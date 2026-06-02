@@ -1,0 +1,3428 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif Jaringan Komputer - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #080c14;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #111827 0%, #080c14 100%);
+            --panel-bg: rgba(17, 24, 39, 0.6);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --accent-hover: #4f46e5;
+            --correct: #10b981;
+            --correct-bg: rgba(16, 185, 129, 0.08);
+            --correct-border: rgba(16, 185, 129, 0.25);
+            --incorrect: #ef4444;
+            --incorrect-bg: rgba(239, 68, 68, 0.08);
+            --incorrect-border: rgba(239, 68, 68, 0.25);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.08);
+            --warning-border: rgba(245, 158, 11, 0.25);
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f3f4f6;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #e0e7ff 0%, #f3f4f6 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(99, 102, 241, 0.08);
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --accent: #4f46e5;
+            --accent-glow: rgba(79, 70, 229, 0.08);
+            --accent-hover: #3730a3;
+            --correct: #059669;
+            --correct-bg: rgba(5, 150, 105, 0.06);
+            --correct-border: rgba(5, 150, 105, 0.18);
+            --incorrect: #dc2626;
+            --incorrect-bg: rgba(220, 38, 38, 0.06);
+            --incorrect-border: rgba(220, 38, 38, 0.18);
+            --warning: #d97706;
+            --warning-bg: rgba(217, 119, 6, 0.06);
+            --warning-border: rgba(217, 119, 6, 0.18);
+            --shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        /* Container & Grid Layout */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Interactive Buttons */
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Dashboard View */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #a78bfa, var(--accent));
+            background-size: 200% 100%;
+            animation: glowMove 8s linear infinite;
+        }
+
+        @keyframes glowMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .customizer-section {
+            margin-bottom: 24px;
+        }
+
+        .customizer-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        /* Categories Checkbox Select */
+        .category-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .category-item input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+        }
+
+        .category-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .category-meta {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        /* Mode & Count Selector Grid */
+        .options-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        @media (max-width: 640px) {
+            .options-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .custom-select-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-group {
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .btn-select {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-select.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+
+        /* Large Action Button */
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #4f46e5);
+            color: white;
+            border: none;
+            font-family: var(--font-sans);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+            filter: brightness(1.1);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* History & Stats Sidebar */
+        .sidebar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .history-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .history-item {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .history-score {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .history-date {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .history-meta {
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .empty-history {
+            text-align: center;
+            padding: 24px 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        /* Tips Card */
+        .tips-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(167, 139, 250, 0.05) 100%);
+            border: 1px dashed var(--accent);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            position: relative;
+        }
+
+        .tips-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tips-card h4 svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .tips-card p {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Active Quiz View */
+        .quiz-container {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .quiz-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quiz-main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Quiz Header Info */
+        .quiz-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .info-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .info-pill.timer {
+            color: var(--warning);
+            border-color: var(--warning-border);
+            background: var(--warning-bg);
+        }
+
+        .info-pill.timer.critical {
+            color: var(--incorrect);
+            border-color: var(--incorrect-border);
+            background: var(--incorrect-bg);
+            animation: pulseRed 1s infinite alternate;
+        }
+
+        @keyframes pulseRed {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #a78bfa);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-height: 380px;
+            position: relative;
+        }
+
+        .question-tag {
+            align-self: flex-start;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .question-text code,
+        .explanation-box code {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #f472b6;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* Option Buttons */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: translateX(4px);
+        }
+
+        .option-btn.selected {
+            border-color: var(--accent);
+            background: rgba(99, 102, 241, 0.08);
+            box-shadow: inset 0 0 0 1px var(--accent);
+        }
+
+        /* Option Feedback States */
+        .option-btn.correct {
+            border-color: var(--correct) !important;
+            background: var(--correct-bg) !important;
+            box-shadow: inset 0 0 0 1px var(--correct) !important;
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--incorrect) !important;
+            background: var(--incorrect-bg) !important;
+            box-shadow: inset 0 0 0 1px var(--incorrect) !important;
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .option-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            margin-right: 14px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .option-btn:hover:not(.disabled) .option-badge {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .option-btn.selected .option-badge {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .option-btn.correct .option-badge {
+            background: var(--correct);
+            border-color: var(--correct);
+            color: white;
+        }
+
+        .option-btn.incorrect .option-badge {
+            background: var(--incorrect);
+            border-color: var(--incorrect);
+            color: white;
+        }
+
+        .option-text {
+            line-height: 1.5;
+        }
+
+        /* Action Buttons Area */
+        .quiz-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            gap: 16px;
+        }
+
+        .btn-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .btn-secondary svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .btn-flag {
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+        }
+
+        .btn-flag.flagged {
+            color: var(--warning);
+            border-color: var(--warning);
+            background: var(--warning-bg);
+        }
+
+        .btn-flag svg {
+            fill: none;
+            transition: var(--transition);
+        }
+
+        .btn-flag.flagged svg {
+            fill: var(--warning);
+        }
+
+        /* Practice Explanation Block */
+        .explanation-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+            display: none;
+            animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .explanation-box.visible {
+            display: block;
+        }
+
+        .explanation-header {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--correct);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .explanation-header svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .explanation-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Exam Sidebar Navigation Grid */
+        .exam-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grid-legend {
+            display: flex;
+            gap: 12px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .legend-color.answered {
+            background: var(--accent);
+        }
+
+        .legend-color.flagged {
+            background: var(--warning);
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .grid-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .grid-cell:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .grid-cell.active {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 8px var(--accent-glow);
+            font-weight: 800;
+        }
+
+        .grid-cell.answered {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .grid-cell.flagged {
+            background: var(--warning);
+            color: white;
+            border-color: var(--warning);
+        }
+
+        .grid-cell.flagged.active {
+            border-color: var(--text-primary);
+        }
+
+        .grid-cell.answered.active {
+            border-color: var(--text-primary);
+        }
+
+        /* Result View */
+        .result-panel {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .score-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+        }
+
+        /* Circular SVG Progress */
+        .circle-progress-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 8px;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.03);
+            stroke-width: 12;
+        }
+
+        .circle-fill {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 12;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-dasharray: 439.82;
+            stroke-dashoffset: 439.82;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-num {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--text-primary);
+        }
+
+        .score-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .result-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+
+        .result-desc {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 460px;
+        }
+
+        /* Stats Blocks */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-icon {
+            margin-bottom: 4px;
+        }
+
+        .stat-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .stat-val {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .stat-lbl {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Review Section */
+        .review-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 16px;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+        }
+
+        .search-box svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .review-filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .filter-btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--text-secondary);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-item {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: var(--transition);
+        }
+
+        .review-item.correct-answer {
+            border-left: 4px solid var(--correct);
+        }
+
+        .review-item.incorrect-answer {
+            border-left: 4px solid var(--incorrect);
+        }
+
+        .review-item.skipped-answer {
+            border-left: 4px solid var(--warning);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .review-number {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .review-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .review-badge.correct {
+            background: var(--correct-bg);
+            color: var(--correct);
+            border: 1px solid var(--correct-border);
+        }
+
+        .review-badge.incorrect {
+            background: var(--incorrect-bg);
+            color: var(--incorrect);
+            border: 1px solid var(--incorrect-border);
+        }
+
+        .review-badge.skipped {
+            background: var(--warning-bg);
+            color: var(--warning);
+            border: 1px solid var(--warning-border);
+        }
+
+        .review-question {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .review-answers {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .review-ans-row {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+        }
+
+        .review-ans-row.user-select {
+            border-color: var(--incorrect);
+            background: var(--incorrect-bg);
+        }
+
+        .review-ans-row.user-select.is-correct {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+        }
+
+        .review-ans-row.correct-key {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+            margin-top: 4px;
+        }
+
+        .review-ans-lbl {
+            font-weight: 700;
+            margin-right: 8px;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .review-ans-txt {
+            flex-grow: 1;
+        }
+
+        .review-explanation {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .review-explanation-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--correct);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .review-explanation-text {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 32px 0 24px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19h16M4 15h16M4 11h16M4 7h16" stroke="currentColor" stroke-linecap="round" />
+                        <circle cx="6" cy="7" r="1.5" fill="currentColor" />
+                        <circle cx="18" cy="11" r="1.5" fill="currentColor" />
+                        <circle cx="10" cy="15" r="1.5" fill="currentColor" />
+                        <circle cx="14" cy="19" r="1.5" fill="currentColor" />
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>Network UTS Prep</h1>
+                    <p>Desain & Manajemen Jaringan Komputer</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <!-- Dark icon by default -->
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dynamic Views -->
+        <main>
+            <!-- 1. DASHBOARD VIEW -->
+            <div id="dashboard-view" class="dashboard-grid">
+                <!-- Configuration panel -->
+                <div class="glass-panel">
+                    <h2 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M12 6V4m0 2a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m-6 8a2 2 0 1 0 0-4m0 4a2 2 0 1 1 0-4m0 4v2m0-6V4m6 16v-6m6 0v2m0-6V4m0 6a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 6v-4"
+                                stroke="currentColor" stroke-linecap="round" />
+                        </svg>
+                        Konfigurasi Latihan
+                    </h2>
+
+                    <!-- Category Selector -->
+                    <div class="customizer-section">
+                        <label class="customizer-label">Pilih Kategori Materi</label>
+                        <div class="category-options">
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="1" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian 1: Konsep Dasar, Pemrosesan, & Arsitektur</span>
+                                    <span class="category-meta">Soal 1–15 • Teori dasar & komponen jaringan</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="2" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian 2: Sistem Operasi Jaringan (NOS)</span>
+                                    <span class="category-meta">Soal 16–22 • UNIX, Linux, Windows Server, NetWare</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="3" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian 3: OSI Reference Model & Enkapsulasi</span>
+                                    <span class="category-meta">Soal 23–35 • 7 Layer OSI & Pembungkusan PDU</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="4" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian 4: Protokol Transport (TCP vs UDP)</span>
+                                    <span class="category-meta">Soal 36–42 • Keandalan, Handshake, Overhead & Flow
+                                        Control</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="5" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian 5: IP Addressing & Subnetting</span>
+                                    <span class="category-meta">Soal 43–50 • Kelas IP, Subnet Mask & Host
+                                        usability</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="6" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian Tambahan: Khusus Materi M5</span>
+                                    <span class="category-meta">Soal 51–70 • IPv6, Routing, Port, Switch vs Hub,
+                                        VLSM</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Options Grid (Count & Mode) -->
+                    <div class="options-row">
+                        <div class="custom-select-group">
+                            <label class="customizer-label">Jumlah Soal</label>
+                            <div class="btn-group" id="count-group">
+                                <button class="btn-select" data-val="10">10</button>
+                                <button class="btn-select" data-val="25">25</button>
+                                <button class="btn-select" data-val="50">50</button>
+                                <button class="btn-select active" data-val="all">Semua (70)</button>
+                            </div>
+                        </div>
+
+                        <div class="custom-select-group">
+                            <label class="customizer-label">Mode Kuis</label>
+                            <div class="btn-group" id="mode-group">
+                                <button class="btn-select active" data-val="practice">Latihan</button>
+                                <button class="btn-select" data-val="exam">Ujian</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Start Button -->
+                    <button class="btn-primary" id="start-btn">
+                        Mulai Latihan
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 3l14 9-14 9V3z" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Sidebar (History / Tips) -->
+                <div class="sidebar-panel">
+                    <!-- High Score / History Card -->
+                    <div class="history-card">
+                        <h3 class="section-title">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Riwayat Latihan
+                        </h3>
+                        <div class="history-list" id="history-container">
+                            <!-- Populated dynamically via JS -->
+                            <div class="empty-history">Belum ada riwayat pengerjaan kuis.</div>
+                        </div>
+                    </div>
+
+                    <!-- Study Tips -->
+                    <div class="tips-card">
+                        <h4>
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M9.663 17h4.673M12 3v1m6.364.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Tips Latihan UTS
+                        </h4>
+                        <p>
+                            Gunakan <strong>Mode Latihan</strong> untuk belajar mandiri di mana Anda bisa langsung
+                            membaca penjelasan materi lengkap sesaat setelah menjawab. Gunakan <strong>Mode
+                                Ujian</strong> untuk melatih fokus dengan batas waktu dan kisi-kisi soal yang menantang.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. QUIZ PLAY VIEW -->
+            <div id="quiz-view" class="quiz-container hidden">
+                <!-- Left Main Area: Question & Options -->
+                <div class="quiz-main">
+                    <!-- Progress & Information Header -->
+                    <div class="quiz-info-bar">
+                        <div class="info-pill" id="question-index-label">Soal 1 dari 10</div>
+                        <div class="info-pill" id="score-counter-pill">Benar: 0 • Salah: 0</div>
+                        <div class="info-pill hidden" id="timer-pill">
+                            <svg viewBox="0 0 24 24" fill="none" style="width: 14px; height: 14px;">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                            <span id="timer-display">00:00</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" id="quiz-progress-bar"></div>
+                    </div>
+
+                    <!-- Question Card -->
+                    <div class="question-card">
+                        <span class="question-tag" id="question-section-tag">Bagian 1</span>
+                        <div class="question-text" id="question-text-box">
+                            Memuat pertanyaan...
+                        </div>
+                        <div class="options-list" id="options-container">
+                            <!-- Options populated dynamically -->
+                        </div>
+
+                        <!-- Action buttons inside card (prev, next, flag) -->
+                        <div class="quiz-actions">
+                            <button class="btn-secondary" id="prev-btn">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                                Sebelumnya
+                            </button>
+
+                            <button class="btn-secondary btn-flag" id="flag-btn" title="Tandai ragu-ragu">
+                                <svg viewBox="0 0 24 24" style="width:16px; height:16px;">
+                                    <path d="M3 21v-4m0 0V5a2 2 0 0 1 2-2h6.5l1 2H21v11h-7l-1-2H3z"
+                                        stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                                Ragu-ragu
+                            </button>
+
+                            <button class="btn-secondary" id="next-btn">
+                                Selanjutnya
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Instant Explanation (visible in Practice Mode after responding) -->
+                        <div class="explanation-box" id="instant-explanation-box">
+                            <div class="explanation-header">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor"
+                                        stroke-linecap="round" />
+                                </svg>
+                                Penjelasan Kunci Jawaban
+                            </div>
+                            <div class="explanation-text" id="instant-explanation-text">
+                                Detail penjelasan...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar: Question Grid Grid Map -->
+                <div class="exam-sidebar">
+                    <div class="sidebar-card">
+                        <div class="sidebar-card-title">
+                            Peta Soal
+                            <button class="btn-secondary" id="submit-quiz-btn"
+                                style="padding: 6px 12px; font-size: 11px; border-color: var(--accent); color: var(--accent); background: var(--accent-glow);">
+                                Kumpulkan
+                            </button>
+                        </div>
+                        <div class="grid-legend">
+                            <div class="legend-item">
+                                <div class="legend-color"></div><span>Belum</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color answered"></div><span>Terjawab</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color flagged"></div><span>Ragu-ragu</span>
+                            </div>
+                        </div>
+                        <div class="questions-grid" id="exam-grid-container">
+                            <!-- Populated with cell grid buttons -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. RESULT VIEW -->
+            <div id="result-view" class="result-panel hidden">
+                <!-- Score Breakdown -->
+                <div class="score-card">
+                    <div class="circle-progress-container">
+                        <svg width="160" height="160" viewBox="0 0 160 160">
+                            <circle class="circle-bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="circle-fill" id="score-circle" cx="80" cy="80" r="70"></circle>
+                        </svg>
+                        <div class="score-value">
+                            <span class="score-num" id="result-score-percent">0%</span>
+                            <span class="score-label">Skor</span>
+                        </div>
+                    </div>
+
+                    <h2 class="result-title" id="result-feedback-title">Hebat!</h2>
+                    <p class="result-desc" id="result-feedback-desc">
+                        Anda telah menyelesaikan kuis latihan UTS.
+                    </p>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><svg viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"
+                                        stroke="var(--correct)" />
+                                </svg></div>
+                            <span class="stat-val" id="stats-correct" style="color: var(--correct);">0</span>
+                            <span class="stat-lbl">Benar</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><svg viewBox="0 0 24 24">
+                                    <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"
+                                        stroke="var(--incorrect)" />
+                                </svg></div>
+                            <span class="stat-val" id="stats-incorrect" style="color: var(--incorrect);">0</span>
+                            <span class="stat-lbl">Salah</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><svg viewBox="0 0 24 24">
+                                    <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"
+                                        stroke="var(--warning)" />
+                                </svg></div>
+                            <span class="stat-val" id="stats-skipped" style="color: var(--warning);">0</span>
+                            <span class="stat-lbl">Dilewati</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><svg viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="var(--accent)" />
+                                </svg></div>
+                            <span class="stat-val" id="stats-time" style="color: var(--accent);">00:00</span>
+                            <span class="stat-lbl">Waktu</span>
+                        </div>
+                    </div>
+
+                    <!-- Panel Action buttons -->
+                    <div style="display:flex; gap:16px; width:100%; margin-top:20px; flex-wrap:wrap;">
+                        <button class="btn-primary" id="restart-btn" style="flex:1; min-width: 200px;">
+                            Ulangi Kuis
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 1 1 8.582 9h5m0 0V4" stroke="currentColor"
+                                    stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            </svg>
+                        </button>
+                        <button class="btn-secondary" id="change-settings-btn"
+                            style="flex:1; min-width: 200px; padding: 16px 24px;">
+                            Ganti Pengaturan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Review Details Section -->
+                <div class="review-panel">
+                    <h3 class="section-title" style="margin-bottom: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4"
+                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Review Pertanyaan & Jawaban
+                    </h3>
+
+                    <!-- Review Toolbar (Search + Filter) -->
+                    <div class="review-controls">
+                        <!-- Search Box -->
+                        <div class="search-box">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="M21 21l-4.35-4.35" />
+                            </svg>
+                            <input type="text" id="review-search" placeholder="Cari soal atau kata kunci...">
+                        </div>
+
+                        <!-- Filter Chips -->
+                        <div class="review-filters">
+                            <button class="filter-btn active" data-filter="all">Semua Soal (<span
+                                    id="count-filter-all">0</span>)</button>
+                            <button class="filter-btn" data-filter="correct" style="color: var(--correct);">Benar (<span
+                                    id="count-filter-correct">0</span>)</button>
+                            <button class="filter-btn" data-filter="incorrect" style="color: var(--incorrect);">Salah
+                                (<span id="count-filter-incorrect">0</span>)</button>
+                            <button class="filter-btn" data-filter="skipped" style="color: var(--warning);">Dilewati
+                                (<span id="count-filter-skipped">0</span>)</button>
+                        </div>
+                    </div>
+
+                    <!-- Review Scroll Area -->
+                    <div class="review-list" id="review-cards-container">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dibuat untuk latihan mandiri UTS Desain & Manajemen Jaringan Komputer.</p>
+            <p style="margin-top: 4px; color: var(--accent);">Lenovo Legion Edition</p>
+        </footer>
+    </div>
+
+    <!-- QUESTIONS AND LOGIC SCRIPTS -->
+    <script>
+        // --- 70 QUESTIONS DATABASE ---
+        const ALL_QUESTIONS = [
+            // --- BAGIAN 1: KONSEP DASAR JARINGAN, PEMROSESAN, & ARSITEKTUR (1-15) ---
+            {
+                id: 1,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Dua atau lebih komputer yang dihubungkan bersama sehingga mereka dapat berkomunikasi satu sama lain dan berbagi sumber daya merupakan definisi jaringan komputer menurut...",
+                options: [
+                    "Forouzan (2012)",
+                    "Tanenbaum (2011)",
+                    "Steven T. Karris (2009)",
+                    "DARPA / DoD"
+                ],
+                answer: "C",
+                explanation: "Slide Pertemuan 1-2 halaman 5 secara eksplisit mengutip definisi jaringan komputer menurut Karris (2009)."
+            },
+            {
+                id: 2,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Manakah di bawah ini yang bukan merupakan komponen utama dari sebuah jaringan komputer?",
+                options: [
+                    "Hardware dan Software",
+                    "Protocol dan Medium Transmisi",
+                    "User Interface dan Storage",
+                    "Jawaban A dan B benar"
+                ],
+                answer: "C",
+                explanation: "Komponen utama jaringan komputer terdiri dari empat elemen, yaitu perangkat keras (hardware), perangkat lunak (software), aturan komunikasi (protocol), dan media transmisi."
+            },
+            {
+                id: 3,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Ketika semua pemrosesan data dalam suatu jaringan dilakukan oleh satu komputer pusat, metode pemrosesan tersebut dinamakan...",
+                options: [
+                    "Distributed Processing",
+                    "Centralized Processing",
+                    "Hybrid Processing",
+                    "Peer-to-Peer Processing"
+                ],
+                answer: "B",
+                explanation: "Pemrosesan terpusat (centralized) berarti semua pemrosesan data dilakukan di satu komputer pusat (seperti mainframe atau server pusat)."
+            },
+            {
+                id: 4,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Apa yang menjadi kelemahan utama dari sistem pemrosesan data terpusat (Centralized Processing)?",
+                options: [
+                    "Manajemen data sangat kompleks",
+                    "Biaya infrastruktur awal sangat tinggi karena redundansi",
+                    "Rentan terhadap single point of failure",
+                    "Sinkronisasi data antar node sangat sulit"
+                ],
+                answer: "C",
+                explanation: "Jika komputer pusat mengalami kerusakan, seluruh sistem/terminal akan mati total karena tidak ada redundansi."
+            },
+            {
+                id: 5,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Karakteristik utama yang membedakan pemrosesan terdistribusi (Distributed Processing) dari pemrosesan terpusat adalah...",
+                options: [
+                    "Data hanya disimpan di satu server legacy",
+                    "Beban kerja dibagi secara merata ke banyak komputer yang saling terhubung",
+                    "Manajemen sistem menjadi jauh lebih mudah dan sederhana",
+                    "Biaya investasi infrastruktur IT jauh lebih rendah"
+                ],
+                answer: "B",
+                explanation: "Pada pemrosesan terdistribusi, pemrosesan dilakukan oleh banyak komputer (node) sehingga kinerja dan skalabilitasnya lebih tinggi serta meminimalkan risiko mati total."
+            },
+            {
+                id: 6,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Jaringan di mana setiap komputer memiliki kemampuan yang setara untuk bertindak sebagai client sekaligus server disebut...",
+                options: [
+                    "Client-Server",
+                    "Mainframe-Terminal",
+                    "Peer-to-Peer (P2P)",
+                    "Local Area Network"
+                ],
+                answer: "C",
+                explanation: "Arsitektur Peer-to-Peer tidak memiliki server khusus; setiap node/PC memiliki kedudukan dan kemampuan yang setara."
+            },
+            {
+                id: 7,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Berapakah ukuran jumlah komputer yang ideal untuk menerapkan arsitektur jaringan Peer-to-Peer (P2P)?",
+                options: [
+                    "100+ komputer",
+                    "50–100 komputer",
+                    "2–10 komputer",
+                    "Lebih dari 10 komputer"
+                ],
+                answer: "C",
+                explanation: "P2P ideal untuk skala kecil (2-10 komputer) karena jika node terlalu banyak, jaringan akan sangat sulit dikelola dan kinerjanya menurun."
+            },
+            {
+                id: 8,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Mengapa laboratorium komputer universitas yang membutuhkan manajemen user terpusat (seperti Active Directory) lebih cocok menggunakan arsitektur Client-Server?",
+                options: [
+                    "Karena biaya setup awal Client-Server jauh lebih murah dibanding P2P",
+                    "Memudahkan kontrol keamanan terpusat, autentikasi, dan distribusi software",
+                    "Karena arsitektur Client-Server tidak memerlukan administrator khusus",
+                    "Supaya setiap mahasiswa dapat saling menghapus file di komputer lain secara bebas"
+                ],
+                answer: "B",
+                explanation: "Keunggulan utama Client-Server adalah skalabilitas yang sangat baik dan kontrol manajemen/keamanan yang mudah dikelola secara terpusat oleh administrator."
+            },
+            {
+                id: 9,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Layanan jaringan yang memungkinkan penyimpanan, pengambilan, dan pengelolaan berkas secara terpusat menggunakan protokol seperti SMB atau NFS disebut...",
+                options: [
+                    "Print Service",
+                    "Application Service",
+                    "File Service",
+                    "Database Service"
+                ],
+                answer: "C",
+                explanation: "File service mengurusi manajemen berkas/sharing data antar pengguna tanpa perlu menyalin manual ke media fisik."
+            },
+            {
+                id: 10,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Pada layanan printer (Print Service), antrian cetak dikelola oleh suatu server khusus untuk mengatur urutan percetakan pengguna. Komponen antrian ini disebut...",
+                options: [
+                    "Print Storage",
+                    "Print Queue",
+                    "Print Server",
+                    "Print Gateway"
+                ],
+                answer: "B",
+                explanation: "Print Queue berfungsi mengatur urutan dokumen yang masuk dari berbagai client agar printer dapat mencetaknya secara bergantian."
+            },
+            {
+                id: 11,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Teknologi seperti Citrix atau Remote Desktop Protocol (RDP), di mana client hanya menampilkan antarmuka sementara semua pemrosesan data dilakukan di server, memanfaatkan konsep...",
+                options: [
+                    "Thick Client",
+                    "Peer Client",
+                    "Thin Client",
+                    "Database Client"
+                ],
+                answer: "C",
+                explanation: "Pada arsitektur thin client, beban komputasi ditarik sepenuhnya ke server aplikasi, sementara perangkat pengguna hanya menjadi penampil interface."
+            },
+            {
+                id: 12,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Aplikasi Apache HTTP Server, Nginx, dan Microsoft IIS merupakan contoh software yang digunakan untuk menyediakan layanan...",
+                options: [
+                    "Database Service",
+                    "Application Service",
+                    "Web Service",
+                    "File Service"
+                ],
+                answer: "C",
+                explanation: "Apache, Nginx, dan IIS bertindak sebagai web server yang menyajikan halaman web kepada client via protokol HTTP/HTTPS."
+            },
+            {
+                id: 13,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Manakah di bawah ini urutan klasifikasi jaringan berdasarkan jangkauan geografisnya mulai dari yang terkecil hingga terbesar?",
+                options: [
+                    "MAN -> LAN -> WAN",
+                    "LAN -> WAN -> MAN",
+                    "LAN -> MAN -> WAN",
+                    "WAN -> MAN -> LAN"
+                ],
+                answer: "C",
+                explanation: "LAN mencakup radius &lt;1-10 km (gedung/kampus), MAN mencakup 10-100 km (kota), dan WAN mencakup wilayah global lintas negara/benua."
+            },
+            {
+                id: 14,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Jaringan internet global yang kita gunakan sehari-hari dikategorikan sebagai jenis jaringan...",
+                options: [
+                    "Local Area Network",
+                    "Metropolitan Area Network",
+                    "Wide Area Network",
+                    "Enterprise Network"
+                ],
+                answer: "C",
+                explanation: "Internet adalah jaringan WAN terbesar di dunia yang menghubungkan miliaran perangkat secara global tanpa batas geografis."
+            },
+            {
+                id: 15,
+                section: "Konsep Dasar Jaringan, Metode Pemrosesan, & Arsitektur",
+                question: "Kabel UTP Cat 6 memiliki kecepatan transfer data hingga 10 Gbps. Jarak maksimum pengoperasian kabel ini agar tetap memperoleh kecepatan 10 Gbps secara optimal adalah...",
+                options: [
+                    "100 meter",
+                    "55 meter",
+                    "500 meter",
+                    "80 kilometer"
+                ],
+                answer: "B",
+                explanation: "Berdasarkan tabel media transmisi, UTP Cat 6 dapat mencapai kecepatan 10 Gbps pada jarak maksimal 55 meter (sedangkan untuk kecepatan 1 Gbps bisa mencapai 100 meter)."
+            },
+
+            // --- BAGIAN 2: SISTEM OPERASI JARINGAN (NOS) (16-22) ---
+            {
+                id: 16,
+                section: "Sistem Operasi Jaringan (NOS)",
+                question: "Sistem operasi jaringan (NOS) yang dikembangkan di AT&T Bell Labs oleh Ken Thompson dan Dennis Ritchie pada tahun 1969 dan menjadi fondasi bagi banyak OS modern adalah...",
+                options: [
+                    "Windows Server",
+                    "Linux",
+                    "UNIX",
+                    "Novell NetWare"
+                ],
+                answer: "C",
+                explanation: "UNIX adalah pionir OS jaringan komersial/HPC yang lahir pada tahun 1969 di AT&T Bell Labs."
+            },
+            {
+                id: 17,
+                section: "Sistem Operasi Jaringan (NOS)",
+                question: "Manakah di bawah ini yang bukan merupakan varian populer atau turunan dari sistem operasi UNIX?",
+                options: [
+                    "FreeBSD dan OpenBSD",
+                    "Solaris dan IBM AIX",
+                    "Windows Server 2022",
+                    "macOS"
+                ],
+                answer: "C",
+                explanation: "Windows Server dikembangkan secara independen oleh Microsoft Corporation dan bukan turunan UNIX."
+            },
+            {
+                id: 18,
+                section: "Sistem Operasi Jaringan (NOS)",
+                question: "Sistem operasi jaringan open-source terpopuler yang dibuat oleh Linus Torvalds pada tahun 1991 dan saat ini menguasai sekitar 78% server web global adalah...",
+                options: [
+                    "UNIX Enterprise",
+                    "Linux",
+                    "Ubuntu Desktop",
+                    "Novell NetWare"
+                ],
+                answer: "B",
+                explanation: "Linux diluncurkan tahun 1991 oleh Linus Torvalds sebagai kernel open-source yang terinspirasi oleh UNIX."
+            },
+            {
+                id: 19,
+                section: "Sistem Operasi Jaringan (NOS)",
+                question: "Manakah di bawah ini yang merupakan daftar distribusi (distro) Linux yang umum digunakan khusus untuk lingkungan server jaringan?",
+                options: [
+                    "Ubuntu Server, CentOS/RHEL, Debian",
+                    "Windows Server Datacenter, Active Directory, IIS",
+                    "NetWare Core Protocol, IPX/SPX, NDS",
+                    "macOS, HP-UX, Solaris"
+                ],
+                answer: "A",
+                explanation: "Ubuntu Server, Red Hat Enterprise Linux (RHEL)/CentOS, dan Debian adalah distro Linux paling populer untuk server."
+            },
+            {
+                id: 20,
+                section: "Sistem Operasi Jaringan (NOS)",
+                question: "Layanan direktori khusus pada Windows Server yang berfungsi untuk manajemen terpusat terhadap user, komputer, dan kebijakan jaringan disebut...",
+                options: [
+                    "Samba DS",
+                    "Active Directory (AD DS)",
+                    "Novell Directory Services",
+                    "OpenLDAP"
+                ],
+                answer: "B",
+                explanation: "Active Directory (AD DS) adalah fitur utama Windows Server untuk mengelola identitas dan hak akses dalam jaringan enterprise secara terpusat."
+            },
+            {
+                id: 21,
+                section: "Sistem Operasi Jaringan (NOS)",
+                question: "Sistem operasi jaringan yang sempat menguasai lebih dari 60% pasar NOS enterprise pada era 1990-an dengan protokol aslinya IPX/SPX adalah...",
+                options: [
+                    "UNIX BSD",
+                    "Ubuntu Server",
+                    "Novell NetWare",
+                    "Windows NT Server"
+                ],
+                answer: "C",
+                explanation: "Novell NetWare (rilis 1983) adalah pelopor NOS komersial untuk LAN sebelum posisinya digantikan oleh Windows Server dan Linux di era modern."
+            },
+            {
+                id: 22,
+                section: "Sistem Operasi Jaringan (NOS)",
+                question: "Jika dilihat dari aspek lisensi, perbedaan mendasar antara Linux dengan Windows Server atau UNIX Enterprise adalah...",
+                options: [
+                    "Linux bersifat proprietary, sedangkan Windows open-source",
+                    "Linux bersifat open-source (GPL) dan gratis, sedangkan Windows/UNIX komersial berlisensi",
+                    "Linux memerlukan biaya lisensi per user (CAL), sedangkan Windows sepenuhnya bebas biaya",
+                    "Tidak ada perbedaan biaya lisensi di antara ketiganya"
+                ],
+                answer: "B",
+                explanation: "Kode sumber Linux terbuka untuk siapa saja dan dapat dikustomisasi penuh secara gratis, berbeda dengan Windows Server yang berlisensi proprietary."
+            },
+
+            // --- BAGIAN 3: OSI REFERENCE MODEL & PROSES ENKAPSULASI (23-35) ---
+            {
+                id: 23,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "OSI Reference Model dikembangkan oleh organisasi ISO (International Organization for Standardization) pada tahun...",
+                options: [
+                    "1969",
+                    "1970",
+                    "1983",
+                    "1984"
+                ],
+                answer: "D",
+                explanation: "Model referensi OSI yang terdiri dari 7 lapisan diluncurkan secara resmi pada tahun 1984."
+            },
+            {
+                id: 24,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Lapisan OSI manakah yang berfungsi sebagai antarmuka langsung antara pengguna dengan aplikasi jaringan (misalnya mengirim email atau browsing)?",
+                options: [
+                    "Layer 1 – Physical Layer",
+                    "Layer 4 – Transport Layer",
+                    "Layer 6 – Presentation Layer",
+                    "Layer 7 – Application Layer"
+                ],
+                answer: "D",
+                explanation: "Layer 7 (Application) menyediakan layanan langsung ke aplikasi pengguna yang mengakses jaringan (seperti HTTP untuk browser, SMTP untuk email)."
+            },
+            {
+                id: 25,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Enkripsi, dekripsi, kompresi gambar (JPEG/GIF), serta konversi format karakter (ASCII ke EBCDIC) merupakan tanggung jawab utama dari lapisan...",
+                options: [
+                    "Application Layer (Layer 7)",
+                    "Presentation Layer (Layer 6)",
+                    "Session Layer (Layer 5)",
+                    "Transport Layer (Layer 4)"
+                ],
+                answer: "B",
+                explanation: "Layer 6 (Presentation) mengurusi sintaksis dan format data agar dapat dipahami oleh perangkat penerima."
+            },
+            {
+                id: 26,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Lapisan Session (Layer 5) pada model OSI bertanggung jawab untuk mengontrol dialog komunikasi antar perangkat. Mode dialog komunikasi yang hanya mengizinkan pengiriman data satu arah saja dinamakan...",
+                options: [
+                    "Simplex",
+                    "Half-Duplex",
+                    "Full-Duplex",
+                    "Stateless"
+                ],
+                answer: "A",
+                explanation: "Simplex artinya data hanya mengalir satu arah (penerima tidak bisa membalas), contohnya siaran radio kampus atau proyektor kelas."
+            },
+            {
+                id: 27,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Ketika dosen menggunakan walkie-talkie saat kegiatan lapangan, komunikasi dapat berjalan dua arah tetapi harus bergantian. Mode dialog ini disebut...",
+                options: [
+                    "Simplex",
+                    "Half-Duplex",
+                    "Full-Duplex",
+                    "Connection-oriented"
+                ],
+                answer: "B",
+                explanation: "Half-Duplex memungkinkan pengiriman dua arah namun tidak bisa terjadi secara bersamaan (harus bergantian)."
+            },
+            {
+                id: 28,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Fungsi utama dari Transport Layer (Layer 4) pada model OSI adalah...",
+                options: [
+                    "Mengubah bit digital menjadi sinyal listrik kabel",
+                    "Pengalamatan logis (IP Address) dan penentuan rute terbaik (routing)",
+                    "Menyediakan transfer data end-to-end yang andal atau cepat antar host (TCP/UDP)",
+                    "Deteksi kesalahan fisik menggunakan metode CRC pada frame"
+                ],
+                answer: "C",
+                explanation: "Layer 4 mengatur segmentasi data dari layer atas, multiplexing, kontrol aliran (flow control), serta pemilihan protokol transport (TCP/UDP)."
+            },
+            {
+                id: 29,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Perangkat jaringan Router bekerja pada lapisan OSI yang bertanggung jawab terhadap pengalamatan logis dan routing. Lapisan tersebut adalah...",
+                options: [
+                    "Layer 1 – Physical Layer",
+                    "Layer 2 – Data Link Layer",
+                    "Layer 3 – Network Layer",
+                    "Layer 4 – Transport Layer"
+                ],
+                answer: "C",
+                explanation: "Network Layer (Layer 3) bertanggung jawab atas pengalamatan IP, pengiriman paket, dan proses routing. Router adalah perangkat utama di layer ini."
+            },
+            {
+                id: 30,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Lapisan OSI yang mengurusi pengalamatan fisik (MAC Address) dan melakukan deteksi kesalahan (error detection) dengan memformat data ke bentuk Frame adalah...",
+                options: [
+                    "Physical Layer",
+                    "Data Link Layer",
+                    "Network Layer",
+                    "Session Layer"
+                ],
+                answer: "B",
+                explanation: "Data Link Layer (Layer 2) membungkus paket menjadi frame, menambahkan MAC address pengirim/tujuan, dan melakukan deteksi error via CRC. Perangkat yang bekerja di sini adalah Switch."
+            },
+            {
+                id: 31,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Kabel UTP, serat optik (Fiber Optic), Hub, dan Repeater dikategorikan sebagai komponen yang bekerja pada lapisan...",
+                options: [
+                    "Layer 1 – Physical Layer",
+                    "Layer 2 – Data Link Layer",
+                    "Layer 3 – Network Layer",
+                    "Layer 4 – Transport Layer"
+                ],
+                answer: "A",
+                explanation: "Physical layer (Layer 1) menangani transmisi bit mentah melalui media fisik, sinyal listrik, optik, atau gelombang radio."
+            },
+            {
+                id: 32,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Proses pembungkusan data dengan menambahkan informasi header di setiap lapisan OSI sebelum dikirimkan melalui media transmisi disebut...",
+                options: [
+                    "Decapsulation",
+                    "Segmentation",
+                    "Encapsulation",
+                    "Multiplexing"
+                ],
+                answer: "C",
+                explanation: "Enkapsulasi adalah proses berjalan dari layer atas ke bawah di sisi pengirim, di mana data 'dibungkus' dengan header baru di tiap layer."
+            },
+            {
+                id: 33,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Ketika data berada di Layer 3 (Network Layer) pada proses enkapsulasi, Protokol Data Unit (PDU) tersebut dinamakan...",
+                options: [
+                    "Data",
+                    "Segment",
+                    "Packet",
+                    "Frame"
+                ],
+                answer: "C",
+                explanation: "Urutan PDU dari atas ke bawah: Layer 7-5 = DATA, Layer 4 = SEGMENT, Layer 3 = PACKET, Layer 2 = FRAME, Layer 1 = BITS."
+            },
+            {
+                id: 34,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Proses pembongkaran header pembungkus data yang dilakukan oleh komputer penerima dari lapisan paling bawah hingga lapisan atas disebut...",
+                options: [
+                    "Encapsulation",
+                    "Decapsulation",
+                    "Routing",
+                    "Demultiplexing"
+                ],
+                answer: "B",
+                explanation: "Dekapsulasi adalah kebalikan dari enkapsulasi; terjadi di sisi penerima untuk membaca informasi header dari layer 1 ke layer atas."
+            },
+            {
+                id: 35,
+                section: "OSI Reference Model & Proses Enkapsulasi",
+                question: "Berdasarkan perbandingan arsitektur, lapisan Application Layer pada model TCP/IP merupakan gabungan dari lapisan apa saja pada model OSI?",
+                options: [
+                    "Application + Transport + Network",
+                    "Application + Presentation + Session",
+                    "Data Link + Physical",
+                    "Transport + Session"
+                ],
+                answer: "B",
+                explanation: "Model TCP/IP (4 layer) menyederhanakan tiga lapisan teratas OSI (Layer 5, 6, dan 7) menjadi satu lapisan tunggal bernama Application Layer."
+            },
+
+            // --- BAGIAN 4: PROTOKOL TRANSPORT (TCP VS UDP) (36-42) ---
+            {
+                id: 36,
+                section: "Protokol Transport (TCP vs UDP)",
+                question: "Manakah di bawah ini karakteristik yang tepat mengenai protokol TCP (Transmission Control Protocol)?",
+                options: [
+                    "Connectionless, Unreliable, Tanpa Urutan, Overhead rendah",
+                    "Connection-oriented, Reliable, Ordered (Berurutan), Flow Control",
+                    "Sangat cepat, tanpa handshake, toleran terhadap kehilangan paket data",
+                    "Mengirimkan data langsung tanpa memedulikan status penerima"
+                ],
+                answer: "B",
+                explanation: "TCP berfokus pada reliabilitas data; koneksi dipastikan terbentuk dulu, data dijamin sampai utuh, berurutan, dan memiliki mekanisme kontrol aliran data."
+            },
+            {
+                id: 37,
+                section: "Protokol Transport (TCP vs UDP)",
+                question: "Mekanisme pembuatan koneksi pada protokol TCP sebelum data dikirimkan yang melibatkan segmen SYN, SYN-ACK, dan ACK dinamakan...",
+                options: [
+                    "Windowing Size",
+                    "Flow Control Handshake",
+                    "3-Way Handshake",
+                    "Retransmission Mechanism"
+                ],
+                answer: "C",
+                explanation: "3-Way Handshake adalah proses tiga langkah TCP: (1) Client kirim SYN, (2) Server balas SYN-ACK, (3) Client konfirmasi ACK."
+            },
+            {
+                id: 38,
+                section: "Protokol Transport (TCP vs UDP)",
+                question: "Mengapa protokol UDP (User Datagram Protocol) sangat ideal digunakan untuk aplikasi Live Video Streaming atau Game Online?",
+                options: [
+                    "Karena UDP menjamin tidak akan ada paket yang hilang (zero packet loss)",
+                    "Karena UDP memiliki ukuran header yang sangat besar dan aman",
+                    "Karena UDP mengutamakan kecepatan tinggi (low latency) daripada reliabilitas data utuh",
+                    "Karena UDP secara otomatis mengulang pengiriman data yang rusak"
+                ],
+                answer: "C",
+                explanation: "Komunikasi real-time atau game tidak bisa ditunda (delay) demi menunggu pengiriman ulang paket yang hilang. Kecepatan transmisi adalah prioritas utama."
+            },
+            {
+                id: 39,
+                section: "Protokol Transport (TCP vs UDP)",
+                question: "Berdasarkan ukuran overhead header, manakah perbandingan yang benar antara TCP dengan UDP?",
+                options: [
+                    "TCP memiliki header rendah (8 byte), sedangkan UDP memiliki header tinggi (20+ byte)",
+                    "Keduanya memiliki ukuran header yang sama yaitu 16 byte",
+                    "TCP memiliki header tinggi (20+ byte) karena membawa informasi kontrol, sedangkan UDP rendah (8 byte)",
+                    "UDP tidak memiliki header sama sekali saat transmisi data"
+                ],
+                answer: "C",
+                explanation: "Header TCP lebih kompleks (minimal 20 byte) untuk menjamin keandalan data, sedangkan header UDP sangat sederhana dan ringan (hanya 8 byte)."
+            },
+            {
+                id: 40,
+                section: "Protokol Transport (TCP vs UDP)",
+                question: "Aplikasi pengiriman surat elektronik (Email) menggunakan protokol SMTP. Protokol lapisan transport yang digunakannya adalah...",
+                options: [
+                    "UDP, karena email harus dikirim secepat mungkin tanpa memedulikan kegagalan",
+                    "TCP, karena isi dokumen email harus sampai secara utuh, lengkap, dan berurutan",
+                    "ICMP, karena email berfungsi memberikan indikasi pesan error",
+                    "ARP, karena email membutuhkan pemetaan alamat fisik"
+                ],
+                answer: "B",
+                explanation: "Email tidak boleh kehilangan karakter atau urutan kalimatnya di tengah jalan, sehingga wajib menggunakan keandalan yang disediakan TCP."
+            },
+            {
+                id: 41,
+                section: "Protokol Transport (TCP vs UDP)",
+                question: "Teknik mengatur kecepatan pengiriman paket data dari pengirim agar komputer penerima tidak kewalahan memprosesnya pada protokol TCP disebut...",
+                options: [
+                    "Segmentation",
+                    "Flow Control (via Window Size)",
+                    "Error Recovery",
+                    "Best Effort Delivery"
+                ],
+                answer: "B",
+                explanation: "Flow control mencegah pengirim membanjiri buffer penerima dengan menyesuaikan ukuran jendela pengiriman data (window size)."
+            },
+            {
+                id: 42,
+                section: "Protokol Transport (TCP vs UDP)",
+                question: "Manakah kelompok protokol di bawah ini yang semuanya berjalan di atas lapisan transport UDP?",
+                options: [
+                    "HTTP, HTTPS, FTP",
+                    "SMTP, POP3, IMAP",
+                    "DNS Query, VoIP, Video Streaming Zoom",
+                    "SSH, Telnet, RDP"
+                ],
+                answer: "C",
+                explanation: "Layanan real-time, kueri cepat seperti DNS, VoIP, dan video conferencing/streaming memanfaatkan efisiensi protokol UDP."
+            },
+
+            // --- BAGIAN 5: IP ADDRESSING & SUBNETTING (43-50) ---
+            {
+                id: 43,
+                section: "IP Addressing & Subnetting",
+                question: "Berapakah panjang ruang alamat yang dimiliki oleh IPv4 dan IPv6 secara berturut-turut?",
+                options: [
+                    "16 bit dan 32 bit",
+                    "32 bit dan 64 bit",
+                    "32 bit dan 128 bit",
+                    "64 bit dan 128 bit"
+                ],
+                answer: "C",
+                explanation: "IPv4 menggunakan alamat sepanjang 32 bit (~4,3 miliar alamat), sedangkan IPv6 menggunakan 128 bit (2^128 alamat)."
+            },
+            {
+                id: 44,
+                section: "IP Addressing & Subnetting",
+                question: "IP Address kelas C memiliki rentang angka pada oktet pertamanya sebesar...",
+                options: [
+                    "1–126",
+                    "128–191",
+                    "192–223",
+                    "224–247"
+                ],
+                answer: "C",
+                explanation: "Pembagian kelas IP tradisional pada oktet pertama: Kelas A (0-127, note: 127 loopback), Kelas B (128-191), Kelas C (192-223)."
+            },
+            {
+                id: 45,
+                section: "IP Addressing & Subnetting",
+                question: "Protokol pada Internet Layer yang bertugas memetakan atau mencari MAC Address (alamat fisik) dari suatu IP Address (alamat logis) yang sudah diketahui adalah...",
+                options: [
+                    "ICMP (Internet Control Message Protocol)",
+                    "ARP (Address Resolution Protocol)",
+                    "RARP (Reverse Address Resolution Protocol)",
+                    "DHCP (Dynamic Host Configuration Protocol)"
+                ],
+                answer: "B",
+                explanation: "ARP menerjemahkan IP -> MAC, sedangkan RARP menerjemahkan kebalikannya yaitu MAC -> IP."
+            },
+            {
+                id: 46,
+                section: "IP Addressing & Subnetting",
+                question: "Notasi penulisan IP Address `192.168.1.2/24`. Notasi tanda garis miring `/24` tersebut merujuk pada metode penomoran...",
+                options: [
+                    "Classful Addressing",
+                    "MAC Translation Number",
+                    "CIDR (Classless Inter-Domain Routing)",
+                    "IP Fragmentation Offset"
+                ],
+                answer: "C",
+                explanation: "CIDR diperkenalkan tahun 1993 menggunakan notasi prefix (seperti /24) untuk menunjukkan jumlah bit bernilai 1 pada subnet mask (255.255.255.0)."
+            },
+            {
+                id: 47,
+                section: "IP Addressing & Subnetting",
+                question: "Apa dua alasan utama mengapa seorang administrator jaringan wajib melakukan teknik Subnetting pada alokasi IP perusahaan?",
+                options: [
+                    "Mengubah alamat MAC dan menyembunyikan identitas web server",
+                    "Efisiensi penggunaan IP Address agar tidak terbuang sia-sia dan mengontrol performa (membatasi broadcast domain)",
+                    "Agar semua komputer di dunia dapat masuk ke jaringan lokal tanpa password",
+                    "Menurunkan kecepatan transfer data kabel dan mematikan fungsi routing router"
+                ],
+                answer: "B",
+                explanation: "Tanpa subnetting, alokasi IP kelas B/A yang besar akan membuang jutaan IP sisa dan membebani jaringan dengan lalu lintas broadcast yang terlalu masif."
+            },
+            {
+                id: 48,
+                section: "IP Addressing & Subnetting",
+                question: "[Hitungan Subnetting] Diketahui sebuah subnetting network kelas C: 192.168.1.0/26. Berapakah nilai Subnet Mask desimal dan jumlah subnet yang terbentuk?",
+                options: [
+                    "255.255.255.0 dan 2 Subnet",
+                    "255.255.255.128 dan 2 Subnet",
+                    "255.255.255.192 dan 4 Subnet",
+                    "255.255.255.240 dan 16 Subnet"
+                ],
+                answer: "C",
+                explanation: "Prefix /26 berarti ada 2 bit bernilai '1' pada oktet terakhir (11000000 di biner = 192 desimal). Subnet mask = 255.255.255.192. Jumlah Subnet = 2^2 = 4 subnet."
+            },
+            {
+                id: 49,
+                section: "IP Addressing & Subnetting",
+                question: "[Hitungan Subnetting] Dari network 192.168.10.0/28, berapakah jumlah host yang valid (usable host) yang dapat digunakan oleh perangkat di setiap subjaringan?",
+                options: [
+                    "62 host",
+                    "30 host",
+                    "16 host",
+                    "14 host"
+                ],
+                answer: "D",
+                explanation: "Prefix /28 menyisakan 4 bit berharga '0' untuk host pada oktet terakhir (32 - 28 = 4). Rumus jumlah host per subjaringan = 2^4 - 2 = 16 - 2 = 14 host valid (dikurangi IP Network dan IP Broadcast)."
+            },
+            {
+                id: 50,
+                section: "IP Addressing & Subnetting",
+                question: "Seorang administrator jaringan melihat port aktif di bawah ini pada koneksi server: Port 80, Port 443, Port 22. Layanan/Aplikasi apa saja yang secara berurutan berjalan pada ketiga port tersebut?",
+                options: [
+                    "HTTPS, HTTP, SSH",
+                    "HTTP, HTTPS, SSH",
+                    "FTP, Telnet, SMTP",
+                    "DNS, DHCP, MySQL"
+                ],
+                answer: "B",
+                explanation: "Port 80 digunakan untuk HTTP (Web tidak terenkripsi), Port 443 digunakan untuk HTTPS (Web aman terenkripsi SSL/TLS), dan Port 22 digunakan untuk SSH (Remote access terenkripsi)."
+            },
+
+            // --- BAGIAN TAMBAHAN: KHUSUS MATERI M5 (51-70) ---
+            {
+                id: 51,
+                section: "Khusus Materi M5",
+                question: "Berdasarkan dokumen M5, arsitektur protokol TCP/IP didefinisikan ke dalam berapa layer fungsi?",
+                options: [
+                    "7 Layer",
+                    "5 Layer",
+                    "4 Layer",
+                    "3 Layer"
+                ],
+                answer: "C",
+                explanation: "Berbeda dengan OSI yang memiliki 7 layer, arsitektur TCP/IP didefinisikan dalam 4 layer fungsi, yaitu Application, Transport, Internet, dan Network Access Layer."
+            },
+            {
+                id: 52,
+                section: "Khusus Materi M5",
+                question: "Protokol Ethernet (IEEE 802.3) and Wi-Fi (IEEE 802.11) berada pada layer apa dalam arsitektur TCP/IP?",
+                options: [
+                    "Internet Layer",
+                    "Transport Layer",
+                    "Network Access Layer",
+                    "Application Layer"
+                ],
+                answer: "C",
+                explanation: "Network Access Layer menyediakan media bagi sistem untuk mengirimkan data dan mengubah IP datagram ke frame transmisi menggunakan standar seperti Ethernet dan Wi-Fi."
+            },
+            {
+                id: 53,
+                section: "Khusus Materi M5",
+                question: "Di bawah ini adalah karakteristik dari Internet Protocol (IP) pada Internet Layer, kecuali...",
+                options: [
+                    "Unreliable",
+                    "Connection-oriented",
+                    "Connectionless",
+                    "Datagram Delivery"
+                ],
+                answer: "B",
+                explanation: "IP bersifat connectionless (tidak ada handshake awal sebelum kirim data), unreliable (best effort delivery), dan setiap paketnya independen (datagram delivery). Jadi, IP bukan connection-oriented."
+            },
+            {
+                id: 54,
+                section: "Khusus Materi M5",
+                question: "Field pada Header Paket IP yang berfungsi membatasi jumlah maksimum hop (lompatan antar router) yang dapat dilalui sebuah paket agar tidak berputar-putar di jaringan selamanya adalah...",
+                options: [
+                    "Total Length",
+                    "Fragment Offset",
+                    "Time to Live (TTL)",
+                    "Header Checksum"
+                ],
+                answer: "C",
+                explanation: "TTL menentukan batas maksimum hop; nilainya akan dikurangi setiap kali melewati router. Jika TTL mencapai 0, paket akan dibuang."
+            },
+            {
+                id: 55,
+                section: "Khusus Materi M5",
+                question: "Berapakah range IP Address untuk oktet pertama dan jumlah host maksimum yang dimiliki oleh IP Kelas B?",
+                options: [
+                    "1.x.x.x - 126.x.x.x dengan 16.777.214 host",
+                    "128.0.x.x - 191.255.x.x dengan 65.532 host",
+                    "192.0.0.x - 223.255.255.x dengan 254 host",
+                    "224.0.0.0 - 239.255.255.255 untuk Multicast"
+                ],
+                answer: "B",
+                explanation: "Sesuai tabel Kelas IP di materi M5, Kelas B memiliki range oktet pertama 128-191 dan mampu menampung hingga 65.532 host (atau lebih tepatnya 65.534 host valid)."
+            },
+            {
+                id: 56,
+                section: "Khusus Materi M5",
+                question: "Mengapa industri jaringan komputer saat ini mulai beralih menggunakan IPv6 untuk menggantikan IPv4?",
+                options: [
+                    "Karena IPv4 hanya berukuran 16 bit sehingga sangat lambat",
+                    "Pertumbuhan perangkat IoT yang masif sehingga ruang alamat IPv4 (32-bit/~4,3 miliar alamat) habis",
+                    "Karena IPv6 tidak membutuhkan router untuk proses pengiriman data",
+                    "Karena IPv6 menggunakan biner murni sedangkan IPv4 menggunakan desimal"
+                ],
+                answer: "B",
+                explanation: "IPv4 hanya 32 bit (~4,3 miliar alamat). Dengan pertumbuhan IoT yang meledak, ruang alamat tersebut habis, sehingga dibutuhkan IPv6 yang berukuran 128 bit."
+            },
+            {
+                id: 57,
+                section: "Khusus Materi M5",
+                question: "Berapakah total ruang alamat yang disediakan oleh IPv6 dengan panjang 128 bit-nya?",
+                options: [
+                    "~4,3 Miliar alamat",
+                    "~16,7 Juta alamat",
+                    "~340 Undecillion alamat",
+                    "Tidak terbatas secara absolut"
+                ],
+                answer: "C",
+                explanation: "IPv6 memiliki kapasitas 2^128 atau sekitar 340 Undecillion alamat, yang dianalogikan cukup untuk memberikan alamat pada setiap butir pasir di bumi!"
+            },
+            {
+                id: 58,
+                section: "Khusus Materi M5",
+                question: "Jika sebuah alamat IPv6 ditulis penuh sebagai `3ffe:0501:0008:1234:0260:97ff:fe40:efab`, bagaimanakah penulisan ringkasnya (Simplified) yang benar menurut aturan kompresi?",
+                options: [
+                    "3ffe:0501:0008:1234:0260:97ff:fe40:efab",
+                    "3ffe:51:8:1234:26:97ff:fe40:efab",
+                    "3ffe:0501:8::260:97ff:fe40:efab",
+                    "3ffe:5:8:1234:26:97:fe:ef"
+                ],
+                answer: "A",
+                explanation: "Penyederhanaan dilakukan dengan membuang angka nol (0) di depan setiap kelompok hexadesimal (leading zeros). Maka 0501 -> 501, 0008 -> 8, dan 0260 -> 260."
+            },
+            {
+                id: 59,
+                section: "Khusus Materi M5",
+                question: "Pada jenis alamat IPv6, alamat Loopback ditulis secara ringkas (Compressed) dengan notasi...",
+                options: [
+                    "::/128",
+                    "::1/128",
+                    "ff00::/8",
+                    "FE80::/8"
+                ],
+                answer: "B",
+                explanation: "Berdasarkan materi M5 halaman 12, alamat Loopback IPv6 ditulis sebagai ::1/128, sedangkan ::/128 adalah alamat Unspecified."
+            },
+            {
+                id: 60,
+                section: "Khusus Materi M5",
+                question: "Setiap oktet pada penulisan Dotted Decimal IPv4 terdiri dari 8 bit (1 byte). Berapakah range nilai desimal yang mungkin muncul pada tiap oktet tersebut?",
+                options: [
+                    "0 - 127",
+                    "1 - 254",
+                    "0 - 255",
+                    "1 - 256"
+                ],
+                answer: "C",
+                explanation: "Karena 1 oktet berukuran 8 bit, nilai biner terendah adalah 00000000 (desimal 0) dan tertinggi adalah 11111111 (desimal 255)."
+            },
+            {
+                id: 61,
+                section: "Khusus Materi M5",
+                question: "Ketika kamu mengetik perintah ping atau traceroute di terminal laptop Lenovo Legion kamu untuk mengecek error transmisi jaringan, protokol apa yang sebenarnya bekerja di latar belakang?",
+                options: [
+                    "ARP",
+                    "RARP",
+                    "ICMP",
+                    "DHCP"
+                ],
+                answer: "C",
+                explanation: "ICMP (Internet Control Message Protocol) adalah protokol yang digunakan untuk pengecekan dan mengindikasikan error saat transmisi data (contoh nyatanya adalah Ping dan Traceroute)."
+            },
+            {
+                id: 62,
+                section: "Khusus Materi M5",
+                question: "Apakah fungsi dari protokol Routing seperti RIP, OSPF, dan BGP yang ditanamkan pada perangkat Router?",
+                options: [
+                    "Mengubah sinyal digital menjadi analog",
+                    "Memetakan alamat IP menjadi alamat MAC secara otomatis",
+                    "Menentukan jalur (path) terbaik untuk pengiriman paket antar jaringan berbeda",
+                    "Memfilter traffic jaringan berdasarkan aturan keamanan port"
+                ],
+                answer: "C",
+                explanation: "Router menggunakan protokol routing (Static, RIP, OSPF, BGP) untuk menghubungkan beberapa jaringan berbeda dan mengarahkan lalu lintas paket data lewat jalur terbaik."
+            },
+            {
+                id: 63,
+                section: "Khusus Materi M5",
+                question: "Angka 16-bit (range 0-65535) yang digunakan untuk mengidentifikasi layanan atau proses spesifik di dalam sebuah host dinamakan...",
+                options: [
+                    "IP Address",
+                    "MAC Address",
+                    "Port Number",
+                    "CIDR Prefix"
+                ],
+                answer: "C",
+                explanation: "Port number membedakan aplikasi/layanan yang berjalan di dalam satu host. Analoginya: IP = alamat rumah, Port = nomor kamar di dalam rumah tersebut."
+            },
+            {
+                id: 64,
+                section: "Khusus Materi M5",
+                question: "Rentang angka port antara 0 - 1023 diklasifikasikan sebagai kelompok port untuk...",
+                options: [
+                    "Registered Ports",
+                    "Dynamic Ports",
+                    "Private Ports",
+                    "Well-Known Ports"
+                ],
+                answer: "D",
+                explanation: "Port dikelompokkan menjadi tiga: 0-1023 (Well-Known Ports untuk sistem/server), 1024-49151 (Registered Ports), dan 49152-65535 (Dynamic/Private Ports)."
+            },
+            {
+                id: 65,
+                section: "Khusus Materi M5",
+                question: "Manakah pasangan Port Number, Nama Protokol, dan Jenis Transport yang benar di bawah ini?",
+                options: [
+                    "Port 21 – SSH – UDP",
+                    "Port 53 – DNS – TCP/UDP",
+                    "Port 80 – HTTPS – TCP",
+                    "Port 443 – HTTP – UDP"
+                ],
+                answer: "B",
+                explanation: "Berdasarkan tabel port M5: DNS menggunakan Port 53 (TCP/UDP). (Catatan: SSH adalah port 22, HTTP port 80, dan HTTPS port 443)."
+            },
+            {
+                id: 66,
+                section: "Khusus Materi M5",
+                question: "Perintah baris (command) yang dapat digunakan di sistem operasi Windows untuk melihat daftar port yang sedang aktif/terbuka di komputer kita adalah...",
+                options: [
+                    "ifconfig -a",
+                    "ss -tulnp",
+                    "netstat -an",
+                    "ping -t"
+                ],
+                answer: "C",
+                explanation: "Di Windows, kita menggunakan perintah netstat -an untuk melihat port yang aktif. Sedangkan ss -tulnp digunakan di lingkungan Linux."
+            },
+            {
+                id: 67,
+                section: "Khusus Materi M5",
+                question: "Mengapa perangkat Switch (Layer 2) jauh lebih efisien dan aman dalam mengelola lalu lintas data dibandingkan dengan Hub (Layer 1)?",
+                options: [
+                    "Switch menyebarkan data secara broadcast ke seluruh port yang ada",
+                    "Switch menggunakan kabel serat optik sedangkan Hub hanya bisa pakai tembaga",
+                    "Switch mengirim data secara cerdas hanya ke port tujuan berdasarkan MAC Table",
+                    "Switch bekerja tanpa memedulikan collision domain"
+                ],
+                answer: "C",
+                explanation: "Hub mengirim data secara broadcast ke semua port. Switch lebih cerdas karena merekam alamat MAC perangkat dan hanya melempar data ke port tujuan, sehingga terhindar dari tabrakan data (collision)."
+            },
+            {
+                id: 68,
+                section: "Khusus Materi M5",
+                question: "Topologi jaringan di mana setiap node terhubung langsung ke satu perangkat pusat seperti Switch/Hub, sangat mudah dikelola, namun perangkat pusatnya menjadi single point of failure adalah...",
+                options: [
+                    "Topologi Bus",
+                    "Topologi Star",
+                    "Topologi Ring",
+                    "Topologi Mesh"
+                ],
+                answer: "B",
+                explanation: "Topologi Star menghubungkan semua node ke pusat. Kelebihannya mudah dikelola, tapi kalau Switch/Hub pusatnya mati, seluruh jaringan ikut down."
+            },
+            {
+                id: 69,
+                section: "Khusus Materi M5",
+                question: "Diperkenalkan pada tahun 1992 oleh IETF untuk menggantikan sistem kelas tradisional yang boros alokasi IP, singkatan dari apakah CIDR itu?",
+                options: [
+                    "Classful Internal Data Routing",
+                    "Classless Inter-Domain Routing",
+                    "Computer Internet Digital Router",
+                    "Control Inter-Network Dynamic Route"
+                ],
+                answer: "B",
+                explanation: "CIDR singkatan dari Classless Inter-Domain Routing, metode alokasi IP yang tidak kaku berdasarkan kelas demi efisiensi."
+            },
+            {
+                id: 70,
+                section: "Khusus Materi M5",
+                question: "[Studi Kasus M5] Jika kamu diminta mengonfigurasi segmen jaringan untuk ruang Administrasi Kampus yang membutuhkan 10 komputer, dengan teknik VLSM, prefix CIDR manakah yang paling efisien dan pas untuk dialokasikan?",
+                options: [
+                    "/26 (menyediakan hingga 62 host)",
+                    "/27 (menyediakan hingga 30 host)",
+                    "/28 (menyediakan hingga 14 host)",
+                    "/30 (menyediakan hingga 2 host)"
+                ],
+                answer: "C",
+                explanation: "Berdasarkan studi kasus VLSM di materi M5 halaman 38, untuk kebutuhan 10 host, pilihan paling efisien adalah prefix /28 karena menyediakan slot hingga 14 host yang valid. Menggunakan /26 atau /27 akan menyisakan terlalu banyak IP kosong (boros)."
+            }
+        ];
+
+        // --- APP STATE ---
+        let state = {
+            questions: [],         // Active question set (filtered/sliced/shuffled)
+            currentIdx: 0,         // Index of active question in state.questions
+            userAnswers: {},       // Maps question index -> chosen letter ('A', 'B', 'C', 'D')
+            flaggedQuestions: {},  // Maps question index -> boolean
+            timeSpent: 0,          // In seconds
+            timerInterval: null,
+            mode: 'practice',      // 'practice' or 'exam'
+            soundEnabled: true,
+            theme: 'dark'
+        };
+
+        // --- WEB AUDIO API SYNTHESIS ---
+        let audioCtx = null;
+        function playSynthSound(type) {
+            if (!state.soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(500, now);
+                    osc.frequency.exponentialRampToValueAtTime(250, now + 0.08);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'correct') {
+                    // Two-tone chime (major third interval)
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'incorrect') {
+                    // Sad descending tone
+                    osc.frequency.setValueAtTime(220, now); // A3
+                    osc.frequency.linearRampToValueAtTime(140, now + 0.2);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'finish') {
+                    // Triumph arpeggio
+                    const notes = [261.63, 329.63, 392.00, 523.25];
+                    notes.forEach((freq, idx) => {
+                        const noteOsc = audioCtx.createOscillator();
+                        const noteGain = audioCtx.createGain();
+                        noteOsc.connect(noteGain);
+                        noteGain.connect(audioCtx.destination);
+                        noteOsc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                        noteGain.gain.setValueAtTime(0.06, now + idx * 0.08);
+                        noteGain.gain.linearRampToValueAtTime(0, now + idx * 0.08 + 0.25);
+                        noteOsc.start(now + idx * 0.08);
+                        noteOsc.stop(now + idx * 0.08 + 0.25);
+                    });
+                }
+            } catch (e) {
+                console.warn('Audio Context sound play failed:', e);
+            }
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initHistory();
+            setupEventListeners();
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('quiz_theme') || 'dark';
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            state.theme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        function initHistory() {
+            const history = getHistory();
+            renderHistoryUI(history);
+        }
+
+        function getHistory() {
+            return JSON.parse(localStorage.getItem('quiz_history')) || [];
+        }
+
+        function saveSessionToHistory(scorePercent, correct, total, duration) {
+            const history = getHistory();
+            const session = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+                score: Math.round(scorePercent),
+                correct: correct,
+                total: total,
+                duration: formatTime(duration),
+                mode: state.mode === 'practice' ? 'Latihan' : 'Ujian'
+            };
+            history.unshift(session); // Add to beginning
+            localStorage.setItem('quiz_history', JSON.stringify(history.slice(0, 10))); // Cap at 10 items
+            renderHistoryUI(getHistory());
+        }
+
+        function renderHistoryUI(history) {
+            const container = document.getElementById('history-container');
+            if (history.length === 0) {
+                container.innerHTML = `<div class="empty-history">Belum ada riwayat pengerjaan kuis.</div>`;
+                return;
+            }
+            container.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <div class="history-info">
+                        <span class="history-score">${item.score}% Benar</span>
+                        <span class="history-date">${item.date}</span>
+                    </div>
+                    <div style="text-align: right; display:flex; flex-direction:column; gap:2px;">
+                        <span class="history-meta">${item.correct}/${item.total} Soal</span>
+                        <span class="history-date" style="font-size:10px;">${item.duration} • ${item.mode}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playSynthSound('click');
+                setTheme(state.theme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Sound toggle
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                state.soundEnabled = !state.soundEnabled;
+                const icon = document.getElementById('sound-icon');
+                if (state.soundEnabled) {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    `;
+                } else {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    `;
+                }
+                playSynthSound('click');
+            });
+
+            // Select count configuration buttons
+            const countButtons = document.querySelectorAll('#count-group button');
+            countButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    countButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // Select mode configuration buttons
+            const modeButtons = document.querySelectorAll('#mode-group button');
+            modeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    modeButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // Start Quiz Button
+            document.getElementById('start-btn').addEventListener('click', startQuiz);
+
+            // Quiz Navigation Buttons
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                if (state.currentIdx > 0) {
+                    playSynthSound('click');
+                    state.currentIdx--;
+                    renderQuestion();
+                }
+            });
+
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if (state.currentIdx < state.questions.length - 1) {
+                    playSynthSound('click');
+                    state.currentIdx++;
+                    renderQuestion();
+                } else if (state.mode === 'practice') {
+                    // In practice mode, allow finish from the last question
+                    finishQuiz();
+                }
+            });
+
+            // Flag/Ragu-ragu Button
+            document.getElementById('flag-btn').addEventListener('click', toggleFlagQuestion);
+
+            // Submit Button
+            document.getElementById('submit-quiz-btn').addEventListener('click', () => {
+                if (confirm('Apakah Anda yakin ingin menyelesaikan kuis ini?')) {
+                    finishQuiz();
+                }
+            });
+
+            // Results Navigation
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                playSynthSound('click');
+                startQuiz();
+            });
+
+            document.getElementById('change-settings-btn').addEventListener('click', () => {
+                playSynthSound('click');
+                showView('dashboard-view');
+            });
+
+            // Review search and filters
+            document.getElementById('review-search').addEventListener('input', applyReviewFilters);
+
+            const filterBtns = document.querySelectorAll('.review-filters .filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyReviewFilters();
+                });
+            });
+        }
+
+        // --- ENGINE LOGIC ---
+
+        function startQuiz() {
+            playSynthSound('click');
+
+            // 1. Gather Selected Categories
+            const checkedBoxes = document.querySelectorAll('.cat-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                alert('Silakan pilih minimal satu kategori materi!');
+                return;
+            }
+
+            const activeCategories = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+
+            // Map checkbox categories to question groups
+            // Cat 1: 1-15, Cat 2: 16-22, Cat 3: 23-35, Cat 4: 36-42, Cat 5: 43-50, Cat 6: 51-70
+            let filteredQuestions = ALL_QUESTIONS.filter(q => {
+                if (q.id <= 15) return activeCategories.includes(1);
+                if (q.id >= 16 && q.id <= 22) return activeCategories.includes(2);
+                if (q.id >= 23 && q.id <= 35) return activeCategories.includes(3);
+                if (q.id >= 36 && q.id <= 42) return activeCategories.includes(4);
+                if (q.id >= 43 && q.id <= 50) return activeCategories.includes(5);
+                if (q.id >= 51) return activeCategories.includes(6);
+                return false;
+            });
+
+            // Shuffle questions to randomize study experience
+            filteredQuestions = shuffleArray([...filteredQuestions]);
+
+            // 2. Determine count limit
+            const countBtn = document.querySelector('#count-group button.active');
+            const countLimitVal = countBtn.getAttribute('data-val');
+            let finalCount = filteredQuestions.length;
+            if (countLimitVal !== 'all') {
+                finalCount = Math.min(parseInt(countLimitVal), filteredQuestions.length);
+            }
+            state.questions = filteredQuestions.slice(0, finalCount);
+
+            // 3. Set Mode
+            const modeBtn = document.querySelector('#mode-group button.active');
+            state.mode = modeBtn.getAttribute('data-val');
+
+            // Reset States
+            state.currentIdx = 0;
+            state.userAnswers = {};
+            state.flaggedQuestions = {};
+            state.timeSpent = 0;
+
+            // Timer management
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            const timerPill = document.getElementById('timer-pill');
+            if (state.mode === 'exam') {
+                timerPill.classList.remove('hidden');
+                // Calculate time: 1.5 minutes per question
+                let timerLimit = state.questions.length * 90; // in seconds
+                updateTimerDisplay(timerLimit);
+
+                state.timerInterval = setInterval(() => {
+                    timerLimit--;
+                    state.timeSpent++;
+                    updateTimerDisplay(timerLimit);
+
+                    // Alert user if remaining time is under 1 minute
+                    if (timerLimit === 60) {
+                        document.getElementById('timer-pill').classList.add('critical');
+                    }
+
+                    if (timerLimit <= 0) {
+                        clearInterval(state.timerInterval);
+                        alert('Waktu ujian telah habis! Hasil Anda akan segera dikumpulkan.');
+                        finishQuiz();
+                    }
+                }, 1000);
+            } else {
+                timerPill.classList.add('hidden');
+                // Just count up time in practice mode
+                state.timerInterval = setInterval(() => {
+                    state.timeSpent++;
+                }, 1000);
+            }
+
+            // Setup UI views
+            const examSidebar = document.querySelector('.exam-sidebar');
+            if (state.mode === 'exam') {
+                examSidebar.classList.remove('hidden');
+            } else {
+                examSidebar.classList.add('hidden');
+            }
+
+            renderExamGrid();
+            renderQuestion();
+            showView('quiz-view');
+        }
+
+        function updateTimerDisplay(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainder = seconds % 60;
+            document.getElementById('timer-display').innerText =
+                `${minutes.toString().padStart(2, '0')}:${remainder.toString().padStart(2, '0')}`;
+        }
+
+        function renderQuestion() {
+            const q = state.questions[state.currentIdx];
+            if (!q) return;
+
+            // Hide/Show navigation details
+            document.getElementById('question-index-label').innerText = `Soal ${state.currentIdx + 1} dari ${state.questions.length}`;
+            document.getElementById('question-section-tag').innerText = q.section;
+
+            // Format question text with HTML codes
+            document.getElementById('question-text-box').innerHTML = q.question;
+
+            // Render options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            const selectedAns = state.userAnswers[state.currentIdx];
+            const hasAnswered = selectedAns !== undefined;
+
+            const letterMap = ['A', 'B', 'C', 'D'];
+            q.options.forEach((optText, i) => {
+                const optLetter = letterMap[i];
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+
+                // Content structure
+                btn.innerHTML = `
+                    <div class="option-badge">${optLetter}</div>
+                    <div class="option-text">${optText}</div>
+                `;
+
+                // Classes based on state
+                if (selectedAns === optLetter) {
+                    btn.classList.add('selected');
+                }
+
+                // In practice mode, show instant colors after response
+                if (state.mode === 'practice' && hasAnswered) {
+                    btn.classList.add('disabled');
+                    if (optLetter === q.answer) {
+                        btn.classList.add('correct');
+                    } else if (selectedAns === optLetter) {
+                        btn.classList.add('incorrect');
+                    }
+                }
+
+                // Attach click event
+                btn.addEventListener('click', () => {
+                    if (state.mode === 'practice' && hasAnswered) return; // Locked in practice mode once answered
+                    selectOption(optLetter);
+                });
+
+                optionsContainer.appendChild(btn);
+            });
+
+            // Adjust navigation button disabled/enabled states
+            document.getElementById('prev-btn').disabled = state.currentIdx === 0;
+            document.getElementById('prev-btn').style.opacity = state.currentIdx === 0 ? '0.4' : '1';
+
+            const nextBtn = document.getElementById('next-btn');
+            if (state.currentIdx === state.questions.length - 1) {
+                if (state.mode === 'practice') {
+                    nextBtn.innerHTML = `Selesai <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none"/></svg>`;
+                } else {
+                    nextBtn.disabled = true;
+                    nextBtn.style.opacity = '0.4';
+                }
+            } else {
+                nextBtn.innerHTML = `Selanjutnya <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round"/></svg>`;
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            }
+
+            // Flag/Ragu-ragu status
+            const flagBtn = document.getElementById('flag-btn');
+            if (state.flaggedQuestions[state.currentIdx]) {
+                flagBtn.classList.add('flagged');
+            } else {
+                flagBtn.classList.remove('flagged');
+            }
+
+            // Progress bar value
+            const progressPct = ((state.currentIdx + 1) / state.questions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
+
+            // Explanation box in practice mode
+            const expBox = document.getElementById('instant-explanation-box');
+            if (state.mode === 'practice' && hasAnswered) {
+                document.getElementById('instant-explanation-text').innerHTML = q.explanation;
+                expBox.classList.add('visible');
+            } else {
+                expBox.classList.remove('visible');
+            }
+
+            // Update Counter Pill
+            updateStatsCounter();
+
+            // Highlight grid cells in exam mode
+            if (state.mode === 'exam') {
+                document.querySelectorAll('.grid-cell').forEach((cell, idx) => {
+                    if (idx === state.currentIdx) {
+                        cell.classList.add('active');
+                        cell.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } else {
+                        cell.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        function selectOption(letter) {
+            const q = state.questions[state.currentIdx];
+            const wasEmpty = state.userAnswers[state.currentIdx] === undefined;
+            state.userAnswers[state.currentIdx] = letter;
+
+            if (state.mode === 'practice') {
+                // Instantly play audio based on correctness
+                if (letter === q.answer) {
+                    playSynthSound('correct');
+                } else {
+                    playSynthSound('incorrect');
+                }
+                // Re-render immediately to lock and show explanation
+                renderQuestion();
+            } else {
+                // Exam mode: just record selection and color update
+                playSynthSound('click');
+                updateGridCellState(state.currentIdx);
+                renderQuestion();
+            }
+        }
+
+        function toggleFlagQuestion() {
+            playSynthSound('click');
+            const isFlagged = !state.flaggedQuestions[state.currentIdx];
+            state.flaggedQuestions[state.currentIdx] = isFlagged;
+
+            const flagBtn = document.getElementById('flag-btn');
+            if (isFlagged) {
+                flagBtn.classList.add('flagged');
+            } else {
+                flagBtn.classList.remove('flagged');
+            }
+
+            if (state.mode === 'exam') {
+                updateGridCellState(state.currentIdx);
+            }
+        }
+
+        function updateStatsCounter() {
+            let correct = 0;
+            let incorrect = 0;
+
+            // Only relevant for practice mode or when checking live
+            state.questions.forEach((q, idx) => {
+                const ans = state.userAnswers[idx];
+                if (ans !== undefined) {
+                    if (ans === q.answer) correct++;
+                    else incorrect++;
+                }
+            });
+
+            document.getElementById('score-counter-pill').innerText = `Benar: ${correct} • Salah: ${incorrect}`;
+        }
+
+        function renderExamGrid() {
+            const grid = document.getElementById('exam-grid-container');
+            grid.innerHTML = '';
+
+            state.questions.forEach((_, idx) => {
+                const cell = document.createElement('button');
+                cell.className = 'grid-cell';
+                cell.innerText = idx + 1;
+                cell.addEventListener('click', () => {
+                    playSynthSound('click');
+                    state.currentIdx = idx;
+                    renderQuestion();
+                });
+                grid.appendChild(cell);
+                updateGridCellState(idx, cell);
+            });
+        }
+
+        function updateGridCellState(idx, cellElement) {
+            const cell = cellElement || document.getElementById('exam-grid-container').children[idx];
+            if (!cell) return;
+
+            cell.className = 'grid-cell';
+
+            if (state.userAnswers[idx] !== undefined) {
+                cell.classList.add('answered');
+            }
+            if (state.flaggedQuestions[idx]) {
+                cell.classList.add('flagged');
+            }
+            if (idx === state.currentIdx) {
+                cell.classList.add('active');
+            }
+        }
+
+        function finishQuiz() {
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            playSynthSound('finish');
+
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let skippedCount = 0;
+
+            state.questions.forEach((q, idx) => {
+                const ans = state.userAnswers[idx];
+                if (ans === undefined) {
+                    skippedCount++;
+                } else if (ans === q.answer) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+            });
+
+            const total = state.questions.length;
+            const scorePercent = total > 0 ? (correctCount / total) * 100 : 0;
+
+            // Render Circle SVG Progress Animation
+            const circle = document.getElementById('score-circle');
+            const circumference = 2 * Math.PI * 70; // 439.82
+            const offset = circumference - (scorePercent / 100) * circumference;
+
+            // Set delay to let page transition show smooth progress fill animation
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 100);
+
+            // Populate Score panel text
+            document.getElementById('result-score-percent').innerText = `${Math.round(scorePercent)}%`;
+
+            // Feedback headers
+            let title = 'Hebat!';
+            let desc = 'Performa luar biasa! Anda sudah menguasai materi dengan sangat baik dan siap UTS.';
+
+            if (scorePercent === 100) {
+                title = 'Sempurna! 💯';
+                desc = 'Jawaban Anda benar semua! Tingkat pemahaman jaringan komputer Anda luar biasa.';
+            } else if (scorePercent >= 80) {
+                title = 'Bagus Sekali! 🚀';
+                desc = 'Anda telah memahami sebagian besar konsep jaringan dengan sangat matang.';
+            } else if (scorePercent >= 60) {
+                title = 'Cukup Baik! 👍';
+                desc = 'Hasil yang lumayan, namun masih ada beberapa materi yang perlu ditinjau kembali.';
+            } else {
+                title = 'Belajar Lagi! 📚';
+                desc = 'Jangan patah semangat. Ulas kembali penjelasan jawaban di bawah dan coba kuis lagi.';
+            }
+
+            document.getElementById('result-feedback-title').innerText = title;
+            document.getElementById('result-feedback-desc').innerText = desc;
+
+            // Populate Statistics
+            document.getElementById('stats-correct').innerText = correctCount;
+            document.getElementById('stats-incorrect').innerText = incorrectCount;
+            document.getElementById('stats-skipped').innerText = skippedCount;
+            document.getElementById('stats-time').innerText = formatTime(state.timeSpent);
+
+            // Save to localStorage
+            saveSessionToHistory(scorePercent, correctCount, total, state.timeSpent);
+
+            // Populate Review panel questions
+            renderReviewPanel();
+
+            showView('result-view');
+        }
+
+        function renderReviewPanel() {
+            const container = document.getElementById('review-cards-container');
+            container.innerHTML = '';
+
+            let correctFilterCount = 0;
+            let incorrectFilterCount = 0;
+            let skippedFilterCount = 0;
+
+            state.questions.forEach((q, idx) => {
+                const ans = state.userAnswers[idx];
+                if (ans === undefined) skippedFilterCount++;
+                else if (ans === q.answer) correctFilterCount++;
+                else incorrectFilterCount++;
+
+                const card = document.createElement('div');
+                card.className = 'review-item';
+
+                // Add left border class based on result
+                let statusBadge = '';
+                if (ans === undefined) {
+                    card.classList.add('skipped-answer');
+                    statusBadge = '<span class="review-badge skipped">Dilewati</span>';
+                } else if (ans === q.answer) {
+                    card.classList.add('correct-answer');
+                    statusBadge = '<span class="review-badge correct">Benar</span>';
+                } else {
+                    card.classList.add('incorrect-answer');
+                    statusBadge = '<span class="review-badge incorrect">Salah</span>';
+                }
+
+                // Construct options rows
+                let optionRowsHtml = '';
+                const letterMap = ['A', 'B', 'C', 'D'];
+                q.options.forEach((optText, i) => {
+                    const letter = letterMap[i];
+                    let rowClass = '';
+
+                    // Highlights
+                    if (letter === q.answer) {
+                        rowClass = 'correct-key';
+                    } else if (ans === letter && letter !== q.answer) {
+                        rowClass = 'user-select';
+                    }
+
+                    let userCheck = '';
+                    if (ans === letter) {
+                        userCheck = letter === q.answer ? ' (Pilihan Anda - Benar)' : ' (Pilihan Anda - Salah)';
+                    }
+
+                    optionRowsHtml += `
+                        <div class="review-ans-row ${rowClass}">
+                            <div class="review-ans-lbl">${letter}</div>
+                            <div class="review-ans-txt">${optText}${userCheck}</div>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-number">Soal #${idx + 1} (${q.section})</span>
+                        ${statusBadge}
+                    </div>
+                    <div class="review-question">${q.question}</div>
+                    <div class="review-answers">
+                        ${optionRowsHtml}
+                    </div>
+                    <div class="review-explanation">
+                        <div class="review-explanation-title">Penjelasan UTS</div>
+                        <div class="review-explanation-text">${q.explanation}</div>
+                    </div>
+                `;
+
+                // Custom attributes for filtering
+                card.setAttribute('data-status', ans === undefined ? 'skipped' : (ans === q.answer ? 'correct' : 'incorrect'));
+                card.setAttribute('data-text', `${q.question} ${q.explanation} ${q.options.join(' ')}`.toLowerCase());
+
+                container.appendChild(card);
+            });
+
+            // Set filter counter numbers
+            document.getElementById('count-filter-all').innerText = state.questions.length;
+            document.getElementById('count-filter-correct').innerText = correctFilterCount;
+            document.getElementById('count-filter-incorrect').innerText = incorrectFilterCount;
+            document.getElementById('count-filter-skipped').innerText = skippedFilterCount;
+
+            applyReviewFilters();
+        }
+
+        function applyReviewFilters() {
+            const query = document.getElementById('review-search').value.toLowerCase();
+            const activeFilter = document.querySelector('.review-filters .filter-btn.active').getAttribute('data-filter');
+            const cards = document.querySelectorAll('#review-cards-container .review-item');
+
+            cards.forEach(card => {
+                const cardStatus = card.getAttribute('data-status');
+                const cardText = card.getAttribute('data-text');
+
+                const matchesFilter = activeFilter === 'all' || cardStatus === activeFilter;
+                const matchesSearch = query === '' || cardText.includes(query);
+
+                if (matchesFilter && matchesSearch) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // --- UTILITY FUNCTIONS ---
+
+        function showView(viewId) {
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('result-view').classList.add('hidden');
+
+            document.getElementById(viewId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainder = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainder.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+
+</html>

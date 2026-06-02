@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTS Prep Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #080c14;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #080c14 100%);
+            --panel-bg: rgba(15, 23, 42, 0.55);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-jaringan: #6366f1;
+            --accent-jaringan-glow: rgba(99, 102, 241, 0.2);
+            --accent-apsi: #38bdf8;
+            --accent-apsi-glow: rgba(56, 189, 248, 0.2);
+            --glass-blur: blur(20px);
+            --shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.6);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 24px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #e0e7ff 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(99, 102, 241, 0.08);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-jaringan: #4f46e5;
+            --accent-jaringan-glow: rgba(79, 70, 229, 0.08);
+            --accent-apsi: #0284c7;
+            --accent-apsi-glow: rgba(2, 132, 199, 0.08);
+            --shadow: 0 20px 50px 0 rgba(99, 102, 241, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Decorative glowing mesh orbs in background */
+        .glowing-orb {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(100px);
+            opacity: 0.12;
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .glowing-orb {
+            opacity: 0.06;
+        }
+
+        .orb-1 {
+            top: -100px;
+            left: -100px;
+            background: radial-gradient(circle, var(--accent-jaringan) 0%, transparent 80%);
+            animation: floatOrb 12s ease-in-out infinite alternate;
+        }
+
+        .orb-2 {
+            bottom: -100px;
+            right: -100px;
+            background: radial-gradient(circle, var(--accent-apsi) 0%, transparent 80%);
+            animation: floatOrb 16s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatOrb {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(50px, 30px) scale(1.1);
+            }
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 40px 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 48px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent-jaringan), var(--accent-apsi));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #080c14;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+        }
+
+        [data-theme="light"] .brand-logo {
+            color: white;
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+        }
+
+        .brand-title h1 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent-apsi));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-theme {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-theme:hover {
+            border-color: var(--accent-apsi);
+            background: var(--accent-apsi-glow);
+            color: var(--accent-apsi);
+            transform: translateY(-2px);
+        }
+
+        .btn-theme svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Portal Hero Intro */
+        .hero {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 56px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero h2 span {
+            background: linear-gradient(135deg, var(--accent-jaringan), var(--accent-apsi));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Subjects Grid Layout */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-bottom: 56px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .subject-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            transition: var(--transition);
+        }
+
+        /* Distinct styling for Jaringan vs APSI card */
+        .card-jaringan::before {
+            background: linear-gradient(90deg, var(--accent-jaringan), #8b5cf6);
+        }
+
+        .card-apsi::before {
+            background: linear-gradient(90deg, var(--accent-apsi), #06b6d4);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .card-jaringan:hover {
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.12);
+        }
+
+        .card-apsi:hover {
+            box-shadow: 0 20px 40px rgba(56, 189, 248, 0.12);
+        }
+
+        .card-header-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .subject-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f8fafc;
+            position: relative;
+        }
+
+        .card-jaringan .subject-icon {
+            background: linear-gradient(135deg, var(--accent-jaringan), #8b5cf6);
+            box-shadow: 0 6px 20px var(--accent-jaringan-glow);
+        }
+
+        .card-apsi .subject-icon {
+            background: linear-gradient(135deg, var(--accent-apsi), #06b6d4);
+            box-shadow: 0 6px 20px var(--accent-apsi-glow);
+        }
+
+        .subject-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .badge-count {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .subject-info h3 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .subject-info p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Topics Bullet List */
+        .topics-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-top: 8px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .topic-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .topic-item svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        .card-jaringan .topic-item svg {
+            stroke: var(--accent-jaringan);
+        }
+
+        .card-apsi .topic-item svg {
+            stroke: var(--accent-apsi);
+        }
+
+        /* Stats Sub-Box inside Card */
+        .card-stats-box {
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .card-stats-box {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .stat-label-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .stat-label-item .lbl {
+            color: var(--text-secondary);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        .stat-label-item .val {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-label-item .val.high-score {
+            font-size: 14px;
+        }
+
+        .card-jaringan .stat-label-item .val.high-score {
+            color: #a78bfa;
+        }
+
+        .card-apsi .stat-label-item .val.high-score {
+            color: var(--accent-apsi);
+        }
+
+        /* Portal Navigation Action Button */
+        .btn-start {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .card-jaringan .btn-start {
+            background: linear-gradient(135deg, var(--accent-jaringan), #4f46e5);
+            color: white;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.2);
+        }
+
+        .card-jaringan:hover .btn-start {
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .card-apsi .btn-start {
+            background: linear-gradient(135deg, var(--accent-apsi), #0ea5e9);
+            color: #080c14;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.2);
+        }
+
+        [data-theme="light"] .card-apsi .btn-start {
+            color: white;
+        }
+
+        .card-apsi:hover .btn-start {
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-start svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            transition: transform 0.25s ease;
+        }
+
+        .subject-card:hover .btn-start svg {
+            transform: translateX(4px);
+        }
+
+        /* Utility animations & classes */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 32px 0 24px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background elements -->
+    <div class="glowing-orb orb-1"></div>
+    <div class="glowing-orb orb-2"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>Quiz Portal</h1>
+                    <p>Persiapan UTS Semester 6</p>
+                </div>
+            </div>
+            <button class="btn-theme" id="theme-toggle" title="Ganti Tema">
+                <svg id="theme-icon" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+        </header>
+
+        <!-- Main Body -->
+        <main style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+            <section class="hero">
+                <h2>Latihan Soal UTS <span>Interaktif</span></h2>
+                <p>Uji pemahaman materi Anda dengan simulasi kuis interaktif. Pilih mata kuliah di bawah untuk memulai
+                    latihan dalam mode Belajar Mandiri atau simulasi Ujian berbatas waktu.</p>
+            </section>
+
+            <!-- Cards Grid -->
+            <div class="subjects-grid">
+                <!-- Subject 1: Jaringan Komputer -->
+                <div class="subject-card card-jaringan" onclick="window.location.href='kuisJaringan.html'">
+                    <div class="card-header-area">
+                        <div class="subject-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 19h16M4 15h16M4 11h16M4 7h16" stroke="currentColor"
+                                    stroke-linecap="round" />
+                                <circle cx="6" cy="7" r="1.5" fill="currentColor" />
+                                <circle cx="18" cy="11" r="1.5" fill="currentColor" />
+                                <circle cx="10" cy="15" r="1.5" fill="currentColor" />
+                                <circle cx="14" cy="19" r="1.5" fill="currentColor" />
+                            </svg>
+                        </div>
+                        <span class="badge-count">70 Soal</span>
+                    </div>
+
+                    <div class="subject-info">
+                        <h3>Jaringan Komputer</h3>
+                        <p>Desain, arsitektur, manajemen jaringan komputer, OSI layer, TCP vs UDP, IP Addressing,
+                            subnetting, dan VLSM.</p>
+                    </div>
+
+                    <div class="topics-list">
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>OSI Reference Model & Enkapsulasi</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Protokol Transport (TCP & UDP)</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>IP Subnetting & Perhitungan VLSM</span>
+                        </div>
+                    </div>
+
+                    <!-- Statistics box -->
+                    <div class="card-stats-box" id="stats-jaringan">
+                        <div class="stat-label-item">
+                            <span class="lbl">Skor Tertinggi</span>
+                            <span class="val high-score" id="jaringan-high">-</span>
+                        </div>
+                        <div class="stat-label-item" style="text-align: right;">
+                            <span class="lbl">Sesi Terakhir</span>
+                            <span class="val" id="jaringan-recent">Belum ada</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-start">
+                        Mulai Jaringan Komputer
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Subject 2: APSI -->
+                <div class="subject-card card-apsi" onclick="window.location.href='kuisAPSI.html'">
+                    <div class="card-header-area">
+                        <div class="subject-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5zm10 0a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5zM4 15a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4zm10 0a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-4z"
+                                    stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="badge-count">20 Soal</span>
+                    </div>
+
+                    <div class="subject-info">
+                        <h3>Analisis Perancangan Sistem</h3>
+                        <p>Desain sistem informasi, kualitas data/informasi, perancangan output & jenis laporan,
+                            pengkodean mnemonic/block/group, serta pemodelan terstruktur & UML.</p>
+                    </div>
+
+                    <div class="topics-list">
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Desain Output & Jenis Laporan</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Sistem Kode (Mnemonic, Block, Group)</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Pemodelan Data & UML (DFD, Class, State)</span>
+                        </div>
+                    </div>
+
+                    <!-- Statistics box -->
+                    <div class="card-stats-box" id="stats-apsi">
+                        <div class="stat-label-item">
+                            <span class="lbl">Skor Tertinggi</span>
+                            <span class="val high-score" id="apsi-high">-</span>
+                        </div>
+                        <div class="stat-label-item" style="text-align: right;">
+                            <span class="lbl">Sesi Terakhir</span>
+                            <span class="val" id="apsi-recent">Belum ada</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-start">
+                        Mulai Latihan APSI
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2026 Legion Quiz Hub. Dirancang khusus untuk persiapan UTS Jaringan Komputer & APSI.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initStatistics();
+            setupEventListeners();
+        });
+
+        // Theme management
+        let currentTheme = 'dark';
+        function initTheme() {
+            // Check if there is a theme stored for either of the two quizzes or index
+            currentTheme = localStorage.getItem('index_quiz_theme') || localStorage.getItem('apsi_quiz_theme') || localStorage.getItem('quiz_theme') || 'dark';
+            setTheme(currentTheme);
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('index_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        function setupEventListeners() {
+            document.getElementById('theme-toggle').addEventListener('click', (e) => {
+                e.stopPropagation(); // Avoid triggering card click
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+        }
+
+        // Load statistics dynamically from localStorage
+        function initStatistics() {
+            // 1. Jaringan Komputer Statistics
+            try {
+                const jaringanHistory = JSON.parse(localStorage.getItem('quiz_history')) || [];
+                if (jaringanHistory.length > 0) {
+                    // Highest Score
+                    const scores = jaringanHistory.map(item => item.score);
+                    const highest = Math.max(...scores);
+                    document.getElementById('jaringan-high').innerText = `${highest}%`;
+
+                    // Recent session
+                    const recent = jaringanHistory[0]; // First item is the latest
+                    document.getElementById('jaringan-recent').innerText = `${recent.date} (${recent.score}%)`;
+                }
+            } catch (e) {
+                console.warn('Gagal memuat statistik jaringan:', e);
+            }
+
+            // 2. APSI Statistics
+            try {
+                const apsiHistory = JSON.parse(localStorage.getItem('apsi_quiz_history')) || [];
+                if (apsiHistory.length > 0) {
+                    // Highest Score
+                    const scores = apsiHistory.map(item => item.score);
+                    const highest = Math.max(...scores);
+                    document.getElementById('apsi-high').innerText = `${highest}%`;
+
+                    // Recent session
+                    const recent = apsiHistory[0];
+                    document.getElementById('apsi-recent').innerText = `${recent.date} (${recent.score}%)`;
+                }
+            } catch (e) {
+                console.warn('Gagal memuat statistik APSI:', e);
+            }
+        }
+    </script>
+</body>
+
+</html>
