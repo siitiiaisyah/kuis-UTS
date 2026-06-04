@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards MLSI - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050a0e;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #064e3b 0%, #050a0e 100%);
+            --panel-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --accent-hover: #059669;
+            --correct: #10b981;
+            --correct-bg: rgba(16, 185, 129, 0.08);
+            --correct-border: rgba(16, 185, 129, 0.25);
+            --incorrect: #ef4444;
+            --incorrect-bg: rgba(239, 68, 68, 0.08);
+            --incorrect-border: rgba(239, 68, 68, 0.25);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.08);
+            --warning-border: rgba(245, 158, 11, 0.25);
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #d1fae5 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(16, 185, 129, 0.1);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #059669;
+            --accent-glow: rgba(5, 150, 105, 0.08);
+            --accent-hover: #047857;
+            --correct: #059669;
+            --correct-bg: rgba(5, 150, 105, 0.06);
+            --correct-border: rgba(5, 150, 105, 0.18);
+            --incorrect: #dc2626;
+            --incorrect-bg: rgba(220, 38, 38, 0.06);
+            --incorrect-border: rgba(220, 38, 38, 0.18);
+            --warning: #d97706;
+            --warning-bg: rgba(217, 119, 6, 0.06);
+            --warning-border: rgba(217, 119, 6, 0.18);
+            --shadow: 0 12px 40px 0 rgba(5, 150, 105, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #34d399);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Layout Grid */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 32px;
+            flex-grow: 1;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 900px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Kategori */
+        .category-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .sidebar-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-item {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 12.5px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--text-primary);
+        }
+
+        .menu-item.active {
+            background: var(--accent);
+            color: #050a0e;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        [data-theme="light"] .menu-item.active {
+            color: white;
+        }
+
+        .menu-item-meta {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .menu-item.active .menu-item-meta {
+            background: rgba(255, 255, 255, 0.2);
+            color: inherit;
+        }
+
+        /* Main Study Arena */
+        .study-arena {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        /* 3D Flashcard Scene */
+        .card-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 680px;
+            height: 360px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .flashcard-3d {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .flashcard-3d.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .card-front {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            color: var(--text-primary);
+        }
+
+        .card-front::after {
+            content: 'Klik untuk membalik';
+            position: absolute;
+            bottom: 20px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, rgba(6, 78, 59, 0.2) 0%, rgba(15, 23, 42, 0.8) 100%);
+            backdrop-filter: var(--glass-blur);
+            color: var(--text-primary);
+            transform: rotateY(180deg);
+            border-color: var(--accent);
+        }
+
+        .card-back::after {
+            content: 'Klik untuk membalik kembali';
+            position: absolute;
+            bottom: 20px;
+            font-size: 11px;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .card-category-tag {
+            position: absolute;
+            top: 24px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+        }
+
+        .card-text {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .card-back .card-text {
+            font-size: 17px;
+            font-weight: 600;
+            text-align: left;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .card-back .card-text::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .card-back .card-text::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        /* Controls Panel */
+        .controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 680px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .track-outer {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .track-inner {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* Action Buttons Row */
+        .buttons-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 1fr 100px;
+            gap: 12px;
+            width: 100%;
+        }
+
+        @media (max-width: 500px) {
+            .buttons-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .buttons-row .btn-nav {
+                order: 2;
+            }
+            .buttons-row .btn-evaluate {
+                order: 1;
+                grid-column: span 2;
+            }
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px;
+            border-radius: 12px;
+            font-family: var(--font-sans);
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+        }
+
+        .btn-action svg {
+            width: 16px;
+            height: 16px;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .btn-action:hover:not(:disabled) {
+            border-color: var(--text-secondary);
+            transform: translateY(-1px);
+        }
+
+        .btn-action:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-evaluate {
+            color: white;
+            border: none;
+        }
+
+        .btn-review-again {
+            background: linear-gradient(135deg, var(--incorrect), #b91c1c);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-review-again:hover {
+            box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35);
+            filter: brightness(1.1);
+        }
+
+        .btn-mastered {
+            background: linear-gradient(135deg, var(--correct), #047857);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-mastered:hover {
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+            filter: brightness(1.1);
+        }
+
+        /* Helpers Box */
+        .helper-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 12px 18px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        [data-theme="light"] .helper-box {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .kbd-tips {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .kbd-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .kbd-key {
+            font-family: var(--font-mono);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            padding: 1px 5px;
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+
+        /* Reset and Shuffle tools */
+        .utility-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .btn-utility {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-utility:hover {
+            color: var(--accent);
+        }
+
+        .btn-utility svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Success screen overlays */
+        .success-overlay {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            height: 100%;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--correct);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--correct-border);
+            margin-bottom: 8px;
+            animation: pulseCorrect 1.5s infinite alternate;
+        }
+
+        @keyframes pulseCorrect {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.2); }
+            100% { transform: scale(1.08); box-shadow: 0 0 16px 4px rgba(16, 185, 129, 0.1); }
+        }
+
+        .success-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke-width: 2.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                        <path d="m9 14 2 2 4-4"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>MLSI Flashcards</h1>
+                    <p>Manajemen Layanan Sistem Informasi</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="workspace-grid">
+            <!-- Sidebar Panel -->
+            <div class="category-sidebar">
+                <div class="glass-panel">
+                    <h3 class="sidebar-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M19 11H5m14 0a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2m14 0V9a2 2 0 0 0-2-2M5 11V9a2 2 0 0 1 2-2m10 0V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2m10 0H7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Materi Deck
+                    </h3>
+                    <div class="menu-list">
+                        <button class="menu-item active" data-kelompok="all">
+                            <span>Semua Materi</span>
+                            <span class="menu-item-meta" id="count-all">0 / 17</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="1">
+                            <span>Kelompok 1: Materi 1</span>
+                            <span class="menu-item-meta" id="count-k1">0 / 3</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="2">
+                            <span>Kelompok 2: Materi 2</span>
+                            <span class="menu-item-meta" id="count-k2">0 / 3</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="3">
+                            <span>Kelompok 3: Materi 3</span>
+                            <span class="menu-item-meta" id="count-k3">0 / 3</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="4">
+                            <span>Kelompok 4: Materi 4</span>
+                            <span class="menu-item-meta" id="count-k4">0 / 4</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="5">
+                            <span>Kelompok 5: Materi 5</span>
+                            <span class="menu-item-meta" id="count-k5">0 / 4</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-panel" style="padding: 20px;">
+                    <h4 style="font-size: 13.5px; font-weight: 700; margin-bottom: 10px; display:flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="width:16px; height:16px;">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Statistik Deck
+                    </h4>
+                    <div style="font-size: 12px; display:flex; flex-direction:column; gap:6px; color: var(--text-secondary);">
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>Total Dipelajari:</span>
+                            <strong style="color: var(--text-primary);" id="stat-total-mastered">0 / 17</strong>
+                        </div>
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>Tingkat Penguasaan:</span>
+                            <strong style="color: var(--accent);" id="stat-percent-mastered">0%</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Arena -->
+            <div class="study-arena">
+                <!-- 3D Card Scene -->
+                <div class="card-scene" id="card-scene">
+                    <div class="flashcard-3d" id="flashcard">
+                        <!-- Front Face -->
+                        <div class="card-face card-front">
+                            <span class="card-category-tag" id="card-category">Materi 1</span>
+                            <div class="card-text" id="card-question-text">
+                                Pertanyaan memuat...
+                            </div>
+                        </div>
+                        <!-- Back Face -->
+                        <div class="card-face card-back">
+                            <span class="card-category-tag" id="card-category-back">Materi 1</span>
+                            <div class="card-text" id="card-answer-text">
+                                Jawaban memuat...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls & Stats Panel -->
+                <div class="controls-panel">
+                    <!-- Progress bar -->
+                    <div class="progress-bar-container">
+                        <span id="card-index-label">Kartu 1 dari 17</span>
+                        <div class="track-outer">
+                            <div class="track-inner" id="progress-bar"></div>
+                        </div>
+                        <span id="mastery-indicator">Belum Dikuasai</span>
+                    </div>
+
+                    <!-- Navigation & Evaluation Buttons -->
+                    <div class="buttons-row">
+                        <button class="btn-action btn-nav" id="prev-card-btn" title="Sebelumnya (Arrow Left)">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <button class="btn-action btn-evaluate btn-review-again" id="review-again-btn" title="Belajar Lagi (Arrow Down)">
+                            Belajar Lagi
+                        </button>
+                        <button class="btn-action btn-evaluate btn-mastered" id="mastered-btn" title="Paham (Arrow Up)">
+                            Paham
+                        </button>
+                        <button class="btn-action btn-nav" id="next-card-btn" title="Selanjutnya (Arrow Right)">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Helpers and Reset/Shuffle bar -->
+                    <div class="helper-box">
+                        <div class="kbd-tips">
+                            <span class="kbd-item"><span class="kbd-key">Space</span> Balik</span>
+                            <span class="kbd-item"><span class="kbd-key">←</span> / <span class="kbd-key">→</span> Navigasi</span>
+                            <span class="kbd-item"><span class="kbd-key">↑</span> Paham</span>
+                            <span class="kbd-item"><span class="kbd-key">↓</span> Belajar Lagi</span>
+                        </div>
+                        <div class="utility-row">
+                            <button class="btn-utility" id="shuffle-btn">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M4 4h5l.282.282m4.436 4.436L15 10M4 20h5l1.644-1.644M19 4v6h-6m6-6l-8.5 8.5M19 20v-6h-6m6 6l-6.5-6.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Acak
+                            </button>
+                            <button class="btn-utility" id="reset-deck-btn">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 1 1 8.582 9h5m0 0V4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dibuat untuk latihan mandiri UTS Manajemen Layanan Sistem Informasi.</p>
+            <p style="margin-top: 4px; color: var(--accent);">Siti Aisyah Edition</p>
+        </footer>
+    </div>
+
+    <!-- FLASHCARD ENGINE AND DATA SCRIPTS -->
+    <script>
+        // --- 17 FLASHCARDS DATABASE ---
+        const ALL_CARDS = [
+            // --- KELOMPOK 1: MATERI 1 (1-3) ---
+            {
+                id: 1,
+                kelompok: 1,
+                category: "Kelompok 1: Materi 1 – Memahami Layanan & Manajemen",
+                question: "Definisi resmi Layanan (Service) menurut ITIL?",
+                answer: "Cara memberikan nilai (value) kepada pelanggan dengan memfasilitasi hasil (outcomes) yang ingin dicapai, tanpa pelanggan harus menanggung biaya dan risiko tertentu."
+            },
+            {
+                id: 2,
+                kelompok: 1,
+                category: "Kelompok 1: Materi 1 – Memahami Layanan & Manajemen",
+                question: "Jembatan keledai / Singkatan untuk 3 Komponen Utama Manajemen Layanan?",
+                answer: "<strong>OPT</strong> → Orang (People), Proses (Process), dan Teknologi (Technology)."
+            },
+            {
+                id: 3,
+                kelompok: 1,
+                category: "Kelompok 1: Materi 1 – Memahami Layanan & Manajemen",
+                question: "Apa bedanya fokus Outcome (Hasil) dengan Service (Layanan)?",
+                answer: "Pelanggan tidak membeli layanan, tapi membeli hasil.<br><br><strong>Contoh:</strong> Beli Cloud Storage (Layanan) → Hasilnya: Data aman & bisa diakses kapan saja."
+            },
+            // --- KELOMPOK 2: MATERI 2 (4-6) ---
+            {
+                id: 4,
+                kelompok: 2,
+                category: "Kelompok 2: Materi 2 – Identifikasi Layanan SI",
+                question: "Perbedaan mendasar fokus Layanan SI vs Layanan TI?",
+                answer: "<strong>SI (Sistem Informasi):</strong> Bagaimana informasi diolah & digunakan. Berfokus ke analisis proses bisnis & aplikasi (seperti ERP / E-commerce).<br><br><strong>TI (Teknologi Informasi):</strong> Bagaimana teknologi mendukung sistem. Berfokus ke infrastruktur fisik & teknis (seperti jaringan, server, keamanan siber)."
+            },
+            {
+                id: 5,
+                kelompok: 2,
+                category: "Kelompok 2: Materi 2 – Identifikasi Layanan SI",
+                question: "Apa itu Service Pipeline, Service Catalog, dan Retired Services?",
+                answer: "<strong>Pipeline:</strong> Layanan dalam tahap perencanaan atau pengembangan.<br><br><strong>Catalog:</strong> Layanan aktif yang siap digunakan oleh user saat ini.<br><br><strong>Retired:</strong> Layanan lama yang sudah dinonaktifkan."
+            },
+            {
+                id: 6,
+                kelompok: 2,
+                category: "Kelompok 2: Materi 2 – Identifikasi Layanan SI",
+                question: "Analogi menu restoran untuk Core, Supporting, dan Enhancing Services?",
+                answer: "<strong>Core (Utama):</strong> Menu utama (Nasi Goreng).<br><br><strong>Supporting (Pendukung):</strong> Komponen wajib (Kompor & Minyak). Tanpa pendukung, core tidak bisa berjalan.<br><br><strong>Enhancing (Tambahan):</strong> Nilai tambah opsional (Kerupuk gratis atau Es Krim)."
+            },
+            // --- KELOMPOK 3: MATERI 3 (7-9) ---
+            {
+                id: 7,
+                kelompok: 3,
+                category: "Kelompok 3: Materi 3 – Service Level Management",
+                question: "Bedanya SLA vs OLA?",
+                answer: "<strong>SLA (Service Level Agreement):</strong> Perjanjian standar performa & kualitas layanan antara Penyedia Layanan dengan Pelanggan Eksternal.<br><br><strong>OLA (Operational Level Agreement):</strong> Perjanjian hubungan kerja & komitmen antar Tim Internal penyedia layanan untuk menyokong tercapainya target SLA."
+            },
+            {
+                id: 8,
+                kelompok: 3,
+                category: "Kelompok 3: Materi 3 – Service Level Management",
+                question: "Apa itu SLO (Service Level Objective)?",
+                answer: "Target atau angka spesifik yang terukur di dalam dokumen SLA.<br><br><strong>Contoh:</strong> Target uptime server minimal 99.9% atau waktu respons tiket maksimal 15 menit."
+            },
+            {
+                id: 9,
+                kelompok: 3,
+                category: "Kelompok 3: Materi 3 – Service Level Management",
+                question: "Sebutkan 3 Jenis SLA berdasarkan model target penggunanya!",
+                answer: "<strong>1. Berbasis Pelanggan:</strong> Banyak layanan dirangkum dalam 1 kontrak untuk 1 pelanggan khusus.<br><br><strong>2. Berbasis Layanan:</strong> 1 kontrak standar mengenai 1 layanan tertentu untuk semua pelanggan.<br><br><strong>3. Multi Level:</strong> Kontrak bertingkat/kustomisasi yang disesuaikan dengan berbagai tingkat kebutuhan pelanggan."
+            },
+            // --- KELOMPOK 4: MATERI 4 (10-13) ---
+            {
+                id: 10,
+                kelompok: 4,
+                category: "Kelompok 4: Materi 4 – Problem & Change Management",
+                question: "Slogan kilat pembeda Incident vs Problem vs Change?",
+                answer: "<strong>Incident:</strong> Pulihkan gangguan secepatnya (Restore Service / Atasi gejala).<br><br><strong>Problem:</strong> Temukan akar penyebab biar gak berulang (Prevent Recurrence).<br><br><strong>Change:</strong> Eksekusi modifikasi / peningkatan sistem secara aman & teratur (Improve Service)."
+            },
+            {
+                id: 11,
+                kelompok: 4,
+                category: "Kelompok 4: Materi 4 – Problem & Change Management",
+                question: "Apa itu Workaround dalam penanganan gangguan?",
+                answer: "Solusi atau trik darurat sementara untuk memulihkan layanan pengguna harian tanpa harus menyelesaikan akar masalah (root cause) utamanya terlebih dahulu."
+            },
+            {
+                id: 12,
+                kelompok: 4,
+                category: "Kelompok 4: Materi 4 – Problem & Change Management",
+                question: "Perbedaan izin eksekusi Standard Change vs Normal Change?",
+                answer: "<strong>Standard:</strong> Perubahan rutin, berisiko rendah, dipandu SOP yang jelas, sehingga dapat langsung dieksekusi tanpa perlu persetujuan dewan CAB.<br><br><strong>Normal:</strong> Perubahan non-rutin, berisiko sedang/tinggi. Wajib mengisi proposal RFC dan dievaluasi ketat oleh dewan CAB."
+            },
+            {
+                id: 13,
+                kelompok: 4,
+                category: "Kelompok 4: Materi 4 – Problem & Change Management",
+                question: "Apa singkatan dan tugas utama CAB?",
+                answer: "<strong>CAB = Change Advisory Board</strong>.<br><br><strong>Tugas utama:</strong> Meninjau proposal perubahan, menilai risiko & dampak operasional, menentukan jadwal rilis (maintenance window), serta memberikan persetujuan atau penolakan pengajuan perubahan sistem."
+            },
+            // --- KELOMPOK 5: MATERI 5 (14-17) ---
+            {
+                id: 14,
+                kelompok: 5,
+                category: "Kelompok 5: Materi 5 – Asset & Configuration Management",
+                question: "Aturan emas hubungan logika Aset vs Configuration Item (CI)?",
+                answer: "\"Tidak semua aset adalah CI, tetapi semua CI sudah pasti merupakan aset.\"<br><br>CI adalah bagian (subset) dari aset yang konfigurasinya wajib dipantau & dikendalikan ketat demi menjaga stabilitas operasional layanan."
+            },
+            {
+                id: 15,
+                kelompok: 5,
+                category: "Kelompok 5: Materi 5 – Asset & Configuration Management",
+                question: "Apa kegunaan utama data yang disimpan di CMDB dibanding data inventaris biasa?",
+                answer: "CMDB tidak hanya mencatat data atribut aset (inventaris), melainkan wajib menyimpan informasi detail mengenai <strong>hubungan (relasi) timbal balik</strong> antar-komponen sistem. Berguna untuk analisis dampak troubleshooting secara cepat."
+            },
+            {
+                id: 16,
+                kelompok: 5,
+                category: "Kelompok 5: Materi 5 – Asset & Configuration Management",
+                question: "Singkatan daur hidup aset TI: \"Pandawa Pergi Dengan Ojek Racing\"?",
+                answer: "<strong>Planning</strong> (Perencanaan)<br><strong>Procurement</strong> (Pengadaan)<br><strong>Deployment</strong> (Penerapan)<br><strong>Operation</strong> (Operasional)<br><strong>Retirement</strong> (Pensiun / Dibuang)"
+            },
+            {
+                id: 17,
+                kelompok: 5,
+                category: "Kelompok 5: Materi 5 – Asset & Configuration Management",
+                question: "Apa fungsi utama dari Configuration Baseline?",
+                answer: "Sebagai rekaman \"titik acuan aman/stabil formal\" sistem pada suatu waktu.<br><br>Jika eksperimen update patch software baru berujung kegagalan crash, baseline dipakai sebagai jangkar untuk melakukan rollback (kembali ke kondisi normal awal)."
+            }
+        ];
+
+        // --- APP STATE ---
+        let state = {
+            currentKelompok: 'all',  // 'all', 1, 2, 3, 4, 5
+            cards: [],              // Cards in active deck
+            currentIdx: 0,          // Index in state.cards
+            masteredCards: {},      // Maps card.id -> boolean
+            isFlipped: false,       // Current flip state
+            soundEnabled: true,
+            theme: 'dark'
+        };
+
+        // --- WEB AUDIO API SYNTHESIS ---
+        let audioCtx = null;
+        function playSynthSound(type) {
+            if (!state.soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(550, now);
+                    osc.frequency.exponentialRampToValueAtTime(280, now + 0.08);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'flip') {
+                    // Swoosh card sound
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.exponentialRampToValueAtTime(680, now + 0.15);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'mastered') {
+                    // Success chime
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'review') {
+                    // Soft feedback
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(120, now + 0.12);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.12);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                }
+            } catch (e) {
+                console.warn('Audio Context sound play failed:', e);
+            }
+        }
+
+        // --- APP FLOW & ENGINE ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initMasteryStorage();
+            setupEventListeners();
+            loadDeck('all');
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('mlsi_quiz_theme') || 'dark';
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            state.theme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('mlsi_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        function initMasteryStorage() {
+            const stored = JSON.parse(localStorage.getItem('mlsi_flashcard_paham')) || {};
+            state.masteredCards = stored;
+            updateSidebarMasteryCounters();
+        }
+
+        function saveMastery() {
+            localStorage.setItem('mlsi_flashcard_paham', JSON.stringify(state.masteredCards));
+            updateSidebarMasteryCounters();
+        }
+
+        function updateSidebarMasteryCounters() {
+            // Count total cards
+            const totalCards = ALL_CARDS.length;
+            let totalMastered = 0;
+            let kCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+            let kTotals = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+            ALL_CARDS.forEach(card => {
+                kTotals[card.kelompok]++;
+                if (state.masteredCards[card.id]) {
+                    totalMastered++;
+                    kCounts[card.kelompok]++;
+                }
+            });
+
+            // Update UI
+            document.getElementById('count-all').innerText = `${totalMastered} / ${totalCards}`;
+            document.getElementById('count-k1').innerText = `${kCounts[1]} / ${kTotals[1]}`;
+            document.getElementById('count-k2').innerText = `${kCounts[2]} / ${kTotals[2]}`;
+            document.getElementById('count-k3').innerText = `${kCounts[3]} / ${kTotals[3]}`;
+            document.getElementById('count-k4').innerText = `${kCounts[4]} / ${kTotals[4]}`;
+            document.getElementById('count-k5').innerText = `${kCounts[5]} / ${kTotals[5]}`;
+
+            document.getElementById('stat-total-mastered').innerText = `${totalMastered} / ${totalCards}`;
+            const percent = Math.round((totalMastered / totalCards) * 100) || 0;
+            document.getElementById('stat-percent-mastered').innerText = `${percent}%`;
+        }
+
+        function loadDeck(kelompokVal) {
+            state.currentKelompok = kelompokVal;
+            state.isFlipped = false;
+            document.getElementById('flashcard').classList.remove('is-flipped');
+
+            if (kelompokVal === 'all') {
+                state.cards = [...ALL_CARDS];
+            } else {
+                const k = parseInt(kelompokVal);
+                state.cards = ALL_CARDS.filter(c => c.kelompok === k);
+            }
+
+            state.currentIdx = 0;
+            renderCard();
+        }
+
+        function renderCard() {
+            const container = document.getElementById('card-scene');
+
+            if (state.cards.length === 0) {
+                // Should not happen unless filtered deck is empty, but handle gracefully
+                container.innerHTML = `
+                    <div style="text-align:center; padding: 40px; color: var(--text-secondary);">
+                        Tidak ada kartu di deck ini.
+                    </div>`;
+                return;
+            }
+
+            const card = state.cards[state.currentIdx];
+            
+            // Check if card is already mastered
+            const isMastered = state.masteredCards[card.id] === true;
+
+            // Bind values to UI elements
+            document.getElementById('card-category').innerText = card.category;
+            document.getElementById('card-category-back').innerText = card.category;
+            document.getElementById('card-question-text').innerHTML = card.question;
+            document.getElementById('card-answer-text').innerHTML = card.answer;
+
+            // Update Card border color style based on mastery
+            const flashcardElement = document.getElementById('flashcard');
+            const frontFace = flashcardElement.querySelector('.card-front');
+            const backFace = flashcardElement.querySelector('.card-back');
+
+            if (isMastered) {
+                frontFace.style.borderColor = 'var(--correct)';
+                backFace.style.borderColor = 'var(--correct)';
+                document.getElementById('mastery-indicator').innerText = 'Paham (Dikuasai)';
+                document.getElementById('mastery-indicator').style.color = 'var(--correct)';
+            } else {
+                frontFace.style.borderColor = 'var(--border-color)';
+                backFace.style.borderColor = 'var(--accent)';
+                document.getElementById('mastery-indicator').innerText = 'Belum Dikuasai';
+                document.getElementById('mastery-indicator').style.color = 'var(--text-secondary)';
+            }
+
+            // Update Nav indicators
+            document.getElementById('card-index-label').innerText = `Kartu ${state.currentIdx + 1} dari ${state.cards.length}`;
+            document.getElementById('prev-card-btn').disabled = state.currentIdx === 0;
+            document.getElementById('next-card-btn').disabled = state.currentIdx === state.cards.length - 1;
+
+            // Update Progress bar
+            const pct = ((state.currentIdx + 1) / state.cards.length) * 100;
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+        }
+
+        function flipCard() {
+            playSynthSound('flip');
+            state.isFlipped = !state.isFlipped;
+            document.getElementById('flashcard').classList.toggle('is-flipped', state.isFlipped);
+        }
+
+        function markCardMastered(mastered) {
+            const card = state.cards[state.currentIdx];
+            if (!card) return;
+
+            if (mastered) {
+                playSynthSound('mastered');
+                state.masteredCards[card.id] = true;
+            } else {
+                playSynthSound('review');
+                state.masteredCards[card.id] = false;
+            }
+
+            saveMastery();
+            renderCard();
+
+            // Auto-advance after evaluation after 400ms if not at end
+            setTimeout(() => {
+                if (state.currentIdx < state.cards.length - 1) {
+                    navigateCard(1);
+                } else {
+                    // Check if all cards in the active deck are mastered
+                    const allActiveDeckMastered = state.cards.every(c => state.masteredCards[c.id] === true);
+                    if (allActiveDeckMastered) {
+                        showAllDeckCompletedCelebration();
+                    }
+                }
+            }, 400);
+        }
+
+        function navigateCard(direction) {
+            const nextIdx = state.currentIdx + direction;
+            if (nextIdx >= 0 && nextIdx < state.cards.length) {
+                playSynthSound('click');
+                state.currentIdx = nextIdx;
+                state.isFlipped = false;
+                document.getElementById('flashcard').classList.remove('is-flipped');
+                
+                // Add soft transition
+                const flashcardElement = document.getElementById('flashcard');
+                flashcardElement.style.transform = `scale(0.95)`;
+                flashcardElement.style.opacity = '0.5';
+                
+                setTimeout(() => {
+                    renderCard();
+                    flashcardElement.style.transform = state.isFlipped ? 'rotateY(180deg) scale(1)' : 'rotateY(0deg) scale(1)';
+                    flashcardElement.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        function shuffleActiveDeck() {
+            playSynthSound('click');
+            state.isFlipped = false;
+            document.getElementById('flashcard').classList.remove('is-flipped');
+            
+            // Fisher-Yates shuffle
+            for (let i = state.cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [state.cards[i], state.cards[j]] = [state.cards[j], state.cards[i]];
+            }
+            state.currentIdx = 0;
+            renderCard();
+        }
+
+        function resetAllMastery() {
+            if (confirm('Apakah Anda yakin ingin menyetel ulang semua data penguasaan kartu ke kondisi awal?')) {
+                playSynthSound('review');
+                state.masteredCards = {};
+                saveMastery();
+                renderCard();
+            }
+        }
+
+        function showAllDeckCompletedCelebration() {
+            const deckTitle = state.currentKelompok === 'all' ? 'Semua Materi' : `Kelompok ${state.currentKelompok}`;
+            const container = document.getElementById('flashcard');
+            
+            // Failsafe backup faces contents
+            const frontBackup = container.querySelector('.card-front').innerHTML;
+            
+            container.querySelector('.card-front').innerHTML = `
+                <div class="success-overlay" style="animation: fadeIn 0.4s ease-out;">
+                    <div class="success-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 20px; font-weight: 800; color: var(--correct);">Deck Selesai! 🎉</h3>
+                    <p style="font-size: 13px; color: var(--text-secondary); max-width: 320px;">
+                        Selamat! Anda telah menandai seluruh kartu pada deck <strong>${deckTitle}</strong> sebagai "Paham".
+                    </p>
+                    <button class="btn-action" id="restart-deck-overlay-btn" style="margin-top: 8px; border-color: var(--accent); color: var(--accent); background: var(--accent-glow);">
+                        Pelajari Lagi
+                    </button>
+                </div>
+            `;
+            
+            // Temporarily disable standard flip when clicking celebration screen
+            document.getElementById('card-scene').style.pointerEvents = 'none';
+
+            // Bind click to restart button inside card
+            document.getElementById('restart-deck-overlay-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                // Restore standard pointer events
+                document.getElementById('card-scene').style.pointerEvents = 'auto';
+                
+                // Clear mastered status of current deck to let user learn again
+                state.cards.forEach(c => {
+                    state.masteredCards[c.id] = false;
+                });
+                saveMastery();
+                
+                // Restore and reload deck
+                loadDeck(state.currentKelompok);
+            });
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playSynthSound('click');
+                setTheme(state.theme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Sound toggle
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                state.soundEnabled = !state.soundEnabled;
+                const icon = document.getElementById('sound-icon');
+                if (state.soundEnabled) {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    `;
+                } else {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    `;
+                }
+                playSynthSound('click');
+            });
+
+            // Card click (Flip)
+            document.getElementById('card-scene').addEventListener('click', flipCard);
+
+            // Nav buttons click
+            document.getElementById('prev-card-btn').addEventListener('click', () => navigateCard(-1));
+            document.getElementById('next-card-btn').addEventListener('click', () => navigateCard(1));
+
+            // Mastery buttons click
+            document.getElementById('review-again-btn').addEventListener('click', () => markCardMastered(false));
+            document.getElementById('mastered-btn').addEventListener('click', () => markCardMastered(true));
+
+            // Sidebar Kelompok items selection
+            const menuItems = document.querySelectorAll('.menu-list .menu-item');
+            menuItems.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    menuItems.forEach(item => item.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Allow clicking again by restoring pointer events
+                    document.getElementById('card-scene').style.pointerEvents = 'auto';
+                    
+                    const kelompokVal = btn.getAttribute('data-kelompok');
+                    loadDeck(kelompokVal);
+                });
+            });
+
+            // Utility buttons
+            document.getElementById('shuffle-btn').addEventListener('click', shuffleActiveDeck);
+            document.getElementById('reset-deck-btn').addEventListener('click', resetAllMastery);
+
+            // Keyboard listeners
+            document.addEventListener('keydown', (e) => {
+                // Disable keyboard shortcuts when targetting input fields
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    flipCard();
+                } else if (e.code === 'ArrowLeft') {
+                    e.preventDefault();
+                    navigateCard(-1);
+                } else if (e.code === 'ArrowRight') {
+                    e.preventDefault();
+                    navigateCard(1);
+                } else if (e.code === 'ArrowUp') {
+                    e.preventDefault();
+                    markCardMastered(true);
+                } else if (e.code === 'ArrowDown') {
+                    e.preventDefault();
+                    markCardMastered(false);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
