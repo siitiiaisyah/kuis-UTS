@@ -1,0 +1,3078 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif MLSI - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050a0e;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #064e3b 0%, #050a0e 100%);
+            --panel-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --accent-hover: #059669;
+            --correct: #10b981;
+            --correct-bg: rgba(16, 185, 129, 0.08);
+            --correct-border: rgba(16, 185, 129, 0.25);
+            --incorrect: #ef4444;
+            --incorrect-bg: rgba(239, 68, 68, 0.08);
+            --incorrect-border: rgba(239, 68, 68, 0.25);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.08);
+            --warning-border: rgba(245, 158, 11, 0.25);
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #d1fae5 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(16, 185, 129, 0.1);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #059669;
+            --accent-glow: rgba(5, 150, 105, 0.08);
+            --accent-hover: #047857;
+            --correct: #059669;
+            --correct-bg: rgba(5, 150, 105, 0.06);
+            --correct-border: rgba(5, 150, 105, 0.18);
+            --incorrect: #dc2626;
+            --incorrect-bg: rgba(220, 38, 38, 0.06);
+            --incorrect-border: rgba(220, 38, 38, 0.18);
+            --warning: #d97706;
+            --warning-bg: rgba(217, 119, 6, 0.06);
+            --warning-border: rgba(217, 119, 6, 0.18);
+            --shadow: 0 12px 40px 0 rgba(5, 150, 105, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #34d399);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #10b981, var(--accent));
+            background-size: 200% 100%;
+            animation: glowMove 8s linear infinite;
+        }
+
+        @keyframes glowMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .customizer-section {
+            margin-bottom: 24px;
+        }
+
+        .customizer-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .category-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .category-item input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+        }
+
+        .category-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .category-meta {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .options-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        @media (max-width: 640px) {
+            .options-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .custom-select-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-group {
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .btn-select {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-select.active {
+            background: var(--accent);
+            color: #050a0e;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        [data-theme="light"] .btn-select.active {
+            color: white;
+        }
+
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: #050a0e;
+            font-weight: 800;
+            border: none;
+            font-family: var(--font-sans);
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px var(--accent-glow);
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .btn-primary {
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(16, 185, 129, 0.35);
+            filter: brightness(1.1);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .sidebar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .history-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .history-item {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .history-score {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .history-date {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .history-meta {
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .empty-history {
+            text-align: center;
+            padding: 24px 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .tips-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(6, 78, 59, 0.4) 100%);
+            border: 1px dashed var(--accent);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            position: relative;
+        }
+
+        .tips-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tips-card h4 svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .tips-card p {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .quiz-container {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .quiz-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quiz-main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .quiz-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .info-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .info-pill.timer {
+            color: var(--warning);
+            border-color: var(--warning-border);
+            background: var(--warning-bg);
+        }
+
+        .info-pill.timer.critical {
+            color: var(--incorrect);
+            border-color: var(--incorrect-border);
+            background: var(--incorrect-bg);
+            animation: pulseRed 1s infinite alternate;
+        }
+
+        @keyframes pulseRed {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #34d399);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .question-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-height: 380px;
+            position: relative;
+        }
+
+        .question-tag {
+            align-self: flex-start;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .question-text code,
+        .explanation-box code {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #f472b6;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: translateX(4px);
+        }
+
+        .option-btn.selected {
+            border-color: var(--accent);
+            background: rgba(16, 185, 129, 0.08);
+            box-shadow: inset 0 0 0 1px var(--accent);
+        }
+
+        .option-btn.correct {
+            border-color: var(--correct) !important;
+            background: var(--correct-bg) !important;
+            box-shadow: inset 0 0 0 1px var(--correct) !important;
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--incorrect) !important;
+            background: var(--incorrect-bg) !important;
+            box-shadow: inset 0 0 0 1px var(--incorrect) !important;
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+
+        .option-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            margin-right: 14px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .option-btn:hover:not(.disabled) .option-badge {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .option-btn.selected .option-badge {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #050a0e;
+        }
+
+        [data-theme="light"] .option-btn.selected .option-badge {
+            color: white;
+        }
+
+        .option-btn.correct .option-badge {
+            background: var(--correct);
+            border-color: var(--correct);
+            color: white;
+        }
+
+        .option-btn.incorrect .option-badge {
+            background: var(--incorrect);
+            border-color: var(--incorrect);
+            color: white;
+        }
+
+        .option-text {
+            line-height: 1.5;
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            gap: 16px;
+        }
+
+        .btn-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            border-color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .btn-flag {
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+        }
+
+        .btn-flag.flagged {
+            color: var(--warning);
+            border-color: var(--warning);
+            background: var(--warning-bg);
+        }
+
+        .btn-flag svg {
+            fill: none;
+            transition: var(--transition);
+        }
+
+        .btn-flag.flagged svg {
+            fill: var(--warning);
+        }
+
+        .explanation-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+            display: none;
+            animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .explanation-box.visible {
+            display: block;
+        }
+
+        .explanation-header {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--correct);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .explanation-header svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .explanation-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .exam-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grid-legend {
+            display: flex;
+            gap: 12px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .legend-color.answered {
+            background: var(--accent);
+        }
+
+        .legend-color.flagged {
+            background: var(--warning);
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .grid-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .grid-cell:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .grid-cell.active {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 8px var(--accent-glow);
+            font-weight: 800;
+        }
+
+        .grid-cell.answered {
+            background: var(--accent);
+            color: #050a0e;
+            font-weight: 700;
+            border-color: var(--accent);
+        }
+
+        [data-theme="light"] .grid-cell.answered {
+            color: white;
+        }
+
+        .grid-cell.flagged {
+            background: var(--warning);
+            color: #050a0e;
+            font-weight: 700;
+            border-color: var(--warning);
+        }
+
+        [data-theme="light"] .grid-cell.flagged {
+            color: white;
+        }
+
+        .grid-cell.flagged.active {
+            border-color: var(--text-primary);
+        }
+
+        .grid-cell.answered.active {
+            border-color: var(--text-primary);
+        }
+
+        .result-panel {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .score-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+        }
+
+        .circle-progress-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 8px;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.03);
+            stroke-width: 12;
+        }
+
+        .circle-fill {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 12;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-dasharray: 439.82;
+            stroke-dashoffset: 439.82;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-num {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--text-primary);
+        }
+
+        .score-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .result-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+
+        .result-desc {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 460px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-icon {
+            margin-bottom: 4px;
+        }
+
+        .stat-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .stat-val {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .stat-lbl {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .review-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 16px;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+        }
+
+        .search-box svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .review-filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .filter-btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--text-secondary);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: #050a0e;
+            font-weight: 700;
+            border-color: var(--accent);
+        }
+
+        [data-theme="light"] .filter-btn.active {
+            color: white;
+        }
+
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-item {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: var(--transition);
+        }
+
+        .review-item.correct-answer {
+            border-left: 4px solid var(--correct);
+        }
+
+        .review-item.incorrect-answer {
+            border-left: 4px solid var(--incorrect);
+        }
+
+        .review-item.skipped-answer {
+            border-left: 4px solid var(--warning);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .review-number {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .review-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .review-badge.correct {
+            background: var(--correct-bg);
+            color: var(--correct);
+            border: 1px solid var(--correct-border);
+        }
+
+        .review-badge.incorrect {
+            background: var(--incorrect-bg);
+            color: var(--incorrect);
+            border: 1px solid var(--incorrect-border);
+        }
+
+        .review-badge.skipped {
+            background: var(--warning-bg);
+            color: var(--warning);
+            border: 1px solid var(--warning-border);
+        }
+
+        .review-question {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .review-answers {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .review-ans-row {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+        }
+
+        .review-ans-row.user-select {
+            border-color: var(--incorrect);
+            background: var(--incorrect-bg);
+        }
+
+        .review-ans-row.user-select.is-correct {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+        }
+
+        .review-ans-row.correct-key {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+            margin-top: 4px;
+        }
+
+        .review-ans-lbl {
+            font-weight: 700;
+            margin-right: 8px;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .review-ans-txt {
+            flex-grow: 1;
+        }
+
+        .review-explanation {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .review-explanation-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--correct);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .review-explanation-text {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 32px 0 24px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                        <path d="m9 14 2 2 4-4"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>MLSI UTS Prep</h1>
+                    <p>Manajemen Layanan Sistem Informasi</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dynamic Views -->
+        <main>
+            <!-- 1. DASHBOARD VIEW -->
+            <div id="dashboard-view" class="dashboard-grid">
+                <!-- Configuration panel -->
+                <div class="glass-panel">
+                    <h2 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M12 6V4m0 2a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m-6 8a2 2 0 1 0 0-4m0 4a2 2 0 1 1 0-4m0 4v2m0-6V4m6 16v-6m6 0v2m0-6V4m0 6a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 6v-4" stroke="currentColor" stroke-linecap="round" />
+                        </svg>
+                        Konfigurasi Latihan
+                    </h2>
+
+                    <!-- Category Selector -->
+                    <div class="customizer-section">
+                        <label class="customizer-label">Pilih Kategori Materi</label>
+                        <div class="category-options">
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="1" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian 1: Memahami Layanan & Identifikasi (Materi 1 & 2)</span>
+                                    <span class="category-meta">Soal 1–6, 47–50 • Esensi layanan, 3 pilar ITSM, portofolio, catalog, pipeline, & best practices</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="2" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian 2: Service Level Management (Materi 3)</span>
+                                    <span class="category-meta">Soal 7–10, 43–46 • SLA, OLA, UC, sanksi/kompensasi, response & resolution time, scheduled maintenance</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="3" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian 3: Incident, Problem & Change Management (Materi 4)</span>
+                                    <span class="category-meta">Soal 11–18, 34–42 • Incident restore, RCA (5 Why, Fishbone), Change Advisory Board (CAB), Standard/Normal change</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="4" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bagian 4: Asset & Configuration Management (Materi 5)</span>
+                                    <span class="category-meta">Soal 19–33 • Lifecycle aset (Planning to Retirement), SACM, CMDB, CMS, CI, dan Configuration Baseline</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Options Grid (Count & Mode) -->
+                    <div class="options-row">
+                        <div class="custom-select-group">
+                            <label class="customizer-label">Jumlah Soal</label>
+                            <div class="btn-group" id="count-group">
+                                <button class="btn-select" data-val="10">10</button>
+                                <button class="btn-select" data-val="20">20</button>
+                                <button class="btn-select" data-val="30">30</button>
+                                <button class="btn-select active" data-val="all">Semua (50)</button>
+                            </div>
+                        </div>
+
+                        <div class="custom-select-group">
+                            <label class="customizer-label">Mode Kuis</label>
+                            <div class="btn-group" id="mode-group">
+                                <button class="btn-select active" data-val="practice">Latihan</button>
+                                <button class="btn-select" data-val="exam">Ujian</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Start Button -->
+                    <button class="btn-primary" id="start-btn">
+                        Mulai Latihan
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 3l14 9-14 9V3z" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Sidebar (History / Tips) -->
+                <div class="sidebar-panel">
+                    <!-- High Score / History Card -->
+                    <div class="history-card">
+                        <h3 class="section-title">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Riwayat Latihan
+                        </h3>
+                        <div class="history-list" id="history-container">
+                            <div class="empty-history">Belum ada riwayat pengerjaan kuis.</div>
+                        </div>
+                    </div>
+
+                    <!-- Study Tips -->
+                    <div class="tips-card">
+                        <h4>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9.663 17h4.673M12 3v1m6.364.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Tips Latihan UTS
+                        </h4>
+                        <p>
+                            Gunakan <strong>Mode Latihan</strong> untuk belajar mandiri di mana Anda bisa langsung membaca penjelasan materi lengkap sesaat setelah menjawab. Gunakan <strong>Mode Ujian</strong> untuk melatih fokus dengan batas waktu dan kisi-kisi soal yang menantang.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. QUIZ PLAY VIEW -->
+            <div id="quiz-view" class="quiz-container hidden">
+                <!-- Left Main Area: Question & Options -->
+                <div class="quiz-main">
+                    <!-- Progress & Information Header -->
+                    <div class="quiz-info-bar">
+                        <div class="info-pill" id="question-index-label">Soal 1 dari 10</div>
+                        <div class="info-pill" id="score-counter-pill">Benar: 0 • Salah: 0</div>
+                        <div class="info-pill hidden" id="timer-pill">
+                            <svg viewBox="0 0 24 24" fill="none" style="width: 14px; height: 14px;">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                            <span id="timer-display">00:00</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" id="quiz-progress-bar"></div>
+                    </div>
+
+                    <!-- Question Card -->
+                    <div class="question-card">
+                        <span class="question-tag" id="question-section-tag">Bagian 1</span>
+                        <div class="question-text" id="question-text-box">
+                            Memuat pertanyaan...
+                        </div>
+                        <div class="options-list" id="options-container">
+                            <!-- Options populated dynamically -->
+                        </div>
+
+                        <!-- Action buttons inside card (prev, next, flag) -->
+                        <div class="quiz-actions">
+                            <button class="btn-secondary" id="prev-btn">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                                Sebelumnya
+                            </button>
+
+                            <button class="btn-secondary btn-flag" id="flag-btn" title="Tandai ragu-ragu">
+                                <svg viewBox="0 0 24 24" style="width:16px; height:16px;">
+                                    <path d="M3 21v-4m0 0V5a2 2 0 0 1 2-2h6.5l1 2H21v11h-7l-1-2H3z" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                                Ragu-ragu
+                            </button>
+
+                            <button class="btn-secondary" id="next-btn">
+                                Selanjutnya
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Instant Explanation (visible in Practice Mode after responding) -->
+                        <div class="explanation-box" id="instant-explanation-box">
+                            <div class="explanation-header">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                                Penjelasan Kunci Jawaban
+                            </div>
+                            <div class="explanation-text" id="instant-explanation-text">
+                                Detail penjelasan...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar: Question Grid Map -->
+                <div class="exam-sidebar">
+                    <div class="sidebar-card">
+                        <div class="sidebar-card-title">
+                            Peta Soal
+                            <button class="btn-secondary" id="submit-quiz-btn" style="padding: 6px 12px; font-size: 11px; border-color: var(--accent); color: var(--accent); background: var(--accent-glow);">
+                                Kumpulkan
+                            </button>
+                        </div>
+                        <div class="grid-legend">
+                            <div class="legend-item">
+                                <div class="legend-color"></div><span>Belum</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color answered"></div><span>Terjawab</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color flagged"></div><span>Ragu-ragu</span>
+                            </div>
+                        </div>
+                        <div class="questions-grid" id="exam-grid-container">
+                            <!-- Populated with cell grid buttons -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. RESULT VIEW -->
+            <div id="result-view" class="result-panel hidden">
+                <!-- Score Breakdown -->
+                <div class="score-card">
+                    <div class="circle-progress-container">
+                        <svg width="160" height="160" viewBox="0 0 160 160">
+                            <circle class="circle-bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="circle-fill" id="score-circle" cx="80" cy="80" r="70"></circle>
+                        </svg>
+                        <div class="score-value">
+                            <span class="score-num" id="result-score-percent">0%</span>
+                            <span class="score-label">Skor</span>
+                        </div>
+                    </div>
+
+                    <h2 class="result-title" id="result-feedback-title">Hebat!</h2>
+                    <p class="result-desc" id="result-feedback-desc">
+                        Anda telah menyelesaikan kuis latihan UTS.
+                    </p>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="var(--correct)" />
+                                </svg>
+                            </div>
+                            <span class="stat-val" id="stats-correct" style="color: var(--correct);">0</span>
+                            <span class="stat-lbl">Benar</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="var(--incorrect)" />
+                                </svg>
+                            </div>
+                            <span class="stat-val" id="stats-incorrect" style="color: var(--incorrect);">0</span>
+                            <span class="stat-lbl">Salah</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="var(--warning)" />
+                                </svg>
+                            </div>
+                            <span class="stat-val" id="stats-skipped" style="color: var(--warning);">0</span>
+                            <span class="stat-lbl">Dilewati</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="var(--accent)" />
+                                </svg>
+                            </div>
+                            <span class="stat-val" id="stats-time" style="color: var(--accent);">00:00</span>
+                            <span class="stat-lbl">Waktu</span>
+                        </div>
+                    </div>
+
+                    <!-- Panel Action buttons -->
+                    <div style="display:flex; gap:16px; width:100%; margin-top:20px; flex-wrap:wrap;">
+                        <button class="btn-primary" id="restart-btn" style="flex:1; min-width: 200px;">
+                            Ulangi Kuis
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 1 1 8.582 9h5m0 0V4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            </svg>
+                        </button>
+                        <button class="btn-secondary" id="change-settings-btn" style="flex:1; min-width: 200px; padding: 16px 24px;">
+                            Ganti Pengaturan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Review Details Section -->
+                <div class="review-panel">
+                    <h3 class="section-title" style="margin-bottom: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Review Pertanyaan & Jawaban
+                    </h3>
+
+                    <!-- Review Toolbar (Search + Filter) -->
+                    <div class="review-controls">
+                        <!-- Search Box -->
+                        <div class="search-box">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="M21 21l-4.35-4.35" />
+                            </svg>
+                            <input type="text" id="review-search" placeholder="Cari soal atau kata kunci...">
+                        </div>
+
+                        <!-- Filter Chips -->
+                        <div class="review-filters">
+                            <button class="filter-btn active" data-filter="all">Semua Soal (<span id="count-filter-all">0</span>)</button>
+                            <button class="filter-btn" data-filter="correct" style="color: var(--correct);">Benar (<span id="count-filter-correct">0</span>)</button>
+                            <button class="filter-btn" data-filter="incorrect" style="color: var(--incorrect);">Salah (<span id="count-filter-incorrect">0</span>)</button>
+                            <button class="filter-btn" data-filter="skipped" style="color: var(--warning);">Dilewati (<span id="count-filter-skipped">0</span>)</button>
+                        </div>
+                    </div>
+
+                    <!-- Review Scroll Area -->
+                    <div class="review-list" id="review-cards-container">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dibuat untuk latihan mandiri UTS Manajemen Layanan Sistem Informasi.</p>
+            <p style="margin-top: 4px; color: var(--accent);">Lenovo Legion Edition</p>
+        </footer>
+    </div>
+
+    <!-- QUESTIONS AND LOGIC SCRIPTS -->
+    <script>
+        // --- 50 QUESTIONS DATABASE ---
+        const ALL_QUESTIONS = [
+            {
+                id: 1,
+                section: "Memahami Layanan & Manajemen (Materi 1)",
+                question: "Menurut kerangka ITIL, apa yang dimaksud dengan layanan (service)?",
+                options: [
+                    "Cara memberikan nilai kepada pelanggan dengan memfasilitasi hasil yang ingin dicapai tanpa menanggung biaya dan risiko tertentu.",
+                    "Sistem infrastruktur teknologi yang terdiri dari server, jaringan, dan perangkat keras.",
+                    "Aktivitas penjualan perangkat lunak aplikasi bisnis kepada klien komersial.",
+                    "Kontrak formal yang mengatur penalti finansial apabila sistem mengalami gangguan operasional."
+                ],
+                answer: "A",
+                explanation: "Esensi dari layanan adalah memberikan value (nilai) dan memfasilitasi outcome (hasil) bagi konsumen tanpa membebani mereka dengan risiko teknis dan biaya pembuatan sistem."
+            },
+            {
+                id: 2,
+                section: "Memahami Layanan & Manajemen (Materi 1)",
+                question: "Manakah di bawah ini yang merupakan tiga komponen utama dari kemampuan organisasi dalam Manajemen Layanan?",
+                options: [
+                    "Biaya, Risiko, dan Nilai",
+                    "Orang, Proses, dan Teknologi",
+                    "Hardware, Software, dan Brainware",
+                    "Incident, Problem, dan Change"
+                ],
+                answer: "B",
+                explanation: "Manajemen layanan bukan cuma soal kecanggihan alat, melainkan keterpaduan dari tiga pilar utama: Orang (People), Proses (Process), dan Teknologi (Technology)."
+            },
+            {
+                id: 3,
+                section: "Memahami Layanan & Manajemen (Materi 1)",
+                question: "Sebelum implementasi ITSM, bagaimana karakteristik umum pengguna ketika ingin melaporkan suatu gangguan operasional sistem?",
+                options: [
+                    "Melalui portal mandiri (self-service) secara online.",
+                    "Menghubungi single point of contact (Service Desk).",
+                    "Harus datang langsung atau menghubungi nomor personal teknisi secara manual.",
+                    "Mengisi formulir Request for Change (RFC) terlebih dahulu."
+                ],
+                answer: "C",
+                explanation: "Tanpa adanya sistem manajemen layanan (ITSM) yang terstruktur, organisasi tidak memiliki pusat bantuan (Service Desk), sehingga pengguna terpaksa mencari teknisi sendiri secara manual."
+            },
+            {
+                id: 4,
+                section: "Identifikasi Layanan SI (Materi 2)",
+                question: "Manakah dari contoh berikut yang termasuk ke dalam cakupan Layanan Sistem Informasi (Information System Services)?",
+                options: [
+                    "Pemasangan kabel jaringan lokal (LAN) dan konfigurasi switch perangkat keras.",
+                    "Pengembangan aplikasi Enterprise Resource Planning (ERP) dan analisis proses bisnis.",
+                    "Pembersihan debu fisik pada komputer server di dalam Data Center.",
+                    "Manajemen enkripsi data siber dan proteksi dari serangan malware."
+                ],
+                answer: "B",
+                explanation: "Layanan SI berfokus pada analisis proses bisnis dan bagaimana informasi diolah serta digunakan lewat aplikasi (seperti ERP atau e-commerce)."
+            },
+            {
+                id: 5,
+                section: "Identifikasi Layanan SI (Materi 2)",
+                question: "Layanan yang masih dalam tahap perencanaan atau pengembangan di dalam organisasi diklasifikasikan ke dalam kelompok apa?",
+                options: [
+                    "Service Catalog",
+                    "Retired Services",
+                    "Service Pipeline",
+                    "Core Services"
+                ],
+                answer: "C",
+                explanation: "Dalam portofolio layanan, Service Pipeline adalah tempat untuk menampung seluruh daftar layanan baru yang masih dirancang atau dikembangkan."
+            },
+            {
+                id: 6,
+                section: "Identifikasi Layanan SI (Materi 2)",
+                question: "Dalam konteks klasifikasi fungsi layanan, penyediaan sistem operasi dan jaringan komputer yang menjamin jalannya aplikasi e-learning disebut sebagai...",
+                options: [
+                    "Core Services (Layanan Utama)",
+                    "Supporting Services (Layanan Pendukung)",
+                    "Enhancing Services (Layanan Tambahan)",
+                    "External Services (Layanan Eksternal)"
+                ],
+                answer: "B",
+                explanation: "Supporting Services adalah infrastruktur atau layanan dasar yang wajib ada agar layanan utama (Core Services) bisa beroperasi dengan normal."
+            },
+            {
+                id: 7,
+                section: "Service Level Management (Materi 3)",
+                question: "Dokumen formal atau kontrak tertulis yang mengatur standar performa layanan antara penyedia layanan dengan pelanggan eksternal disebut...",
+                options: [
+                    "Operational Level Agreement (OLA)",
+                    "Service Level Agreement (SLA)",
+                    "Request for Change (RFC)",
+                    "Known Error Database (KEDB)"
+                ],
+                answer: "B",
+                explanation: "SLA adalah dokumen atau kontrak formal yang menyepakati standar kualitas layanan antara penyedia layanan (Service Provider) dengan pelanggannya (Customer)."
+            },
+            {
+                id: 8,
+                section: "Service Level Management (Materi 3)",
+                question: "Metrik kinerja SLA yang mengukur seberapa cepat tim teknis mulai memberikan respons awal sejak tiket keluhan diterima disebut...",
+                options: [
+                    "Uptime / Ketersediaan",
+                    "Waktu Respons (Response Time)",
+                    "Waktu Penyelesaian (Resolution Time)",
+                    "Tingkat Kesalahan (Error Rate)"
+                ],
+                answer: "B",
+                explanation: "Waktu respons mengukur kecepatan penyedia layanan dalam memberikan tanggapan awal setelah menerima laporan keluhan pelanggan."
+            },
+            {
+                id: 9,
+                section: "Service Level Management (Materi 3)",
+                question: "Apa perbedaan mendasar antara dokumen SLA dengan dokumen OLA?",
+                options: [
+                    "SLA mengikat pelanggan eksternal, sedangkan OLA mengikat hubungan kerja antar-tim internal penyedia.",
+                    "SLA dibuat oleh tim jaringan, sedangkan OLA dibuat secara khusus oleh manajer puncak keuangan.",
+                    "SLA bersifat tidak wajib, sedangkan OLA bersifat hukum formal pidana.",
+                    "SLA mengukur aspek finansial aset, sedangkan OLA mencatat detail arsitektur database."
+                ],
+                answer: "A",
+                explanation: "SLA mengatur komitmen dengan pihak luar (pelanggan), sementara OLA mengatur komitmen kerja sama antar-tim internal organisasi untuk mencapai target SLA tersebut."
+            },
+            {
+                id: 10,
+                section: "Service Level Management (Materi 3)",
+                question: "Jika suatu vendor cloud menyusun satu kontrak terintegrasi yang mencakup layanan email, telepon, medsos, dan website sekaligus untuk satu klien spesifik, maka jenis SLA yang digunakan adalah...",
+                options: [
+                    "SLA Berbasis Layanan (Service-based SLA)",
+                    "SLA Berbasis Pelanggan (Customer-based SLA)",
+                    "SLA Tingkat Korporat",
+                    "SLA Otomatis Terdistribusi"
+                ],
+                answer: "B",
+                explanation: "SLA berbasis pelanggan mengumpulkan semua layanan yang dibutuhkan oleh satu pelanggan tertentu ke dalam satu kontrak tunggal."
+            },
+            {
+                id: 11,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Dalam manajemen layanan sistem informasi, apa fokus utama dari aktivitas Incident Management?",
+                options: [
+                    "Mencari akar penyebab gangguan sistem agar tidak terulang selamanya.",
+                    "Memulihkan operasional layanan normal secepat mungkin dengan dampak minimal bagi user.",
+                    "Menilai risiko finansial sebelum sistem baru dibeli oleh divisi pengadaan.",
+                    "Mengaudit keakuratan data serial number perangkat keras di data center."
+                ],
+                answer: "B",
+                explanation: "Fokus tunggal Incident Management adalah perbaikan darurat agar layanan kembali berjalan normal secepat mungkin (Restore Service)."
+            },
+            {
+                id: 12,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Manakah di bawah ini yang dikategorikan sebagai insiden (incident) pada sistem informasi?",
+                options: [
+                    "Spesifikasi RAM server dinilai terlalu kecil berdasarkan hasil review bulanan.",
+                    "Pengguna gagal melakukan login ke aplikasi keuangan karena muncul pesan error runtime.",
+                    "Rencana migrasi server database utama dari lokal ke infrastruktur cloud.",
+                    "Pemberian label identitas unik kode batang pada aset printer baru."
+                ],
+                answer: "B",
+                explanation: "Insiden adalah kejadian nyata yang menyebabkan layanan berhenti, melambat, atau tidak bisa diakses oleh pengguna saat itu juga."
+            },
+            {
+                id: 13,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Apa yang dimaksud dengan 'Problem' dalam kerangka kerja tata kelola ITIL?",
+                options: [
+                    "Setiap kejadian klaim ganti rugi keuangan yang diajukan oleh user akibat pemadaman listrik.",
+                    "Penyebab utama (root cause) dari satu atau lebih insiden yang terjadi secara berulang.",
+                    "Dokumen permohonan resmi modifikasi script kode program aplikasi.",
+                    "Kondisi di mana sistem cadangan berhasil mengambil alih beban server utama."
+                ],
+                answer: "B",
+                explanation: "Problem adalah misteri atau dalang di balik gangguan. Ia didefinisikan sebagai akar penyebab (root cause) dari insiden-insiden yang terjadi berulang kali."
+            },
+            {
+                id: 14,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Melakukan tindakan restart server harian saat crash terjadi merupakan contoh penanganan gejala sementara, tindakan ini disebut...",
+                options: [
+                    "Permanent Fix",
+                    "Workaround / Solusi Sementara",
+                    "Baseline Configuration",
+                    "Asset Deployment"
+                ],
+                answer: "B",
+                explanation: "Workaround adalah solusi sementara untuk meminimalkan dampak masalah atau memulihkan layanan tanpa harus menyelesaikan akar masalah utamanya terlebih dahulu."
+            },
+            {
+                id: 15,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Metode analisis yang menelusuri rentetan pertanyaan \"Mengapa?\" secara berulang guna mendeteksi akar penyebab masalah disebut...",
+                options: [
+                    "Fishbone Implementation",
+                    "Metode 5 Why (5 Mengapa)",
+                    "Configuration Accounting",
+                    "First Contact Resolution"
+                ],
+                answer: "B",
+                explanation: "Metode 5 Why adalah teknik analisis akar masalah (RCA) dengan terus bertanya \"Mengapa?\" berulang kali sampai menemukan penyebab paling mendasar yang bisa dikendalikan."
+            },
+            {
+                id: 16,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Apa fungsi utama dari dibentuknya tim Change Advisory Board (CAB)?",
+                options: [
+                    "Menulis kode baris program instruksi aplikasi akuntansi dari awal.",
+                    "Meninjau, menilai risiko, dampak, serta menyetujui atau menolak pengajuan perubahan layanan TI.",
+                    "Membeli perangkat keras laptop murah ke toko grosir komputer.",
+                    "Melayani panggilan telepon keluhan aduan pengguna secara ramah."
+                ],
+                answer: "B",
+                explanation: "CAB adalah dewan penasihat berisi para ahli yang bertugas mengevaluasi risiko keselamatan, menjadwalkan, dan memberikan persetujuan terhadap setiap perubahan sistem (Change)."
+            },
+            {
+                id: 17,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Aktivitas pembaruan kata sandi (reset password) user atau penambahan kuota email standar termasuk ke dalam jenis perubahan...",
+                options: [
+                    "Normal Change",
+                    "Emergency Change",
+                    "Standard Change",
+                    "Critical Change"
+                ],
+                answer: "C",
+                explanation: "Standard Change adalah perubahan rutin, berisiko sangat rendah, dan penanganannya sudah memiliki prosedur baku (SOP), sehingga tidak perlu meminta izin ulang ke dewan CAB."
+            },
+            {
+                id: 18,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Kapan dokumen Request for Change (RFC) wajib diajukan dan diproses melalui evaluasi CAB?",
+                options: [
+                    "Ketika terjadi insiden mati lampu total di seluruh area gedung perkantoran.",
+                    "Ketika ingin mengeksekusi Normal Change seperti migrasi database atau upgrade sistem core.",
+                    "Saat teknisi helpdesk hendak mencatat keluhan nama user di sistem ticketing.",
+                    "Setiap kali pengguna meminta penggantian mouse komputer yang rusak."
+                ],
+                answer: "B",
+                explanation: "Normal Change adalah perubahan yang bukan rutin (seperti upgrade server besar atau migrasi data) sehingga wajib mengisi dokumen RFC dan di-review ketat oleh CAB."
+            },
+            {
+                id: 19,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Pernyataan manakah yang paling akurat menggambarkan hubungan prinsip antara Aset (Asset) dan Item Konfigurasi (Configuration Item/CI)?",
+                options: [
+                    "Semua aset adalah CI, namun tidak semua CI adalah aset.",
+                    "Tidak semua aset adalah CI, tetapi semua CI sudah pasti merupakan aset.",
+                    "Aset dikelola oleh tim internal, sedangkan seluruh CI dikelola oleh vendor eksternal.",
+                    "Aset hanya berbentuk fisik, sedangkan CI selalu berbentuk digital non-fisik."
+                ],
+                answer: "B",
+                explanation: "Sesuai hukum tata kelola SACM, CI adalah bagian (subset) dari aset perusahaan yang dinilai krusial sehingga konfigurasinya wajib dikendalikan."
+            },
+            {
+                id: 20,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Jika fisik sebuah komputer jinjing dikategorikan sebagai Aset, manakah komponen di dalamnya yang bertindak sebagai Configuration Item (CI)?",
+                options: [
+                    "Kardus pembungkus luar bawaan pabrik saat dibeli.",
+                    "Sistem operasi terpasang dan konfigurasi parameter sistem keamanan.",
+                    "Nota kwitansi kertas bukti pembayaran pajak pembelian dari toko.",
+                    "Tas ransel pembawa laptop yang diberikan gratis sebagai bonus pembelanjaan."
+                ],
+                answer: "B",
+                explanation: "Laptop fisiknya adalah aset, sedangkan hal-hal logis internal yang kustomisasinya memengaruhi stabilitas operasional sistem (seperti OS, aplikasi, dan setelan keamanan) adalah CI."
+            },
+            {
+                id: 21,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Database pusat yang menyimpan karakteristik informasi teknis mengenai CI beserta pemetaan hubungan keterkaitan antarsistem disebut...",
+                options: [
+                    "Known Error Database (KEDB)",
+                    "Configuration Management Database (CMDB)",
+                    "Service Portfolio Log",
+                    "Operational Level Register"
+                ],
+                answer: "B",
+                explanation: "CMDB adalah database khusus yang tidak hanya mencatat data atribut aset, melainkan fokus menyimpan informasi \"hubungan/relasi\" timbal balik antar-CI."
+            },
+            {
+                id: 22,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Apa manfaat nyata pemanfaatan arsitektur CMDB yang komprehensif saat terjadi gangguan insiden pada server payroll perusahaan?",
+                options: [
+                    "Secara otomatis memotong gaji bulanan karyawan yang terlambat masuk kantor.",
+                    "Mempercepat proses troubleshooting karena tim IT langsung paham daftar database yang terhubung serta relasi antar-sistem yang terdampak.",
+                    "Mencetak nota tagihan biaya listrik pemakaian data center secara mandiri.",
+                    "Menghapus seluruh file log error program agar kapasitas media penyimpanan lega."
+                ],
+                answer: "B",
+                explanation: "Karena CMDB menyimpan visualisasi peta hubungan antar-sistem, ketika server rusak, tim IT bisa melakukan analisis dampak (impact analysis) dengan kilat untuk mempercepat pencarian eror."
+            },
+            {
+                id: 23,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Sistem terintegrasi yang bertindak sebagai payung besar pengelola beberapa database CMDB beserta penjamin akurasi sinkronisasi datanya disebut...",
+                options: [
+                    "Configuration Management System (CMS)",
+                    "Service Pipeline Engine",
+                    "Decision Support Subsystem",
+                    "Baseline Control Register"
+                ],
+                answer: "A",
+                explanation: "CMS memiliki skala arsitektur di atas CMDB. CMS adalah kesatuan alat, proses, dan integrasi yang mengelola seluruh informasi CI dan memayungi CMDB."
+            },
+            {
+                id: 24,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Urutan siklus hidup (lifecycle) manajemen aset teknologi informasi yang tepat dan runut menurut standar perkuliahan adalah...",
+                options: [
+                    "Procurement - Deployment - Operation - Planning - Retirement",
+                    "Planning - Procurement - Deployment - Operation - Retirement",
+                    "Deployment - Operation - Planning - Retirement - Procurement",
+                    "Planning - Deployment - Procurement - Retirement - Operation"
+                ],
+                answer: "B",
+                explanation: "Umur ekonomi aset selalu dimulai dari Perencanaan (Planning), Pengadaan (Procurement), Pemasangan/Penerapan (Deployment), Operasional harian (Operation), dan masa Pensiun (Retirement)."
+            },
+            {
+                id: 25,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Pada tahapan manakah di dalam siklus hidup aset TI, aktivitas analisis anggaran belanja serta penentuan spesifikasi teknis dijalankan?",
+                options: [
+                    "Procurement",
+                    "Deployment",
+                    "Planning (Perencanaan)",
+                    "Retirement"
+                ],
+                answer: "C",
+                explanation: "Menentukan spesifikasi teknis barang, menganalisis ketersediaan dana anggaran, dan memperjelas alasan urgensi kebutuhan bisnis dikerjakan di tahap awal, yaitu perencanaan (Planning)."
+            },
+            {
+                id: 26,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Aktivitas memeriksa kesesuaian fisik barang kiriman vendor dengan lembar dokumen purchase order merupakan inti kegiatan dari tahap...",
+                options: [
+                    "Planning",
+                    "Procurement (Pengadaan)",
+                    "Deployment",
+                    "Operation"
+                ],
+                answer: "B",
+                explanation: "Tahap Procurement (Pengadaan) mencakup seluruh proses transaksi pemesanan legal aset hingga proses pengecekan fisik barang saat diterima dari vendor."
+            },
+            {
+                id: 27,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Aktivitas pelatihan operasional (training) bagi staf end-user agar mahir menggunakan aplikasi sistem baru dilaksanakan pada fase...",
+                options: [
+                    "Procurement",
+                    "Deployment (Penerapan)",
+                    "Operation",
+                    "Retirement"
+                ],
+                answer: "B",
+                explanation: "Ketika aset dipasang di lingkungan asli produksi (Deployment), aktivitas instalasi, konfigurasi, beserta edukasi pelatihan cara pakai (transfer ilmu) wajib dilakukan."
+            },
+            {
+                id: 28,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Pemantauan rutin kinerja hardware, perpanjangan masa berlaku lisensi software, serta perawatan preventif siber masuk ke dalam ranah...",
+                options: [
+                    "Planning",
+                    "Operation (Operasional)",
+                    "Deployment",
+                    "Retirement"
+                ],
+                answer: "B",
+                explanation: "Tahap Operation adalah masa di mana aset dimanfaatkan secara live untuk menyokong proses bisnis, termasuk menjaga lisensinya agar tetap patuh hukum."
+            },
+            {
+                id: 29,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Apa tindakan utama yang wajib dilakukan pada fase Retirement dalam siklus hidup manajemen aset TI sebelum media penyimpanan komputer dijual/dibuang?",
+                options: [
+                    "Melakukan install ulang aplikasi game hiburan agar harga jualnya melambung.",
+                    "Penghapusan data secara aman (secure data wiping) demi mencegah kebocoran informasi rahasia bisnis.",
+                    "Mengajukan formulir permohonan RFC darurat ke dewan penasihat CAB.",
+                    "Identity target ketersediaan uptime di lembar perjanjian kontrak SLA baru."
+                ],
+                answer: "B",
+                explanation: "Demi mematuhi aspek keamanan informasi, sebelum komputer dipensiunkan (Retirement) dan dilepas kepemilikannya, datanya harus dihapus secara aman agar rahasia perusahaan tidak bocor ke luar."
+            },
+            {
+                id: 30,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Apa kegunaan utama dari ditetapkannya Configuration Baseline (Basis Konfigurasi) secara formal pada titik waktu tertentu?",
+                options: [
+                    "Untuk menghitung total depresiasi nilai mata uang penyusutan harga laptop.",
+                    "Berfungsi sebagai titik acuan aman referensi resmi, sehingga jika terjadi error fatal pasca update sistem, tim IT dapat melakukan rollback ke kondisi stabil sebelumnya.",
+                    "Menghapus kewajiban pengisian lembar kerja pengaduan tiket helpdesk.",
+                    "Secara otomatis memblokir seluruh koneksi internet karyawan di jam istirahat."
+                ],
+                answer: "B",
+                explanation: "Configuration Baseline bertindak sebagai \"potret titik aman\". Jika eksperimen perubahan atau update patch software di kemudian hari memicu crash, baseline dipakai untuk pemulihan kembali (rollback)."
+            },
+            {
+                id: 31,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Dalam ilustrasi diagram Service Assets di bab awal, manakah dari komponen berikut yang dikelompokkan ke dalam kategori aset berbentuk software (perangkat lunak)?",
+                options: [
+                    "Server dan Network switch",
+                    "Database dan Employees",
+                    "Payroll app",
+                    "Security Settings dan OS"
+                ],
+                answer: "C",
+                explanation: "Berdasarkan diagram pengantar aset layanan, aplikasi payroll (Payroll app) adalah contoh nyata dari software asset, sedangkan server/switch adalah hardware, dan OS/security settings masuk ke item konfigurasi (CI)."
+            },
+            {
+                id: 32,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Aktivitas manajemen konfigurasi yang berfokus pada pemberian penamaan standar (naming), pelabelan (labeling), serta pemberian ID unik (seperti: SRV-DB-001) disebut...",
+                options: [
+                    "Kontrol Konfigurasi",
+                    "Audit Konfigurasi",
+                    "Identifikasi Konfigurasi",
+                    "Status Accounting"
+                ],
+                answer: "C",
+                explanation: "Identifikasi Konfigurasi adalah aktivitas memilih item-item konfigurasi (CI) yang harus dikelola dan memberikannya penanda unik (ID/Label) agar mudah dilacak."
+            },
+            {
+                id: 33,
+                section: "Asset & Configuration Management (Materi 5)",
+                question: "Manakah di bawah ini yang merupakan tujuan utama dari aktivitas Kontrol Konfigurasi?",
+                options: [
+                    "Melakukan audit fisik ke ruang server secara mendadak",
+                    "Mengontrol dan mengendalikan perubahan pada CI melalui mekanisme review dan approval",
+                    "Menghapus seluruh aset TI yang sudah tidak memiliki nilai ekonomis",
+                    "Memperbaiki bug pada kode program aplikasi keuangan secara darurat"
+                ],
+                answer: "B",
+                explanation: "Kontrol Konfigurasi memastikan bahwa setiap perubahan pada Item Konfigurasi (CI) harus ditinjau dan disetujui (approval) terlebih dahulu guna mengurangi risiko gangguan layanan."
+            },
+            {
+                id: 34,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Dalam tahapan Incident Management, aktivitas mencatat insiden ke dalam sistem ticketing untuk keperluan pelacakan dan pengelolaan disebut...",
+                options: [
+                    "Identifikasi Incident",
+                    "Logging Tiket",
+                    "Klasifikasi Incident",
+                    "Prioritas Incident"
+                ],
+                answer: "B",
+                explanation: "Proses memasukkan data gangguan secara resmi ke dalam sistem ticketing agar mendapatkan nomor tiket pelacakan dinamakan tahapan Logging Tiket."
+            },
+            {
+                id: 35,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Apa input utama yang dibutuhkan pada tahapan Prioritas Incident di Manajemen Insiden?",
+                options: [
+                    "Dokumen SLA dari vendor dan laporan keuangan kuartalan",
+                    "Tiket incident yang sudah terkategorisasi, informasi dampak (impact), dan urgensi (urgency)",
+                    "Persetujuan tertulis dari tim Change Advisory Board (CAB)",
+                    "Berkas log penyelesaian permanen dari Known Error Database"
+                ],
+                answer: "B",
+                explanation: "Penentuan skala prioritas insiden (Rendah, Sedang, Tinggi, Kritis) selalu dihitung berdasarkan kombinasi nilai Dampak (Impact) terhadap bisnis dan Urgensi (Urgency) penanganan."
+            },
+            {
+                id: 36,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Dalam skema Incident Management, kapankah sebuah tiket gangguan boleh dialirkan ke tahap Eskalasi?",
+                options: [
+                    "Segera setelah user selesai menelepon atau mengisi formulir",
+                    "Ketika insiden tersebut tidak dapat diselesaikan oleh tim dukungan pada level awal (Level 1)",
+                    "Setelah solusi permanen (permanent fix) berhasil diterapkan di server utama",
+                    "Menunggu proses audit lisensi tahunan selesai dilaksanakan"
+                ],
+                answer: "B",
+                explanation: "Eskalasi dilakukan untuk mengalihkan penanganan insiden ke tim atau peran yang memiliki kompetensi/otoritas lebih tinggi karena tim level awal tidak mampu menyelesaikannya."
+            },
+            {
+                id: 37,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Di dalam manajemen problem, apa nama database atau rekaman log yang digunakan untuk menyimpan solusi sementara (workaround) dan akar masalah yang teridentifikasi?",
+                options: [
+                    "Configuration Management Database (CMDB)",
+                    "Known Error Database (KEDB) / Problem Record",
+                    "Service Portfolio Registry",
+                    "Change Control Log"
+                ],
+                answer: "B",
+                explanation: "Rekam jejak problem, solusi sementara (workaround), beserta akar penyebab yang berhasil dianalisis tim Problem Management akan dicatat secara resmi di dalam Problem Record / Known Error untuk mencegah gangguan berulang."
+            },
+            {
+                id: 38,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Perhatikan alur 5 Why berikut: \"Server down → CPU overload → User tinggi → Resource server terbatas → Belum ada upgrade server → X\". Apakah kesimpulan akar masalah (Root Cause) yang tepat untuk mengisi huruf X sesuai materi kuliah?",
+                options: [
+                    "Anggaran divisi IT habis dipotong",
+                    "Server terserang virus trojan",
+                    "Tidak ada capacity planning / capacity review",
+                    "Kelalaian admin lupa menghidupkan AC ruangan"
+                ],
+                answer: "C",
+                explanation: "Berdasarkan studi kasus analisis akar masalah (RCA) di slide kuliah, rantai pertanyaan \"Mengapa\" tersebut berujung pada kesimpulan bahwa organisasi tidak memiliki perencanaan kapasitas (capacity planning/review)."
+            },
+            {
+                id: 39,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Manakah di bawah ini yang merupakan dokumen resmi tertulis yang memuat nama perubahan, tujuan, dampak, risiko, jadwal implementasi, hingga rollback plan?",
+                options: [
+                    "Service Level Agreement (SLA)",
+                    "Operational Level Agreement (OLA)",
+                    "Request for Change (RFC)",
+                    "Configuration Baseline Spreadsheet"
+                ],
+                answer: "C",
+                explanation: "RFC (Request for Change) adalah formulir proposal atau dokumen resmi yang wajib diisi untuk mendokumentasikan rencana modifikasi sebelum diajukan ke dewan CAB."
+            },
+            {
+                id: 40,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Siapa saja anggota yang umumnya terlibat di dalam struktur dewan Change Advisory Board (CAB)?",
+                options: [
+                    "Hanya Teknisi Magang dan Staff Administrasi Gudang",
+                    "IT Manager, Network Engineer, Security Officer, Application Owner, dan Service Desk Leader",
+                    "Direktur Utama Keuangan dan Tim Audit Pajak Eksternal",
+                    "Seluruh pelanggan (customer) yang menggunakan layanan cloud"
+                ],
+                answer: "B",
+                explanation: "Anggota CAB terdiri dari pemangku kepentingan (stakeholders) dan tenaga ahli dari berbagai lini TI (manajerial, jaringan, keamanan, pemilik aplikasi, dan helpdesk) untuk mengukur dampak perubahan dari segala sisi."
+            },
+            {
+                id: 41,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Langkah penting manakah yang wajib dijalankan tepat sebelum melakukan implementasi perubahan sistem di lingkungan produksi (live production) untuk memperkecil risiko kegagalan?",
+                options: [
+                    "Melakukan proses Retirement pada database cadangan",
+                    "Melakukan pengujian (testing) di lingkungan khusus seperti test/staging environment",
+                    "Menandatangani kontrak kompensasi penalti baru dengan pelanggan",
+                    "Menghapus identitas penamaan unik pada seluruh unit hardware"
+                ],
+                answer: "B",
+                explanation: "Melakukan pengujian (testing) di lingkungan test/staging sangat penting dilakukan sebelum sistem dilepas ke lingkungan produksi agar memastikan perubahan berfungsi normal tanpa error."
+            },
+            {
+                id: 42,
+                section: "Problem & Change Management (Materi 4)",
+                question: "Untuk meminimalkan gangguan operasional bisnis pengguna harian, kapankah jadwal eksekusi perubahan (change) sebaiknya dilakukan?",
+                options: [
+                    "Di awal jam masuk kantor Senin pagi",
+                    "Tepat saat jam sibuk transaksi akhir bulan",
+                    "Pada waktu lalu lintas data rendah (low traffic), seperti malam hari atau akhir pekan",
+                    "Kapan saja saat teknisi memiliki waktu luang tanpa perlu pemberitahuan"
+                ],
+                answer: "C",
+                explanation: "Perubahan terjadwal sebaiknya dieksekusi di luar jam kerja (maintenance window) saat low traffic untuk meminimalkan dampak kerugian downtime bagi proses bisnis utama organisasi."
+            },
+            {
+                id: 43,
+                section: "Service Level Management (Materi 3)",
+                question: "Metrik kualitas teknik layanan yang menilai seberapa sering layanan mengalami kegagalan, seperti jumlah bug perangkat lunak atau persentase transaksi yang gagal diproses disebut...",
+                options: [
+                    "Waktu Respons (Response Time)",
+                    "Tingkat Penyelesaian pada Panggilan Pertama",
+                    "Tingkat Kesalahan (Error Rate)",
+                    "Faktor Ketersediaan (Uptime)"
+                ],
+                answer: "C",
+                explanation: "Tingkat Kesalahan (Error Rate) mengukur stabilitas aspek teknis layanan dengan menghitung frekuensi kegagalan sistem atau bug program."
+            },
+            {
+                id: 44,
+                section: "Service Level Management (Materi 3)",
+                question: "Di dalam dokumen templat resmi Perjanjian Tingkat Layanan (SLA), klausul yang menerangkan kompensasi berupa kredit layanan atau diskon jika terjadi pelanggaran metrik diatur pada bab...",
+                options: [
+                    "Deskripsi Layanan",
+                    "Kompensasi dan Sanksi",
+                    "Prosedur Peninjauan dan Revisi",
+                    "Ketentuan Pengakhiran"
+                ],
+                answer: "B",
+                explanation: "Bagian Kompensasi dan Sanksi mengatur hak ganti rugi (seperti pemberian kredit layanan atau potongan tagihan) bagi pelanggan apabila vendor gagal memenuhi target KPI SLA."
+            },
+            {
+                id: 45,
+                section: "Service Level Management (Materi 3)",
+                question: "Berdasarkan dokumen contoh riil SLA antara CloudTech Solutions dengan XYZ Corporation, pada hari dan jam berapakah aktivitas pemeliharaan terjadwal (scheduled maintenance) dijalankan?",
+                options: [
+                    "Setiap hari Jumat pukul 00.00 - 02.00 WIB",
+                    "Setiap hari Minggu pukul 02.00 hingga 04.00 GMT",
+                    "Setiap akhir bulan pada jam kerja operasional",
+                    "Kapan saja secara acak tanpa batasan waktu standar"
+                ],
+                answer: "B",
+                explanation: "Merujuk pada dokumen contoh SLA CloudTech Solutions, waktu pemeliharaan server cloud dijadwalkan secara spesifik pada hari Minggu pukul 02.00 - 04.00 GMT."
+            },
+            {
+                id: 46,
+                section: "Service Level Management (Materi 3)",
+                question: "Sesuai contoh kasus kompensasi CloudTech Solutions, apa bentuk sanksi ganti rugi jika target uptime bulanan jebol di bawah angka 99,95%?",
+                options: [
+                    "Vendor akan dituntut secara hukum pidana ke pengadilan",
+                    "Klien menerima kredit layanan setara 10% dari biaya bulanan untuk setiap 0,1% penurunan di bawah ambang batas",
+                    "Direktur TI dari vendor wajib diganti saat itu juga",
+                    "Kontrak kerja sama otomatis hangus tanpa kompensasi apa pun"
+                ],
+                answer: "B",
+                explanation: "Dokumen kesepakatan menyatakan sanksi berupa pemberian kredit layanan finansial sebesar 10% dari biaya langganan bulanan untuk setiap kelipatan drop 0,1% dari threshold."
+            },
+            {
+                id: 47,
+                section: "Identifikasi Layanan SI (Materi 2)",
+                question: "Di dalam instansi Universitas Padjadjaran (Unpad), penyediaan layanan pengelolaan akun dan kata sandi SIAT (Sistem Informasi Akademik Terpadu) dikategorikan ke dalam struktur...",
+                options: [
+                    "Layanan Jaringan Nirkabel",
+                    "Layanan Software",
+                    "Komponen Perangkat Teknologi Informasi",
+                    "Layanan Komunikasi Telepon IP"
+                ],
+                answer: "B",
+                explanation: "Pengelolaan akun, password SIAT, update patch, konfigurasi sistem operasi, dan instalasi aplikasi akademik dikelompokkan ke dalam rumpun Layanan Software."
+            },
+            {
+                id: 48,
+                section: "Identifikasi Layanan SI (Materi 2)",
+                question: "Aktivitas mengidentifikasi dan mengelola portofolio seluruh layanan organisasi—baik yang masih berupa ide rencana, berstatus aktif operasional, maupun yang sudah usang dipensiunkan—merupakan tugas dari proses ITIL bernama...",
+                options: [
+                    "Service Portfolio Management",
+                    "Service Catalog Management",
+                    "Service Level Management",
+                    "Incident Logging Management"
+                ],
+                answer: "A",
+                explanation: "Service Portfolio Management mengawasi siklus investasi seluruh spektrum layanan (masa lalu, masa kini, masa depan), sementara Service Catalog hanya fokus mendaftar layanan yang aktif saat ini saja."
+            },
+            {
+                id: 49,
+                section: "Identifikasi Layanan SI (Materi 2)",
+                question: "Manakah di bawah ini yang merupakan salah satu tantangan atau kendala utama yang sering dihadapi organisasi saat melakukan proses Identifikasi Layanan?",
+                options: [
+                    "Terlalu banyak jumlah teknisi ahli bersertifikasi internasional",
+                    "Biaya pengadaan kertas label kode batang terlalu mahal",
+                    "Kurangnya dokumentasi layanan serta sulit membedakan antara batasan 'layanan' dengan 'aplikasi'",
+                    "Target uptime server terlalu tinggi di atas angka seratus persen"
+                ],
+                answer: "C",
+                explanation: "Berdasarkan materi kuliah, tantangan nyata dalam fase identifikasi mencakup minimnya dokumentasi, kerancuan memisahkan aplikasi dan layanan, serta kurangnya komunikasi antara tim bisnis dengan tim TI."
+            },
+            {
+                id: 50,
+                section: "Identifikasi Layanan SI (Materi 2)",
+                question: "Manakah di bawah ini contoh Best Practice (praktik terbaik) yang disarankan ITIL agar proses identifikasi layanan berjalan sukses memberikan nilai tambah?",
+                options: [
+                    "Menyusun katalog menggunakan bahasa teknis pemrograman komputer yang rumit",
+                    "Menghindari keterlibatan pengguna akhir agar proses perancangan cepat",
+                    "Berorientasi pada nilai (value-driven), melibatkan stakeholder, serta menggunakan bahasa bisnis yang mudah dipahami",
+                    "Melakukan perubahan konfigurasi server tanpa perlu dicatat ke CMDB"
+                ],
+                answer: "C",
+                explanation: "Menurut ITIL, identifikasi layanan harus berorientasi nilai (value-driven), melibatkan pemangku kepentingan (stakeholder), memakai bahasa bisnis (bukan bahasa teknis dewa), didokumentasikan sistematis, dan dievaluasi berkala."
+            }
+        ];
+
+        // --- APP STATE ---
+        let state = {
+            questions: [],         // Active question set
+            currentIdx: 0,         // Index of active question in state.questions
+            userAnswers: {},       // Maps question index -> chosen letter ('A', 'B', 'C', 'D')
+            flaggedQuestions: {},  // Maps question index -> boolean
+            timeSpent: 0,          // In seconds
+            timerInterval: null,
+            mode: 'practice',      // 'practice' or 'exam'
+            soundEnabled: true,
+            theme: 'dark'
+        };
+
+        // --- WEB AUDIO API SYNTHESIS ---
+        let audioCtx = null;
+        function playSynthSound(type) {
+            if (!state.soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(550, now);
+                    osc.frequency.exponentialRampToValueAtTime(280, now + 0.08);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(587.33, now); // D5
+                    osc.frequency.setValueAtTime(739.99, now + 0.08); // F#5
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'incorrect') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(200, now); // G3
+                    osc.frequency.linearRampToValueAtTime(130, now + 0.2);
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'finish') {
+                    const notes = [293.66, 369.99, 440.00, 587.33]; // D major chord
+                    notes.forEach((freq, idx) => {
+                        const noteOsc = audioCtx.createOscillator();
+                        const noteGain = audioCtx.createGain();
+                        noteOsc.type = 'triangle';
+                        noteOsc.connect(noteGain);
+                        noteGain.connect(audioCtx.destination);
+                        noteOsc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                        noteGain.gain.setValueAtTime(0.05, now + idx * 0.08);
+                        noteGain.gain.linearRampToValueAtTime(0, now + idx * 0.08 + 0.3);
+                        noteOsc.start(now + idx * 0.08);
+                        noteOsc.stop(now + idx * 0.08 + 0.3);
+                    });
+                }
+            } catch (e) {
+                console.warn('Audio Context sound play failed:', e);
+            }
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initHistory();
+            setupEventListeners();
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('mlsi_quiz_theme') || 'dark';
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            state.theme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('mlsi_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        function initHistory() {
+            const history = getHistory();
+            renderHistoryUI(history);
+        }
+
+        function getHistory() {
+            return JSON.parse(localStorage.getItem('mlsi_quiz_history')) || [];
+        }
+
+        function saveSessionToHistory(scorePercent, correct, total, duration) {
+            const history = getHistory();
+            const session = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+                score: Math.round(scorePercent),
+                correct: correct,
+                total: total,
+                duration: formatTime(duration),
+                mode: state.mode === 'practice' ? 'Latihan' : 'Ujian'
+            };
+            history.unshift(session);
+            localStorage.setItem('mlsi_quiz_history', JSON.stringify(history.slice(0, 10))); // Cap at 10 entries
+            renderHistoryUI(getHistory());
+        }
+
+        function renderHistoryUI(history) {
+            const container = document.getElementById('history-container');
+            if (history.length === 0) {
+                container.innerHTML = `<div class="empty-history">Belum ada riwayat pengerjaan kuis.</div>`;
+                return;
+            }
+            container.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <div class="history-info">
+                        <span class="history-score">${item.score}% Benar</span>
+                        <span class="history-date">${item.date}</span>
+                    </div>
+                    <div style="text-align: right; display:flex; flex-direction:column; gap:2px;">
+                        <span class="history-meta">${item.correct}/${item.total} Soal</span>
+                        <span class="history-date" style="font-size:10px;">${item.duration} • ${item.mode}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playSynthSound('click');
+                setTheme(state.theme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Sound toggle
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                state.soundEnabled = !state.soundEnabled;
+                const icon = document.getElementById('sound-icon');
+                if (state.soundEnabled) {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    `;
+                } else {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    `;
+                }
+                playSynthSound('click');
+            });
+
+            // Count buttons selection
+            const countButtons = document.querySelectorAll('#count-group button');
+            countButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    countButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // Mode buttons selection
+            const modeButtons = document.querySelectorAll('#mode-group button');
+            modeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    modeButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // Start Quiz
+            document.getElementById('start-btn').addEventListener('click', startQuiz);
+
+            // Navigation
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                if (state.currentIdx > 0) {
+                    playSynthSound('click');
+                    state.currentIdx--;
+                    renderQuestion();
+                }
+            });
+
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if (state.currentIdx < state.questions.length - 1) {
+                    playSynthSound('click');
+                    state.currentIdx++;
+                    renderQuestion();
+                } else if (state.mode === 'practice') {
+                    finishQuiz();
+                }
+            });
+
+            // Ragu-ragu / Flag
+            document.getElementById('flag-btn').addEventListener('click', toggleFlagQuestion);
+
+            // Submit Button
+            document.getElementById('submit-quiz-btn').addEventListener('click', () => {
+                if (confirm('Apakah Anda yakin ingin menyelesaikan kuis ini?')) {
+                    finishQuiz();
+                }
+            });
+
+            // Restart & Change Settings
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                playSynthSound('click');
+                startQuiz();
+            });
+
+            document.getElementById('change-settings-btn').addEventListener('click', () => {
+                playSynthSound('click');
+                showView('dashboard-view');
+            });
+
+            // Review search and filters
+            document.getElementById('review-search').addEventListener('input', applyReviewFilters);
+
+            const filterBtns = document.querySelectorAll('.review-filters .filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyReviewFilters();
+                });
+            });
+        }
+
+        // --- ENGINE LOGIC ---
+
+        function startQuiz() {
+            playSynthSound('click');
+
+            // 1. Gather Selected Categories
+            const checkedBoxes = document.querySelectorAll('.cat-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                alert('Silakan pilih minimal satu kategori materi!');
+                return;
+            }
+
+            const activeCategories = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+
+            // Filter questions
+            let filteredQuestions = ALL_QUESTIONS.filter(q => {
+                if ([1, 2, 3, 4, 5, 6, 47, 48, 49, 50].includes(q.id)) return activeCategories.includes(1);
+                if ([7, 8, 9, 10, 43, 44, 45, 46].includes(q.id)) return activeCategories.includes(2);
+                if ([11, 12, 13, 14, 15, 16, 17, 18, 34, 35, 36, 37, 38, 39, 40, 41, 42].includes(q.id)) return activeCategories.includes(3);
+                if ([19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33].includes(q.id)) return activeCategories.includes(4);
+                return false;
+            });
+
+            // Shuffle
+            filteredQuestions = shuffleArray([...filteredQuestions]);
+
+            // 2. Count limit
+            const countBtn = document.querySelector('#count-group button.active');
+            const countLimitVal = countBtn.getAttribute('data-val');
+            let finalCount = filteredQuestions.length;
+            if (countLimitVal !== 'all') {
+                finalCount = Math.min(parseInt(countLimitVal), filteredQuestions.length);
+            }
+            state.questions = filteredQuestions.slice(0, finalCount);
+
+            // 3. Mode
+            const modeBtn = document.querySelector('#mode-group button.active');
+            state.mode = modeBtn.getAttribute('data-val');
+
+            // Reset state
+            state.currentIdx = 0;
+            state.userAnswers = {};
+            state.flaggedQuestions = {};
+            state.timeSpent = 0;
+
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            const timerPill = document.getElementById('timer-pill');
+            if (state.mode === 'exam') {
+                timerPill.classList.remove('hidden');
+                let timerLimit = state.questions.length * 90; // 1.5 mins per question
+                updateTimerDisplay(timerLimit);
+
+                state.timerInterval = setInterval(() => {
+                    timerLimit--;
+                    state.timeSpent++;
+                    updateTimerDisplay(timerLimit);
+
+                    if (timerLimit === 60) {
+                        timerPill.classList.add('critical');
+                    }
+
+                    if (timerLimit <= 0) {
+                        clearInterval(state.timerInterval);
+                        alert('Waktu ujian telah habis! Hasil Anda akan segera dikumpulkan.');
+                        finishQuiz();
+                    }
+                }, 1000);
+            } else {
+                timerPill.classList.add('hidden');
+                state.timerInterval = setInterval(() => {
+                    state.timeSpent++;
+                }, 1000);
+            }
+
+            const examSidebar = document.querySelector('.exam-sidebar');
+            if (state.mode === 'exam') {
+                examSidebar.classList.remove('hidden');
+            } else {
+                examSidebar.classList.add('hidden');
+            }
+
+            renderExamGrid();
+            renderQuestion();
+            showView('quiz-view');
+        }
+
+        function updateTimerDisplay(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainder = seconds % 60;
+            document.getElementById('timer-display').innerText =
+                `${minutes.toString().padStart(2, '0')}:${remainder.toString().padStart(2, '0')}`;
+        }
+
+        function renderQuestion() {
+            const q = state.questions[state.currentIdx];
+            if (!q) return;
+
+            document.getElementById('question-index-label').innerText = `Soal ${state.currentIdx + 1} dari ${state.questions.length}`;
+            document.getElementById('question-section-tag').innerText = q.section;
+            document.getElementById('question-text-box').innerHTML = q.question;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            const selectedAns = state.userAnswers[state.currentIdx];
+            const hasAnswered = selectedAns !== undefined;
+            const letterMap = ['A', 'B', 'C', 'D'];
+
+            q.options.forEach((optText, i) => {
+                const optLetter = letterMap[i];
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+
+                btn.innerHTML = `
+                    <div class="option-badge">${optLetter}</div>
+                    <div class="option-text">${optText}</div>
+                `;
+
+                if (selectedAns === optLetter) {
+                    btn.classList.add('selected');
+                }
+
+                if (state.mode === 'practice' && hasAnswered) {
+                    btn.classList.add('disabled');
+                    if (optLetter === q.answer) {
+                        btn.classList.add('correct');
+                    } else if (selectedAns === optLetter) {
+                        btn.classList.add('incorrect');
+                    }
+                }
+
+                btn.addEventListener('click', () => {
+                    if (state.mode === 'practice' && hasAnswered) return;
+                    selectOption(optLetter);
+                });
+
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('prev-btn').disabled = state.currentIdx === 0;
+
+            const nextBtn = document.getElementById('next-btn');
+            if (state.currentIdx === state.questions.length - 1) {
+                if (state.mode === 'practice') {
+                    nextBtn.innerHTML = `Selesai <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none"/></svg>`;
+                } else {
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.innerHTML = `Selanjutnya <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round"/></svg>`;
+                nextBtn.disabled = false;
+            }
+
+            const flagBtn = document.getElementById('flag-btn');
+            if (state.flaggedQuestions[state.currentIdx]) {
+                flagBtn.classList.add('flagged');
+            } else {
+                flagBtn.classList.remove('flagged');
+            }
+
+            const progressPct = ((state.currentIdx + 1) / state.questions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
+
+            const expBox = document.getElementById('instant-explanation-box');
+            if (state.mode === 'practice' && hasAnswered) {
+                document.getElementById('instant-explanation-text').innerHTML = q.explanation;
+                expBox.classList.add('visible');
+            } else {
+                expBox.classList.remove('visible');
+            }
+
+            updateStatsCounter();
+
+            if (state.mode === 'exam') {
+                document.querySelectorAll('.grid-cell').forEach((cell, idx) => {
+                    if (idx === state.currentIdx) {
+                        cell.classList.add('active');
+                        cell.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } else {
+                        cell.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        function selectOption(letter) {
+            const q = state.questions[state.currentIdx];
+            state.userAnswers[state.currentIdx] = letter;
+
+            if (state.mode === 'practice') {
+                if (letter === q.answer) {
+                    playSynthSound('correct');
+                } else {
+                    playSynthSound('incorrect');
+                }
+                renderQuestion();
+            } else {
+                playSynthSound('click');
+                updateGridCellState(state.currentIdx);
+                renderQuestion();
+            }
+        }
+
+        function toggleFlagQuestion() {
+            playSynthSound('click');
+            const isFlagged = !state.flaggedQuestions[state.currentIdx];
+            state.flaggedQuestions[state.currentIdx] = isFlagged;
+
+            const flagBtn = document.getElementById('flag-btn');
+            if (isFlagged) {
+                flagBtn.classList.add('flagged');
+            } else {
+                flagBtn.classList.remove('flagged');
+            }
+
+            if (state.mode === 'exam') {
+                updateGridCellState(state.currentIdx);
+            }
+        }
+
+        function updateStatsCounter() {
+            let correct = 0;
+            let incorrect = 0;
+
+            state.questions.forEach((q, idx) => {
+                const ans = state.userAnswers[idx];
+                if (ans !== undefined) {
+                    if (ans === q.answer) correct++;
+                    else incorrect++;
+                }
+            });
+
+            document.getElementById('score-counter-pill').innerText = `Benar: ${correct} • Salah: ${incorrect}`;
+        }
+
+        function renderExamGrid() {
+            const grid = document.getElementById('exam-grid-container');
+            grid.innerHTML = '';
+
+            state.questions.forEach((_, idx) => {
+                const cell = document.createElement('button');
+                cell.className = 'grid-cell';
+                cell.innerText = idx + 1;
+                cell.addEventListener('click', () => {
+                    playSynthSound('click');
+                    state.currentIdx = idx;
+                    renderQuestion();
+                });
+                grid.appendChild(cell);
+                updateGridCellState(idx, cell);
+            });
+        }
+
+        function updateGridCellState(idx, cellElement) {
+            const cell = cellElement || document.getElementById('exam-grid-container').children[idx];
+            if (!cell) return;
+
+            cell.className = 'grid-cell';
+
+            if (state.userAnswers[idx] !== undefined) {
+                cell.classList.add('answered');
+            }
+            if (state.flaggedQuestions[idx]) {
+                cell.classList.add('flagged');
+            }
+            if (idx === state.currentIdx) {
+                cell.classList.add('active');
+            }
+        }
+
+        function finishQuiz() {
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            playSynthSound('finish');
+
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let skippedCount = 0;
+
+            state.questions.forEach((q, idx) => {
+                const ans = state.userAnswers[idx];
+                if (ans === undefined) {
+                    skippedCount++;
+                } else if (ans === q.answer) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+            });
+
+            const total = state.questions.length;
+            const scorePercent = total > 0 ? (correctCount / total) * 100 : 0;
+
+            const circle = document.getElementById('score-circle');
+            const circumference = 2 * Math.PI * 70; // 439.82
+            const offset = circumference - (scorePercent / 100) * circumference;
+
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 100);
+
+            document.getElementById('result-score-percent').innerText = `${Math.round(scorePercent)}%`;
+
+            let title = 'Hebat!';
+            let desc = 'Performa luar biasa! Anda sudah menguasai materi dengan sangat baik dan siap UTS.';
+
+            if (scorePercent === 100) {
+                title = 'Sempurna! 💯';
+                desc = 'Jawaban Anda benar semua! Tingkat pemahaman Manajemen Layanan Sistem Informasi Anda luar biasa.';
+            } else if (scorePercent >= 80) {
+                title = 'Bagus Sekali! 🚀';
+                desc = 'Anda telah memahami sebagian besar konsep tata kelola dan manajemen layanan dengan sangat matang.';
+            } else if (scorePercent >= 60) {
+                title = 'Cukup Baik! 👍';
+                desc = 'Hasil yang lumayan, namun masih ada beberapa konsep ITIL, SACM, atau Change Management yang perlu ditinjau kembali.';
+            } else {
+                title = 'Belajar Lagi! 📚';
+                desc = 'Jangan patah semangat. Ulas kembali penjelasan jawaban di bawah dan coba kuis lagi.';
+            }
+
+            document.getElementById('result-feedback-title').innerText = title;
+            document.getElementById('result-feedback-desc').innerText = desc;
+
+            document.getElementById('stats-correct').innerText = correctCount;
+            document.getElementById('stats-incorrect').innerText = incorrectCount;
+            document.getElementById('stats-skipped').innerText = skippedCount;
+            document.getElementById('stats-time').innerText = formatTime(state.timeSpent);
+
+            saveSessionToHistory(scorePercent, correctCount, total, state.timeSpent);
+            renderReviewPanel();
+            showView('result-view');
+        }
+
+        function renderReviewPanel() {
+            const container = document.getElementById('review-cards-container');
+            container.innerHTML = '';
+
+            let correctFilterCount = 0;
+            let incorrectFilterCount = 0;
+            let skippedFilterCount = 0;
+
+            state.questions.forEach((q, idx) => {
+                const ans = state.userAnswers[idx];
+                if (ans === undefined) skippedFilterCount++;
+                else if (ans === q.answer) correctFilterCount++;
+                else incorrectFilterCount++;
+
+                const card = document.createElement('div');
+                card.className = 'review-item';
+
+                let statusBadge = '';
+                if (ans === undefined) {
+                    card.classList.add('skipped-answer');
+                    statusBadge = '<span class="review-badge skipped">Dilewati</span>';
+                } else if (ans === q.answer) {
+                    card.classList.add('correct-answer');
+                    statusBadge = '<span class="review-badge correct">Benar</span>';
+                } else {
+                    card.classList.add('incorrect-answer');
+                    statusBadge = '<span class="review-badge incorrect">Salah</span>';
+                }
+
+                let optionRowsHtml = '';
+                const letterMap = ['A', 'B', 'C', 'D'];
+                q.options.forEach((optText, i) => {
+                    const letter = letterMap[i];
+                    let rowClass = '';
+
+                    if (letter === q.answer) {
+                        rowClass = 'correct-key';
+                    } else if (ans === letter && letter !== q.answer) {
+                        rowClass = 'user-select';
+                    }
+
+                    let userCheck = '';
+                    if (ans === letter) {
+                        userCheck = letter === q.answer ? ' (Pilihan Anda - Benar)' : ' (Pilihan Anda - Salah)';
+                    }
+
+                    optionRowsHtml += `
+                        <div class="review-ans-row ${rowClass}">
+                            <div class="review-ans-lbl">${letter}</div>
+                            <div class="review-ans-txt">${optText}${userCheck}</div>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-number">Soal #${idx + 1} (${q.section})</span>
+                        ${statusBadge}
+                    </div>
+                    <div class="review-question">${q.question}</div>
+                    <div class="review-answers">
+                        ${optionRowsHtml}
+                    </div>
+                    <div class="review-explanation">
+                        <div class="review-explanation-title">Penjelasan UTS</div>
+                        <div class="review-explanation-text">${q.explanation}</div>
+                    </div>
+                `;
+
+                card.setAttribute('data-status', ans === undefined ? 'skipped' : (ans === q.answer ? 'correct' : 'incorrect'));
+                card.setAttribute('data-text', `${q.question} ${q.explanation} ${q.options.join(' ')}`.toLowerCase());
+
+                container.appendChild(card);
+            });
+
+            document.getElementById('count-filter-all').innerText = state.questions.length;
+            document.getElementById('count-filter-correct').innerText = correctFilterCount;
+            document.getElementById('count-filter-incorrect').innerText = incorrectFilterCount;
+            document.getElementById('count-filter-skipped').innerText = skippedFilterCount;
+
+            applyReviewFilters();
+        }
+
+        function applyReviewFilters() {
+            const query = document.getElementById('review-search').value.toLowerCase();
+            const activeFilter = document.querySelector('.review-filters .filter-btn.active').getAttribute('data-filter');
+            const cards = document.querySelectorAll('#review-cards-container .review-item');
+
+            cards.forEach(card => {
+                const cardStatus = card.getAttribute('data-status');
+                const cardText = card.getAttribute('data-text');
+
+                const matchesFilter = activeFilter === 'all' || cardStatus === activeFilter;
+                const matchesSearch = query === '' || cardText.includes(query);
+
+                if (matchesFilter && matchesSearch) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // --- UTILITY FUNCTIONS ---
+
+        function showView(viewId) {
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('result-view').classList.add('hidden');
+
+            document.getElementById(viewId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainder = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainder.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+
+</html>

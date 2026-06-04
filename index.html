@@ -21,6 +21,8 @@
             --accent-jaringan-glow: rgba(99, 102, 241, 0.2);
             --accent-apsi: #38bdf8;
             --accent-apsi-glow: rgba(56, 189, 248, 0.2);
+            --accent-mlsi: #10b981;
+            --accent-mlsi-glow: rgba(16, 185, 129, 0.2);
             --glass-blur: blur(20px);
             --shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.6);
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -39,6 +41,8 @@
             --accent-jaringan-glow: rgba(79, 70, 229, 0.08);
             --accent-apsi: #0284c7;
             --accent-apsi-glow: rgba(2, 132, 199, 0.08);
+            --accent-mlsi: #059669;
+            --accent-mlsi-glow: rgba(5, 150, 105, 0.08);
             --shadow: 0 20px 50px 0 rgba(99, 102, 241, 0.05);
         }
 
@@ -231,10 +235,16 @@
         /* Subjects Grid Layout */
         .subjects-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 32px;
             margin-bottom: 56px;
             animation: fadeIn 0.6s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .subjects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -269,13 +279,17 @@
             transition: var(--transition);
         }
 
-        /* Distinct styling for Jaringan vs APSI card */
+        /* Distinct styling for Jaringan vs APSI vs MLSI card */
         .card-jaringan::before {
             background: linear-gradient(90deg, var(--accent-jaringan), #8b5cf6);
         }
 
         .card-apsi::before {
             background: linear-gradient(90deg, var(--accent-apsi), #06b6d4);
+        }
+
+        .card-mlsi::before {
+            background: linear-gradient(90deg, var(--accent-mlsi), #34d399);
         }
 
         .subject-card:hover {
@@ -289,6 +303,10 @@
 
         .card-apsi:hover {
             box-shadow: 0 20px 40px rgba(56, 189, 248, 0.12);
+        }
+
+        .card-mlsi:hover {
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.12);
         }
 
         .card-header-area {
@@ -316,6 +334,11 @@
         .card-apsi .subject-icon {
             background: linear-gradient(135deg, var(--accent-apsi), #06b6d4);
             box-shadow: 0 6px 20px var(--accent-apsi-glow);
+        }
+
+        .card-mlsi .subject-icon {
+            background: linear-gradient(135deg, var(--accent-mlsi), #34d399);
+            box-shadow: 0 6px 20px var(--accent-mlsi-glow);
         }
 
         .subject-icon svg {
@@ -382,6 +405,10 @@
             stroke: var(--accent-apsi);
         }
 
+        .card-mlsi .topic-item svg {
+            stroke: var(--accent-mlsi);
+        }
+
         /* Stats Sub-Box inside Card */
         .card-stats-box {
             background: rgba(0, 0, 0, 0.15);
@@ -430,6 +457,10 @@
             color: var(--accent-apsi);
         }
 
+        .card-mlsi .stat-label-item .val.high-score {
+            color: #34d399;
+        }
+
         /* Portal Navigation Action Button */
         .btn-start {
             display: flex;
@@ -469,6 +500,21 @@
 
         .card-apsi:hover .btn-start {
             box-shadow: 0 8px 24px rgba(56, 189, 248, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .card-mlsi .btn-start {
+            background: linear-gradient(135deg, var(--accent-mlsi), #34d399);
+            color: #050a0e;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
+        }
+
+        [data-theme="light"] .card-mlsi .btn-start {
+            color: white;
+        }
+
+        .card-mlsi:hover .btn-start {
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
             filter: brightness(1.1);
         }
 
@@ -669,12 +715,77 @@
                         </svg>
                     </button>
                 </div>
+
+                <!-- Subject 3: MLSI -->
+                <div class="subject-card card-mlsi" onclick="window.location.href='kuisMLSI.html'">
+                    <div class="card-header-area">
+                        <div class="subject-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                                <path d="m9 14 2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <span class="badge-count">50 Soal</span>
+                    </div>
+
+                    <div class="subject-info">
+                        <h3>Manajemen Layanan SI</h3>
+                        <p>Tata kelola ITIL, identifikasi & portofolio layanan, SLA/OLA, Incident & Problem management (RCA), Change Advisory Board (CAB), serta SACM & CMDB.</p>
+                    </div>
+
+                    <div class="topics-list">
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Layanan & Portofolio ITIL</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Service Level Management (SLA)</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Incident, Problem & Change Control</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Asset & Configuration (CMDB)</span>
+                        </div>
+                    </div>
+
+                    <!-- Statistics box -->
+                    <div class="card-stats-box" id="stats-mlsi">
+                        <div class="stat-label-item">
+                            <span class="lbl">Skor Tertinggi</span>
+                            <span class="val high-score" id="mlsi-high">-</span>
+                        </div>
+                        <div class="stat-label-item" style="text-align: right;">
+                            <span class="lbl">Sesi Terakhir</span>
+                            <span class="val" id="mlsi-recent">Belum ada</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-start">
+                        Mulai Latihan MLSI
+                        <svg viewBox="0 0 24 24">
+                            <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </main>
 
         <!-- Footer -->
         <footer>
-            <p>© 2026 Legion Quiz Hub. Dirancang khusus untuk persiapan UTS Jaringan Komputer & APSI.</p>
+            <p>© 2026 Legion Quiz Hub. Dirancang khusus untuk persiapan UTS Jaringan Komputer, APSI & MLSI.</p>
         </footer>
     </div>
 
@@ -689,8 +800,8 @@
         // Theme management
         let currentTheme = 'dark';
         function initTheme() {
-            // Check if there is a theme stored for either of the two quizzes or index
-            currentTheme = localStorage.getItem('index_quiz_theme') || localStorage.getItem('apsi_quiz_theme') || localStorage.getItem('quiz_theme') || 'dark';
+            // Check if there is a theme stored for either of the quizzes or index
+            currentTheme = localStorage.getItem('index_quiz_theme') || localStorage.getItem('mlsi_quiz_theme') || localStorage.getItem('apsi_quiz_theme') || localStorage.getItem('quiz_theme') || 'dark';
             setTheme(currentTheme);
         }
 
@@ -747,6 +858,23 @@
                 }
             } catch (e) {
                 console.warn('Gagal memuat statistik APSI:', e);
+            }
+
+            // 3. MLSI Statistics
+            try {
+                const mlsiHistory = JSON.parse(localStorage.getItem('mlsi_quiz_history')) || [];
+                if (mlsiHistory.length > 0) {
+                    // Highest Score
+                    const scores = mlsiHistory.map(item => item.score);
+                    const highest = Math.max(...scores);
+                    document.getElementById('mlsi-high').innerText = `${highest}%`;
+
+                    // Recent session
+                    const recent = mlsiHistory[0];
+                    document.getElementById('mlsi-recent').innerText = `${recent.date} (${recent.score}%)`;
+                }
+            } catch (e) {
+                console.warn('Gagal memuat statistik MLSI:', e);
             }
         }
     </script>
