@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rangkuman PVD - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #06080c;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #ea580c 0%, #06080c 100%);
+            --panel-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #f97316;
+            --accent-glow: rgba(249, 115, 22, 0.15);
+            --accent-hover: #ea580c;
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #ffedd5 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(249, 115, 22, 0.15);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #ea580c;
+            --accent-glow: rgba(234, 88, 12, 0.08);
+            --accent-hover: #c2410c;
+            --shadow: 0 12px 40px 0 rgba(234, 88, 12, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #f97316);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Layout Grid */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 900px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar TOC */
+        .toc-sidebar {
+            position: sticky;
+            top: 24px;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .toc-sidebar {
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .sidebar-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .toc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .toc-item {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 12.5px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toc-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .toc-item.active {
+            background: var(--accent);
+            color: #06080c;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        [data-theme="light"] .toc-item.active {
+            color: white;
+        }
+
+        .toc-number {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+
+        .toc-item.active .toc-number {
+            background: rgba(255, 255, 255, 0.2);
+            color: inherit;
+        }
+
+        /* Content Area */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 14.5px;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* Bab Containers */
+        .bab-container {
+            scroll-margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .bab-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bab-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        /* Material Subsections */
+        .sub-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .sub-section:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .sub-title {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+        }
+
+        .sub-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .text-p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bullet-item {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .bullet-item::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Styled Cards (Alert Box) */
+        .alert-box {
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            border: 1px solid transparent;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+
+        .alert-box.important {
+            background: rgba(245, 158, 11, 0.05);
+            border-color: rgba(245, 158, 11, 0.2);
+            color: #d97706;
+        }
+
+        [data-theme="dark"] .alert-box.important {
+            color: #f59e0b;
+        }
+
+        .alert-box.info {
+            background: rgba(249, 115, 22, 0.05);
+            border-color: rgba(249, 115, 22, 0.2);
+            color: #ea580c;
+        }
+
+        [data-theme="dark"] .alert-box.info {
+            color: #f97316;
+        }
+
+        .alert-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .alert-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .alert-content strong {
+            color: var(--text-primary);
+        }
+
+        /* Mnemonic Mnemonic */
+        .mnemonic-box {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mnemonic-box strong {
+            color: var(--accent);
+        }
+
+        /* Table design */
+        .custom-table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            font-weight: 700;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 14px 16px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            line-height: 1.5;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        /* Empty state */
+        .no-results {
+            text-align: center;
+            padding: 48px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 32px 0 24px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"/>
+                        <path d="m19 9-5 5-4-4-3 3"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>PVD Rangkuman Materi</h1>
+                    <p>Pemodelan dan Visualisasi Data</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="workspace-grid">
+            <!-- Sidebar TOC (Table of Contents) -->
+            <div class="toc-sidebar">
+                <div class="glass-panel">
+                    <h3 class="sidebar-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6h16M4 12h16M4 18h7" stroke-linecap="round"/>
+                        </svg>
+                        Daftar Isi
+                    </h3>
+                    <div class="toc-list">
+                        <button class="toc-item active" data-target="bab1">
+                            <span class="toc-number">Bab 1</span>
+                            <span>Pengantar & Proses DS</span>
+                        </button>
+                        <button class="toc-item" data-target="bab2">
+                            <span class="toc-number">Bab 2</span>
+                            <span>Kategori & Grafik</span>
+                        </button>
+                        <button class="toc-item" data-target="bab3">
+                            <span class="toc-number">Bab 3</span>
+                            <span>Komunikasi Visual</span>
+                        </button>
+                        <button class="toc-item" data-target="bab4">
+                            <span class="toc-number">Bab 4</span>
+                            <span>Best & Bad Practices</span>
+                        </button>
+                        <button class="toc-item" data-target="bab5">
+                            <span class="toc-number">Bab 5</span>
+                            <span>Form & Sheets</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Search Box -->
+                <div class="search-container">
+                    <input type="text" id="search-box" class="search-input" placeholder="Cari materi, kategori, prinsip, atau bab...">
+                </div>
+
+                <!-- Bab 1 -->
+                <section class="bab-container" id="bab1">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 1</span>
+                        Pengantar Visualisasi Data & Proses Data Science
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Definisi dan Tujuan</h3>
+                        <p class="text-p"><strong>Visualisasi Data (Data Visualization):</strong> Tampilan berupa grafis atau visual dari informasi dan data dalam bentuk grafik atau peta.</p>
+                        
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>Tujuan Utama (Sangat Penting):</strong>
+                                Untuk melihat tren (<em>trends</em>), pencilan (<em>outliers</em>), maupun pola (<em>patterns</em>) pada sekumpulan data, serta mengkomunikasikan informasi secara jelas dan efektif melalui cara grafis.
+                            </div>
+                        </div>
+
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Bentuk vs Fungsi (Form vs Function):</strong> Visualisasi yang ideal harus menyeimbangkan bentuk estetis (keindahan) dan fungsionalitas (kegunaan) agar dapat menstimulasi atensi serta keterlibatan penonton tanpa gagal menyampaikan informasi utama secara akurat.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Kapan Kita Membutuhkan Visualisasi Data?</h3>
+                        <p class="text-p">Kita memerlukan visualisasi data untuk berbagai kebutuhan analisis dan pemahaman informasi:</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Menjelaskan Perubahan Waktu (Time Series):</strong> Melihat keterkaitan atau tren data seiring berjalannya waktu.</li>
+                            <li class="bullet-item"><strong>Menjelaskan Frekuensi:</strong> Menggambarkan seberapa sering suatu peristiwa terjadi.</li>
+                            <li class="bullet-item"><strong>Menjelaskan Hubungan (Korelasi):</strong> Mencari hubungan antara dua variabel atau lebih (misal: umur seseorang vs gaya hidupnya).</li>
+                            <li class="bullet-item"><strong>Menganalisis Jaringan (Network):</strong> Memetakan hubungan dan melakukan pengelompokan (<em>clustering</em>) data (misal: peta jaringan klien dalam strategi marketing).</li>
+                            <li class="bullet-item"><strong>Penjadwalan (Scheduling):</strong> Menjabarkan urutan data untuk mengestimasi durasi pengerjaan proyek/tugas.</li>
+                            <li class="bullet-item"><strong>Menganalisis Nilai dan Risiko (Value and Risk):</strong> Memperhitungkan secara cepat keuntungan, kerugian, dan risiko dalam bisnis.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 3 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Langkah-Langkah Proses Visualisasi Data</h3>
+                        <p class="text-p">Dalam konteks <strong>Data Science</strong>, visualisasi berada pada tahap akhir sebelum pengambilan keputusan (<em>Make Decisions</em>). Proses pembuatan visualisasi data mengikuti alur berurutan berikut:</p>
+                        <ol style="padding-left: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 8px; color: var(--text-secondary); font-size: 13.5px;">
+                            <li><strong>Menentukan Tujuan:</strong> Mengidentifikasi apakah visualisasi ditujukan untuk mempresentasikan informasi, membantu eksplorasi data secara interaktif, atau sebagai metode analisis data mendalam.</li>
+                            <li><strong>Menentukan Target Audiens:</strong> Menyesuaikan bahasa dan penyajian informasi dengan latar belakang target audiens agar pesan tersampaikan secara tepat sasaran.</li>
+                            <li><strong>Mendapatkan dan Mengeksplorasi Data:</strong> Meliputi pencarian data yang dibutuhkan, menyusun ulang struktur data, dan melakukan penyaringan (<em>filtering</em>) data kotor.</li>
+                            <li><strong>Menentukan Jenis Visualisasi:</strong> Memilih jenis diagram yang paling cocok berdasarkan tujuan, jenis data (nominal/numerik), jumlah variabel, dan perubahan waktu.</li>
+                            <li><strong>Membuat Visualisasi yang Efektif dan Menarik:</strong> Menyusun tata letak cerita (<em>storytelling</em>) dan estetika grafis yang padu.</li>
+                            <li><strong>Evaluasi:</strong> Meninjau kembali apakah visualisasi yang dibuat sudah menjawab tujuan awal.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- Bab 2 -->
+                <section class="bab-container" id="bab2">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 2</span>
+                        Kategori dan Jenis Visualisasi Data
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Lima Kategori Utama Visualisasi Data</h3>
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>Klasifikasi Data:</strong>
+                                Dataset dapat diklasifikasikan ke dalam 5 kelompok utama visualisasi berdasarkan karakteristik dimensi dan keterhubungannya.
+                            </div>
+                        </div>
+
+                        <div class="custom-table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Kategori</th>
+                                        <th>Syarat / Karakteristik</th>
+                                        <th>Contoh Jenis Visualisasi</th>
+                                        <th>Arti Sederhana</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Temporal</strong></td>
+                                        <td>Harus memenuhi 2 syarat: Linier dan Satu Dimensi. Memperlihatkan data pada skala waktu tertentu. Mudah dicerna.</td>
+                                        <td>Scatter plot, diagram kutub, time series, timeline, grafik linier.</td>
+                                        <td>Grafik berbasis waktu.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Hierarki</strong></td>
+                                        <td>Mengelompokkan data dan memperlihatkan hubungannya dengan kelompok data lain (cluster). Lebih kompleks dan sulit dibaca secara instan.</td>
+                                        <td>Diagram pohon (tree diagram), diagram cincin, sunburst diagram.</td>
+                                        <td>Grafik tingkatan / silsilah kelompok.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Network</strong></td>
+                                        <td>Dataset yang saling terhubung dengan dataset lain sehingga membentuk jaringan keterhubungan tanpa perlu deskripsi panjang.</td>
+                                        <td>Matrix chart, node-link diagram, word cloud, alluvial diagram.</td>
+                                        <td>Grafik jaringan hubungan data.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Multidimensional</strong></td>
+                                        <td>Melibatkan 2 atau lebih variabel sehingga membentuk tampilan multi-aspek/3D. Dapat dipecah menjadi insight yang lebih kecil.</td>
+                                        <td>Scatter plot, pie chart, venn diagram, stacked bar graph, histogram.</td>
+                                        <td>Grafik banyak variabel.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Geospasial</strong></td>
+                                        <td>Berhubungan dengan lokasi fisik dan kondisi geografis di dunia nyata. Peta dasar yang diberi lapisan (layer) data.</td>
+                                        <td>Flow map, density map, cartogram, heat map.</td>
+                                        <td>Grafik peta wilayah.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mnemonic-box">
+                            <span class="alert-icon">🔑</span>
+                            <div>
+                                <strong>Trik Menghafal (Mnemonic):</strong> Kategori Data = <strong>Te-Hi-Ne-Mu-G</strong> (Temporal, Hierarki, Network, Multidimensi, Geospasial).
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bab 3 -->
+                <section class="bab-container" id="bab3">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 3</span>
+                        Komunikasi Visual dalam Desain Grafis
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Definisi & Fungsi Komunikasi Visual</h3>
+                        <p class="text-p"><strong>Komunikasi Visual:</strong> Proses penyampaian pesan di mana lambang-lambang yang dikirimkan oleh komunikator (penyampai pesan) hanya ditangkap oleh komunikan (penerima) semata-mata melalui indra penglihatan. Memadukan kreativitas, estetika, efisiensi, dan kegunaan komunikatif.</p>
+                        
+                        <ul class="bullet-list" style="margin-top: 8px;">
+                            <li class="bullet-item"><strong>Sarana Informasi dan Instruksi:</strong> Menunjukkan hubungan arah, posisi, skala, dan petunjuk (contoh: peta, diagram alur, simbol rambu).</li>
+                            <li class="bullet-item"><strong>Sarana Presentasi dan Promosi:</strong> Menyampaikan pesan produk, menarik perhatian (atensi), dan membuat pesan melekat di ingatan (contoh: poster iklan).</li>
+                            <li class="bullet-item"><strong>Sarana Identifikasi:</strong> Mencerminkan citra identitas atau kualitas suatu produk/lembaga agar mudah dikenali (contoh: logo produk/merek).</li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Prinsip-Prinsip Desain Komunikasi Visual</h3>
+                        <p class="text-p">Dalam menyusun elemen visual, desainer wajib mengacu pada prinsip-prinsip dasar berikut:</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Keseimbangan (Balance):</strong> Kesamaan distribusi bobot visual di seluruh area desain agar terlihat stabil dan harmonis.
+                                <ul style="padding-left: 20px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px; list-style-type: circle;">
+                                    <li><em>Simetris:</em> Formal, bagian kiri dan kanan sumbu khayal berukuran, berbentuk, dan berposisi sama.</li>
+                                    <li><em>Asimetris:</em> Informal, bersifat dinamis, tidak mengikuti aturan pencerminan kaku tapi tetap seimbang secara optis.</li>
+                                    <li><em>Horizontal:</em> Menjaga keseimbangan antara bagian atas dan bawah layout.</li>
+                                </ul>
+                            </li>
+                            <li class="bullet-item"><strong>Titik Fokus (Focal Point / Center of Interest / Eye Catcher):</strong> Menonjolkan salah satu unsur utama (lewat warna kontras, bentuk unik, atau ukuran besar) untuk memancing pandangan pertama.</li>
+                            <li class="bullet-item"><strong>Hierarki Visual:</strong> Mengatur elemen desain berdasarkan urutan prioritas perhatian mata (Mana yang harus dilihat pertama kali, kedua, dan seterusnya).</li>
+                            <li class="bullet-item"><strong>Ritme (Rhythm):</strong> Pola yang diciptakan dengan mengulang atau memvariasikan elemen desain secara teratur untuk membangun kesan perpindahan pandangan mata.</li>
+                            <li class="bullet-item"><strong>Kesatuan (Unity):</strong> Mengorganisasikan seluruh elemen grafis (garis, warna, bentuk, teks) sehingga menyatu, serasi, dan saling mendukung.</li>
+                            <li class="bullet-item"><strong>Proporsi:</strong> Perbandingan ukuran yang ideal antara satu bagian objek dengan bagian lainnya atau keseluruhan komposisi.</li>
+                            <li class="bullet-item"><strong>Dominasi (Dominance):</strong> Sifat unggul/istimewa suatu elemen untuk memecah keberaturan layout dan menghilangkan kebosanan visual.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 3 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Elemen Pendukung Komunikasi Visual</h3>
+                        
+                        <!-- Ilustrasi -->
+                        <p class="text-p" style="font-weight: 700; color: var(--text-primary);">A. Ilustrasi (Gambar/Visual):</p>
+                        <p class="text-p" style="margin-top: -6px;">Gambar pendukung untuk memperjelas isi teks atau menyemarakkan tampilan halaman. Teknik ilustrasi dibagi menjadi:</p>
+                        <ul class="bullet-list" style="margin-left: 12px; margin-top: -6px;">
+                            <li class="bullet-item"><strong>Hand Drawing:</strong> Sepenuhnya menggunakan keterampilan tangan manual (pensil, kuas, pena).</li>
+                            <li class="bullet-item"><strong>Fotografi:</strong> Menggunakan bantuan kamera (manual/digital) sehingga menghasilkan gambar yang lebih realistis, objektif, dan persuasif.</li>
+                            <li class="bullet-item"><strong>Teknologi Gabungan:</strong> Perpaduan antara fotografi/karya manual dengan pengolahan komputer grafis.</li>
+                        </ul>
+
+                        <!-- Struktur Teks Iklan -->
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>Struktur Teks Iklan (Sangat Penting):</strong>
+                                <ul style="padding-left: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px;">
+                                    <li><strong>Judul (Headline):</strong> Terletak di paling atas, ukuran huruf paling besar, menyampaikan pesan inti paling penting.</li>
+                                    <li><strong>Sub Judul (Sub Headline):</strong> Memperjelas headline dan menjadi penyela/jembatan ke teks isi.</li>
+                                    <li><strong>Teks Isi (Body Copy):</strong> Menerangkan informasi produk atau maksud secara detail dan terperinci.</li>
+                                    <li><strong>Slogan (Semboyan):</strong> Kalimat pendek, unik, padat, dan khas untuk memancing ingatan jangka panjang.</li>
+                                    <li><strong>Kata Penutup (Closing Word):</strong> Berisi kalimat ajakan, harapan, atau janji singkat.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tipografi -->
+                        <p class="text-p" style="font-weight: 700; color: var(--text-primary); margin-top: 10px;">B. Tipografi (Seni Penataan Huruf):</p>
+                        <p class="text-p" style="margin-top: -6px;">Seni memilih, menyusun, dan mengatur huruf cetak. Klasifikasi tipe huruf:</p>
+                        <ul class="bullet-list" style="margin-left: 12px; margin-top: -6px;">
+                            <li class="bullet-item"><strong>Serif (Berkait):</strong> Memiliki kait/kaki kecil di ujung huruf, tebal tipis huruf kontras. Memberikan kesan formal, anggun, intelektual, dan konservatif. (Contoh: <em>Times New Roman, Georgia</em>).</li>
+                            <li class="bullet-item"><strong>Sans Serif (Tak Berkait):</strong> Tidak memiliki kait/kaki, ketebalan batang huruf sama/seragam. Berkesan modern, bersih, sederhana, sangat mudah dibaca di layar digital, kurang formal. (Contoh: <em>Arial, Helvetica, Inter</em>).</li>
+                            <li class="bullet-item"><strong>Script (Tulis/Latin):</strong> Seperti tulisan tangan manual yang menyambung. Mengalir anggun, berkesan personal, intim, dan elegan.</li>
+                            <li class="bullet-item"><strong>Dekoratif (Graphic):</strong> Memiliki desain yang rumit dan artistik. Hanya cocok untuk judul besar (Headline) dan dilarang keras untuk teks isi karena sulit dibaca.</li>
+                            <li class="bullet-item"><strong>Monospace:</strong> Setiap huruf memiliki lebar horizontal/jarak ketukan yang sama persis. Berkesan teknis, retro, atau mesin ketik. (Contoh: <em>Courier, JetBrains Mono</em>).</li>
+                        </ul>
+
+                        <!-- Warna -->
+                        <p class="text-p" style="font-weight: 700; color: var(--text-primary); margin-top: 10px;">C. Warna (Chromatics):</p>
+                        <p class="text-p" style="margin-top: -6px;">Kualitas mutu cahaya yang dipantulkan objek ke mata. Sangat krusial untuk membangun mood, atmosfer, dan emosi audiens. Pembagian warna:</p>
+                        <ul class="bullet-list" style="margin-left: 12px; margin-top: -6px;">
+                            <li class="bullet-item"><strong>Warna Primer:</strong> Warna dasar utama pembentuk warna lain (Merah, Biru, Kuning).</li>
+                            <li class="bullet-item"><strong>Warna Sekunder:</strong> Campuran seimbang dari dua warna primer (Hijau, Jingga, Ungu).</li>
+                            <li class="bullet-item"><strong>Warna Tersier:</strong> Campuran satu warna primer dengan satu warna sekunder di sebelahnya.</li>
+                            <li class="bullet-item"><strong>Warna Khusus:</strong> Warna dari pigmen khusus seperti emas (Gold) dan perak (Silver).</li>
+                        </ul>
+
+                        <!-- Psikologi Warna -->
+                        <div class="alert-box info">
+                            <span class="alert-icon">🎨</span>
+                            <div class="alert-content">
+                                <strong>Psikologi Warna Utama:</strong>
+                                <ul style="padding-left: 16px; margin-top: 4px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; list-style-type: square;">
+                                    <li><strong>Merah:</strong> Energi, hasrat, amarah, bahaya.</li>
+                                    <li><strong>Biru:</strong> Kepercayaan, kestabilan, teknologi, tenang.</li>
+                                    <li><strong>Hijau:</strong> Alami, pertumbuhan, kesehatan, uang.</li>
+                                    <li><strong>Kuning:</strong> Optimis, ceria, perhatian, kecurangan.</li>
+                                    <li><strong>Putih:</strong> Suci, bersih, minimalis, steril.</li>
+                                    <li><strong>Hitam:</strong> Mewah, formal, misteri, kematian.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bab 4 -->
+                <section class="bab-container" id="bab4">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 4</span>
+                        Praktik Terbaik & Kesalahan Visualisasi Data
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Cara Membuat Visualisasi Efektif</h3>
+                        <p class="text-p">Untuk membuat visualisasi data yang tidak hanya indah tetapi juga mudah dicerna, terapkan kiat-kiat berikut:</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Buat Storyboard (Bercerita):</strong> Buat data Anda berbicara dengan menyusun kronologi alur data, perbandingan kontras, atau satu fakta penting utama agar visualisasi terasa hidup.</li>
+                            <li class="bullet-item"><strong>Gunakan Visual Order (Urutan Visual):</strong> Menyusun tata letak secara runtut dan sistematis. Pastikan bagian terpenting dibuat lebih menonjol agar menjadi pemberhentian pertama pandangan audiens.</li>
+                            <li class="bullet-item"><strong>Hilangkan Clutter (Kekusutan):</strong> Buat visual sesederhana mungkin. Hindari efek 3D miring yang tidak perlu, hapus garis latar grid yang terlalu tebal, dan kurangi label teks berlebihan yang membuat sesak.</li>
+                            <li class="bullet-item"><strong>Gunakan Konteks:</strong> Selalu tambahkan informasi pelengkap berupa judul, keterangan satuan sumbu, atau catatan teks penjelas agar audiens tidak salah menafsirkan grafik.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Kesalahan Fatal dalam Visualisasi Data</h3>
+                        <div class="alert-box important">
+                            <span class="alert-icon">⚠️</span>
+                            <div class="alert-content">
+                                <strong>Anti-Pattern (Kesalahan Umum):</strong>
+                                Jangan pernah lakukan kesalahan-kesalahan berikut karena dapat menyesatkan audiens atau merusak integritas data.
+                            </div>
+                        </div>
+
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Tidak Menampilkan Data (Omitting Data / Menyembunyikan Variasi):</strong> Hanya menampilkan nilai rata-rata agregat saja tanpa memperlihatkan sebaran poin data asli atau rentang variasinya yang sebenarnya.
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Pola Tidak Mudah Ditangkap (Clutter 3D):</strong> Menggunakan perspektif sudut miring atau efek tampilan 3 dimensi (3D) pada diagram batang/lingkaran. Efek ini menyulitkan mata manusia dalam memperkirakan perbandingan ukuran/tinggi objek secara akurat.
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Distorsi Data (Data Distortion / Manipulasi Sumbu Y):</strong> Kesalahan menentukan rentang nilai pada sumbu vertikal. Idealnya, grafik batang wajib dimulai dari angka 0 pada sumbu Y. Memotong sumbu Y di atas 0 akan membuat perbedaan kecil antar-batang terlihat sangat dramatis dan manipulatif.
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Elemen Grafis Tidak Jelas (Grafis Kecil):</strong> Ukuran teks judul, legenda, label variabel, atau angka sumbu X/Y terlalu mini sehingga tidak terbaca oleh audiens.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Bab 5 -->
+                <section class="bab-container" id="bab5">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 5</span>
+                        Google Form & Praktikum Google Sheets
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Google Form</h3>
+                        <p class="text-p"><strong>Google Form:</strong> Layanan survei kuesioner berbasis web gratis untuk membuat formulir digital secara praktis dan mengumpulkan umpan balik (feedback) secara cepat.</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Fungsi Utama:</strong> Membuat kuesioner penelitian ilmiah/skripsi, kuesioner bisnis/feedback pelanggan, formulir lamaran kerja, lembar ujian/kuis sekolah, dan formulir pembelian/pemesanan produk.</li>
+                            <li class="bullet-item"><strong>Fitur Khusus:</strong> <em>Multiple choice grid</em> (kisi pilihan ganda) untuk membuat deretan pertanyaan skala likert/tabel pilihan dengan sangat cepat dan terstruktur.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Alur Praktikum & Aturan Pengelolaan Data</h3>
+                        <p class="text-p">Dalam melakukan praktikum pengumpulan dan pemodelan visualisasi data kuesioner, mahasiswa wajib mengikuti alur kerja berikut:</p>
+                        <ol style="padding-left: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 8px; color: var(--text-secondary); font-size: 13.5px;">
+                            <li><strong>Menentukan Tema Kuesioner:</strong> Tema harus bersifat umum dan aman. Dilarang keras memuat unsur SARA, politik praktis, dan data pribadi yang sangat sensitif (seperti NIK, nomor rekening, alamat lengkap rumah, dll.).</li>
+                            <li><strong>Menyebarkan Kuesioner Digital:</strong> Menyebarkan link Google Form ke responden hingga terkumpul minimal **20 - 30 record data** tanggapan.</li>
+                            <li><strong>Rekapitulasi Otomatis:</strong> Menghubungkan Google Form dengan Google Sheets agar tanggapan masuk secara real-time ke dalam tabel Sheets.</li>
+                            <li><strong>Membuat Grafik Visualisasi:</strong> Memilah data respon, lalu membuat grafik (pie chart/bar chart) secara langsung menggunakan fitur pembuat grafik bawaan Google Sheets.</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <!-- No Results Found -->
+                <div class="no-results" id="no-results-box">
+                    Tidak ada rangkuman materi yang cocok dengan kata kunci Anda.
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <header style="margin-top: 48px; border-bottom: none; border-top: 1px solid var(--border-color); padding-top: 24px; padding-bottom: 0;">
+            <div style="width: 100%; text-align: center;">
+                <p style="font-size: 11px; color: var(--text-secondary);">Dibuat untuk latihan mandiri UTS Pemodelan dan Visualisasi Data.</p>
+                <p style="margin-top: 4px; font-size: 11px; color: var(--accent); font-weight: 700;">Siti Aisyah Edition</p>
+            </div>
+        </header>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Theme management
+        let currentTheme = 'dark';
+        function initTheme() {
+            currentTheme = localStorage.getItem('index_quiz_theme') || 'dark';
+            setTheme(currentTheme);
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('index_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        // Sound System
+        let soundEnabled = true;
+        let audioCtx = null;
+        function playClickSound() {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+                gain.gain.setValueAtTime(0.03, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } catch (e) {
+                console.warn('Audio Context sound play failed:', e);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            setupEventListeners();
+            initScrollspy();
+        });
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playClickSound();
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Sound toggle
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                const icon = document.getElementById('sound-icon');
+                if (soundEnabled) {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    `;
+                } else {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    `;
+                }
+                playClickSound();
+            });
+
+            // Sidebar TOC clicks
+            const tocItems = document.querySelectorAll('.toc-item');
+            tocItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    playClickSound();
+                    const targetId = item.getAttribute('data-target');
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Search filtering
+            document.getElementById('search-box').addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                const babs = document.querySelectorAll('.bab-container');
+                let anyVisible = false;
+
+                babs.forEach(bab => {
+                    const text = bab.innerText.toLowerCase();
+                    if (query === '' || text.includes(query)) {
+                        bab.style.display = 'flex';
+                        anyVisible = true;
+                    } else {
+                        bab.style.display = 'none';
+                    }
+                });
+
+                const noResults = document.getElementById('no-results-box');
+                if (anyVisible) {
+                    noResults.style.display = 'none';
+                } else {
+                    noResults.style.display = 'block';
+                }
+            });
+        }
+
+        // Scrollspy to highlight TOC on scroll
+        function initScrollspy() {
+            const babs = document.querySelectorAll('.bab-container');
+            const tocItems = document.querySelectorAll('.toc-item');
+
+            const options = {
+                root: null,
+                rootMargin: '-20% 0px -60% 0px', // Trigger when section is in middle viewport
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.getAttribute('id');
+                        tocItems.forEach(item => {
+                            if (item.getAttribute('data-target') === activeId) {
+                                item.classList.add('active');
+                            } else {
+                                item.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }, options);
+
+            babs.forEach(bab => observer.observe(bab));
+        }
+    </script>
+</body>
+
+</html>

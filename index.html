@@ -649,6 +649,17 @@
             box-shadow: 0 4px 12px var(--accent-mlsi-glow);
         }
 
+        .card-pvd .btn-summary-pvd {
+            border-color: var(--accent-pvd);
+            background: rgba(249, 115, 22, 0.05);
+            color: var(--accent-pvd);
+        }
+
+        .card-pvd .btn-summary-pvd:hover {
+            background: var(--accent-pvd-glow);
+            box-shadow: 0 4px 12px var(--accent-pvd-glow);
+        }
+
         .btn-start svg {
             width: 16px;
             height: 16px;
@@ -985,20 +996,28 @@
                         </div>
                     </div>
 
-                    <div class="card-actions-row">
+                    <div class="card-actions-row" style="flex-direction: column; gap: 10px;">
                         <button class="btn-start" onclick="window.location.href='kuisPVD.html'">
                             Mulai Kuis
                             <svg viewBox="0 0 24 24">
                                 <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" />
                             </svg>
                         </button>
-                        <button class="btn-flashcard" onclick="window.location.href='flashcardPVD.html'">
-                            Flashcards
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
-                                <path d="M7 7h10M7 12h10M7 17h6"/>
-                            </svg>
-                        </button>
+                        <div style="display: flex; gap: 10px; width: 100%;">
+                            <button class="btn-flashcard" onclick="window.location.href='flashcardPVD.html'">
+                                Flashcards
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
+                                    <path d="M7 7h10M7 12h10M7 17h6"/>
+                                </svg>
+                            </button>
+                            <button class="btn-summary btn-summary-pvd" onclick="window.location.href='rangkumanPVD.html'">
+                                Rangkuman
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V3A2.5 2.5 0 0 1 6.5 4H20v13H6.5a2.5 2.5 0 0 0-2.5 2.5z" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
