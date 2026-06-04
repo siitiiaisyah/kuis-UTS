@@ -1827,9 +1827,9 @@
                 question: "Apa perbedaan mendasar antara dokumen SLA dengan dokumen OLA?",
                 options: [
                     "SLA mengikat pelanggan eksternal, sedangkan OLA mengikat hubungan kerja antar-tim internal penyedia.",
-                    "SLA dibuat oleh tim jaringan, sedangkan OLA dibuat secara khusus oleh manajer puncak keuangan.",
-                    "SLA bersifat tidak wajib, sedangkan OLA bersifat hukum formal pidana.",
-                    "SLA mengukur aspek finansial aset, sedangkan OLA mencatat detail arsitektur database."
+                    "SLA dibuat antara penyedia layanan dengan supplier/vendor pihak ketiga, sedangkan OLA dibuat untuk pelanggan eksternal.",
+                    "SLA bersifat teknis dan operasional untuk tim internal, sedangkan OLA adalah perjanjian legal formal tingkat korporasi.",
+                    "SLA mengukur kinerja performa finansial organisasi, sedangkan OLA mengukur kepuasan pengguna akhir."
                 ],
                 answer: "A",
                 explanation: "SLA mengatur komitmen dengan pihak luar (pelanggan), sementara OLA mengatur komitmen kerja sama antar-tim internal organisasi untuk mencapai target SLA tersebut."
@@ -1841,8 +1841,8 @@
                 options: [
                     "SLA Berbasis Layanan (Service-based SLA)",
                     "SLA Berbasis Pelanggan (Customer-based SLA)",
-                    "SLA Tingkat Korporat",
-                    "SLA Otomatis Terdistribusi"
+                    "SLA Multi-level (Multi-level SLA)",
+                    "SLA Berbasis Kontak (Contact-based SLA)"
                 ],
                 answer: "B",
                 explanation: "SLA berbasis pelanggan mengumpulkan semua layanan yang dibutuhkan oleh satu pelanggan tertentu ke dalam satu kontrak tunggal."
@@ -1852,10 +1852,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Dalam manajemen layanan sistem informasi, apa fokus utama dari aktivitas Incident Management?",
                 options: [
-                    "Mencari akar penyebab gangguan sistem agar tidak terulang selamanya.",
+                    "Mencari dan menyelesaikan akar penyebab (root cause) dari satu atau lebih insiden.",
                     "Memulihkan operasional layanan normal secepat mungkin dengan dampak minimal bagi user.",
-                    "Menilai risiko finansial sebelum sistem baru dibeli oleh divisi pengadaan.",
-                    "Mengaudit keakuratan data serial number perangkat keras di data center."
+                    "Merencanakan dan menguji perubahan konfigurasi infrastruktur TI agar bebas dari kegagalan.",
+                    "Mendokumentasikan seluruh kesalahan yang diketahui (known errors) beserta solusi sementaranya."
                 ],
                 answer: "B",
                 explanation: "Fokus tunggal Incident Management adalah perbaikan darurat agar layanan kembali berjalan normal secepat mungkin (Restore Service)."
@@ -1865,10 +1865,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Manakah di bawah ini yang dikategorikan sebagai insiden (incident) pada sistem informasi?",
                 options: [
-                    "Spesifikasi RAM server dinilai terlalu kecil berdasarkan hasil review bulanan.",
+                    "Ditemukannya celah keamanan potensial pada sistem operasi yang belum sempat dieksploitasi.",
                     "Pengguna gagal melakukan login ke aplikasi keuangan karena muncul pesan error runtime.",
-                    "Rencana migrasi server database utama dari lokal ke infrastruktur cloud.",
-                    "Pemberian label identitas unik kode batang pada aset printer baru."
+                    "Kegiatan perawatan berkala (scheduled maintenance) yang menyebabkan sistem tidak dapat diakses selama 10 menit.",
+                    "Permintaan dari departemen SDM untuk membuatkan akun email bagi karyawan baru."
                 ],
                 answer: "B",
                 explanation: "Insiden adalah kejadian nyata yang menyebabkan layanan berhenti, melambat, atau tidak bisa diakses oleh pengguna saat itu juga."
@@ -1878,10 +1878,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Apa yang dimaksud dengan 'Problem' dalam kerangka kerja tata kelola ITIL?",
                 options: [
-                    "Setiap kejadian klaim ganti rugi keuangan yang diajukan oleh user akibat pemadaman listrik.",
+                    "Gangguan mendadak yang menyebabkan penurunan kualitas layanan SI secara signifikan.",
                     "Penyebab utama (root cause) dari satu atau lebih insiden yang terjadi secara berulang.",
-                    "Dokumen permohonan resmi modifikasi script kode program aplikasi.",
-                    "Kondisi di mana sistem cadangan berhasil mengambil alih beban server utama."
+                    "Kegagalan fungsional pada salah satu komponen infrastruktur yang belum memengaruhi layanan.",
+                    "Permintaan resmi dari pengguna untuk melakukan peningkatan kapasitas server."
                 ],
                 answer: "B",
                 explanation: "Problem adalah misteri atau dalang di balik gangguan. Ia didefinisikan sebagai akar penyebab (root cause) dari insiden-insiden yang terjadi berulang kali."
@@ -1892,7 +1892,7 @@
                 question: "Melakukan tindakan restart server harian saat crash terjadi merupakan contoh penanganan gejala sementara, tindakan ini disebut...",
                 options: [
                     "Permanent Fix",
-                    "Workaround / Solusi Sementara",
+                    "Workaround",
                     "Baseline Configuration",
                     "Asset Deployment"
                 ],
@@ -1904,8 +1904,8 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Metode analisis yang menelusuri rentetan pertanyaan \"Mengapa?\" secara berulang guna mendeteksi akar penyebab masalah disebut...",
                 options: [
-                    "Fishbone Implementation",
-                    "Metode 5 Why (5 Mengapa)",
+                    "Diagram Fishbone (Ishikawa)",
+                    "Metode 5 Why",
                     "Configuration Accounting",
                     "First Contact Resolution"
                 ],
@@ -1917,10 +1917,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Apa fungsi utama dari dibentuknya tim Change Advisory Board (CAB)?",
                 options: [
-                    "Menulis kode baris program instruksi aplikasi akuntansi dari awal.",
+                    "Menangani dan menyelesaikan keluhan teknis dari pengguna akhir pada tingkat pertama (First Level Support).",
                     "Meninjau, menilai risiko, dampak, serta menyetujui atau menolak pengajuan perubahan layanan TI.",
-                    "Membeli perangkat keras laptop murah ke toko grosir komputer.",
-                    "Melayani panggilan telepon keluhan aduan pengguna secara ramah."
+                    "Melakukan investigasi mendalam untuk menemukan akar penyebab dari insiden sistem yang berulang.",
+                    "Mengaudit keakuratan data konfigurasi aset TI yang tercatat di CMDB secara berkala."
                 ],
                 answer: "B",
                 explanation: "CAB adalah dewan penasihat berisi para ahli yang bertugas mengevaluasi risiko keselamatan, menjadwalkan, dan memberikan persetujuan terhadap setiap perubahan sistem (Change)."
@@ -1933,7 +1933,7 @@
                     "Normal Change",
                     "Emergency Change",
                     "Standard Change",
-                    "Critical Change"
+                    "Major Change"
                 ],
                 answer: "C",
                 explanation: "Standard Change adalah perubahan rutin, berisiko sangat rendah, dan penanganannya sudah memiliki prosedur baku (SOP), sehingga tidak perlu meminta izin ulang ke dewan CAB."
@@ -1943,10 +1943,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Kapan dokumen Request for Change (RFC) wajib diajukan dan diproses melalui evaluasi CAB?",
                 options: [
-                    "Ketika terjadi insiden mati lampu total di seluruh area gedung perkantoran.",
+                    "Setiap kali terjadi insiden kritis (major incident) yang membutuhkan pemulihan darurat.",
                     "Ketika ingin mengeksekusi Normal Change seperti migrasi database atau upgrade sistem core.",
-                    "Saat teknisi helpdesk hendak mencatat keluhan nama user di sistem ticketing.",
-                    "Setiap kali pengguna meminta penggantian mouse komputer yang rusak."
+                    "Ketika ingin mengimplementasikan Standard Change yang prosedurnya sudah disetujui sebelumnya.",
+                    "Saat departemen IT melakukan pengadaan rutin perangkat keras komputer yang sudah dianggarkan."
                 ],
                 answer: "B",
                 explanation: "Normal Change adalah perubahan yang bukan rutin (seperti upgrade server besar atau migrasi data) sehingga wajib mengisi dokumen RFC dan di-review ketat oleh CAB."
@@ -1958,8 +1958,8 @@
                 options: [
                     "Semua aset adalah CI, namun tidak semua CI adalah aset.",
                     "Tidak semua aset adalah CI, tetapi semua CI sudah pasti merupakan aset.",
-                    "Aset dikelola oleh tim internal, sedangkan seluruh CI dikelola oleh vendor eksternal.",
-                    "Aset hanya berbentuk fisik, sedangkan CI selalu berbentuk digital non-fisik."
+                    "Aset memiliki nilai finansial bagi bisnis, sedangkan CI hanya memiliki nilai operasional tanpa nilai finansial.",
+                    "Aset mencakup aspek sumber daya manusia, sedangkan CI hanya mencakup perangkat keras dan lunak."
                 ],
                 answer: "B",
                 explanation: "Sesuai hukum tata kelola SACM, CI adalah bagian (subset) dari aset perusahaan yang dinilai krusial sehingga konfigurasinya wajib dikendalikan."
@@ -1969,10 +1969,10 @@
                 section: "Asset & Configuration Management (Materi 5)",
                 question: "Jika fisik sebuah komputer jinjing dikategorikan sebagai Aset, manakah komponen di dalamnya yang bertindak sebagai Configuration Item (CI)?",
                 options: [
-                    "Kardus pembungkus luar bawaan pabrik saat dibeli.",
+                    "Jumlah penyusutan nilai buku laptop pada laporan keuangan tahunan.",
                     "Sistem operasi terpasang dan konfigurasi parameter sistem keamanan.",
-                    "Nota kwitansi kertas bukti pembayaran pajak pembelian dari toko.",
-                    "Tas ransel pembawa laptop yang diberikan gratis sebagai bonus pembelanjaan."
+                    "Biaya perbaikan (maintenance fee) bulanan yang dibayarkan ke vendor.",
+                    "Nomor registrasi pembelian laptop di departemen pengadaan."
                 ],
                 answer: "B",
                 explanation: "Laptop fisiknya adalah aset, sedangkan hal-hal logis internal yang kustomisasinya memengaruhi stabilitas operasional sistem (seperti OS, aplikasi, dan setelan keamanan) adalah CI."
@@ -1984,8 +1984,8 @@
                 options: [
                     "Known Error Database (KEDB)",
                     "Configuration Management Database (CMDB)",
-                    "Service Portfolio Log",
-                    "Operational Level Register"
+                    "Service Catalog",
+                    "Configuration Management System (CMS)"
                 ],
                 answer: "B",
                 explanation: "CMDB adalah database khusus yang tidak hanya mencatat data atribut aset, melainkan fokus menyimpan informasi \"hubungan/relasi\" timbal balik antar-CI."
@@ -1995,10 +1995,10 @@
                 section: "Asset & Configuration Management (Materi 5)",
                 question: "Apa manfaat nyata pemanfaatan arsitektur CMDB yang komprehensif saat terjadi gangguan insiden pada server payroll perusahaan?",
                 options: [
-                    "Secara otomatis memotong gaji bulanan karyawan yang terlambat masuk kantor.",
+                    "Secara otomatis mendeteksi dan memperbaiki kerusakan hardware server tanpa intervensi teknisi.",
                     "Mempercepat proses troubleshooting karena tim IT langsung paham daftar database yang terhubung serta relasi antar-sistem yang terdampak.",
-                    "Mencetak nota tagihan biaya listrik pemakaian data center secara mandiri.",
-                    "Menghapus seluruh file log error program agar kapasitas media penyimpanan lega."
+                    "Memantau lalu lintas jaringan secara real-time dan memblokir serangan siber DDoS.",
+                    "Menyimpan seluruh lisensi perangkat lunak dan otomatis memperbaruinya ketika masa berlaku habis."
                 ],
                 answer: "B",
                 explanation: "Karena CMDB menyimpan visualisasi peta hubungan antar-sistem, ketika server rusak, tim IT bisa melakukan analisis dampak (impact analysis) dengan kilat untuk mempercepat pencarian eror."
@@ -2009,9 +2009,9 @@
                 question: "Sistem terintegrasi yang bertindak sebagai payung besar pengelola beberapa database CMDB beserta penjamin akurasi sinkronisasi datanya disebut...",
                 options: [
                     "Configuration Management System (CMS)",
-                    "Service Pipeline Engine",
-                    "Decision Support Subsystem",
-                    "Baseline Control Register"
+                    "Service Portfolio Management System (SPMS)",
+                    "Asset Register System (ARS)",
+                    "Known Error Database (KEDB)"
                 ],
                 answer: "A",
                 explanation: "CMS memiliki skala arsitektur di atas CMDB. CMS adalah kesatuan alat, proses, dan integrasi yang mengelola seluruh informasi CI dan memayungi CMDB."
@@ -2036,7 +2036,7 @@
                 options: [
                     "Procurement",
                     "Deployment",
-                    "Planning (Perencanaan)",
+                    "Planning",
                     "Retirement"
                 ],
                 answer: "C",
@@ -2048,7 +2048,7 @@
                 question: "Aktivitas memeriksa kesesuaian fisik barang kiriman vendor dengan lembar dokumen purchase order merupakan inti kegiatan dari tahap...",
                 options: [
                     "Planning",
-                    "Procurement (Pengadaan)",
+                    "Procurement",
                     "Deployment",
                     "Operation"
                 ],
@@ -2061,7 +2061,7 @@
                 question: "Aktivitas pelatihan operasional (training) bagi staf end-user agar mahir menggunakan aplikasi sistem baru dilaksanakan pada fase...",
                 options: [
                     "Procurement",
-                    "Deployment (Penerapan)",
+                    "Deployment",
                     "Operation",
                     "Retirement"
                 ],
@@ -2074,7 +2074,7 @@
                 question: "Pemantauan rutin kinerja hardware, perpanjangan masa berlaku lisensi software, serta perawatan preventif siber masuk ke dalam ranah...",
                 options: [
                     "Planning",
-                    "Operation (Operasional)",
+                    "Operation",
                     "Deployment",
                     "Retirement"
                 ],
@@ -2086,10 +2086,10 @@
                 section: "Asset & Configuration Management (Materi 5)",
                 question: "Apa tindakan utama yang wajib dilakukan pada fase Retirement dalam siklus hidup manajemen aset TI sebelum media penyimpanan komputer dijual/dibuang?",
                 options: [
-                    "Melakukan install ulang aplikasi game hiburan agar harga jualnya melambung.",
+                    "Menjual kembali aset tersebut secara langsung ke pasar bebas tanpa mengubah konfigurasi di dalamnya.",
                     "Penghapusan data secara aman (secure data wiping) demi mencegah kebocoran informasi rahasia bisnis.",
-                    "Mengajukan formulir permohonan RFC darurat ke dewan penasihat CAB.",
-                    "Identity target ketersediaan uptime di lembar perjanjian kontrak SLA baru."
+                    "Memindahkan aset ke server cadangan agar tetap dapat diakses oleh tim operasional.",
+                    "Mengubah status CI di CMDB menjadi 'Active' untuk menandai berakhirnya siklus."
                 ],
                 answer: "B",
                 explanation: "Demi mematuhi aspek keamanan informasi, sebelum komputer dipensiunkan (Retirement) dan dilepas kepemilikannya, datanya harus dihapus secara aman agar rahasia perusahaan tidak bocor ke luar."
@@ -2099,10 +2099,10 @@
                 section: "Asset & Configuration Management (Materi 5)",
                 question: "Apa kegunaan utama dari ditetapkannya Configuration Baseline (Basis Konfigurasi) secara formal pada titik waktu tertentu?",
                 options: [
-                    "Untuk menghitung total depresiasi nilai mata uang penyusutan harga laptop.",
+                    "Menentukan standar minimum gaji bagi teknisi yang melakukan pemeliharaan infrastruktur TI.",
                     "Berfungsi sebagai titik acuan aman referensi resmi, sehingga jika terjadi error fatal pasca update sistem, tim IT dapat melakukan rollback ke kondisi stabil sebelumnya.",
-                    "Menghapus kewajiban pengisian lembar kerja pengaduan tiket helpdesk.",
-                    "Secara otomatis memblokir seluruh koneksi internet karyawan di jam istirahat."
+                    "Membatasi jumlah kapasitas data yang dapat disimpan di dalam server utama perusahaan.",
+                    "Menjamin bahwa seluruh perangkat keras yang dibeli memiliki spesifikasi yang sama persis."
                 ],
                 answer: "B",
                 explanation: "Configuration Baseline bertindak sebagai \"potret titik aman\". Jika eksperimen perubahan atau update patch software di kemudian hari memicu crash, baseline dipakai untuk pemulihan kembali (rollback)."
@@ -2138,10 +2138,10 @@
                 section: "Asset & Configuration Management (Materi 5)",
                 question: "Manakah di bawah ini yang merupakan tujuan utama dari aktivitas Kontrol Konfigurasi?",
                 options: [
-                    "Melakukan audit fisik ke ruang server secara mendadak",
-                    "Mengontrol dan mengendalikan perubahan pada CI melalui mekanisme review dan approval",
-                    "Menghapus seluruh aset TI yang sudah tidak memiliki nilai ekonomis",
-                    "Memperbaiki bug pada kode program aplikasi keuangan secara darurat"
+                    "Memastikan data di CMDB sesuai dengan kondisi fisik aset sebenarnya melalui verifikasi.",
+                    "Mengontrol dan mengendalikan perubahan pada CI melalui mekanisme review dan approval.",
+                    "Mencatat riwayat perubahan status CI sepanjang siklus hidupnya.",
+                    "Mengidentifikasi dan memberi label unik pada setiap komponen infrastruktur baru."
                 ],
                 answer: "B",
                 explanation: "Kontrol Konfigurasi memastikan bahwa setiap perubahan pada Item Konfigurasi (CI) harus ditinjau dan disetujui (approval) terlebih dahulu guna mengurangi risiko gangguan layanan."
@@ -2164,10 +2164,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Apa input utama yang dibutuhkan pada tahapan Prioritas Incident di Manajemen Insiden?",
                 options: [
-                    "Dokumen SLA dari vendor dan laporan keuangan kuartalan",
+                    "Rekomendasi tindakan perbaikan sementara (workaround) dari tim Problem Management.",
                     "Tiket incident yang sudah terkategorisasi, informasi dampak (impact), dan urgensi (urgency)",
-                    "Persetujuan tertulis dari tim Change Advisory Board (CAB)",
-                    "Berkas log penyelesaian permanen dari Known Error Database"
+                    "Laporan audit kinerja Service Desk periode sebelumnya.",
+                    "Hasil analisis akar masalah (root cause analysis) dari tim internal."
                 ],
                 answer: "B",
                 explanation: "Penentuan skala prioritas insiden (Rendah, Sedang, Tinggi, Kritis) selalu dihitung berdasarkan kombinasi nilai Dampak (Impact) terhadap bisnis dan Urgensi (Urgency) penanganan."
@@ -2177,10 +2177,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Dalam skema Incident Management, kapankah sebuah tiket gangguan boleh dialirkan ke tahap Eskalasi?",
                 options: [
-                    "Segera setelah user selesai menelepon atau mengisi formulir",
+                    "Ketika pengguna tidak setuju dengan kategori prioritas yang ditentukan oleh Service Desk.",
                     "Ketika insiden tersebut tidak dapat diselesaikan oleh tim dukungan pada level awal (Level 1)",
-                    "Setelah solusi permanen (permanent fix) berhasil diterapkan di server utama",
-                    "Menunggu proses audit lisensi tahunan selesai dilaksanakan"
+                    "Saat insiden tersebut sudah melebihi batas waktu resolusi yang disepakati di OLA.",
+                    "Sesaat setelah solusi sementara (workaround) berhasil diterapkan pada sistem."
                 ],
                 answer: "B",
                 explanation: "Eskalasi dilakukan untuk mengalihkan penanganan insiden ke tim atau peran yang memiliki kompetensi/otoritas lebih tinggi karena tim level awal tidak mampu menyelesaikannya."
@@ -2203,10 +2203,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Perhatikan alur 5 Why berikut: \"Server down → CPU overload → User tinggi → Resource server terbatas → Belum ada upgrade server → X\". Apakah kesimpulan akar masalah (Root Cause) yang tepat untuk mengisi huruf X sesuai materi kuliah?",
                 options: [
-                    "Anggaran divisi IT habis dipotong",
-                    "Server terserang virus trojan",
+                    "Kurangnya pengawasan keamanan fisik di ruang data center.",
+                    "Kesalahan pemilihan sistem operasi yang tidak kompatibel.",
                     "Tidak ada capacity planning / capacity review",
-                    "Kelalaian admin lupa menghidupkan AC ruangan"
+                    "Keterlambatan tim Service Desk dalam merespons tiket keluhan awal."
                 ],
                 answer: "C",
                 explanation: "Berdasarkan studi kasus analisis akar masalah (RCA) di slide kuliah, rantai pertanyaan \"Mengapa\" tersebut berujung pada kesimpulan bahwa organisasi tidak memiliki perencanaan kapasitas (capacity planning/review)."
@@ -2229,10 +2229,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Siapa saja anggota yang umumnya terlibat di dalam struktur dewan Change Advisory Board (CAB)?",
                 options: [
-                    "Hanya Teknisi Magang dan Staff Administrasi Gudang",
+                    "Staf HRD, Tim Legal, Akuntan Perusahaan, dan Chief Executive Officer (CEO).",
                     "IT Manager, Network Engineer, Security Officer, Application Owner, dan Service Desk Leader",
-                    "Direktur Utama Keuangan dan Tim Audit Pajak Eksternal",
-                    "Seluruh pelanggan (customer) yang menggunakan layanan cloud"
+                    "Seluruh pengguna akhir (end-users) yang terdaftar di dalam sistem active directory.",
+                    "Vendor penyuplai perangkat keras dan perwakilan instansi pemerintah terkait."
                 ],
                 answer: "B",
                 explanation: "Anggota CAB terdiri dari pemangku kepentingan (stakeholders) dan tenaga ahli dari berbagai lini TI (manajerial, jaringan, keamanan, pemilik aplikasi, dan helpdesk) untuk mengukur dampak perubahan dari segala sisi."
@@ -2242,10 +2242,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Langkah penting manakah yang wajib dijalankan tepat sebelum melakukan implementasi perubahan sistem di lingkungan produksi (live production) untuk memperkecil risiko kegagalan?",
                 options: [
-                    "Melakukan proses Retirement pada database cadangan",
+                    "Mengubah status seluruh Item Konfigurasi (CI) menjadi 'Retired' di CMDB.",
                     "Melakukan pengujian (testing) di lingkungan khusus seperti test/staging environment",
-                    "Menandatangani kontrak kompensasi penalti baru dengan pelanggan",
-                    "Menghapus identitas penamaan unik pada seluruh unit hardware"
+                    "Membuat kesepakatan OLA baru dengan tim internal pendukung.",
+                    "Mengajukan komplain penalti performa kepada vendor penyedia layanan."
                 ],
                 answer: "B",
                 explanation: "Melakukan pengujian (testing) di lingkungan test/staging sangat penting dilakukan sebelum sistem dilepas ke lingkungan produksi agar memastikan perubahan berfungsi normal tanpa error."
@@ -2255,10 +2255,10 @@
                 section: "Problem & Change Management (Materi 4)",
                 question: "Untuk meminimalkan gangguan operasional bisnis pengguna harian, kapankah jadwal eksekusi perubahan (change) sebaiknya dilakukan?",
                 options: [
-                    "Di awal jam masuk kantor Senin pagi",
-                    "Tepat saat jam sibuk transaksi akhir bulan",
+                    "Pada jam kerja reguler agar seluruh tim pendukung stand-by di kantor.",
+                    "Secara langsung (real-time) saat insiden sedang terjadi di lingkungan produksi.",
                     "Pada waktu lalu lintas data rendah (low traffic), seperti malam hari atau akhir pekan",
-                    "Kapan saja saat teknisi memiliki waktu luang tanpa perlu pemberitahuan"
+                    "Tepat di awal siklus harian sebelum proses backup data dijalankan."
                 ],
                 answer: "C",
                 explanation: "Perubahan terjadwal sebaiknya dieksekusi di luar jam kerja (maintenance window) saat low traffic untuk meminimalkan dampak kerugian downtime bagi proses bisnis utama organisasi."
@@ -2294,10 +2294,10 @@
                 section: "Service Level Management (Materi 3)",
                 question: "Berdasarkan dokumen contoh riil SLA antara CloudTech Solutions dengan XYZ Corporation, pada hari dan jam berapakah aktivitas pemeliharaan terjadwal (scheduled maintenance) dijalankan?",
                 options: [
-                    "Setiap hari Jumat pukul 00.00 - 02.00 WIB",
+                    "Setiap hari Sabtu pukul 22.00 - 24.00 WIB",
                     "Setiap hari Minggu pukul 02.00 hingga 04.00 GMT",
-                    "Setiap akhir bulan pada jam kerja operasional",
-                    "Kapan saja secara acak tanpa batasan waktu standar"
+                    "Setiap hari Senin pukul 01.00 - 03.00 WIB",
+                    "Setiap hari Kamis pukul 03.00 - 05.00 GMT"
                 ],
                 answer: "B",
                 explanation: "Merujuk pada dokumen contoh SLA CloudTech Solutions, waktu pemeliharaan server cloud dijadwalkan secara spesifik pada hari Minggu pukul 02.00 - 04.00 GMT."
@@ -2307,10 +2307,10 @@
                 section: "Service Level Management (Materi 3)",
                 question: "Sesuai contoh kasus kompensasi CloudTech Solutions, apa bentuk sanksi ganti rugi jika target uptime bulanan jebol di bawah angka 99,95%?",
                 options: [
-                    "Vendor akan dituntut secara hukum pidana ke pengadilan",
+                    "Vendor diwajibkan untuk menyediakan server cadangan fisik baru secara gratis.",
                     "Klien menerima kredit layanan setara 10% dari biaya bulanan untuk setiap 0,1% penurunan di bawah ambang batas",
-                    "Direktur TI dari vendor wajib diganti saat itu juga",
-                    "Kontrak kerja sama otomatis hangus tanpa kompensasi apa pun"
+                    "Klien berhak menangguhkan seluruh pembayaran bulanan secara permanen selama sisa tahun berjalan.",
+                    "Vendor dikenakan denda administratif langsung dari lembaga pengawas telekomunikasi nasional."
                 ],
                 answer: "B",
                 explanation: "Dokumen kesepakatan menyatakan sanksi berupa pemberian kredit layanan finansial sebesar 10% dari biaya langganan bulanan untuk setiap kelipatan drop 0,1% dari threshold."
@@ -2346,10 +2346,10 @@
                 section: "Identifikasi Layanan SI (Materi 2)",
                 question: "Manakah di bawah ini yang merupakan salah satu tantangan atau kendala utama yang sering dihadapi organisasi saat melakukan proses Identifikasi Layanan?",
                 options: [
-                    "Terlalu banyak jumlah teknisi ahli bersertifikasi internasional",
-                    "Biaya pengadaan kertas label kode batang terlalu mahal",
+                    "Keterbatasan jumlah lisensi perangkat lunak monitoring yang terpasang di jaringan.",
+                    "Sulitnya mengintegrasikan database CMDB dengan sistem ERP keuangan eksternal.",
                     "Kurangnya dokumentasi layanan serta sulit membedakan antara batasan 'layanan' dengan 'aplikasi'",
-                    "Target uptime server terlalu tinggi di atas angka seratus persen"
+                    "Penolakan dari pihak manajemen untuk mengalokasikan anggaran biaya operasional TI."
                 ],
                 answer: "C",
                 explanation: "Berdasarkan materi kuliah, tantangan nyata dalam fase identifikasi mencakup minimnya dokumentasi, kerancuan memisahkan aplikasi dan layanan, serta kurangnya komunikasi antara tim bisnis dengan tim TI."
@@ -2359,10 +2359,10 @@
                 section: "Identifikasi Layanan SI (Materi 2)",
                 question: "Manakah di bawah ini contoh Best Practice (praktik terbaik) yang disarankan ITIL agar proses identifikasi layanan berjalan sukses memberikan nilai tambah?",
                 options: [
-                    "Menyusun katalog menggunakan bahasa teknis pemrograman komputer yang rumit",
-                    "Menghindari keterlibatan pengguna akhir agar proses perancangan cepat",
+                    "Menyusun katalog menggunakan bahasa teknis pemrograman sistem yang rumit agar terlihat profesional.",
+                    "Membatasi akses katalog layanan hanya untuk jajaran direksi dan manajer tingkat atas saja.",
                     "Berorientasi pada nilai (value-driven), melibatkan stakeholder, serta menggunakan bahasa bisnis yang mudah dipahami",
-                    "Melakukan perubahan konfigurasi server tanpa perlu dicatat ke CMDB"
+                    "Mewajibkan persetujuan langsung dari direktur utama untuk setiap permintaan layanan kecil."
                 ],
                 answer: "C",
                 explanation: "Menurut ITIL, identifikasi layanan harus berorientasi nilai (value-driven), melibatkan pemangku kepentingan (stakeholder), memakai bahasa bisnis (bukan bahasa teknis dewa), didokumentasikan sistematis, dan dievaluasi berkala."
