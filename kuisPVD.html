@@ -1,0 +1,2974 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif PVD - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0c0a09;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #7c2d12 0%, #0c0a09 100%);
+            --panel-bg: rgba(28, 25, 23, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f5f5f4;
+            --text-secondary: #a8a29e;
+            --accent: #f97316;
+            --accent-glow: rgba(249, 115, 22, 0.15);
+            --accent-hover: #ea580c;
+            --correct: #10b981;
+            --correct-bg: rgba(16, 185, 129, 0.08);
+            --correct-border: rgba(16, 185, 129, 0.25);
+            --incorrect: #ef4444;
+            --incorrect-bg: rgba(239, 68, 68, 0.08);
+            --incorrect-border: rgba(239, 68, 68, 0.25);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.08);
+            --warning-border: rgba(245, 158, 11, 0.25);
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f5f4;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #ffedd5 0%, #f5f5f4 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(249, 115, 22, 0.1);
+            --text-primary: #1c1917;
+            --text-secondary: #57534e;
+            --accent: #ea580c;
+            --accent-glow: rgba(234, 88, 12, 0.08);
+            --accent-hover: #c2410c;
+            --correct: #059669;
+            --correct-bg: rgba(5, 150, 105, 0.06);
+            --correct-border: rgba(5, 150, 105, 0.18);
+            --incorrect: #dc2626;
+            --incorrect-bg: rgba(220, 38, 38, 0.06);
+            --incorrect-border: rgba(220, 38, 38, 0.18);
+            --warning: #d97706;
+            --warning-bg: rgba(217, 119, 6, 0.06);
+            --warning-border: rgba(217, 119, 6, 0.18);
+            --shadow: 0 12px 40px 0 rgba(234, 88, 12, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #f59e0b, var(--accent));
+            background-size: 200% 100%;
+            animation: glowMove 8s linear infinite;
+        }
+
+        @keyframes glowMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .customizer-section {
+            margin-bottom: 24px;
+        }
+
+        .customizer-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .category-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .category-item input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+        }
+
+        .category-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .category-meta {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .options-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        @media (max-width: 640px) {
+            .options-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .custom-select-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-group {
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .btn-select {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-select.active {
+            background: var(--accent);
+            color: #0c0a09;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+        }
+
+        [data-theme="light"] .btn-select.active {
+            color: white;
+        }
+
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: #0c0a09;
+            font-weight: 800;
+            border: none;
+            font-family: var(--font-sans);
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px var(--accent-glow);
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .btn-primary {
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(249, 115, 22, 0.35);
+            filter: brightness(1.1);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .sidebar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .history-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .history-item {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .history-score {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .history-date {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .history-meta {
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .empty-history {
+            text-align: center;
+            padding: 24px 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .tips-card {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(124, 45, 18, 0.4) 100%);
+            border: 1px dashed var(--accent);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            position: relative;
+        }
+
+        .tips-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tips-card h4 svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .tips-card p {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .quiz-container {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .quiz-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quiz-main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .quiz-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .info-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .info-pill.timer {
+            color: var(--warning);
+            border-color: var(--warning-border);
+            background: var(--warning-bg);
+        }
+
+        .info-pill.timer.critical {
+            color: var(--incorrect);
+            border-color: var(--incorrect-border);
+            background: var(--incorrect-bg);
+            animation: pulseRed 1s infinite alternate;
+        }
+
+        @keyframes pulseRed {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #f59e0b);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .question-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-height: 380px;
+            position: relative;
+        }
+
+        .question-tag {
+            align-self: flex-start;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(249, 115, 22, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(249, 115, 22, 0.15);
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 14.5px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: translateX(4px);
+        }
+
+        .option-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .option-btn:hover:not(.disabled) .option-badge {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: #0c0a09;
+        }
+
+        .option-btn.selected {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .option-btn.selected .option-badge {
+            background: var(--accent);
+            color: #0c0a09;
+            border-color: var(--accent);
+        }
+
+        /* Practice mode feedback colors */
+        .option-btn.correct {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+        }
+
+        .option-btn.correct .option-badge {
+            background: var(--correct);
+            color: white;
+            border-color: var(--correct);
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--incorrect);
+            background: var(--incorrect-bg);
+        }
+
+        .option-btn.incorrect .option-badge {
+            background: var(--incorrect);
+            color: white;
+            border-color: var(--incorrect);
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+        }
+
+        /* Instant explanation box */
+        .explanation-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .explanation-box.visible {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .explanation-title {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .explanation-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Navigation Buttons Row */
+        .quiz-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+        }
+
+        .btn-action:hover:not(:disabled) {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .btn-action:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-action svg {
+            width: 16px;
+            height: 16px;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .btn-flag {
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-flag:hover {
+            border-color: var(--warning);
+            color: var(--warning);
+            background: var(--warning-bg);
+        }
+
+        .btn-flag.flagged {
+            border-color: var(--warning);
+            background: var(--warning);
+            color: #0c0a09;
+        }
+
+        .btn-flag svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+        }
+
+        /* Exam Sidebar Navigation Grid */
+        .exam-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .exam-grid-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .exam-grid-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .exam-grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .grid-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-cell:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .grid-cell.answered {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .grid-cell.flagged {
+            background: var(--warning-bg);
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .grid-cell.active {
+            box-shadow: 0 0 0 2px var(--text-primary);
+            border-color: transparent;
+            color: var(--text-primary);
+        }
+
+        .submit-btn-panel {
+            margin-top: 12px;
+        }
+
+        /* Result View */
+        .result-layout {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @media (max-width: 900px) {
+            .result-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .score-display-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 40px 32px;
+        }
+
+        .score-gauge {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin-bottom: 24px;
+        }
+
+        .score-gauge svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .score-gauge circle {
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .score-gauge .gauge-track {
+            stroke: rgba(255, 255, 255, 0.04);
+        }
+
+        .score-gauge .gauge-fill {
+            stroke: var(--accent);
+            stroke-dasharray: 439.82; /* 2 * PI * r (r=70) */
+            stroke-dashoffset: 439.82;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .score-value-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-percent {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--text-primary);
+        }
+
+        .score-lbl {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .result-feedback-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .result-feedback-desc {
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .stats-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .stat-val {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .stat-val.correct { color: var(--correct); }
+        .stat-val.incorrect { color: var(--incorrect); }
+        .stat-val.skipped { color: var(--text-secondary); }
+
+        .stat-name {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Review Section */
+        .review-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+            margin-bottom: 8px;
+        }
+
+        .review-search-box {
+            flex-grow: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .review-search-box input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.15);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 13.5px;
+            transition: var(--transition);
+        }
+
+        .review-search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .review-filters {
+            display: flex;
+            gap: 6px;
+        }
+
+        .filter-btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .review-item {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.3s ease-out;
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .review-item.correct-answer { border-left: 5px solid var(--correct); }
+        .review-item.incorrect-answer { border-left: 5px solid var(--incorrect); }
+        .review-item.skipped-answer { border-left: 5px solid var(--text-secondary); }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .review-number {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .review-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .review-badge.correct { background: var(--correct-bg); color: var(--correct); }
+        .review-badge.incorrect { background: var(--incorrect-bg); color: var(--incorrect); }
+        .review-badge.skipped { background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); }
+
+        .review-question {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .review-answers {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .review-ans-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+
+        .review-ans-lbl {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .review-ans-row.correct-key {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+            color: var(--correct);
+        }
+
+        .review-ans-row.correct-key .review-ans-lbl {
+            background: var(--correct);
+            color: white;
+            border-color: var(--correct);
+        }
+
+        .review-ans-row.user-select {
+            border-color: var(--incorrect);
+            background: var(--incorrect-bg);
+            color: var(--incorrect);
+        }
+
+        .review-ans-row.user-select .review-ans-lbl {
+            background: var(--incorrect);
+            color: white;
+            border-color: var(--incorrect);
+        }
+
+        .review-explanation {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+            margin-top: 4px;
+        }
+
+        .review-explanation-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .review-explanation-text {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Helpers */
+        .hidden {
+            display: none !important;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 32px 0 24px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"/>
+                        <path d="m19 9-5 5-4-4-3 3"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>PVD Kuis Interaktif</h1>
+                    <p>Pemodelan & Visualisasi Data</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main style="flex-grow: 1; display: flex; flex-direction: column;">
+            
+            <!-- VIEW 1: DASHBOARD / CONFIGURATION -->
+            <div id="dashboard-view" class="dashboard-grid">
+                <!-- Config area -->
+                <div class="glass-panel" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <h3 class="section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M12 6V4m0 2a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m-6 8a2 2 0 1 0 0-4m0 4a2 2 0 1 1 0-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 1 0 0-4m0 4a2 2 0 1 1 0-4m0 4v2m0-6V4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Kustomisasi Latihan
+                        </h3>
+
+                        <!-- Category Selector -->
+                        <div class="customizer-section">
+                            <span class="customizer-label">Pilih Materi Modul:</span>
+                            <div class="category-options">
+                                <label class="category-item">
+                                    <input type="checkbox" class="cat-checkbox" value="1" checked>
+                                    <div class="category-info">
+                                        <span class="category-name">Part 1: M1-M2 - Pemodelan & Visualisasi Data</span>
+                                        <span class="category-meta">13 Soal • Konsep dasar visualisasi & kategori chart</span>
+                                    </div>
+                                </label>
+                                <label class="category-item">
+                                    <input type="checkbox" class="cat-checkbox" value="2" checked>
+                                    <div class="category-info">
+                                        <span class="category-name">Part 2: M3 - Menentukan Visualisasi Data yang Baik</span>
+                                        <span class="category-meta">12 Soal • Chart suggestions, clutter & storyboard</span>
+                                    </div>
+                                </label>
+                                <label class="category-item">
+                                    <input type="checkbox" class="cat-checkbox" value="3" checked>
+                                    <div class="category-info">
+                                        <span class="category-name">Part 3: M6-M7 - Komunikasi Visual</span>
+                                        <span class="category-meta">17 Soal • Hierarki visual, tipografi & warna</span>
+                                    </div>
+                                </label>
+                                <label class="category-item">
+                                    <input type="checkbox" class="cat-checkbox" value="4" checked>
+                                    <div class="category-info">
+                                        <span class="category-name">Part 4: M8 - Mengenal Google Form</span>
+                                        <span class="category-meta">8 Soal • Kuis online & fitur penilaian otomatis</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Settings Row -->
+                        <div class="options-row">
+                            <div class="custom-select-group">
+                                <span class="customizer-label">Jumlah Soal:</span>
+                                <div class="btn-group" id="count-group">
+                                    <button class="btn-select" data-val="10">10</button>
+                                    <button class="btn-select" data-val="25">25</button>
+                                    <button class="btn-select active" data-val="all">Semua</button>
+                                </div>
+                            </div>
+                            <div class="custom-select-group">
+                                <span class="customizer-label">Mode Kuis:</span>
+                                <div class="btn-group" id="mode-group">
+                                    <button class="btn-select active" data-val="practice" title="Pembahasan instan langsung setelah menjawab">Latihan</button>
+                                    <button class="btn-select" data-val="exam" title="Berbatas waktu dengan rekap di akhir kuis">Ujian</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" id="start-btn">
+                        Mulai Simulasi Kuis
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 3l14 9-14 9V3z" fill="currentColor"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Sidebar (History and Tips) -->
+                <div class="sidebar-panel">
+                    <!-- History Card -->
+                    <div class="history-card">
+                        <h4 style="font-size: 14px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="width:16px; height:16px;">
+                                <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                            </svg>
+                            Riwayat Latihan
+                        </h4>
+                        <div class="history-list" id="history-container">
+                            <div class="empty-history">Belum ada riwayat pengerjaan kuis.</div>
+                        </div>
+                    </div>
+
+                    <!-- Tips Card -->
+                    <div class="tips-card">
+                        <h4>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9.663 17h4.673M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            </svg>
+                            Tips Belajar Mandiri
+                        </h4>
+                        <p>Pilihlah <strong>Mode Latihan</strong> jika Anda ingin mengulas dan menghafal materi dengan tenang. Setiap jawaban salah akan langsung menampilkan kotak **Penjelasan UTS** komprehensif.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: QUIZ MAIN INTERFACE -->
+            <div id="quiz-view" class="quiz-container hidden">
+                <!-- Question pane -->
+                <div class="quiz-main">
+                    <div class="quiz-info-bar">
+                        <span id="question-index-label">Soal 1 dari 10</span>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span class="info-pill" id="score-counter-pill">Benar: 0 • Salah: 0</span>
+                            <span class="info-pill timer hidden" id="timer-pill">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px; height:14px;">
+                                    <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke-linecap="round"/>
+                                </svg>
+                                <span id="timer-display">00:00</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Progress bar -->
+                    <div class="progress-container">
+                        <div class="progress-bar" id="quiz-progress-bar"></div>
+                    </div>
+
+                    <!-- Question Card -->
+                    <div class="question-card">
+                        <span class="question-tag" id="question-section-tag">Section</span>
+                        <div class="question-text" id="question-text-box">Pertanyaan memuat...</div>
+                        <div class="options-container" id="options-container">
+                            <!-- Answer option buttons will inject here -->
+                        </div>
+                        
+                        <!-- Instant feedback explanation (Practice Mode Only) -->
+                        <div class="explanation-box" id="instant-explanation-box">
+                            <div class="explanation-title">Penjelasan UTS</div>
+                            <div class="explanation-text" id="instant-explanation-text">Pembahasan...</div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="quiz-actions">
+                        <button class="btn-action" id="prev-btn">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Sebelumnya
+                        </button>
+                        
+                        <!-- Flag / Ragu-ragu -->
+                        <button class="btn-flag" id="flag-btn" title="Tandai ragu-ragu">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+
+                        <button class="btn-action" id="next-btn">
+                            Selanjutnya
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M9 5l7 7-7 7" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Exam sidebar (Grid indicator map) -->
+                <div class="exam-sidebar hidden">
+                    <div class="exam-grid-card">
+                        <span class="exam-grid-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="width:14px; height:14px;">
+                                <rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>
+                            </svg>
+                            Peta Navigasi Soal
+                        </span>
+                        <div class="exam-grid-container" id="exam-grid-container">
+                            <!-- Cell indexes inject here -->
+                        </div>
+                        <div class="submit-btn-panel">
+                            <button class="btn-primary" id="submit-quiz-btn" style="padding:12px; font-size:13.5px; background: linear-gradient(135deg, #10b981, #059669); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);">
+                                Selesaikan Ujian
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: RESULT VIEW -->
+            <div id="result-view" class="hidden">
+                <div class="result-layout">
+                    <!-- Score card -->
+                    <div class="glass-panel score-display-card">
+                        <h3 style="font-size:15px; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:1px; margin-bottom:20px;">Hasil Kuis PVD</h3>
+                        <div class="score-gauge">
+                            <svg>
+                                <circle class="gauge-track" cx="90" cy="90" r="70"/>
+                                <circle class="gauge-fill" id="score-circle" cx="90" cy="90" r="70"/>
+                            </svg>
+                            <div class="score-value-container">
+                                <span class="score-percent" id="result-score-percent">0%</span>
+                                <span class="score-lbl">Skor Akhir</span>
+                            </div>
+                        </div>
+
+                        <h4 class="result-feedback-title" id="result-feedback-title">Feedback</h4>
+                        <p class="result-feedback-desc" id="result-feedback-desc">Description</p>
+
+                        <!-- Statistics box -->
+                        <div class="stats-summary-grid">
+                            <div class="stat-box">
+                                <span class="stat-val correct" id="stats-correct">0</span>
+                                <span class="stat-name">Benar</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-val incorrect" id="stats-incorrect">0</span>
+                                <span class="stat-name">Salah</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-val skipped" id="stats-skipped">0</span>
+                                <span class="stat-name">Dilewati</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-val" id="stats-time">00:00</span>
+                                <span class="stat-name">Waktu</span>
+                            </div>
+                        </div>
+
+                        <div style="display:flex; flex-direction:column; gap:10px; width:100%; margin-top:28px;">
+                            <button class="btn-primary" id="restart-btn">Ulangi Kuis</button>
+                            <button class="btn-action" id="change-settings-btn" style="justify-content:center;">Ganti Kustomisasi</button>
+                        </div>
+                    </div>
+
+                    <!-- Review panel -->
+                    <div class="review-panel">
+                        <div class="review-header-row">
+                            <h3 class="section-title" style="margin-bottom:0;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Ulasan Lembar Jawaban
+                            </h3>
+                            <div class="review-filters">
+                                <button class="filter-btn active" data-filter="all">Semua (<span id="count-filter-all">0</span>)</button>
+                                <button class="filter-btn" data-filter="correct" style="color:var(--correct)">Benar (<span id="count-filter-correct">0</span>)</button>
+                                <button class="filter-btn" data-filter="incorrect" style="color:var(--incorrect)">Salah (<span id="count-filter-incorrect">0</span>)</button>
+                                <button class="filter-btn" data-filter="skipped" style="color:var(--text-secondary)">Dilewati (<span id="count-filter-skipped">0</span>)</button>
+                            </div>
+                        </div>
+
+                        <!-- Search -->
+                        <div class="review-search-box">
+                            <input type="text" id="review-search" placeholder="Cari soal atau kata kunci pembahasan...">
+                        </div>
+
+                        <!-- Review cards container -->
+                        <div id="review-cards-container" style="display:flex; flex-direction:column; gap:20px;">
+                            <!-- Review cards inject here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dibuat untuk latihan mandiri UTS Pemodelan Visualisasi Data.</p>
+            <p style="margin-top: 4px; color: var(--accent);">Siti Aisyah Edition</p>
+        </footer>
+    </div>
+
+    <!-- FLASHCARD ENGINE AND DATA SCRIPTS -->
+    <script>
+        // --- 50 QUESTIONS DATABASE ---
+        const ALL_QUESTIONS = [
+            // --- PART 1: M1-M2 - PEMODELAN DAN VISUALISASI DATA (1-13) ---
+            {
+                id: 1,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Manakah di bawah ini yang merupakan tujuan utama dari visualisasi data menurut teori dasar visualisasi?",
+                options: [
+                    "Mengubah data kualitatif menjadi kuantitatif secara otomatis",
+                    "Menghapus data pencilan (outliers) agar grafik terlihat rapi",
+                    "Mempercepat proses kompilasi kode program basis data",
+                    "Melihat tren, outliers, dan pola pada sekumpulan data"
+                ],
+                answer: "D",
+                explanation: "Sesuai definisi dasar, tujuan utama visualisasi data adalah memetakan pola, pencilan (outliers), dan tren tersembunyi."
+            },
+            {
+                id: 2,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Menurut Friedman, apa yang harus berjalan beriringan agar pemaparan ide melalui data dapat berjalan secara efektif?",
+                options: [
+                    "Bentuk estetis dan fungsionalitas",
+                    "Algoritma enkripsi dan struktur data",
+                    "Kecepatan render dan ukuran file data",
+                    "Kompleksitas warna primer dan sekunder"
+                ],
+                answer: "A",
+                explanation: "Menurut Friedman, keindahan bentuk (estetika) dan kegunaan (fungsionalitas) harus seimbang agar pesan tersampaikan secara intuitif."
+            },
+            {
+                id: 3,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Berdasarkan rentang jenis kategori visualisasi data, kategori visualisasi yang mensyaratkan karakteristik linier dan satu dimensi pada skala waktu tertentu disebut...",
+                options: [
+                    "Multidimensional",
+                    "Geospasial",
+                    "Hierarki",
+                    "Temporal"
+                ],
+                answer: "D",
+                explanation: "Kategori temporal terikat dengan lini masa/skala waktu, linier, dan berdimensi satu."
+            },
+            {
+                id: 4,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Apakah nama jenis diagram yang memvisualisasikan pengelompokan data berdasarkan parameter tertentu dalam bentuk lingkaran berlapis, yang termasuk ke dalam kategori hierarki?",
+                options: [
+                    "Sunburst Diagram",
+                    "Matrix Chart",
+                    "Heat Map",
+                    "Node-link Diagram"
+                ],
+                answer: "A",
+                explanation: "Sunburst diagram adalah visualisasi data berbentuk lingkaran berlapis yang masuk dalam kelompok hierarki."
+            },
+            {
+                id: 5,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Berdasarkan visualisasi ikonik sejarah oleh Charles Minard, peristiwa sejarah apa yang digambarkan secara mendalam menggunakan peta rute, suhu, dan skala waktu?",
+                options: [
+                    "Penyerangan pasukan Napoleon ke Rusia",
+                    "Peta pelayaran Christopher Columbus",
+                    "Data hotspot wabah kolera di London",
+                    "Migrasi penduduk benua Amerika"
+                ],
+                answer: "A",
+                explanation: "Charles Minard menggambar visualisasi ikonik berupa peta multi-variabel (pasukan, rute, suhu, waktu) penyerangan Napoleon."
+            },
+            {
+                id: 6,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Apa kelebihan utama dari visualisasi data berskala \"Multidimensional\"?",
+                options: [
+                    "Memiliki struktur linier dan pasti satu dimensi",
+                    "Sangat mudah dibaca oleh anak-anak karena hanya berisi gambar kartun",
+                    "Dapat dipecah menjadi berbagai wawasan (insight) yang lebih kecil",
+                    "Hanya bisa digunakan untuk menggambarkan kondisi silsilah keluarga"
+                ],
+                answer: "C",
+                explanation: "Karena memuat lebih dari 2 variabel, visualisasi multidimensional kaya akan sub-informasi."
+            },
+            {
+                id: 7,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Format visualisasi Word Cloud termasuk ke dalam kategori visualisasi data kelompok...",
+                options: [
+                    "Network",
+                    "Temporal",
+                    "Geospasial",
+                    "Hierarki"
+                ],
+                answer: "A",
+                explanation: "Word Cloud dikelompokkan ke dalam kategori network karena memperlihatkan kepadatan dan asosiasi keterhubungan kata."
+            },
+            {
+                id: 8,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Di dalam alur kerja Data Science Process, visualisasi data dan pembuatan laporan (Communicate, Visualize, Report) diletakkan tepat sebelum tahap...",
+                options: [
+                    "Clean Dataset",
+                    "Raw Data Collected",
+                    "Make Decisions (Mengambil Keputusan)",
+                    "Exploratory Data Analysis"
+                ],
+                answer: "C",
+                explanation: "Berdasarkan bagan alur Data Science Process, visualisasi data diletakkan tepat sebelum aksi penentuan keputusan akhir."
+            },
+            {
+                id: 9,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Kategori visualisasi data manakah yang paling pas digunakan saat kamu ingin memetakan relasi antar-klien bisnis yang kompleks tanpa penjelasan deskriptif panjang?",
+                options: [
+                    "Temporal",
+                    "Hierarki",
+                    "Network",
+                    "Geospasial"
+                ],
+                answer: "C",
+                explanation: "Grafik tipe network dirancang khusus untuk memetakan dataset yang saling terhubung (seperti jaringan hubungan klien)."
+            },
+            {
+                id: 10,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Mengapa visualisasi data dianggap jauh lebih efektif dalam menyampaikan informasi dibandingkan teks tulisan biasa dalam eksperimen \"One Second Game\"?",
+                options: [
+                    "Karena manusia secara psikologis mengingat 80% dari apa yang mereka lihat dan lakukan",
+                    "Karena otak manusia hanya mampu memproses data berbentuk tabel angka",
+                    "Karena data teks membutuhkan ruang penyimpanan komputasi yang lebih besar",
+                    "Karena indra pendengaran manusia mendominasi 90% penyerapan data deskriptif"
+                ],
+                answer: "A",
+                explanation: "Studi visual membuktikan visualisasi jauh lebih cepat dicerna karena mayoritas memori manusia menangkap apa yang dilihat/dilakukan."
+            },
+            {
+                id: 11,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Grafik Stacked Bar (Batang Bertumpuk) sering digunakan untuk menampilkan data kategori...",
+                options: [
+                    "Temporal",
+                    "Multidimensional",
+                    "Hierarki",
+                    "Geospasial"
+                ],
+                answer: "B",
+                explanation: "Stacked bar menampilkan beberapa lapisan variabel dalam satu batang, sehingga masuk kategori multidimensional."
+            },
+            {
+                id: 12,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Industri marketing sering menggunakan visualisasi data untuk melakukan clustering demi mencari insight dari data pelanggan. Kebutuhan ini masuk dalam fungsi...",
+                options: [
+                    "Menganalisis jaringan (Network)",
+                    "Penjadwalan (Scheduling)",
+                    "Frekuensi",
+                    "Time series"
+                ],
+                answer: "A",
+                explanation: "Fungsi visualisasi network dalam marketing dipakai untuk memetakan serta mengelompokkan (clustering) klien bisnis."
+            },
+            {
+                id: 13,
+                kelompok: 1,
+                section: "Part 1: M1-M2 - Pemodelan & Visualisasi Data",
+                question: "Di bawah ini yang merupakan contoh visualisasi data yang termasuk ke dalam kategori Geospasial adalah...",
+                options: [
+                    "Stacked bar graph",
+                    "Heat map wilayah",
+                    "Word cloud",
+                    "Sunburst diagram"
+                ],
+                answer: "B",
+                explanation: "Segala visualisasi yang dipetakan langsung di atas kondisi geografis dunia nyata termasuk kategori Geospasial."
+            },
+            
+            // --- PART 2: M3 - MENENTUKAN VISUALISASI DATA YANG BAIK (14-25) ---
+            {
+                id: 14,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Mengapa penggunaan tampilan grafik tiga dimensi (3D) yang tidak mendasar sering digolongkan sebagai kesalahan (clutter) dalam visualisasi data?",
+                options: [
+                    "Karena mengonsumsi ruang penyimpanan file yang terlalu besar",
+                    "Karena menyulitkan mata menilai proporsi tinggi batang secara kasat mata",
+                    "Karena menghilangkan warna primer pada sumbu koordinat",
+                    "Karena otomatis mendistorsi nilai sumbu Y dimulai dari angka nol"
+                ],
+                answer: "B",
+                explanation: "Efek 3D dengan sudut perspektif miring membuat audiens sulit menilai nilai asli tinggi grafik batang secara visual."
+            },
+            {
+                id: 15,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Agar perbedaan nilai data pada grafik batang dapat ditampilkan secara proporsional dan tidak mengalami distorsi visual, rentang sumbu vertikal (Sumbu Y) sebaiknya dimulai dari...",
+                options: [
+                    "Nilai rata-rata data (mean)",
+                    "Angka nol (0)",
+                    "Nilai minimum sampel data",
+                    "Angka satu (1)"
+                ],
+                answer: "B",
+                explanation: "Memulai sumbu vertikal (Y) dari nol wajib dilakukan agar perbandingan nilai data proporsional dan tidak terdistorsi."
+            },
+            {
+                id: 16,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Manakah langkah pertama yang harus dilakukan secara berurutan dalam proses pembuatan visualisasi data yang efektif?",
+                options: [
+                    "Menentukan jenis grafik atau diagram",
+                    "Melakukan filter dan menyusun ulang data",
+                    "Menentukan tujuan visualisasi data",
+                    "Menentukan target audiens"
+                ],
+                answer: "C",
+                explanation: "Tahapan awal paling mendasar adalah menentukan tujuan visualisasi (untuk presentasi, eksplorasi, atau analisis)."
+            },
+            {
+                id: 17,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Menghilangkan elemen-elemen hiasan seperti garis kisi-kisi berlebih, teks tidak penting, dan efek 3D yang mengganggu estetika fungsional termasuk ke dalam langkah...",
+                options: [
+                    "Pembuatan Storyboard",
+                    "Penambahan Konteks",
+                    "Penghilangan Clutter",
+                    "Penggunaan Visual Order"
+                ],
+                answer: "C",
+                explanation: "Clutter adalah elemen dekoratif/kekusutan visual yang tidak fungsional. Penghapusannya disebut hilangkan clutter."
+            },
+            {
+                id: 18,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Berdasarkan materi perkuliahan, visualisasi \"Where the Wild Things Glow\" oleh Jonni Walker memanfaatkan citra satelit untuk menggambarkan fenomena alam apa?",
+                options: [
+                    "Polusi sampah plastik di laut",
+                    "Peta hotspot persebaran Covid-19",
+                    "Karakteristik ras anjing populer",
+                    "Bioluminescence di pesisir Australia"
+                ],
+                answer: "D",
+                explanation: "Infografis karya Jonni Walker tersebut memetakan sebaran makhluk hidup laut yang memancarkan cahaya di pesisir Australia."
+            },
+            {
+                id: 19,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Visualisasi data \"Drowning in Plastic\" yang dirilis oleh Reuters Graphics menyajikan sebuah bold statement visual mengenai masalah...",
+                options: [
+                    "Keragaman demografi di Amerika Serikat",
+                    "Tingkat keparahan sampah plastik di bumi",
+                    "Penggunaan bahasa daerah di seluruh dunia",
+                    "Struktur package pemrograman dalam CRAN"
+                ],
+                answer: "B",
+                explanation: "Reuters Graphics mendesain visualisasi tersebut untuk memberikan pesan berani (bold statement) mengenai krisis plastik global."
+            },
+            {
+                id: 20,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Dalam langkah pembuatan visualisasi data, pembuatan alur cerita (storyboard) bertujuan untuk...",
+                options: [
+                    "Memilih jenis software visualisasi yang paling mahal",
+                    "Membuat visualisasi data bercerita dengan menonjolkan fakta atau kronologi",
+                    "Menghitung rumusan matematis pada sumbu vertikal grafik",
+                    "Mengatur lebar huruf bertipe monospace"
+                ],
+                answer: "B",
+                explanation: "Storyboard disusun agar visualisasi data terasa lebih hidup melalui alur cerita atau kronologi logis."
+            },
+            {
+                id: 21,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Pertanyaan mendasar apa yang harus dijawab saat kita ingin menentukan jenis visualisasi berdasarkan \"Komposisi\" atau \"Hubungan\"?",
+                options: [
+                    "Berapa resolusi layar monitor komputer?",
+                    "Apa tujuan visualisasi?",
+                    "Siapa pembuat basis datanya?",
+                    "Berapa memori laptop yang tersisa?"
+                ],
+                answer: "B",
+                explanation: "Berdasarkan bagan saran grafik (Chart Suggestions), pertanyaan pertama untuk memilih diagram adalah mengidentifikasi tujuannya."
+            },
+            {
+                id: 22,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Di bawah ini, manakah yang merupakan salah satu dari tiga fungsi utama visualisasi data yang ditentukan di tahap awal perancangan?",
+                options: [
+                    "Menggandakan volume ukuran penyimpanan data",
+                    "Membantu proses eksplorasi data",
+                    "Menyembunyikan tren yang bernilai negatif",
+                    "Mengotomatisasi pengisian kuesioner online"
+                ],
+                answer: "B",
+                explanation: "Tiga tujuan awal visualisasi data adalah: mempresentasikan data, eksplorasi data, dan analisis data."
+            },
+            {
+                id: 23,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Saat mengumpulkan dan mengeksplorasi data sebelum divisualisasikan, rangkaian tahapan teknis yang benar di bawah ini adalah...",
+                options: [
+                    "Melakukan filter data -> Mencari data -> Menyusun ulang data",
+                    "Menyusun ulang data -> Melakukan filter data -> Mencari data",
+                    "Mencari data -> Menyusun ulang data -> Melakukan filter data",
+                    "Melakukan filter data -> Menyusun ulang data -> Mencari data"
+                ],
+                answer: "C",
+                explanation: "Urutan logis pengelolaan data adalah mencari datanya dulu, menata kembali strukturnya, baru menyaring data yang relevan."
+            },
+            {
+                id: 24,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Infografis bertajuk \"The Next America\" menyajikan proyeksi data interaktif yang sangat komprehensif mengenai...",
+                options: [
+                    "Letak birthplace ribuan bahasa di dunia",
+                    "Pergeseran demografis dan tren pernikahan antar-ras di AS",
+                    "Pengaruh pupuk nitrogen pada tanaman jagung",
+                    "Pemetaan kecerdasan ras anjing sedunia"
+                ],
+                answer: "B",
+                explanation: "Proyek data besar Pew Research Center tersebut menyoroti keragaman tren demografi historis dan masa depan Amerika Serikat."
+            },
+            {
+                id: 25,
+                kelompok: 2,
+                section: "Part 2: M3 - Menentukan Visualisasi Data yang Baik",
+                question: "Apa akibatnya jika ukuran elemen grafis seperti angka dan label teks pada sumbu koordinat X atau Y terlalu kecil?",
+                options: [
+                    "Terjadi kesalahan distorsi data rentang nilai",
+                    "Grafik otomatis berubah menjadi visualisasi hierarki",
+                    "Informasi menjadi sulit dibaca dan dipahami oleh audiens",
+                    "Skala data kualitatif berubah menjadi kuantitatif"
+                ],
+                answer: "C",
+                explanation: "Teks atau angka yang berukuran terlalu kecil pada sumbu grafik digolongkan sebagai elemen grafis yang buruk karena menyulitkan audiens."
+            },
+            
+            // --- PART 3: M6-M7 - KOMUNIKASI VISUAL (26-42) ---
+            {
+                id: 26,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Bentuk komunikasi visual dapat berupa komunikasi langsung. Manakah contoh komunikasi visual yang bersifat langsung?",
+                options: [
+                    "Iklan pamflet di jalan raya",
+                    "Bahasa isyarat bagi tuna rungu",
+                    "Video tutorial tanpa suara",
+                    "Poster pengumuman ujian"
+                ],
+                answer: "B",
+                explanation: "Bahasa isyarat antardua orang tuna rungu adalah komunikasi visual langsung tanpa perantara media fisik/digital."
+            },
+            {
+                id: 27,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Ketika mendesain sebuah infografis, kita mengatur elemen sedemandin rupa sehingga mata audiens diarahkan secara berurutan dari objek pertama, kedua, hingga ketiga. Prinsip ini dinamakan...",
+                options: [
+                    "Prinsip Ritme",
+                    "Prinsip Kesatuan",
+                    "Prinsip Hierarki Visual",
+                    "Prinsip Keseimbangan Horizontal"
+                ],
+                answer: "C",
+                explanation: "Hierarki visual bertugas menuntun fokus mata audiens membaca informasi secara berurutan sesuai prioritas pesan."
+            },
+            {
+                id: 28,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Huruf yang memiliki ciri khas berupa \"kait\" atau \"kaki\" di setiap ujungnya, berkesan formal, anggun, dan konservatif seperti Times New Roman termasuk dalam kelompok...",
+                options: [
+                    "Sans Serif",
+                    "Serif",
+                    "Monospace",
+                    "Script"
+                ],
+                answer: "B",
+                explanation: "Huruf kelompok Serif memiliki ornamen kaki/kait kecil di ujung huruf, berkesan formal dan elegan."
+            },
+            {
+                id: 29,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Campuran antara satu warna primer dengan warna sekunder yang berada di sebelahnya akan menghasilkan kelompok warna...",
+                options: [
+                    "Khusus",
+                    "Kuarter",
+                    "Sekunder Baru",
+                    "Tersier"
+                ],
+                answer: "D",
+                explanation: "Warna tersier tercipta dari campuran satu warna primer dengan satu warna sekunder di dekatnya."
+            },
+            {
+                id: 30,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Dalam psikologi warna, warna yang merepresentasikan nilai kepercayaan (trust), keamanan, konservatif, dan dunia teknologi adalah...",
+                options: [
+                    "Hijau",
+                    "Merah",
+                    "Biru",
+                    "Hitam"
+                ],
+                answer: "C",
+                explanation: "Secara psikologis, warna biru memancarkan kesan kepercayaan (trust), keamanan, profesionalitas, dan teknologi."
+            },
+            {
+                id: 31,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Dalam struktur penamaan teks komunikasi visual iklan, bagian teks yang bertugas menerangkan karakteristik produk secara mendalam dan detail disebut...",
+                options: [
+                    "Headline",
+                    "Slogan",
+                    "Body Copy",
+                    "Sub Headline"
+                ],
+                answer: "C",
+                explanation: "Teks isi (body copy) memuat penjabaran informasi atau kelebihan produk secara mendalam dan mendetail."
+            },
+            {
+                id: 32,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Proses penyampaian pesan di mana lambang yang dikirimkan komunikator hanya dapat ditangkap oleh komunikan semata-mata melalui indra penglihatan dinamakan...",
+                options: [
+                    "Komunikasi Visual",
+                    "Komunikasi Verbal",
+                    "Komunikasi Audiovisual",
+                    "Komunikasi Interpersonal"
+                ],
+                answer: "A",
+                explanation: "Merupakan arti harfiah dari proses pengiriman pesan berbasis grafis yang mengandalkan indra penglihatan saja."
+            },
+            {
+                id: 33,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Dari sudut pandang teknis ilustrasi, gambar yang diwujudkan melalui perpaduan antara teknik fotografi atau ilustrasi manual dengan pengolahan digital di komputer dinamakan...",
+                options: [
+                    "Hand Drawing",
+                    "Ilustrasi Murni",
+                    "Teknik Gabungan",
+                    "Ilustrasi Kamera"
+                ],
+                answer: "C",
+                explanation: "Teknik gabungan memadukan ilustrasi tangan manual atau fotografi dengan olahan grafis digital komputer."
+            },
+            {
+                id: 34,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Jenis huruf yang memiliki karakteristik unik di mana setiap karakter/huruf memiliki lebar atau jarak spasial yang sama persis (seperti tipe huruf Courier) adalah...",
+                options: [
+                    "Sans Serif",
+                    "Monospace",
+                    "Dekoratif",
+                    "Script"
+                ],
+                answer: "B",
+                explanation: "Huruf monospace memiliki lebar ruang horizontal yang sama persis untuk setiap karakter (seperti font mesin ketik)."
+            },
+            {
+                id: 35,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Kalimat pendek yang unik, khas, dan dimiliki oleh sebuah produk untuk memancing daya ingat konsumen disebut...",
+                options: [
+                    "Headline",
+                    "Slogan",
+                    "Body Copy",
+                    "Closing Word"
+                ],
+                answer: "B",
+                explanation: "Slogan adalah kalimat pendek yang unik, khas, dan mudah diingat oleh konsumen untuk mengidentifikasi produk."
+            },
+            {
+                id: 36,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Istilah ilmu yang mempelajari tentang teori, penciptaan, dan karakteristik warna dinamakan...",
+                options: [
+                    "Chromatics",
+                    "Typography",
+                    "Vectorics",
+                    "Astrophotography"
+                ],
+                answer: "A",
+                explanation: "Ilmu pengetahuan yang mengkaji dan mempelajari seluk-beluk tentang warna dinamakan Chromatics."
+            },
+            {
+                id: 37,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Salah satu fungsi komunikasi visual adalah sebagai sarana identifikasi. Contoh penerapan fungsi ini dalam kehidupan sehari-hari adalah...",
+                options: [
+                    "Peta penunjuk arah mudik di jalan tol",
+                    "Diagram batang jumlah penduduk di kelurahan",
+                    "Penggunaan merek dan logo spesifik pada kemasan produk minyak goreng",
+                    "Poster instruksi langkah keselamatan kerja kebakaran"
+                ],
+                answer: "C",
+                explanation: "Logo dan identitas visual spesifik pada kemasan membantu produk mudah dibedakan dan dikenali konsumen secara instan."
+            },
+            {
+                id: 38,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Teknik ilustrasi yang mengandalkan keterampilan tangan sepenuhnya menggunakan alat seperti kuas, pensil, pena, atau air brush disebut...",
+                options: [
+                    "Fotografi",
+                    "Hand Drawing",
+                    "Digital Painting",
+                    "Computer Graphic"
+                ],
+                answer: "B",
+                explanation: "Hand drawing adalah pengerjaan gambar ilustrasi yang mengandalkan keterampilan motorik tangan sepenuhnya."
+            },
+            {
+                id: 39,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Manakah di antara pilihan berikut yang merupakan contoh font berjenis Sans Serif?",
+                options: [
+                    "Courier",
+                    "Times New Roman",
+                    "Arial",
+                    "Script Bold"
+                ],
+                answer: "C",
+                explanation: "Arial dan Helvetica adalah contoh paling populer dari tipe font tak berkait atau Sans Serif."
+            },
+            {
+                id: 40,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Warna emas (gold) dan perak (silver) di dalam pengelompokan warna visual dikelompokkan ke dalam...",
+                options: [
+                    "Warna Primer",
+                    "Warna Khusus",
+                    "Warna Sekunder",
+                    "Warna Tersier"
+                ],
+                answer: "B",
+                explanation: "Emas (gold) dan perak (silver) masuk kelompok warna khusus karena pigmennya tidak bisa dibentuk lewat pencampuran biasa."
+            },
+            {
+                id: 41,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Sifat unggul dan istimewa yang menjadikan suatu unsur sebagai penarik dan pusat perhatian utama dalam sebuah karya desain disebut...",
+                options: [
+                    "Proporsi",
+                    "Dominasi",
+                    "Keseimbangan",
+                    "Ritme"
+                ],
+                answer: "B",
+                explanation: "Dominasi (dominance) bertindak sebagai pusat perhatian utama (focal point) untuk memecah kejenuhan desain."
+            },
+            {
+                id: 42,
+                kelompok: 3,
+                section: "Part 3: M6-M7 - Komunikasi Visual",
+                question: "Jenis huruf yang desainnya sangat rumit dan hanya cocok digunakan sebagai headline, serta tidak boleh digunakan untuk body copy adalah...",
+                options: [
+                    "Serif",
+                    "Sans Serif",
+                    "Monospace",
+                    "Dekoratif"
+                ],
+                answer: "D",
+                explanation: "Font dekoratif memiliki detail yang sangat rumit, sehingga tidak boleh dipakai sebagai teks isi karena merusak keterbacaan."
+            },
+            
+            // --- PART 4: M8 - MENGENAL GOOGLE FORM (43-50) ---
+            {
+                id: 43,
+                kelompok: 4,
+                section: "Part 4: M8 - Mengenal Google Form",
+                question: "Untuk mempermudah pengisian formulir, apabila responden menjawab \"Ya\" pada pertanyaan tertentu dan diarahkan ke bagian (section) khusus, fitur apakah yang digunakan di dalam Google Form?",
+                options: [
+                    "Go to section based on answer (Buka bagian berdasarkan jawaban)",
+                    "Data validation",
+                    "Import questions",
+                    "Linear scale"
+                ],
+                answer: "A",
+                explanation: "Fitur ini mengarahkan responden melompati bagian formulir tertentu sesuai opsi jawaban yang mereka pilih."
+            },
+            {
+                id: 44,
+                kelompok: 4,
+                section: "Part 4: M8 - Mengenal Google Form",
+                question: "Saat mengadakan ujian online menggunakan Google Forms, langkah pencegahan apa yang bisa dilakukan agar siswa tidak dapat melihat atau mengubah jawaban yang sudah mereka kirim?",
+                options: [
+                    "Menghapus formulir sebelum ujian selesai",
+                    "Mematikan opsi Edit after submit (Edit setelah mengirim) di menu Settings",
+                    "Mengunci layar menggunakan Password khusus",
+                    "Mematikan tombol Responses (Tanggapan) di menu Settings"
+                ],
+                answer: "B",
+                explanation: "Mematikan fitur ini memastikan lembar jawaban yang sudah terkirim terkunci dan tidak bisa dimanipulasi siswa."
+            },
+            {
+                id: 45,
+                kelompok: 4,
+                section: "Part 4: M8 - Mengenal Google Form",
+                question: "Jika ingin membatasi agar setiap peserta hanya bisa mengisi formulir evaluasi satu kali saja menggunakan akun Google mereka, menu dan pengaturan apakah yang harus dicentang?",
+                options: [
+                    "Menu Settings - General - Collect emails",
+                    "Menu Settings - Responses - Limit to 1 response",
+                    "Menu Settings - Presentation",
+                    "Menu Responses - Accepting responses"
+                ],
+                answer: "B",
+                explanation: "Pilihan \"Limit to 1 response\" (Batasi ke 1 tanggapan) memaksa pengguna masuk akun Google agar tidak bisa mengisi berkali-kali."
+            },
+            {
+                id: 46,
+                kelompok: 4,
+                section: "Part 4: M8 - Mengenal Google Form",
+                question: "Dalam pembuatan soal kuis, bagaimana cara agar Google Form dapat mengetahui jawaban mana yang benar dan berapa poin yang didapat siswa?",
+                options: [
+                    "Memberikan batasan waktu pada menu Settings",
+                    "Menghubungkan Google Form dengan Google Drive",
+                    "Memilih opsi Make this a quiz (Jadikan ini sebagai kuis) dan mengatur Answer Key (Kunci Jawaban)",
+                    "Mengaktifkan fitur Linear Scale"
+                ],
+                answer: "C",
+                explanation: "Mode kuis wajib diaktifkan lewat \"Make this a quiz\" agar menu penentuan kunci jawaban dan poin soal muncul."
+            },
+            {
+                id: 47,
+                kelompok: 4,
+                section: "Part 4: M8 - Mengenal Google Form",
+                question: "Fitur Linear Scale pada Google Formulir biasanya paling tepat diterapkan untuk kondisi berikut, kecuali...",
+                options: [
+                    "Mengukur tingkat pemahaman materi skala 1 hingga 10",
+                    "Memberikan rating terhadap suatu produk",
+                    "Memilih satu jawaban benar dari empat pilihan",
+                    "Menilai tingkat kepuasan layanan dari angka 1 hingga 5"
+                ],
+                answer: "C",
+                explanation: "Linear Scale digunakan untuk mengukur rating/skala bertingkat (1-5 atau 1-10), bukan untuk soal pilihan ganda (multiple choice)."
+            },
+            {
+                id: 48,
+                kelompok: 4,
+                section: "Part 4: M8 - Mengenal Google Form",
+                question: "Berapa jumlah record data minimal yang direkomendasikan dalam tugas pembuatan visualisasi kuesioner mahasiswa sekelas?",
+                options: [
+                    "5 - 10 record",
+                    "10 - 15 record",
+                    "20 - 30 record",
+                    "100 - 150 record"
+                ],
+                answer: "C",
+                explanation: "Sesuai instruksi penugasan praktikum, jumlah record data minimal yang wajib dikumpulkan adalah 20 hingga 30 data."
+            },
+            {
+                id: 49,
+                kelompok: 4,
+                section: "Part 4: M8 - Mengenal Google Form",
+                question: "Apa syarat mutlak isi data kuesioner yang dibuat oleh mahasiswa berdasarkan ketentuan tugas praktikum?",
+                options: [
+                    "Harus mengumpulkan nomor KTP/NIK responden",
+                    "Wajib mengandung opini politik praktis",
+                    "Tidak mengandung unsur SARA, politik, dan data pribadi sensitif",
+                    "Harus menggunakan bahasa Inggris formal"
+                ],
+                answer: "C",
+                explanation: "Ketentuan penugasan melarang keras pengambilan data sensitif pribadi (seperti NIK) serta isu SARA/politik."
+            },
+            {
+                id: 50,
+                kelompok: 4,
+                section: "Part 4: M8 - Mengenal Google Form",
+                question: "Penulisan judul formulir kuesioner pada Google Form dilakukan dengan mengklik bagian kolom teks bawaan yang bernama...",
+                options: [
+                    "Description Form",
+                    "Untitled Form",
+                    "Multiple Choice Option",
+                    "Send Button"
+                ],
+                answer: "B",
+                explanation: "Kolom default pertama kali yang harus diklik untuk memberikan judul kuesioner baru dinamakan \"Untitled Form\"."
+            }
+        ];
+
+        // --- APP STATE ---
+        let state = {
+            questions: [],         // Active sliced & shuffled questions
+            currentIdx: 0,
+            userAnswers: {},       // idx -> option letter (e.g. 'A')
+            flaggedQuestions: {},  // idx -> boolean
+            timeSpent: 0,
+            timerInterval: null,
+            mode: 'practice',      // 'practice' or 'exam'
+            soundEnabled: true,
+            theme: 'dark'
+        };
+
+        // --- WEB AUDIO API SYNTHESIS ---
+        let audioCtx = null;
+        function playSynthSound(type) {
+            if (!state.soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(550, now);
+                    osc.frequency.exponentialRampToValueAtTime(280, now + 0.08);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'correct') {
+                    // Warm major third chime
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(587.33, now); // D5
+                    osc.frequency.setValueAtTime(739.99, now + 0.08); // F#5
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'incorrect') {
+                    // Low synth buzzer
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(200, now); // G3
+                    osc.frequency.linearRampToValueAtTime(130, now + 0.2);
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.2);
+                    osc.start(now);
+                    osc.stop(now + 0.2);
+                } else if (type === 'finish') {
+                    // Celebration arpeggio
+                    const notes = [293.66, 369.99, 440.00, 587.33]; // D major chord
+                    notes.forEach((freq, idx) => {
+                        const noteOsc = audioCtx.createOscillator();
+                        const noteGain = audioCtx.createGain();
+                        noteOsc.type = 'triangle';
+                        noteOsc.connect(noteGain);
+                        noteGain.connect(audioCtx.destination);
+                        noteOsc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                        noteGain.gain.setValueAtTime(0.05, now + idx * 0.08);
+                        noteGain.gain.linearRampToValueAtTime(0, now + idx * 0.08 + 0.3);
+                        noteOsc.start(now + idx * 0.08);
+                        noteOsc.stop(now + idx * 0.08 + 0.3);
+                    });
+                }
+            } catch (e) {
+                console.warn('Audio Context sound play failed:', e);
+            }
+        }
+
+        // --- APP ENGINE INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            setupEventListeners();
+            loadHistory();
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('index_quiz_theme') || 'dark';
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            state.theme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('index_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('pvd_quiz_history')) || [];
+            const container = document.getElementById('history-container');
+
+            if (history.length === 0) {
+                container.innerHTML = `<div class="empty-history">Belum ada riwayat pengerjaan kuis.</div>`;
+                return;
+            }
+
+            container.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <div class="history-info">
+                        <span class="history-score">${item.score}% Benar</span>
+                        <span class="history-date">${item.date}</span>
+                    </div>
+                    <div style="text-align: right; display:flex; flex-direction:column; gap:2px;">
+                        <span class="history-meta">${item.correct}/${item.total} Soal</span>
+                        <span class="history-date" style="font-size:10px;">${item.duration} • ${item.mode}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveSessionToHistory(scorePercent, correct, total, seconds) {
+            const history = JSON.parse(localStorage.getItem('pvd_quiz_history')) || [];
+            const dateStr = new Date().toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            const newSession = {
+                score: Math.round(scorePercent),
+                correct: correct,
+                total: total,
+                duration: formatTime(seconds),
+                mode: state.mode === 'practice' ? 'Latihan' : 'Ujian',
+                date: dateStr
+            };
+
+            history.unshift(newSession); // Add to beginning of history
+            localStorage.setItem('pvd_quiz_history', JSON.stringify(history.slice(0, 10))); // Limit to latest 10
+            loadHistory();
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playSynthSound('click');
+                setTheme(state.theme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Sound toggle
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                state.soundEnabled = !state.soundEnabled;
+                const icon = document.getElementById('sound-icon');
+                if (state.soundEnabled) {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    `;
+                } else {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    `;
+                }
+                playSynthSound('click');
+            });
+
+            // Count buttons selection
+            const countButtons = document.querySelectorAll('#count-group button');
+            countButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    countButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // Mode buttons selection
+            const modeButtons = document.querySelectorAll('#mode-group button');
+            modeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    modeButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // Start Quiz
+            document.getElementById('start-btn').addEventListener('click', startQuiz);
+
+            // Navigation
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                if (state.currentIdx > 0) {
+                    playSynthSound('click');
+                    state.currentIdx--;
+                    renderQuestion();
+                }
+            });
+
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if (state.currentIdx < state.questions.length - 1) {
+                    playSynthSound('click');
+                    state.currentIdx++;
+                    renderQuestion();
+                } else if (state.mode === 'practice') {
+                    finishQuiz();
+                }
+            });
+
+            // Ragu-ragu / Flag
+            document.getElementById('flag-btn').addEventListener('click', toggleFlagQuestion);
+
+            // Submit Button
+            document.getElementById('submit-quiz-btn').addEventListener('click', () => {
+                if (confirm('Apakah Anda yakin ingin menyelesaikan kuis ini?')) {
+                    finishQuiz();
+                }
+            });
+
+            // Restart & Change Settings
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                playSynthSound('click');
+                startQuiz();
+            });
+
+            document.getElementById('change-settings-btn').addEventListener('click', () => {
+                playSynthSound('click');
+                showView('dashboard-view');
+            });
+
+            // Review search and filters
+            document.getElementById('review-search').addEventListener('input', applyReviewFilters);
+
+            const filterBtns = document.querySelectorAll('.review-filters .filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyReviewFilters();
+                });
+            });
+        }
+
+        // --- ENGINE LOGIC ---
+
+        function startQuiz() {
+            playSynthSound('click');
+
+            // 1. Gather Selected Categories
+            const checkedBoxes = document.querySelectorAll('.cat-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                alert('Silakan pilih minimal satu kategori materi!');
+                return;
+            }
+
+            const activeCategories = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+
+            // Filter questions based on selected categories
+            let filteredQuestions = ALL_QUESTIONS.filter(q => {
+                return activeCategories.includes(q.kelompok);
+            });
+
+            // Shuffle
+            filteredQuestions = shuffleArray([...filteredQuestions]);
+
+            // 2. Count limit
+            const countBtn = document.querySelector('#count-group button.active');
+            const countLimitVal = countBtn.getAttribute('data-val');
+            let finalCount = filteredQuestions.length;
+            if (countLimitVal !== 'all') {
+                finalCount = Math.min(parseInt(countLimitVal), filteredQuestions.length);
+            }
+            state.questions = filteredQuestions.slice(0, finalCount);
+
+            // 3. Mode
+            const modeBtn = document.querySelector('#mode-group button.active');
+            state.mode = modeBtn.getAttribute('data-val');
+
+            // Reset state
+            state.currentIdx = 0;
+            state.userAnswers = {};
+            state.flaggedQuestions = {};
+            state.timeSpent = 0;
+
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            const timerPill = document.getElementById('timer-pill');
+            if (state.mode === 'exam') {
+                timerPill.classList.remove('hidden');
+                let timerLimit = state.questions.length * 90; // 1.5 mins per question
+                updateTimerDisplay(timerLimit);
+
+                state.timerInterval = setInterval(() => {
+                    timerLimit--;
+                    state.timeSpent++;
+                    updateTimerDisplay(timerLimit);
+
+                    if (timerLimit === 60) {
+                        timerPill.classList.add('critical');
+                    }
+
+                    if (timerLimit <= 0) {
+                        clearInterval(state.timerInterval);
+                        alert('Waktu ujian telah habis! Hasil Anda akan segera dikumpulkan.');
+                        finishQuiz();
+                    }
+                }, 1000);
+            } else {
+                timerPill.classList.add('hidden');
+                state.timerInterval = setInterval(() => {
+                    state.timeSpent++;
+                }, 1000);
+            }
+
+            const examSidebar = document.querySelector('.exam-sidebar');
+            if (state.mode === 'exam') {
+                examSidebar.classList.remove('hidden');
+            } else {
+                examSidebar.classList.add('hidden');
+            }
+
+            renderExamGrid();
+            renderQuestion();
+            showView('quiz-view');
+        }
+
+        function updateTimerDisplay(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainder = seconds % 60;
+            document.getElementById('timer-display').innerText =
+                `${minutes.toString().padStart(2, '0')}:${remainder.toString().padStart(2, '0')}`;
+        }
+
+        function renderQuestion() {
+            const q = state.questions[state.currentIdx];
+            if (!q) return;
+
+            document.getElementById('question-index-label').innerText = `Soal ${state.currentIdx + 1} dari ${state.questions.length}`;
+            document.getElementById('question-section-tag').innerText = q.section;
+            document.getElementById('question-text-box').innerHTML = q.question;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            const selectedAns = state.userAnswers[state.currentIdx];
+            const hasAnswered = selectedAns !== undefined;
+            const letterMap = ['A', 'B', 'C', 'D'];
+
+            q.options.forEach((optText, i) => {
+                const optLetter = letterMap[i];
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+
+                btn.innerHTML = `
+                    <div class="option-badge">${optLetter}</div>
+                    <div class="option-text">${optText}</div>
+                `;
+
+                if (selectedAns === optLetter) {
+                    btn.classList.add('selected');
+                }
+
+                if (state.mode === 'practice' && hasAnswered) {
+                    btn.classList.add('disabled');
+                    if (optLetter === q.answer) {
+                        btn.classList.add('correct');
+                    } else if (selectedAns === optLetter) {
+                        btn.classList.add('incorrect');
+                    }
+                }
+
+                btn.addEventListener('click', () => {
+                    if (state.mode === 'practice' && hasAnswered) return;
+                    selectOption(optLetter);
+                });
+
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('prev-btn').disabled = state.currentIdx === 0;
+
+            const nextBtn = document.getElementById('next-btn');
+            if (state.currentIdx === state.questions.length - 1) {
+                if (state.mode === 'practice') {
+                    nextBtn.innerHTML = `Selesai <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none"/></svg>`;
+                } else {
+                    nextBtn.disabled = true;
+                }
+            } else {
+                nextBtn.innerHTML = `Selanjutnya <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round"/></svg>`;
+                nextBtn.disabled = false;
+            }
+
+            const flagBtn = document.getElementById('flag-btn');
+            if (state.flaggedQuestions[state.currentIdx]) {
+                flagBtn.classList.add('flagged');
+            } else {
+                flagBtn.classList.remove('flagged');
+            }
+
+            const progressPct = ((state.currentIdx + 1) / state.questions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
+
+            const expBox = document.getElementById('instant-explanation-box');
+            if (state.mode === 'practice' && hasAnswered) {
+                document.getElementById('instant-explanation-text').innerHTML = q.explanation;
+                expBox.classList.add('visible');
+            } else {
+                expBox.classList.remove('visible');
+            }
+
+            updateStatsCounter();
+
+            if (state.mode === 'exam') {
+                document.querySelectorAll('.grid-cell').forEach((cell, idx) => {
+                    if (idx === state.currentIdx) {
+                        cell.classList.add('active');
+                        cell.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } else {
+                        cell.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        function selectOption(letter) {
+            const q = state.questions[state.currentIdx];
+            state.userAnswers[state.currentIdx] = letter;
+
+            if (state.mode === 'practice') {
+                if (letter === q.answer) {
+                    playSynthSound('correct');
+                } else {
+                    playSynthSound('incorrect');
+                }
+                renderQuestion();
+            } else {
+                playSynthSound('click');
+                updateGridCellState(state.currentIdx);
+                renderQuestion();
+            }
+        }
+
+        function toggleFlagQuestion() {
+            playSynthSound('click');
+            const isFlagged = !state.flaggedQuestions[state.currentIdx];
+            state.flaggedQuestions[state.currentIdx] = isFlagged;
+
+            const flagBtn = document.getElementById('flag-btn');
+            if (isFlagged) {
+                flagBtn.classList.add('flagged');
+            } else {
+                flagBtn.classList.remove('flagged');
+            }
+
+            if (state.mode === 'exam') {
+                updateGridCellState(state.currentIdx);
+            }
+        }
+
+        function updateStatsCounter() {
+            let correct = 0;
+            let incorrect = 0;
+
+            state.questions.forEach((q, idx) => {
+                const ans = state.userAnswers[idx];
+                if (ans !== undefined) {
+                    if (ans === q.answer) correct++;
+                    else incorrect++;
+                }
+            });
+
+            document.getElementById('score-counter-pill').innerText = `Benar: ${correct} • Salah: ${incorrect}`;
+        }
+
+        function renderExamGrid() {
+            const grid = document.getElementById('exam-grid-container');
+            grid.innerHTML = '';
+
+            state.questions.forEach((_, idx) => {
+                const cell = document.createElement('button');
+                cell.className = 'grid-cell';
+                cell.innerText = idx + 1;
+                cell.addEventListener('click', () => {
+                    playSynthSound('click');
+                    state.currentIdx = idx;
+                    renderQuestion();
+                });
+                grid.appendChild(cell);
+                updateGridCellState(idx, cell);
+            });
+        }
+
+        function updateGridCellState(idx, cellElement) {
+            const cell = cellElement || document.getElementById('exam-grid-container').children[idx];
+            if (!cell) return;
+
+            cell.className = 'grid-cell';
+
+            if (state.userAnswers[idx] !== undefined) {
+                cell.classList.add('answered');
+            }
+            if (state.flaggedQuestions[idx]) {
+                cell.classList.add('flagged');
+            }
+            if (idx === state.currentIdx) {
+                cell.classList.add('active');
+            }
+        }
+
+        function finishQuiz() {
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            playSynthSound('finish');
+
+            let correctCount = 0;
+            let incorrectCount = 0;
+            let skippedCount = 0;
+
+            state.questions.forEach((q, idx) => {
+                const ans = state.userAnswers[idx];
+                if (ans === undefined) {
+                    skippedCount++;
+                } else if (ans === q.answer) {
+                    correctCount++;
+                } else {
+                    incorrectCount++;
+                }
+            });
+
+            const total = state.questions.length;
+            const scorePercent = total > 0 ? (correctCount / total) * 100 : 0;
+
+            const circle = document.getElementById('score-circle');
+            const circumference = 2 * Math.PI * 70; // 439.82
+            const offset = circumference - (scorePercent / 100) * circumference;
+
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 100);
+
+            document.getElementById('result-score-percent').innerText = `${Math.round(scorePercent)}%`;
+
+            let title = 'Hebat!';
+            let desc = 'Performa luar biasa! Anda sudah menguasai materi dengan sangat baik dan siap UTS.';
+
+            if (scorePercent === 100) {
+                title = 'Sempurna! 💯';
+                desc = 'Jawaban Anda benar semua! Tingkat pemahaman Pemodelan Visualisasi Data Anda luar biasa.';
+            } else if (scorePercent >= 80) {
+                title = 'Bagus Sekali! 🚀';
+                desc = 'Anda telah memahami sebagian besar konsep pemodelan visual, teori infografis, dan Google Form dengan matang.';
+            } else if (scorePercent >= 60) {
+                title = 'Cukup Baik! 👍';
+                desc = 'Hasil yang lumayan, namun masih ada beberapa konsep visualisasi data, tipografi, warna, atau Google Forms yang perlu ditinjau kembali.';
+            } else {
+                title = 'Belajar Lagi! 📚';
+                desc = 'Jangan patah semangat. Ulas kembali penjelasan jawaban di bawah dan coba kuis lagi.';
+            }
+
+            document.getElementById('result-feedback-title').innerText = title;
+            document.getElementById('result-feedback-desc').innerText = desc;
+
+            document.getElementById('stats-correct').innerText = correctCount;
+            document.getElementById('stats-incorrect').innerText = incorrectCount;
+            document.getElementById('stats-skipped').innerText = skippedCount;
+            document.getElementById('stats-time').innerText = formatTime(state.timeSpent);
+
+            saveSessionToHistory(scorePercent, correctCount, total, state.timeSpent);
+            renderReviewPanel();
+            showView('result-view');
+        }
+
+        function renderReviewPanel() {
+            const container = document.getElementById('review-cards-container');
+            container.innerHTML = '';
+
+            let correctFilterCount = 0;
+            let incorrectFilterCount = 0;
+            let skippedFilterCount = 0;
+
+            state.questions.forEach((q, idx) => {
+                const ans = state.userAnswers[idx];
+                if (ans === undefined) skippedFilterCount++;
+                else if (ans === q.answer) correctFilterCount++;
+                else incorrectFilterCount++;
+
+                const card = document.createElement('div');
+                card.className = 'review-item';
+
+                let statusBadge = '';
+                if (ans === undefined) {
+                    card.classList.add('skipped-answer');
+                    statusBadge = '<span class="review-badge skipped">Dilewati</span>';
+                } else if (ans === q.answer) {
+                    card.classList.add('correct-answer');
+                    statusBadge = '<span class="review-badge correct">Benar</span>';
+                } else {
+                    card.classList.add('incorrect-answer');
+                    statusBadge = '<span class="review-badge incorrect">Salah</span>';
+                }
+
+                let optionRowsHtml = '';
+                const letterMap = ['A', 'B', 'C', 'D'];
+                q.options.forEach((optText, i) => {
+                    const letter = letterMap[i];
+                    let rowClass = '';
+
+                    if (letter === q.answer) {
+                        rowClass = 'correct-key';
+                    } else if (ans === letter && letter !== q.answer) {
+                        rowClass = 'user-select';
+                    }
+
+                    let userCheck = '';
+                    if (ans === letter) {
+                        userCheck = letter === q.answer ? ' (Pilihan Anda - Benar)' : ' (Pilihan Anda - Salah)';
+                    }
+
+                    optionRowsHtml += `
+                        <div class="review-ans-row ${rowClass}">
+                            <div class="review-ans-lbl">${letter}</div>
+                            <div class="review-ans-txt">${optText}${userCheck}</div>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="review-header">
+                        <span class="review-number">Soal #${idx + 1} (${q.section})</span>
+                        ${statusBadge}
+                    </div>
+                    <div class="review-question">${q.question}</div>
+                    <div class="review-answers">
+                        ${optionRowsHtml}
+                    </div>
+                    <div class="review-explanation">
+                        <div class="review-explanation-title">Penjelasan UTS</div>
+                        <div class="review-explanation-text">${q.explanation}</div>
+                    </div>
+                `;
+
+                card.setAttribute('data-status', ans === undefined ? 'skipped' : (ans === q.answer ? 'correct' : 'incorrect'));
+                card.setAttribute('data-text', `${q.question} ${q.explanation} ${q.options.join(' ')}`.toLowerCase());
+
+                container.appendChild(card);
+            });
+
+            document.getElementById('count-filter-all').innerText = state.questions.length;
+            document.getElementById('count-filter-correct').innerText = correctFilterCount;
+            document.getElementById('count-filter-incorrect').innerText = incorrectFilterCount;
+            document.getElementById('count-filter-skipped').innerText = skippedFilterCount;
+
+            applyReviewFilters();
+        }
+
+        function applyReviewFilters() {
+            const query = document.getElementById('review-search').value.toLowerCase();
+            const activeFilter = document.querySelector('.review-filters .filter-btn.active').getAttribute('data-filter');
+            const cards = document.querySelectorAll('#review-cards-container .review-item');
+
+            cards.forEach(card => {
+                const cardStatus = card.getAttribute('data-status');
+                const cardText = card.getAttribute('data-text');
+
+                const matchesFilter = activeFilter === 'all' || cardStatus === activeFilter;
+                const matchesSearch = query === '' || cardText.includes(query);
+
+                if (matchesFilter && matchesSearch) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        // --- UTILITY FUNCTIONS ---
+
+        function showView(viewId) {
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('result-view').classList.add('hidden');
+
+            document.getElementById(viewId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainder = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainder.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+
+</html>

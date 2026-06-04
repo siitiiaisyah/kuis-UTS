@@ -23,6 +23,8 @@
             --accent-apsi-glow: rgba(56, 189, 248, 0.2);
             --accent-mlsi: #10b981;
             --accent-mlsi-glow: rgba(16, 185, 129, 0.2);
+            --accent-pvd: #f97316;
+            --accent-pvd-glow: rgba(249, 115, 22, 0.2);
             --glass-blur: blur(20px);
             --shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.6);
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -43,6 +45,8 @@
             --accent-apsi-glow: rgba(2, 132, 199, 0.08);
             --accent-mlsi: #059669;
             --accent-mlsi-glow: rgba(5, 150, 105, 0.08);
+            --accent-pvd: #ea580c;
+            --accent-pvd-glow: rgba(234, 88, 12, 0.08);
             --shadow: 0 20px 50px 0 rgba(99, 102, 241, 0.05);
         }
 
@@ -235,16 +239,10 @@
         /* Subjects Grid Layout */
         .subjects-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 32px;
             margin-bottom: 56px;
             animation: fadeIn 0.6s ease-out;
-        }
-
-        @media (max-width: 1024px) {
-            .subjects-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         @media (max-width: 768px) {
@@ -279,7 +277,7 @@
             transition: var(--transition);
         }
 
-        /* Distinct styling for Jaringan vs APSI vs MLSI card */
+        /* Distinct styling for Jaringan vs APSI vs MLSI vs PVD card */
         .card-jaringan::before {
             background: linear-gradient(90deg, var(--accent-jaringan), #8b5cf6);
         }
@@ -290,6 +288,10 @@
 
         .card-mlsi::before {
             background: linear-gradient(90deg, var(--accent-mlsi), #34d399);
+        }
+
+        .card-pvd::before {
+            background: linear-gradient(90deg, var(--accent-pvd), #f59e0b);
         }
 
         .subject-card:hover {
@@ -307,6 +309,49 @@
 
         .card-mlsi:hover {
             box-shadow: 0 20px 40px rgba(16, 185, 129, 0.12);
+        }
+
+        .card-pvd:hover {
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.12);
+        }
+
+        .card-pvd .subject-icon {
+            background: linear-gradient(135deg, var(--accent-pvd), #f59e0b);
+            box-shadow: 0 6px 20px var(--accent-pvd-glow);
+        }
+
+        .card-pvd .topic-item svg {
+            stroke: var(--accent-pvd);
+        }
+
+        .card-pvd .stat-label-item .val.high-score {
+            color: #f97316;
+        }
+
+        .card-pvd .btn-start {
+            background: linear-gradient(135deg, var(--accent-pvd), #f59e0b);
+            color: #0c0a09;
+            box-shadow: 0 4px 14px rgba(249, 115, 22, 0.2);
+        }
+
+        [data-theme="light"] .card-pvd .btn-start {
+            color: white;
+        }
+
+        .card-pvd:hover .btn-start {
+            box-shadow: 0 8px 24px rgba(249, 115, 22, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .card-pvd .btn-flashcard {
+            border-color: var(--accent-pvd);
+            background: rgba(249, 115, 22, 0.05);
+            color: var(--accent-pvd);
+        }
+
+        .card-pvd .btn-flashcard:hover {
+            background: var(--accent-pvd-glow);
+            box-shadow: 0 4px 12px var(--accent-pvd-glow);
         }
 
         .card-header-area {
@@ -830,12 +875,85 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- Subject 4: PVD -->
+                <div class="subject-card card-pvd">
+                    <div class="card-header-area">
+                        <div class="subject-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 3v18h18"/>
+                                <path d="m19 9-5 5-4-4-3 3"/>
+                            </svg>
+                        </div>
+                        <span class="badge-count">50 Soal</span>
+                    </div>
+
+                    <div class="subject-info">
+                        <h3>Pemodelan Visualisasi Data</h3>
+                        <p>Teori dasar visualisasi data, chart suggestions, clutter removal, storyboard infografis, prinsip komunikasi visual (ritme, hierarki), tipografi & psikologi warna, serta fitur kuis Google Forms.</p>
+                    </div>
+
+                    <div class="topics-list">
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Teori & Kategori Visualisasi Data (M1-M2)</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Kriteria Grafik & Storyboard (M3)</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Komunikasi Visual & Warna (M6-M7)</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Google Forms Quiz Features (M8)</span>
+                        </div>
+                    </div>
+
+                    <!-- Statistics box -->
+                    <div class="card-stats-box" id="stats-pvd">
+                        <div class="stat-label-item">
+                            <span class="lbl">Skor Tertinggi</span>
+                            <span class="val high-score" id="pvd-high">-</span>
+                        </div>
+                        <div class="stat-label-item" style="text-align: right;">
+                            <span class="lbl">Sesi Terakhir</span>
+                            <span class="val" id="pvd-recent">Belum ada</span>
+                        </div>
+                    </div>
+
+                    <div class="card-actions-row">
+                        <button class="btn-start" onclick="window.location.href='kuisPVD.html'">
+                            Mulai Kuis
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" />
+                            </svg>
+                        </button>
+                        <button class="btn-flashcard" onclick="window.location.href='flashcardPVD.html'">
+                            Flashcards
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
+                                <path d="M7 7h10M7 12h10M7 17h6"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
         </main>
 
         <!-- Footer -->
         <footer>
-            <p>© 2026 Siti Aisyah Quiz Hub. Dirancang khusus untuk persiapan UTS Jaringan Komputer, APSI & MLSI.</p>
+            <p>© 2026 Siti Aisyah Quiz Hub. Dirancang khusus untuk persiapan UTS Jaringan Komputer, APSI, MLSI & PVD.</p>
         </footer>
     </div>
 
@@ -925,6 +1043,23 @@
                 }
             } catch (e) {
                 console.warn('Gagal memuat statistik MLSI:', e);
+            }
+
+            // 4. PVD Statistics
+            try {
+                const pvdHistory = JSON.parse(localStorage.getItem('pvd_quiz_history')) || [];
+                if (pvdHistory.length > 0) {
+                    // Highest Score
+                    const scores = pvdHistory.map(item => item.score);
+                    const highest = Math.max(...scores);
+                    document.getElementById('pvd-high').innerText = `${highest}%`;
+
+                    // Recent session
+                    const recent = pvdHistory[0];
+                    document.getElementById('pvd-recent').innerText = `${recent.date} (${recent.score}%)`;
+                }
+            } catch (e) {
+                console.warn('Gagal memuat statistik PVD:', e);
             }
         }
     </script>
