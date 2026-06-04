@@ -2646,7 +2646,28 @@
             if (countLimitVal !== 'all') {
                 finalCount = Math.min(parseInt(countLimitVal), filteredQuestions.length);
             }
-            state.questions = filteredQuestions.slice(0, finalCount);
+            
+            // Deep clone questions and shuffle options
+            const letterMap = ['A', 'B', 'C', 'D'];
+            state.questions = filteredQuestions.slice(0, finalCount).map(q => {
+                const clonedQ = {
+                    ...q,
+                    options: [...q.options]
+                };
+                
+                // Track correct option text
+                const correctIdx = letterMap.indexOf(q.answer);
+                const correctText = q.options[correctIdx];
+                
+                // Shuffle options
+                shuffleArray(clonedQ.options);
+                
+                // Find new correct index
+                const newCorrectIdx = clonedQ.options.indexOf(correctText);
+                clonedQ.answer = letterMap[newCorrectIdx];
+                
+                return clonedQ;
+            });
 
             // 3. Mode
             const modeBtn = document.querySelector('#mode-group button.active');
