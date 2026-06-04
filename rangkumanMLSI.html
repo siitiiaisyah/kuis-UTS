@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rangkuman MLSI - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050a0e;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #064e3b 0%, #050a0e 100%);
+            --panel-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --accent-hover: #059669;
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #d1fae5 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(16, 185, 129, 0.15);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #059669;
+            --accent-glow: rgba(5, 150, 105, 0.08);
+            --accent-hover: #047857;
+            --shadow: 0 12px 40px 0 rgba(5, 150, 105, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #34d399);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Layout Grid */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 900px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar TOC */
+        .toc-sidebar {
+            position: sticky;
+            top: 24px;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .toc-sidebar {
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .sidebar-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .toc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .toc-item {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 12.5px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toc-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .toc-item.active {
+            background: var(--accent);
+            color: #050a0e;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        [data-theme="light"] .toc-item.active {
+            color: white;
+        }
+
+        .toc-number {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+
+        .toc-item.active .toc-number {
+            background: rgba(255, 255, 255, 0.2);
+            color: inherit;
+        }
+
+        /* Content Area */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 14.5px;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* Bab Containers */
+        .bab-container {
+            scroll-margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .bab-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bab-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        /* Material Subsections */
+        .sub-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .sub-section:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .sub-title {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+        }
+
+        .sub-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .text-p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bullet-item {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .bullet-item::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Styled Cards (Alert Box) */
+        .alert-box {
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            border: 1px solid transparent;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+
+        .alert-box.important {
+            background: rgba(245, 158, 11, 0.05);
+            border-color: rgba(245, 158, 11, 0.2);
+            color: #d97706;
+        }
+
+        [data-theme="dark"] .alert-box.important {
+            color: #f59e0b;
+        }
+
+        .alert-box.info {
+            background: rgba(16, 185, 129, 0.05);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: #059669;
+        }
+
+        [data-theme="dark"] .alert-box.info {
+            color: #34d399;
+        }
+
+        .alert-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .alert-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .alert-content strong {
+            color: var(--text-primary);
+        }
+
+        /* Mnemonic Mnemonic */
+        .mnemonic-box {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mnemonic-box strong {
+            color: var(--accent);
+        }
+
+        /* Table design */
+        .custom-table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            font-weight: 700;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 14px 16px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            line-height: 1.5;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        /* Empty state */
+        .no-results {
+            text-align: center;
+            padding: 48px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 32px 0 24px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V3A2.5 2.5 0 0 1 6.5 4H20v13H6.5a2.5 2.5 0 0 0-2.5 2.5z"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>MLSI Rangkuman Materi</h1>
+                    <p>Manajemen Layanan Sistem Informasi</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="workspace-grid">
+            <!-- Sidebar TOC (Table of Contents) -->
+            <div class="toc-sidebar">
+                <div class="glass-panel">
+                    <h3 class="sidebar-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6h16M4 12h16M4 18h7" stroke-linecap="round"/>
+                        </svg>
+                        Daftar Isi
+                    </h3>
+                    <div class="toc-list">
+                        <button class="toc-item active" data-target="bab1">
+                            <span class="toc-number">Bab 1</span>
+                            <span>Memahami ITSM</span>
+                        </button>
+                        <button class="toc-item" data-target="bab2">
+                            <span class="toc-number">Bab 2</span>
+                            <span>Identifikasi Layanan</span>
+                        </button>
+                        <button class="toc-item" data-target="bab3">
+                            <span class="toc-number">Bab 3</span>
+                            <span>SLM & SLA</span>
+                        </button>
+                        <button class="toc-item" data-target="bab4">
+                            <span class="toc-number">Bab 4</span>
+                            <span>Problem & Change</span>
+                        </button>
+                        <button class="toc-item" data-target="bab5">
+                            <span class="toc-number">Bab 5</span>
+                            <span>Asset & Configuration</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Search Box -->
+                <div class="search-container">
+                    <input type="text" id="search-box" class="search-input" placeholder="Cari materi, singkatan, atau bab...">
+                </div>
+
+                <!-- Bab 1 -->
+                <section class="bab-container" id="bab1">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 1</span>
+                        Memahami Layanan dan Manajemen Layanan TI (ITSM)
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Definisi Layanan & Nilai</h3>
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>Layanan (Service):</strong>
+                                Cara memberikan nilai kepada pelanggan dengan memfasilitasi hasil (outcomes) yang ingin dicapai pelanggan, tanpa pelanggan harus menanggung biaya dan risiko tertentu.
+                            </div>
+                        </div>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Nilai (Value):</strong> Layanan harus memberikan manfaat nyata (Contoh: email bisa diakses 24/7 tanpa gangguan).
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Hasil (Outcomes):</strong> Pelanggan tidak membeli layanan, melainkan membeli hasil (Contoh: beli cloud storage → data tersimpan aman & bisa diakses kapan saja).
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Risiko (Risk):</strong> Pelanggan tidak menanggung biaya dan risiko tertentu yang terkait dengan penyediaan layanan, sehingga bisa fokus pada hasil yang diharapkan.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Komponen Manajemen Layanan</h3>
+                        <p class="text-p">Manajemen Layanan adalah seperangkat kemampuan organisasi khusus untuk memberikan nilai kepada pelanggan dalam bentuk layanan. Kemampuan ini bukan hanya soal teknologi, melainkan kolaborasi 3 komponen utama:</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Orang (People):</strong> Peran dan keahlian yang terlibat dalam layanan.</li>
+                            <li class="bullet-item"><strong>Proses (Process):</strong> Cara kerja dan prosedur yang terstruktur untuk layanan.</li>
+                            <li class="bullet-item"><strong>Teknologi (Technology):</strong> Alat dan sistem pendukung untuk layanan yang efektif.</li>
+                        </ul>
+                        <div class="mnemonic-box">
+                            <span class="alert-icon">🔑</span>
+                            <div>
+                                <strong>Trik Menghafal (Mnemonic):</strong> Komponen Manajemen Layanan = <strong>OPT</strong> (Orang, Proses, Teknologi). Ingat saja kalau layanan yang Optimal butuh <strong>OPT</strong>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subsection 3 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Sebelum ITSM vs Implementasi ITSM</h3>
+                        <div class="custom-table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Aspek</th>
+                                        <th>Sebelum ITSM</th>
+                                        <th>Implementasi ITSM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Titik Kontak Layanan</strong></td>
+                                        <td>Tidak ada. Pengguna langsung cari teknisi secara manual.</td>
+                                        <td>Ada Service Desk / Helpdesk terpusat sebagai <em>single point of contact</em>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cara Lapor Masalah</strong></td>
+                                        <td>Harus datang langsung atau telepon personal teknisi.</td>
+                                        <td>Bisa via aplikasi, email, chat, telepon (semua terintegrasi).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Transparansi Status</strong></td>
+                                        <td>Pengguna tidak tahu status tiket/masalahnya.</td>
+                                        <td>Pengguna bisa pantau status tiket secara <em>real-time</em>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Kepuasan Pengguna</strong></td>
+                                        <td>Tidak diukur.</td>
+                                        <td>Diukur secara rutin melalui survei & feedback.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Self-Service</strong></td>
+                                        <td>Tidak tersedia.</td>
+                                        <td>Terseria portal self-service untuk masalah umum.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Contoh Nyata</strong></td>
+                                        <td>Pegawai pemda harus antre ke ruang TI secara manual.</td>
+                                        <td><strong>LAPOR!</strong> (lapor.go.id) - platform pengaduan digital pemerintah.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alert-box info">
+                            <span class="alert-icon">💡</span>
+                            <div class="alert-content">
+                                <strong>Penjelasan Sederhana:</strong> Sebelum ada ITSM, kalau komputer rusak kamu harus keliling nyari teknisi dan tidak tahu kapan selesainya. Setelah ada ITSM, kamu tinggal isi aplikasi/tiket, lalu bisa rebahan sambil mantau status perbaikan secara real-time.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bab 2 -->
+                <section class="bab-container" id="bab2">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 2</span>
+                        Identifikasi Layanan Sistem Informasi
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Peran Identifikasi Layanan</h3>
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>Pentingnya Fase Awal:</strong>
+                                Identifikasi layanan merupakan proses awal dan pondasi dalam manajemen layanan untuk menentukan, mendefinisikan, dan mendokumentasikan layanan secara sistematis. Seluruh aktivitas pengelolaan seperti desain, implementasi, operasional, dan peningkatan bergantung pada kejelasan fase ini.
+                            </div>
+                        </div>
+                        <div class="alert-box info">
+                            <span class="alert-icon">💡</span>
+                            <div class="alert-content">
+                                <strong>Hubungan Antar Konsep:</strong>
+                                Kebutuhan Bisnis → Identifikasi Layanan → Definisi & Klasifikasi → Masuk ke Service Catalog → Digunakan oleh User.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Layanan SI vs Layanan TI</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Layanan Sistem Informasi (SI):</strong> Fokus pada bagaimana informasi diolah dan digunakan. Menjembatani proses bisnis dengan teknologi.<br>
+                                <em>Contoh:</em> Analisis Sistem, Manajemen Data & Business Intelligence (Big Data, Data Mining), Pengembangan Aplikasi Bisnis (E-commerce, ERP, E-learning).
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Layanan Teknologi Informasi (TI):</strong> Fokus pada bagaimana teknologi mendukung sistem (infrastruktur dan teknis).<br>
+                                <em>Contoh:</em> Infrastruktur Jaringan & Server, Software Development, Manajemen Keamanan Informasi, Dukungan Teknis (Helpdesk & perawatan hardware).
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 3 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Klasifikasi Layanan Berdasarkan ITIL</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Berdasarkan Status (Siklus Portofolio):</strong>
+                                <ol style="padding-left: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 4px;">
+                                    <li><em>Service Pipeline:</em> Layanan yang masih dalam tahap perencanaan atau pengembangan.</li>
+                                    <li><em>Service Catalog:</em> Layanan aktif yang sudah siap digunakan oleh pengguna saat ini.</li>
+                                    <li><em>Retired Services:</em> Layanan lama yang sudah dinonaktifkan.</li>
+                                </ol>
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Berdasarkan Fungsi:</strong>
+                                <ol style="padding-left: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 4px;">
+                                    <li><em>Layanan Utama (Core Services):</em> Layanan yang langsung memberikan nilai inti bisnis (Menu Utama).</li>
+                                    <li><em>Layanan Pendukung (Supporting Services):</em> Layanan wajib agar layanan utama bisa berjalan.</li>
+                                    <li><em>Layanan Tambahan (Enhancing Services):</em> Layanan nilai tambah agar layanan lebih menarik.</li>
+                                </ol>
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Berdasarkan Pengguna:</strong> Layanan Internal (pegawai) dan Layanan Eksternal (pelanggan).
+                            </li>
+                        </ul>
+                        <div class="alert-box info">
+                            <span class="alert-icon">💡</span>
+                            <div class="alert-content">
+                                <strong>Analogi Restoran:</strong> Bayangkan restoran. Menu nasi goreng adalah <em>Core Service</em>. Gas, kompor, dan minyak adalah <em>Supporting Service</em> (wajib ada tapi pelanggan tidak beli langsung). Kerupuk gratis atau es krim pencuci mulut adalah <em>Enhancing Service</em>.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bab 3 -->
+                <section class="bab-container" id="bab3">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 3</span>
+                        Service Level Management (SLM) & SLA
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Definisi SLM & SLA</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Service Level Management (SLM):</strong> Proses untuk menentukan, menyepakati, memantau, dan melaporkan kinerja layanan TI agar sesuai dengan kebutuhan bisnis.
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Service Level Agreement (SLA):</strong> Dokumen formal/kontrak tertulis yang mendokumentasikan standar kinerja layanan yang disepakati antara Penyedia Layanan (Service Provider) dan Pelanggan (Customer).
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Metrik Kinerja SLA</h3>
+                        <p class="text-p">Keberhasilan layanan diukur menggunakan metrik objektif:</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Waktu Respons (Response Time):</strong> Seberapa cepat penyedia mulai menanggapi permintaan/masalah (Contoh: keluhan dijawab max 15 menit).</li>
+                            <li class="bullet-item"><strong>Ketersediaan Layanan (Uptime):</strong> Berapa lama layanan aktif tanpa gangguan, diukur dalam persen (Contoh: target uptime server minimal 99,9%).</li>
+                            <li class="bullet-item"><strong>Tingkat Kesalahan (Error Rate):</strong> Seberapa sering layanan gagal (Contoh: persentase transaksi gagal).</li>
+                            <li class="bullet-item"><strong>First Contact Resolution:</strong> Jumlah masalah yang langsung selesai pada panggilan/kontak pertama.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 3 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Tiga Saudara: SLA vs SLO vs OLA</h3>
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>SLA (Service Level Agreement):</strong> Perjanjian standar performa & kualitas layanan antara Penyedia Layanan dan Pelanggan Eksternal.<br>
+                                <strong>SLO (Service Level Objective):</strong> Target atau angka spesifik terukur di dalam dokumen SLA (Contoh: Target uptime 99.9%).<br>
+                                <strong>OLA (Operational Level Agreement):</strong> Perjanjian hubungan kerja & komitmen antar Tim Internal penyedia layanan untuk menyokong SLA (Contoh: Tim Jaringan berjanji ke Tim Helpdesk benerin kabel max 1 jam).
+                            </div>
+                        </div>
+                        <div class="mnemonic-box">
+                            <span class="alert-icon">🔑</span>
+                            <div>
+                                <strong>Trik Menghafal:</strong> <strong>SLA</strong> = Hubungan Luar (Pelanggan Eksternal). <strong>OLA</strong> = Hubungan Dalam (Orang Dalam / Tim Internal).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subsection 4 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">4. Jenis-Jenis SLA</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>SLA Berbasis Pelanggan:</strong> Banyak layanan dirangkum dalam 1 kontrak untuk 1 pelanggan khusus.</li>
+                            <li class="bullet-item"><strong>SLA Berbasis Layanan:</strong> 1 kontrak standar mengenai 1 layanan tertentu untuk semua pelanggan.</li>
+                            <li class="bullet-item"><strong>SLA Multi Level:</strong> Kontrak bertingkat/kustomisasi yang disesuaikan dengan berbagai tingkat kebutuhan pelanggan.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Bab 4 -->
+                <section class="bab-container" id="bab4">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 4</span>
+                        Problem Management dan Change Management
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Perbedaan Utama: Incident, Problem, dan Change</h3>
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>Incident:</strong> Gangguan layanan saat ini yang harus dipulihkan secepat mungkin (Restore Service / Atasi Gejala). <em>Contoh:</em> User gagal login, website down.<br>
+                                <strong>Problem:</strong> Penyebab utama (root cause) dari insiden yang terjadi berulang (Prevent Recurrence). <em>Contoh:</em> Database overload setiap jam sibuk.<br>
+                                <strong>Change:</strong> Tindakan terstruktur untuk memodifikasi atau meningkatkan layanan secara aman (Improve Service). <em>Contoh:</em> Upgrade database.
+                            </div>
+                        </div>
+                        <div class="alert-box info">
+                            <span class="alert-icon">💡</span>
+                            <div class="alert-content">
+                                <strong>Analogi Sakit:</strong> Kamu pusing kepala saat belajar (Gejala = Incident). Kamu minum paracetamol agar pusingnya hilang sementara (Workaround). Besoknya kamu pusing lagi. Setelah ke dokter, ternyata kamu pusing karena silinder matamu naik (Root Cause = Problem). Dokter menyarankan kamu membuat kacamata baru (Tindakan Perbaikan = Change).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Root Cause Analysis (RCA) - Metode 5 Why</h3>
+                        <p class="text-p">RCA adalah metode untuk menemukan penyebab utama masalah agar organisasi tidak hanya memperbaiki gejala sementara (workaround).</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><em>Contoh Gejala:</em> Melakukan restart server (hanya penanganan insiden/sementara).</li>
+                            <li class="bullet-item"><em>Contoh Akar Masalah:</em> Menambah kapasitas RAM karena capacity planning belum ada.</li>
+                            <li class="bullet-item"><em>Alur 5 Why:</em> Bertanya "Mengapa?" secara berulang (umumnya sampai 5 kali) hingga menemukan akar masalah utama yang bisa dikendalikan.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 3 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Jenis-Jenis Perubahan (Change)</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Standard Change:</strong> Perubahan rutin, berisiko rendah, dipandu SOP yang jelas, sehingga dapat langsung dieksekusi tanpa perlu persetujuan dewan CAB (Contoh: Reset password, tambah user baru).
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Normal Change:</strong> Perubahan non-rutin, berisiko sedang/tinggi. Wajib mengisi proposal RFC (Request for Change) dan dievaluasi oleh dewan CAB (Change Advisory Board) sebelum eksekusi (Contoh: Upgrade server, migrasi database).
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Emergency Change:</strong> Perubahan darurat akibat gangguan kritis yang harus segera diimplementasikan. Dokumentasi menyusul setelah sistem aman (Contoh: Patching celah keamanan akibat serangan ransomware).
+                            </li>
+                        </ul>
+                        <div class="alert-box info">
+                            <span class="alert-icon">💡</span>
+                            <div class="alert-content">
+                                <strong>Hubungan Alur Kerja:</strong> 1 Insiden Terjadi → 2 Dianalisis menjadi Problem (Cari Akar Masalah) → 3 Solusi Dieksekusi lewat Change Management → 4 Layanan Kembali Stabil (Siklus Perbaikan Berkelanjutan).
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bab 5 -->
+                <section class="bab-container" id="bab5">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 5</span>
+                        Asset dan Configuration Management (SACM)
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Konsep Dasar SACM</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Asset:</strong> Segala hal yang memiliki nilai finansial atau kegunaan dalam produk/layanan TI (Contoh: Laptop, Server, Router, SOP, Lisensi).
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Configuration Item (CI):</strong> Bagian spesifik dari aset yang konfigurasinya wajib dipantau & dikendalikan ketat demi stabilitas operasional.
+                            </li>
+                        </ul>
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>Aturan Emas:</strong> "Tidak semua aset adalah CI, tetapi semua CI sudah pasti merupakan aset."<br>
+                                <em>Contoh Perbedaan:</em> Laptop adalah Aset. Sistem operasi, aplikasi terinstal, dan pengaturan keamanan di dalamnya adalah CI.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. CMDB (Configuration Management Database) vs CMS</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>CMDB:</strong> Database pusat yang menyimpan data atribut CI (nomor versi, lokasi, status) serta informasi hubungan (relasi) timbal balik antar-CI untuk analisis dampak troubleshooting secara cepat (Contoh: Server A mendukung Aplikasi Payroll B).
+                            </li>
+                            <li class="bullet-item">
+                                <strong>CMS (Configuration Management System):</strong> Kerangka kerja dan alat yang lebih besar untuk mengelola beberapa CMDB, menjaga akurasi data, serta mengintegrasikannya dengan proses ITSM lainnya.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 3 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Lifecycle Aset TI</h3>
+                        <p class="text-p">Siklus hidup aset terdiri dari 5 tahapan berurutan:</p>
+                        <ol style="padding-left: 20px; margin-top: 6px; display: flex; flex-direction: column; gap: 6px; color: var(--text-secondary); font-size: 13.5px;">
+                            <li><strong>Planning</strong> (Perencanaan): Menentukan kebutuhan aset dan analisis anggaran.</li>
+                            <li><strong>Procurement</strong> (Pengadaan): Proses pembelian dan penerimaan aset secara legal.</li>
+                            <li><strong>Deployment</strong> (Penerapan): Instalasi, konfigurasi, dan pelatihan pengguna.</li>
+                            <li><strong>Operation</strong> (Operasional): Pemantauan kinerja, perawatan rutin, dan manajemen lisensi.</li>
+                            <li><strong>Retirement</strong> (Pensiun): Evaluasi, penghapusan data secara aman, atau daur ulang aset.</li>
+                        </ol>
+                        <div class="mnemonic-box">
+                            <span class="alert-icon">🔑</span>
+                            <div>
+                                <strong>Trik Menghafal:</strong> <strong>Pandawa Pergi Dengan Ojek Racing</strong> → Planning, Procurement, Deployment, Operation, Retirement.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subsection 4 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">4. Configuration Baseline</h3>
+                        <p class="text-p">Sebagai rekaman "titik acuan aman/stabil formal" sistem pada suatu waktu. Berfungsi sebagai snapshot standar. Jika eksperimen update patch software baru berujung kegagalan crash, baseline digunakan sebagai jangkar untuk melakukan rollback (kembali ke kondisi normal awal).</p>
+                    </div>
+                </section>
+
+                <!-- No Results Found -->
+                <div class="no-results" id="no-results-box">
+                    Tidak ada rangkuman materi yang cocok dengan kata kunci Anda.
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dibuat untuk latihan mandiri UTS Manajemen Layanan Sistem Informasi.</p>
+            <p style="margin-top: 4px; color: var(--accent);">Siti Aisyah Edition</p>
+        </footer>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Theme management
+        let currentTheme = 'dark';
+        function initTheme() {
+            currentTheme = localStorage.getItem('index_quiz_theme') || 'dark';
+            setTheme(currentTheme);
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('index_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        // Sound System
+        let soundEnabled = true;
+        let audioCtx = null;
+        function playClickSound() {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.exponentialRampToValueAtTime(300, now + 0.08);
+                gain.gain.setValueAtTime(0.03, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.08);
+            } catch (e) {
+                console.warn('Audio Context sound play failed:', e);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            setupEventListeners();
+            initScrollspy();
+        });
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playClickSound();
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Sound toggle
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                const icon = document.getElementById('sound-icon');
+                if (soundEnabled) {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    `;
+                } else {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    `;
+                }
+                playClickSound();
+            });
+
+            // Sidebar TOC clicks
+            const tocItems = document.querySelectorAll('.toc-item');
+            tocItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    playClickSound();
+                    const targetId = item.getAttribute('data-target');
+                    const targetEl = document.getElementById(targetId);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            // Search filtering
+            document.getElementById('search-box').addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                const babs = document.querySelectorAll('.bab-container');
+                let anyVisible = false;
+
+                babs.forEach(bab => {
+                    const text = bab.innerText.toLowerCase();
+                    if (query === '' || text.includes(query)) {
+                        bab.style.display = 'flex';
+                        anyVisible = true;
+                    } else {
+                        bab.style.display = 'none';
+                    }
+                });
+
+                const noResults = document.getElementById('no-results-box');
+                if (anyVisible) {
+                    noResults.style.display = 'none';
+                } else {
+                    noResults.style.display = 'block';
+                }
+            });
+        }
+
+        // Scrollspy to highlight TOC on scroll
+        function initScrollspy() {
+            const babs = document.querySelectorAll('.bab-container');
+            const tocItems = document.querySelectorAll('.toc-item');
+
+            const options = {
+                root: null,
+                rootMargin: '-20% 0px -60% 0px', // Trigger when section is in middle viewport
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.getAttribute('id');
+                        tocItems.forEach(item => {
+                            if (item.getAttribute('data-target') === activeId) {
+                                item.classList.add('active');
+                            } else {
+                                item.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }, options);
+
+            babs.forEach(bab => observer.observe(bab));
+        }
+    </script>
+</body>
+
+</html>
