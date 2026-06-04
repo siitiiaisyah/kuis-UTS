@@ -295,6 +295,16 @@
             height: 360px;
             margin: 0 auto;
             cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .card-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
         }
 
         .flashcard-3d {
@@ -737,9 +747,25 @@
                     <div class="flashcard-3d" id="flashcard">
                         <!-- Front Face -->
                         <div class="card-face card-front">
-                            <span class="card-category-tag" id="card-category">Materi 1</span>
-                            <div class="card-text" id="card-question-text">
-                                Pertanyaan memuat...
+                            <div class="card-content-wrapper" id="card-content-wrapper">
+                                <span class="card-category-tag" id="card-category">Materi 1</span>
+                                <div class="card-text" id="card-question-text">
+                                    Pertanyaan memuat...
+                                </div>
+                            </div>
+                            <div class="success-overlay" id="success-overlay" style="display: none;">
+                                <div class="success-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h3 style="font-size: 20px; font-weight: 800; color: var(--correct);">Deck Selesai! 🎉</h3>
+                                <p style="font-size: 13px; color: var(--text-secondary); max-width: 320px;" id="success-message">
+                                    Selamat! Anda telah menandai seluruh kartu sebagai "Paham".
+                                </p>
+                                <button class="btn-action" id="restart-deck-overlay-btn" style="margin-top: 8px; border-color: var(--accent); color: var(--accent); background: var(--accent-glow);">
+                                    Pelajari Lagi
+                                </button>
                             </div>
                         </div>
                         <!-- Back Face -->
@@ -1108,6 +1134,10 @@
                 return;
             }
 
+            // Ensure content wrapper is shown and success overlay is hidden
+            document.getElementById('card-content-wrapper').style.display = 'flex';
+            document.getElementById('success-overlay').style.display = 'none';
+
             const card = state.cards[state.currentIdx];
             
             // Check if card is already mastered
@@ -1147,6 +1177,10 @@
         }
 
         function flipCard() {
+            // Do not flip if success overlay is shown
+            if (document.getElementById('success-overlay').style.display === 'flex') {
+                return;
+            }
             playSynthSound('flip');
             state.isFlipped = !state.isFlipped;
             document.getElementById('flashcard').classList.toggle('is-flipped', state.isFlipped);
@@ -1189,15 +1223,15 @@
                 state.isFlipped = false;
                 document.getElementById('flashcard').classList.remove('is-flipped');
                 
-                // Add soft transition
-                const flashcardElement = document.getElementById('flashcard');
-                flashcardElement.style.transform = `scale(0.95)`;
-                flashcardElement.style.opacity = '0.5';
+                // Add soft transition to the scene container instead of the card
+                const sceneElement = document.getElementById('card-scene');
+                sceneElement.style.transform = 'scale(0.95)';
+                sceneElement.style.opacity = '0.5';
                 
                 setTimeout(() => {
                     renderCard();
-                    flashcardElement.style.transform = state.isFlipped ? 'rotateY(180deg) scale(1)' : 'rotateY(0deg) scale(1)';
-                    flashcardElement.style.opacity = '1';
+                    sceneElement.style.transform = '';
+                    sceneElement.style.opacity = '';
                 }, 150);
             }
         }
@@ -1227,47 +1261,19 @@
 
         function showAllDeckCompletedCelebration() {
             const deckTitle = state.currentKelompok === 'all' ? 'Semua Materi' : `Kelompok ${state.currentKelompok}`;
-            const container = document.getElementById('flashcard');
             
-            // Failsafe backup faces contents
-            const frontBackup = container.querySelector('.card-front').innerHTML;
+            // Set isFlipped to false and ensure card is not flipped
+            state.isFlipped = false;
+            document.getElementById('flashcard').classList.remove('is-flipped');
             
-            container.querySelector('.card-front').innerHTML = `
-                <div class="success-overlay" style="animation: fadeIn 0.4s ease-out;">
-                    <div class="success-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <h3 style="font-size: 20px; font-weight: 800; color: var(--correct);">Deck Selesai! 🎉</h3>
-                    <p style="font-size: 13px; color: var(--text-secondary); max-width: 320px;">
-                        Selamat! Anda telah menandai seluruh kartu pada deck <strong>${deckTitle}</strong> sebagai "Paham".
-                    </p>
-                    <button class="btn-action" id="restart-deck-overlay-btn" style="margin-top: 8px; border-color: var(--accent); color: var(--accent); background: var(--accent-glow);">
-                        Pelajari Lagi
-                    </button>
-                </div>
+            // Update the message
+            document.getElementById('success-message').innerHTML = `
+                Selamat! Anda telah menandai seluruh kartu pada deck <strong>${deckTitle}</strong> sebagai "Paham".
             `;
             
-            // Temporarily disable standard flip when clicking celebration screen
-            document.getElementById('card-scene').style.pointerEvents = 'none';
-
-            // Bind click to restart button inside card
-            document.getElementById('restart-deck-overlay-btn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                
-                // Restore standard pointer events
-                document.getElementById('card-scene').style.pointerEvents = 'auto';
-                
-                // Clear mastered status of current deck to let user learn again
-                state.cards.forEach(c => {
-                    state.masteredCards[c.id] = false;
-                });
-                saveMastery();
-                
-                // Restore and reload deck
-                loadDeck(state.currentKelompok);
-            });
+            // Toggle visibility
+            document.getElementById('card-content-wrapper').style.display = 'none';
+            document.getElementById('success-overlay').style.display = 'flex';
         }
 
         function setupEventListeners() {
@@ -1320,6 +1326,20 @@
                     const kelompokVal = btn.getAttribute('data-kelompok');
                     loadDeck(kelompokVal);
                 });
+            });
+
+            // Restart deck from success overlay
+            document.getElementById('restart-deck-overlay-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                // Clear mastered status of current deck to let user learn again
+                state.cards.forEach(c => {
+                    state.masteredCards[c.id] = false;
+                });
+                saveMastery();
+                
+                // Restore and reload deck
+                loadDeck(state.currentKelompok);
             });
 
             // Utility buttons
