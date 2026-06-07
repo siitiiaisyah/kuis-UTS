@@ -3455,7 +3455,31 @@
                 const limit = parseInt(quizState.questionCount);
                 finalCount = Math.min(limit, filtered.length);
             }
-            quizState.questions = filtered.slice(0, finalCount);
+            const selectedQuestions = filtered.slice(0, finalCount);
+
+            // Mengacak (shuffle) pilihan ganda untuk setiap soal agar selalu dinamis
+            quizState.questions = selectedQuestions.map(q => {
+                const letters = ['A', 'B', 'C', 'D'];
+                const originalAnswerIndex = letters.indexOf(q.answer);
+                const correctAnswerText = q.options[originalAnswerIndex];
+                
+                // Salin dan acak array options menggunakan metode Fisher-Yates
+                const shuffledOptions = [...q.options];
+                for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+                }
+                
+                // Cari index baru untuk jawaban yang benar dan sesuaikan huruf jawabannya (A, B, C, D)
+                const newAnswerIndex = shuffledOptions.indexOf(correctAnswerText);
+                const newAnswerLetter = letters[newAnswerIndex];
+                
+                return {
+                    ...q,
+                    options: shuffledOptions,
+                    answer: newAnswerLetter
+                };
+            });
 
             // Clean state
             quizState.currentIdx = 0;
