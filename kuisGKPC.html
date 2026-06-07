@@ -1,0 +1,3147 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif GKPC - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050a0e;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #581c87 0%, #050a0e 100%);
+            --panel-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #d946ef;
+            --accent-glow: rgba(217, 70, 239, 0.15);
+            --accent-hover: #c026d3;
+            --correct: #10b981;
+            --correct-bg: rgba(16, 185, 129, 0.08);
+            --correct-border: rgba(16, 185, 129, 0.25);
+            --incorrect: #ef4444;
+            --incorrect-bg: rgba(239, 68, 68, 0.08);
+            --incorrect-border: rgba(239, 68, 68, 0.25);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.08);
+            --warning-border: rgba(245, 158, 11, 0.25);
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #fdf4ff 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(217, 70, 239, 0.15);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #c026d3;
+            --accent-glow: rgba(192, 38, 211, 0.08);
+            --accent-hover: #a21caf;
+            --correct: #059669;
+            --correct-bg: rgba(5, 150, 105, 0.06);
+            --correct-border: rgba(5, 150, 105, 0.18);
+            --incorrect: #dc2626;
+            --incorrect-bg: rgba(220, 38, 38, 0.06);
+            --incorrect-border: rgba(220, 38, 38, 0.18);
+            --warning: #d97706;
+            --warning-bg: rgba(217, 119, 6, 0.06);
+            --warning-border: rgba(217, 119, 6, 0.18);
+            --shadow: 0 12px 40px 0 rgba(192, 38, 211, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #c084fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #c084fc, var(--accent));
+            background-size: 200% 100%;
+            animation: glowMove 8s linear infinite;
+        }
+
+        @keyframes glowMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .customizer-section {
+            margin-bottom: 24px;
+        }
+
+        .customizer-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .category-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .category-item input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+        }
+
+        .category-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .category-meta {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .options-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        @media (max-width: 640px) {
+            .options-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .custom-select-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-group {
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .btn-select {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-select.active {
+            background: var(--accent);
+            color: #050a0e;
+            font-weight: 700;
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+
+        [data-theme="light"] .btn-select.active {
+            color: white;
+        }
+
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: #050a0e;
+            font-weight: 800;
+            border: none;
+            font-family: var(--font-sans);
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px var(--accent-glow);
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .btn-primary {
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(217, 70, 239, 0.35);
+            filter: brightness(1.1);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .sidebar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .history-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .history-item {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .history-score {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .history-date {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .history-meta {
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .empty-history {
+            text-align: center;
+            padding: 24px 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .tips-card {
+            background: linear-gradient(135deg, rgba(217, 70, 239, 0.1) 0%, rgba(88, 28, 135, 0.4) 100%);
+            border: 1px dashed var(--accent);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            position: relative;
+        }
+
+        .tips-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tips-card h4 svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+        }
+
+        .tips-card p {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .quiz-container {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @media (max-width: 1024px) {
+            .quiz-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quiz-main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .quiz-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .info-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .info-pill.timer {
+            color: var(--warning);
+            border-color: var(--warning-border);
+            background: var(--warning-bg);
+        }
+
+        .info-pill.timer.critical {
+            color: var(--incorrect);
+            border-color: var(--incorrect-border);
+            background: var(--incorrect-bg);
+            animation: pulseRed 1s infinite alternate;
+        }
+
+        @keyframes pulseRed {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), #c084fc);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .question-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-height: 380px;
+            position: relative;
+        }
+
+        .question-tag {
+            align-self: flex-start;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(217, 70, 239, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(217, 70, 239, 0.2);
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .question-text code,
+        .explanation-box code {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #d946ef;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: translateX(4px);
+        }
+
+        .option-btn.selected {
+            border-color: var(--accent);
+            background: rgba(217, 70, 239, 0.08);
+            box-shadow: inset 0 0 0 1px var(--accent);
+        }
+
+        .option-btn.correct {
+            border-color: var(--correct) !important;
+            background: var(--correct-bg) !important;
+            box-shadow: inset 0 0 0 1px var(--correct) !important;
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--incorrect) !important;
+            background: var(--incorrect-bg) !important;
+            box-shadow: inset 0 0 0 1px var(--incorrect) !important;
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            opacity: 0.85;
+        }
+
+        .option-badge {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            margin-right: 14px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .option-btn:hover:not(.disabled) .option-badge {
+            background: rgba(217, 70, 239, 0.2);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .option-btn.selected .option-badge {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #050a0e;
+        }
+
+        [data-theme="light"] .option-btn.selected .option-badge {
+            color: white;
+        }
+
+        .option-btn.correct .option-badge {
+            background: var(--correct);
+            border-color: var(--correct);
+            color: white;
+        }
+
+        .option-btn.incorrect .option-badge {
+            background: var(--incorrect);
+            border-color: var(--incorrect);
+            color: white;
+        }
+
+        .option-text {
+            line-height: 1.5;
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            gap: 16px;
+        }
+
+        .btn-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            border-color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .btn-flag {
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+        }
+
+        .btn-flag.flagged {
+            color: var(--warning);
+            border-color: var(--warning);
+            background: var(--warning-bg);
+        }
+
+        .btn-flag svg {
+            fill: none;
+            transition: var(--transition);
+        }
+
+        .btn-flag.flagged svg {
+            fill: var(--warning);
+        }
+
+        .explanation-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+            display: none;
+            animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .explanation-box.visible {
+            display: block;
+        }
+
+        .explanation-header {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--correct);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .explanation-header svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .explanation-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .exam-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grid-legend {
+            display: flex;
+            gap: 12px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .legend-color.answered {
+            background: var(--accent);
+        }
+
+        .legend-color.flagged {
+            background: var(--warning);
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .grid-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.01);
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .grid-cell:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .grid-cell.active {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 8px var(--accent-glow);
+            font-weight: 800;
+        }
+
+        .grid-cell.answered {
+            background: var(--accent);
+            color: #050a0e;
+            font-weight: 700;
+            border-color: var(--accent);
+        }
+
+        [data-theme="light"] .grid-cell.answered {
+            color: white;
+        }
+
+        .grid-cell.flagged {
+            background: var(--warning);
+            color: #050a0e;
+            font-weight: 700;
+            border-color: var(--warning);
+        }
+
+        [data-theme="light"] .grid-cell.flagged {
+            color: white;
+        }
+
+        .grid-cell.flagged.active {
+            border-color: var(--text-primary);
+        }
+
+        .grid-cell.answered.active {
+            border-color: var(--text-primary);
+        }
+
+        .result-panel {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .score-card {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+        }
+
+        .circle-progress-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 8px;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.03);
+            stroke-width: 12;
+        }
+
+        .circle-fill {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 12;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-dasharray: 439.82;
+            stroke-dashoffset: 439.82;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-num {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--text-primary);
+        }
+
+        .score-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .result-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+
+        .result-desc {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            max-width: 460px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-icon {
+            margin-bottom: 4px;
+        }
+
+        .stat-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .stat-val {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .stat-lbl {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .review-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 16px;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+        }
+
+        .search-box svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .review-filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .filter-btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--text-secondary);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: #050a0e;
+            font-weight: 700;
+            border-color: var(--accent);
+        }
+
+        [data-theme="light"] .filter-btn.active {
+            color: white;
+        }
+
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-item {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: var(--transition);
+        }
+
+        .review-item.correct-answer {
+            border-left: 4px solid var(--correct);
+        }
+
+        .review-item.incorrect-answer {
+            border-left: 4px solid var(--incorrect);
+        }
+
+        .review-item.skipped-answer {
+            border-left: 4px solid var(--warning);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .review-number {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .review-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .review-badge.correct {
+            background: var(--correct-bg);
+            color: var(--correct);
+            border: 1px solid var(--correct-border);
+        }
+
+        .review-badge.incorrect {
+            background: var(--incorrect-bg);
+            color: var(--incorrect);
+            border: 1px solid var(--incorrect-border);
+        }
+
+        .review-badge.skipped {
+            background: var(--warning-bg);
+            color: var(--warning);
+            border: 1px solid var(--warning-border);
+        }
+
+        .review-question {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .review-answers {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .review-ans-row {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+        }
+
+        .review-ans-row.user-select {
+            border-color: var(--incorrect);
+            background: var(--incorrect-bg);
+        }
+
+        .review-ans-row.user-select.is-correct {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+        }
+
+        .review-ans-row.correct-key {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+            margin-top: 4px;
+        }
+
+        .review-ans-lbl {
+            font-weight: 700;
+            margin-right: 8px;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .review-ans-txt {
+            flex-grow: 1;
+        }
+
+        .review-explanation {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .review-explanation-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--correct);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .review-explanation-text {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 32px 0 24px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer p a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>GKPC UTS Prep</h1>
+                    <p>Grafik Komputer dan Pengolahan Citra</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dynamic Views -->
+        <main>
+            <!-- 1. DASHBOARD VIEW -->
+            <div id="dashboard-view" class="dashboard-grid">
+                <!-- Configuration panel -->
+                <div class="glass-panel">
+                    <h2 class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M12 6V4m0 2a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m-6 8a2 2 0 1 0 0-4m0 4a2 2 0 1 1 0-4m0 4v2m0-6V4m6 16v-6m6 0v2m0-6V4m0 6a2 2 0 1 0 0 4m0-4a2 2 0 1 1 0 4m0 6v-4" stroke="currentColor" stroke-linecap="round" />
+                        </svg>
+                        Konfigurasi Latihan
+                    </h2>
+
+                    <!-- Category Selector -->
+                    <div class="customizer-section">
+                        <label class="customizer-label">Pilih Kategori Materi</label>
+                        <div class="category-options">
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="1" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bab 1: Pengantar Grafik Komputer & Pengolahan Citra</span>
+                                    <span class="category-meta">Soal 2, 3, 22, 31, 32, 43 • Definisi dasar, tahapan (PRA), bidang penerapan, input/output hardware, software</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="2" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bab 2: Citra, Vektor, dan Raster</span>
+                                    <span class="category-meta">Soal 8–10, 24, 28, 29, 34, 35, 39–42 • Matriks piksel, primitif titik/garis, antialiasing, retrace, font</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="3" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bab 3: Transformasi Geometri 2D & 3D</span>
+                                    <span class="category-meta">Soal 11–14, 36, 44, 47, 49 • Translasi, scaling, rotasi (+/-), refleksi, shear, ruang 3D, koordinat homogen</span>
+                                </div>
+                            </label>
+                            <label class="category-item">
+                                <input type="checkbox" class="cat-checkbox" value="4" checked>
+                                <div class="category-info">
+                                    <span class="category-name">Bab 4: Pengolahan Citra & Computer Vision</span>
+                                    <span class="category-meta">Soal 1, 4–7, 15–21, 23, 25–27, 30, 33, 37, 38, 45, 46, 48, 50 • Enhancement, compression, thresholding, konvolusi, fourier</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Options Grid (Count & Mode) -->
+                    <div class="options-row">
+                        <div class="custom-select-group">
+                            <label class="customizer-label">Jumlah Soal</label>
+                            <div class="btn-group" id="count-group">
+                                <button class="btn-select" data-val="10">10</button>
+                                <button class="btn-select" data-val="20">20</button>
+                                <button class="btn-select" data-val="30">30</button>
+                                <button class="btn-select active" data-val="all">Semua (50)</button>
+                            </div>
+                        </div>
+
+                        <div class="custom-select-group">
+                            <label class="customizer-label">Mode Kuis</label>
+                            <div class="btn-group" id="mode-group">
+                                <button class="btn-select active" data-val="practice">Latihan</button>
+                                <button class="btn-select" data-val="exam">Ujian</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Start Button -->
+                    <button class="btn-primary" id="start-btn">
+                        Mulai Latihan
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 3l14 9-14 9V3z" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Sidebar (History / Tips) -->
+                <div class="sidebar-panel">
+                    <!-- High Score / History Card -->
+                    <div class="history-card">
+                        <h3 class="section-title">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Riwayat Latihan
+                        </h3>
+                        <div class="history-list" id="history-container">
+                            <div class="empty-history">Belum ada riwayat pengerjaan kuis.</div>
+                        </div>
+                    </div>
+
+                    <!-- Study Tips -->
+                    <div class="tips-card">
+                        <h4>
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9.663 17h4.673M12 3v1m6.364.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Tips Latihan UTS
+                        </h4>
+                        <p>
+                            Gunakan <strong>Mode Latihan</strong> untuk mendapatkan koreksi jawaban instan beserta penjelasan rinci secara langsung. Gunakan <strong>Mode Ujian</strong> untuk berlatih di bawah batasan waktu pengerjaan layaknya simulasi UTS sesungguhnya.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. QUIZ PLAY VIEW -->
+            <div id="quiz-view" class="quiz-container hidden">
+                <!-- Left Main Area: Question & Options -->
+                <div class="quiz-main">
+                    <!-- Progress & Information Header -->
+                    <div class="quiz-info-bar">
+                        <div class="info-pill" id="question-index-label">Soal 1 dari 10</div>
+                        <div class="info-pill" id="score-counter-pill">Benar: 0 • Salah: 0</div>
+                        <div class="info-pill hidden" id="timer-pill">
+                            <svg viewBox="0 0 24 24" fill="none" style="width: 14px; height: 14px;">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                            <span id="timer-display">00:00</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" id="quiz-progress-bar"></div>
+                    </div>
+
+                    <!-- Question Card -->
+                    <div class="question-card">
+                        <span class="question-tag" id="question-section-tag">Bagian 1</span>
+                        <div class="question-text" id="question-text-box">
+                            Memuat pertanyaan...
+                        </div>
+                        <div class="options-list" id="options-container">
+                            <!-- Options populated dynamically -->
+                        </div>
+
+                        <!-- Action buttons inside card (prev, next, flag) -->
+                        <div class="quiz-actions">
+                            <button class="btn-secondary" id="prev-btn">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                                Sebelumnya
+                            </button>
+
+                            <button class="btn-secondary btn-flag" id="flag-btn" title="Tandai ragu-ragu">
+                                <svg viewBox="0 0 24 24" style="width:16px; height:16px;">
+                                    <path d="M3 21v-4m0 0V5a2 2 0 0 1 2-2h6.5l1 2H21v11h-7l-1-2H3z" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                                Ragu-ragu
+                            </button>
+
+                            <button class="btn-secondary" id="next-btn">
+                                Selanjutnya
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Instant Explanation (visible in Practice Mode after responding) -->
+                        <div class="explanation-box" id="instant-explanation-box">
+                            <div class="explanation-header">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-linecap="round" />
+                                </svg>
+                                Penjelasan Kunci Jawaban
+                            </div>
+                            <div class="explanation-text" id="instant-explanation-text">
+                                Detail penjelasan...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar: Question Grid Map -->
+                <div class="exam-sidebar">
+                    <div class="sidebar-card">
+                        <div class="sidebar-card-title">
+                            Peta Soal
+                            <button class="btn-secondary" id="submit-quiz-btn" style="padding: 6px 12px; font-size: 11px; border-color: var(--accent); color: var(--accent); background: var(--accent-glow);">
+                                Kumpulkan
+                            </button>
+                        </div>
+                        <div class="grid-legend">
+                            <div class="legend-item">
+                                <div class="legend-color"></div><span>Belum</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color answered"></div><span>Terjawab</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color flagged"></div><span>Ragu-ragu</span>
+                            </div>
+                        </div>
+                        <div class="questions-grid" id="exam-grid-container">
+                            <!-- Populated with cell grid buttons -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. RESULT VIEW -->
+            <div id="result-view" class="result-panel hidden">
+                <!-- Score Breakdown -->
+                <div class="score-card">
+                    <div class="circle-progress-container">
+                        <svg width="160" height="160" viewBox="0 0 160 160">
+                            <circle class="circle-bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="circle-fill" id="score-circle" cx="80" cy="80" r="70"></circle>
+                        </svg>
+                        <div class="score-value">
+                            <span class="score-num" id="result-score-percent">0%</span>
+                            <span class="score-label">Skor</span>
+                        </div>
+                    </div>
+
+                    <h2 class="result-title" id="result-feedback-title">Hebat!</h2>
+                    <p class="result-desc" id="result-feedback-desc">
+                        Anda telah menyelesaikan kuis latihan UTS.
+                    </p>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="var(--correct)" />
+                                </svg>
+                            </div>
+                            <span class="stat-val" id="stats-correct" style="color: var(--correct);">0</span>
+                            <span class="stat-lbl">Benar</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="var(--incorrect)" />
+                                </svg>
+                            </div>
+                            <span class="stat-val" id="stats-incorrect" style="color: var(--incorrect);">0</span>
+                            <span class="stat-lbl">Salah</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="var(--warning)" />
+                                </svg>
+                            </div>
+                            <span class="stat-val" id="stats-skipped" style="color: var(--warning);">0</span>
+                            <span class="stat-lbl">Dilewati</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="var(--accent)" />
+                                </svg>
+                            </div>
+                            <span class="stat-val" id="stats-time" style="color: var(--accent);">00:00</span>
+                            <span class="stat-lbl">Waktu</span>
+                        </div>
+                    </div>
+
+                    <!-- Panel Action buttons -->
+                    <div style="display:flex; gap:16px; width:100%; margin-top:20px; flex-wrap:wrap;">
+                        <button class="btn-primary" id="restart-btn" style="flex:1; min-width: 200px;">
+                            Ulangi Kuis
+                            <svg viewBox="0 0 24 24">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 1 1 8.582 9h5m0 0V4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            </svg>
+                        </button>
+                        <button class="btn-secondary" id="change-settings-btn" style="flex:1; min-width: 200px; padding: 16px 24px;">
+                            Ganti Pengaturan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Review Details Section -->
+                <div class="review-panel">
+                    <h3 class="section-title" style="margin-bottom: 8px;">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Review Pertanyaan & Jawaban
+                    </h3>
+
+                    <!-- Review Toolbar (Search + Filter) -->
+                    <div class="review-controls">
+                        <!-- Search Box -->
+                        <div class="search-box">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="M21 21l-4.35-4.35" />
+                            </svg>
+                            <input type="text" id="review-search" placeholder="Cari soal atau kata kunci...">
+                        </div>
+
+                        <!-- Filter Chips -->
+                        <div class="review-filters">
+                            <button class="filter-btn active" data-filter="all">Semua Soal (<span id="count-filter-all">0</span>)</button>
+                            <button class="filter-btn" data-filter="correct" style="color: var(--correct);">Benar (<span id="count-filter-correct">0</span>)</button>
+                            <button class="filter-btn" data-filter="incorrect" style="color: var(--incorrect);">Salah (<span id="count-filter-incorrect">0</span>)</button>
+                            <button class="filter-btn" data-filter="skipped" style="color: var(--warning);">Dilewati (<span id="count-filter-skipped">0</span>)</button>
+                        </div>
+                    </div>
+
+                    <!-- Review Scroll Area -->
+                    <div class="review-list" id="review-cards-container">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dibuat untuk latihan mandiri UTS Grafik Komputer dan Pengolahan Citra.</p>
+            <p style="margin-top: 4px; color: var(--accent);">Siti Aisyah Edition</p>
+        </footer>
+    </div>
+
+    <!-- QUESTIONS AND LOGIC SCRIPTS -->
+    <script>
+        // --- 50 QUESTIONS DATABASE ---
+        const ALL_QUESTIONS = [
+            {
+                id: 1,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Bidang ilmu yang memproses citra digital masukan untuk menghasilkan keluaran berupa informasi deskriptif atau keputusan disebut...",
+                options: [
+                    "Grafika Komputer",
+                    "Pengolahan Citra",
+                    "Analisis Citra (Computer Vision)",
+                    "Kompresi Citra"
+                ],
+                answer: "C",
+                explanation: "Analisis citra atau computer vision memproses citra digital untuk menghasilkan keluaran deskriptif informasi."
+            },
+            {
+                id: 2,
+                section: "Bab 1: Pengantar Grafik Komputer & Pengolahan Citra",
+                category: 1,
+                question: "Ivan Sutherland pada tahun 1963 menciptakan sistem interaktif grafik pertama di MIT yang dinamakan...",
+                options: [
+                    "Sketchpad",
+                    "Auto CAD",
+                    "Corel Draw",
+                    "Ray Tracing"
+                ],
+                answer: "A",
+                explanation: "Ivan Sutherland menemukan sistem grafik interaktif pertama bernama Sketchpad pada tahun 1963 di MIT."
+            },
+            {
+                id: 3,
+                section: "Bab 1: Pengantar Grafik Komputer & Pengolahan Citra",
+                category: 1,
+                question: "Manakah di antara perangkat berikut yang merupakan contoh murni dari komponen sistem grafik interaktif kategori keluaran (hard-copy ukuran besar)?",
+                options: [
+                    "Scanner",
+                    "Plotter",
+                    "Digitizer",
+                    "CRT Monitor"
+                ],
+                answer: "B",
+                explanation: "Plotter merupakan perangkat keluaran grafis jenis cetak kertas (hard-copy) ukuran besar."
+            },
+            {
+                id: 4,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Tujuan utama dari operasi matematika konvolusi dengan menggunakan mask berupa filter blurring pada pengolahan citra adalah...",
+                options: [
+                    "Menajamkan garis tepi objek yang samar",
+                    "Menghapus warna latar belakang secara total",
+                    "Menghaluskan sudut-sudut tajam atau mengurangi derau halus",
+                    "Mengubah gambar menjadi biner hitam-putih"
+                ],
+                answer: "C",
+                explanation: "Operasi konvolusi filter blurring berguna menghaluskan sudut-sudut tajam citra dan membuang derau halus."
+            },
+            {
+                id: 5,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Pada sistem koordinat komputer (screen coordinate), letak posisi titik asal koordinat (0,0) secara umum berada pada bagian...",
+                options: [
+                    "Tengah-tengah layar monitor",
+                    "Kiri bawah layar monitor",
+                    "Kiri atas layar monitor",
+                    "Kanan bawah layar monitor"
+                ],
+                answer: "C",
+                explanation: "Pada sistem layar komputer standard, koordinat (0,0) terletak di pojok kiri atas layar."
+            },
+            {
+                id: 6,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Proses penyesuaian mata manusia dalam membedakan gradasi tingkat kecemerlangan cahaya secara visual dinamakan...",
+                options: [
+                    "Brightness Adaptation",
+                    "Subjective Brightness",
+                    "Photopic Vision",
+                    "Scotopic Vision"
+                ],
+                answer: "A",
+                explanation: "Brightness Adaptation adalah fenomena mata beradaptasi mengenali gradasi tingkat kecemerlangan cahaya."
+            },
+            {
+                id: 7,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Teknik dalam grafika komputer untuk meminimalkan efek \"tangga\" atau garis kasar (jaggies) akibat keterbatasan resolusi layar monitor disebut...",
+                options: [
+                    "Rendering",
+                    "Antialiasing",
+                    "Thresholding",
+                    "Quantization"
+                ],
+                answer: "B",
+                explanation: "Antialiasing memodifikasi piksel sekitar batas objek untuk memperhalus efek tangga kasar gambar."
+            },
+            {
+                id: 8,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Jika kita memperbesar sebuah gambar digital, lalu tepi gambar tetap terlihat tajam, halus, dan tidak pecah, maka gambar tersebut dipastikan berjenis...",
+                options: [
+                    "Gambar Raster",
+                    "Gambar Piksel",
+                    "Gambar Vektor",
+                    "Gambar Bitmap"
+                ],
+                answer: "C",
+                explanation: "Gambar vektor dibentuk dari garis matematis sehingga selalu tajam meskipun di-zoom ekstrem."
+            },
+            {
+                id: 9,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Manakah aplikasi di bawah ini yang diklasifikasikan secara murni sebagai software pengolah grafis berbasis desain vektor?",
+                options: [
+                    "Adobe Photoshop",
+                    "Corel Draw",
+                    "Microsoft Paint",
+                    "Adobe Premiere"
+                ],
+                answer: "B",
+                explanation: "Corel Draw adalah program aplikasi pengolah gambar berbasis vektor sejati."
+            },
+            {
+                id: 10,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Primitif grafik berbentuk kumpulan piksel yang tersusun lurus dari titik awal ke titik akhir di mana nilai sumbu X bergerak maju dan sumbu Y konstan dinamakan garis...",
+                options: [
+                    "Vertikal",
+                    "Horizontal",
+                    "Diagonal",
+                    "Bebas"
+                ],
+                answer: "B",
+                explanation: "Sumbu-X bertambah secara inkremental sementara Sumbu-Y bernilai tetap/konstan menghasilkan garis horizontal."
+            },
+            {
+                id: 11,
+                section: "Bab 3: Transformasi Geometri 2D & 3D",
+                category: 3,
+                question: "Metode transformasi geometri yang memindahkan posisi objek tanpa merusak bentuk aslinya dengan cara melakukan penambahan besaran tertentu pada koordinat disebut...",
+                options: [
+                    "Rotasi",
+                    "Translasi",
+                    "Scaling",
+                    "Refleksi"
+                ],
+                answer: "B",
+                explanation: "Translasi menggeser posisi koordinat piksel tanpa merusak atau mengubah bentuk objek aslinya."
+            },
+            {
+                id: 12,
+                section: "Bab 3: Transformasi Geometri 2D & 3D",
+                category: 3,
+                question: "Operasi transformasi yang menyebabkan suatu objek grafis berubah ukurannya menjadi membesar atau mengecil secara tidak seragam disebut...",
+                options: [
+                    "Uniform Scaling",
+                    "Non-Uniform Scaling",
+                    "Rotasi Pivot",
+                    "Shear Distortion"
+                ],
+                answer: "B",
+                explanation: "Jika faktor pengali sumbu skala berbeda ($S_x \neq S_y$), ukuran berubah secara tidak seragam (non-uniform)."
+            },
+            {
+                id: 13,
+                section: "Bab 3: Transformasi Geometri 2D & 3D",
+                category: 3,
+                question: "Aturan baku sudut rotasi geometri dalam grafika komputer menyatakan bahwa nilai derajat sudut akan bernilai POSITIF jika putaran dilakukan...",
+                options: [
+                    "Searah dengan jarum jam",
+                    "Berlawanan arah dengan jarum jam",
+                    "Sejajar dengan sumbu Z positif",
+                    "Menuju titik asal koordinat (0,0)"
+                ],
+                answer: "B",
+                explanation: "Aturan baku menyatakan rotasi berlawanan jarum jam bernilai positif, searah jarum jam bernilai negatif."
+            },
+            {
+                id: 14,
+                section: "Bab 3: Transformasi Geometri 2D & 3D",
+                category: 3,
+                question: "Perbedaan mendasar antara proses rotasi pada objek geometri 2D dengan objek geometri 3D terletak pada...",
+                options: [
+                    "Penggunaan nilai matriks konstanta homogen yang dihilangkan",
+                    "Objek 2D menggunakan titik pusat (0,0), sedangkan 3D menggunakan sumbu koordinat sebagai pusat perputaran",
+                    "Objek 3D tidak mengenal sudut putaran negatif searah jarum jam",
+                    "Objek 2D mengalami perubahan bentuk saat diputar, sedangkan 3D tidak"
+                ],
+                answer: "B",
+                explanation: "Rotasi 2D berputar pada titik acuan bidang datar, sedangkan 3D wajib berputar mengelilingi poros sumbu koordinat."
+            },
+            {
+                id: 15,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Jenis kompresi citra digital yang hasil kompresinya tidak menurunkan kualitas citra karena sama sekali tidak ada informasi data gambar yang hilang dinamakan...",
+                options: [
+                    "Lossy Compression",
+                    "Lossless Compression",
+                    "Thresholding Compression",
+                    "Grayscale Compression"
+                ],
+                answer: "B",
+                explanation: "Kompresi Lossless mempertahankan kualitas citra tanpa ada data informasi yang dibuang/hilang."
+            },
+            {
+                id: 16,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Operasi pengolahan citra digital yang bertujuan memecah atau membagi gambar menjadi wilayah objek yang lebih kecil berdasarkan kesamaan warna atau kecerahan disebut...",
+                options: [
+                    "Segmentasi Citra",
+                    "Restorasi Citra",
+                    "Kompresi Citra",
+                    "Perbaikan Kualitas Citra"
+                ],
+                answer: "A",
+                explanation: "Segmentasi citra membagi gambar menjadi wilayah objek kecil berdasarkan kesamaan warna/ciri."
+            },
+            {
+                id: 17,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Berapakah jumlah kemungkinan kombinasi warna yang dapat dihasilkan oleh format penyimpanan citra skala keabuan (grayscale) berukuran 8 bit?",
+                options: [
+                    "16 warna",
+                    "2 warna",
+                    "256 warna",
+                    "16 juta warna"
+                ],
+                answer: "C",
+                explanation: "Rumus jumlah warna grayscale 8 bit adalah $2^8 = 256$ tingkatan warna keabuan."
+            },
+            {
+                id: 18,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Model warna yang berbasis pengurangan sebagian gelombang cahaya (substractive color model) karena efeknya mengurangi warna putih dan umum dipakai pada cetakan hard-copy kertas adalah...",
+                options: [
+                    "RGB",
+                    "CMY",
+                    "True Color",
+                    "Monokrom"
+                ],
+                answer: "B",
+                explanation: "CMY (Cyan, Magenta, Yellow) adalah model warna berbasis substractive untuk media cetak hard-copy kertas."
+            },
+            {
+                id: 19,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Pada algoritma pembentukan lingkaran Bressenham, untuk menghemat waktu komputasi, penggambaran titik lingkaran cukup dilakukan pada sudut...",
+                options: [
+                    "0° - 90°",
+                    "0° - 45°",
+                    "0° - 360°",
+                    "45° - 90°"
+                ],
+                answer: "B",
+                explanation: "Algoritma Bressenham cukup menghitung rentang sudut $0^{\circ}-45^{\circ}$ (seperdelapan lingkaran) karena sifat simetris."
+            },
+            {
+                id: 20,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Apabila kita menggunakan teknik pencerminan pada lingkaran Bressenham dengan mengalikan seluruh nilai koordinat sumbu X dengan nilai (-1), maka kita sedang mencari posisi titik untuk kuadran...",
+                options: [
+                    "Kuadran 2 saja",
+                    "Kuadran 3 dan 4",
+                    "Kuadran 5, 6, 7, dan 8",
+                    "Kuadran 1 saja"
+                ],
+                answer: "C",
+                explanation: "Mengalikan nilai sumbu X dengan nilai (-1) menghasilkan pencerminan horizontal untuk posisi kuadran 5, 6, 7, dan 8."
+            },
+            {
+                id: 21,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Komponen citra digital yang merepresentasikan sebaran terang (lightness) dan gelap (darkness) di dalam sebuah citra secara merata disebut...",
+                options: [
+                    "Kecerahan (Brightness)",
+                    "Kontras (Contrast)",
+                    "Kontur (Contour)",
+                    "Tekstur (Texture)"
+                ],
+                answer: "B",
+                explanation: "Kontras mengukur penyebaran intensitas terang dan gelap yang merata pada gambar digital."
+            },
+            {
+                id: 22,
+                section: "Bab 1: Pengantar Grafik Komputer & Pengolahan Citra",
+                category: 1,
+                question: "Upaya menggambarkan objek nyata ke dalam komputer menggunakan matematika agar memiliki karakteristik geometris disebut tahap...",
+                options: [
+                    "Rendering",
+                    "Pemodelan (Modelling)",
+                    "Animasi",
+                    "Digitalisasi"
+                ],
+                answer: "B",
+                explanation: "Pemodelan (Modelling) adalah upaya menerjemahkan karakteristik objek nyata menjadi matematis geometri."
+            },
+            {
+                id: 23,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Sistem perekaman citra X-Ray thorax untuk mendeteksi kanker paru-paru merupakan contoh penerapan pengolahan citra tingkat awal dalam bidang...",
+                options: [
+                    "Seni komersil",
+                    "Kedokteran",
+                    "Rekayasa Industri",
+                    "Geografi"
+                ],
+                answer: "B",
+                explanation: "Deteksi paru-paru dan kanker lewat X-Ray adalah aplikasi pengolahan citra digital di bidang medis/kedokteran."
+            },
+            {
+                id: 24,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Proses mengubah data citra analog/tampak yang bersifat kontinu menjadi daerah intensitas diskrit dinamakan...",
+                options: [
+                    "Sampling (Digitalisasi)",
+                    "Kuantisasi",
+                    "Retrace",
+                    "Filtering"
+                ],
+                answer: "B",
+                explanation: "Kuantisasi adalah transformasi konversi nilai kontinu analog menjadi daerah nilai intensitas diskrit."
+            },
+            {
+                id: 25,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Teknik pengolahan citra berupa memodifikasi piksel berdasarkan transformasi nilai piksel tetangga dengan mengalikan citra dengan matriks kernel kecil disebut...",
+                options: [
+                    "Transformasi Fourier",
+                    "Konvolusi",
+                    "Penskalaan Geometri",
+                    "Pemugaran Citra"
+                ],
+                answer: "B",
+                explanation: "Operasi konvolusi adalah proses mengalikan sebuah citra spasial dengan matriks filter mask kecil/kernel."
+            },
+            {
+                id: 26,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Alasan utama mengapa operasi penapisan citra terkadang ditransformasikan dari ranah spasial ke ranah frekuensi adalah...",
+                options: [
+                    "Hasil ranah frekuensi otomatis mengubah format gambar menjadi vektor",
+                    "Ranah spasial tidak bisa memproses gambar berwarna RGB",
+                    "Konvolusi di ranah spasial membutuhkan waktu komputasi perkalian yang sangat besar untuk citra beresolusi tinggi",
+                    "Ranah frekuensi mampu memperkecil ukuran piksel secara fisik"
+                ],
+                answer: "C",
+                explanation: "Operasi penapisan di ranah spasial memakan orde komputasi perkalian $N^2 \cdot m^2$ yang sangat besar."
+            },
+            {
+                id: 27,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Alat matematika yang digunakan sebagai kakas (tool) untuk mengubah fungsi citra dari ranah spasial ke ranah frekuensi adalah...",
+                options: [
+                    "Transformasi Fourier",
+                    "Matriks Homogen Homograf",
+                    "Algoritma DDA Midpoint",
+                    "Filter Spasial Konvolusi"
+                ],
+                answer: "A",
+                explanation: "Transformasi Fourier adalah kakas (tool) pengubah fungsi dari ranah spasial ke ranah frekuensi."
+            },
+            {
+                id: 28,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Jenis huruf (typeface) yang memiliki ciri khas berupa \"kait\" atau sirip pada ujung setiap karakter huruf contohnya Times New Roman disebut kelompok...",
+                options: [
+                    "Sanserif",
+                    "Serif",
+                    "Egyptian",
+                    "Dekoratif"
+                ],
+                answer: "B",
+                explanation: "Huruf kelompok Serif dicirikan dengan memiliki kait kecil tambahan pada setiap ujung karakter huruf."
+            },
+            {
+                id: 29,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Pendekatan antialiasing dengan menggambar gambar pada resolusi yang jauh lebih tinggi dari yang diperlukan, lalu mengecilkannya ke ukuran standar dinamakan...",
+                options: [
+                    "Area Sampling",
+                    "Piksel Phasing",
+                    "Supersampling (Postfiltering)",
+                    "Jaggies Filtering"
+                ],
+                answer: "C",
+                explanation: "Supersampling menggambar pada resolusi tinggi lalu di-downsample demi mereduksi efek garis tangga kasar."
+            },
+            {
+                id: 30,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Format file gambar yang menggunakan metode kompresi independen terhadap platform dan sangat populer untuk pertukaran foto di internet adalah...",
+                options: [
+                    "Windows Bitmap (.bmp)",
+                    "JPEG (.jpg)",
+                    "TIFF (.tif)",
+                    "AutoCAD (.dwg)"
+                ],
+                answer: "B",
+                explanation: "JPEG (.jpg) merupakan format file platform independen yang sangat efisien untuk foto internet."
+            },
+            {
+                id: 31,
+                section: "Bab 1: Pengantar Grafik Komputer & Pengolahan Citra",
+                category: 1,
+                question: "Di bawah ini yang termasuk dalam komponen dasar dari sistem grafik interaktif bagian masukan (input) adalah...",
+                options: [
+                    "Printer Berbasis Kertas",
+                    "Layar CRT Monitor",
+                    "Live Video Stream / Scanner",
+                    "Non-linear Editor Video"
+                ],
+                answer: "C",
+                explanation: "Scanner dan Live Video Stream menangkap data dari luar ke dalam memori komputer (Input)."
+            },
+            {
+                id: 32,
+                section: "Bab 1: Pengantar Grafik Komputer & Pengolahan Citra",
+                category: 1,
+                question: "Berdasarkan sejarah grafika komputer, film pertama di bioskop yang mencatatkan diri menggunakan animasi komputer secara resmi pada tahun 1972 adalah...",
+                options: [
+                    "Star Wars",
+                    "Westworld",
+                    "Toy Story",
+                    "Luxo Jr."
+                ],
+                answer: "B",
+                explanation: "Film Westworld ditayangkan pada tahun 1972 sebagai film bioskop pertama pengguna animasi komputer."
+            },
+            {
+                id: 33,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Kombinasi nilai warna RGB (255, 255, 0) pada citra digital True Color akan menghasilkan warna visual berupa...",
+                options: [
+                    "Ungu Muda",
+                    "Kuning",
+                    "Putih Bersih",
+                    "Hitam Pekat"
+                ],
+                answer: "B",
+                explanation: "Nilai maksimal merah (255) dan hijau (255) tanpa komponen biru (0) berpadu membentuk warna kuning."
+            },
+            {
+                id: 34,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Karakteristik utama yang membedakan teknologi display raster dengan teknologi display vektor pada layar komputer kuno adalah...",
+                options: [
+                    "Raster menggambar dengan mengikuti garis matematis objek langsung",
+                    "Vektor menyalakan piksel baris demi baris dari kiri atas ke kanan bawah secara kontinu",
+                    "Raster mengaktifkan alamat titik piksel (scan line) berdasarkan pancaran retrace elektron",
+                    "Vektor mengandalkan data matriks keabuan yang sangat tinggi"
+                ],
+                answer: "C",
+                explanation: "Sistem raster display mengaktifkan piksel baris demi baris menggunakan mekanisme pancaran elektron (scan line)."
+            },
+            {
+                id: 35,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Metode untuk mengisi area bagian dalam sebuah objek grafis berbentuk poligon tertutup pada sistem raster dinamakan...",
+                options: [
+                    "Edge Detection",
+                    "Boundary/Scanline Fill Area",
+                    "Blurring Area",
+                    "Quantization Object"
+                ],
+                answer: "B",
+                explanation: "Scanline fill area bekerja dengan menentukan interval perpotongan garis horizontal di dalam poligon objek."
+            },
+            {
+                id: 36,
+                section: "Bab 3: Transformasi Geometri 2D & 3D",
+                category: 3,
+                question: "Dalam grafik komputer 3D, konvensi kaidah tangan kanan menentukan bahwa nilai sumbu Z positif mengarah ke...",
+                options: [
+                    "Menjauhi pengamat/komputer",
+                    "Mendekati pengamat/keluar layar",
+                    "Mengarah ke sudut kanan atas",
+                    "Mengarah ke bawah sejajar sumbu Y"
+                ],
+                answer: "B",
+                explanation: "Kaidah tangan kanan menentukan sumbu Z positif mengarah ke luar layar monitor mendekati mata kita."
+            },
+            {
+                id: 37,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Pada transformasi citra, untuk mengembalikan citra yang berada di ranah frekuensi kembali menjadi ranah spasial asal, kita wajib menggunakan...",
+                options: [
+                    "Konvolusi Matriks Kernel",
+                    "Transformasi Fourier Balikan (Inverse)",
+                    "Pembulatan Nilai Integer Midpoint",
+                    "Segmentasi Thresholding Biner"
+                ],
+                answer: "B",
+                explanation: "Transformasi Fourier Balikan (Inverse Fourier Transform) digunakan mengembalikan fungsi ranah frekuensi ke ranah spasial asli."
+            },
+            {
+                id: 38,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Operasi perbaikan kualitas citra (image enhancement) yang berfungsi untuk memperjelas detail citra dengan cara menambah kontras pada tepi objek disebut...",
+                options: [
+                    "Blurring Filter",
+                    "Sharpening / Crispening",
+                    "Deblurring Restoration",
+                    "Lossy Compression"
+                ],
+                answer: "B",
+                explanation: "Sharpening (penajaman) memperjelas detail objek dengan meningkatkan kontras tepian citra."
+            },
+            {
+                id: 39,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Ciri khas utama dari huruf/karakter yang tergolong dalam rumpun kelompok Monospace adalah...",
+                options: [
+                    "Memiliki bentuk bunga-bunga dekoratif yang sangat indah",
+                    "Memiliki ukuran lebar huruf yang tetap/sama antar setiap karakter",
+                    "Tidak mempunyai kait sama sekali pada ujung garis karakter",
+                    "Memiliki kait besar berbentuk segi empat yang kokoh"
+                ],
+                answer: "B",
+                explanation: "Karakter Monospace memiliki lebar ruang horizontal yang mutlak sama konstan antar semua tipe huruf."
+            },
+            {
+                id: 40,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Sistem perekaman citra yang keluarannya berbentuk sinyal video kontinu analog dapat ditemukan pada monitor...",
+                options: [
+                    "Televisi Tabung Tradisional",
+                    "Layar LCD Smartphone Modern",
+                    "File Gambar Windows Bitmap (.bmp)",
+                    "Media Penyimpanan Magnetik Flashdisk"
+                ],
+                answer: "A",
+                explanation: "Keluaran berupa sinyal video analog kontinu diproduksi oleh display monitor televisi tabung lama."
+            },
+            {
+                id: 41,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Aktivitas pergerakan elektron dari kiri ke kanan pada teknologi raster display hingga mencapai posisi kanan bawah layar disebut...",
+                options: [
+                    "Horizontal Retrace",
+                    "Vertical Retrace",
+                    "Scan Line Axis",
+                    "Cross-section"
+                ],
+                answer: "A",
+                explanation: "Gerakan pancaran elektron penyapu layar dari kiri ke kanan disebut operasi horizontal retrace."
+            },
+            {
+                id: 42,
+                section: "Bab 2: Citra, Vektor, dan Raster",
+                category: 2,
+                question: "Pada sistem pengolah huruf komputer, metode penyimpanan jenis huruf yang menggunakan sekumpulan grid matriks segi empat di mana nilai bit 1 menandakan piksel aktif disebut...",
+                options: [
+                    "Stroke-based Font",
+                    "Outline Font",
+                    "Bitmap Font",
+                    "TrueType Font"
+                ],
+                answer: "C",
+                explanation: "Bitmap font menyimpan data huruf dalam bentuk kisi matriks biner grid segi empat."
+            },
+            {
+                id: 43,
+                section: "Bab 1: Pengantar Grafik Komputer & Pengolahan Citra",
+                category: 1,
+                question: "Dalam komponen pengolahan citra menurut Anil K. Jain, operasi modifikasi gambar diterapkan apabila...",
+                options: [
+                    "Objek gambar perlu diubah menjadi animasi 3D interaktif",
+                    "Elemen di dalam citra perlu dikelompokkan, dicocokkan, atau diukur",
+                    "Ukuran bit gambar ingin ditingkatkan tanpa batas maksimum",
+                    "Pancaran elektron layar monitor mengalami gangguan garis flickering"
+                ],
+                answer: "B",
+                explanation: "Menurut Anil K. Jain, pengolahan citra diterapkan saat elemen gambar perlu dikelompokkan, diukur, atau dicocokkan."
+            },
+            {
+                id: 44,
+                section: "Bab 3: Transformasi Geometri 2D & 3D",
+                category: 3,
+                question: "Metode transformasi geometri 2D berupa distorsi kemiringan sudut objek grafis pada dua sumbu koordinat dinamakan...",
+                options: [
+                    "Scaling",
+                    "Rotasi",
+                    "Shear",
+                    "Translasi"
+                ],
+                answer: "C",
+                explanation: "Transformasi Shear menghasilkan distorsi efek kemiringan sudut bentuk geometri objek dasar."
+            },
+            {
+                id: 45,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Bagian dari fovea di dalam retina mata manusia yang sangat peka dan sensitif terhadap variasi warna di bawah kondisi cahaya terang (bright light vision) adalah...",
+                options: [
+                    "Rod Receptor",
+                    "Cone Receptor",
+                    "Blind Spot",
+                    "Cornea Optik"
+                ],
+                answer: "B",
+                explanation: "Cone Receptor pada retina manusia berfungsi mengklasifikasikan warna dalam keadaan terang (photopic vision)."
+            },
+            {
+                id: 46,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Aplikasi metodologi OCR pada tahap pemrosesan tingkat awal (preprocessing) sangat membutuhkan operasi pengolahan citra berupa...",
+                options: [
+                    "Animasi Keyframe Morphing",
+                    "Deteksi Sisi / Outline Edge Detection",
+                    "Kompresi Berkas Tipe Lossy",
+                    "Pemodelan Poligon Segi Banyak"
+                ],
+                answer: "B",
+                explanation: "Metodologi awal sistem OCR membutuhkan deteksi sisi/sisi objek (edge detection) guna melacak outline teks."
+            },
+            {
+                id: 47,
+                section: "Bab 3: Transformasi Geometri 2D & 3D",
+                category: 3,
+                question: "Jika faktor penskalaan geometri objek 2D memiliki nilai Sx = Sy = 1, maka objek tersebut akan mengalami...",
+                options: [
+                    "Pembesaran dua kali lipat",
+                    "Pengecilan ekstrem mendekati nol",
+                    "Ukuran dan posisi objek tetap (tidak berubah)",
+                    "Pencerminan terhadap sumbu kuadran asal"
+                ],
+                answer: "C",
+                explanation: "Mengalikan nilai koordinat dengan angka 1 tidak mengubah besaran dimensi angka geometris asal."
+            },
+            {
+                id: 48,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Dalam pengolahan citra digital, komponen \"Tekstur\" didefinisikan sebagai...",
+                options: [
+                    "Intensitas cahaya rata-rata dari suatu area gambar",
+                    "Distribus spasial dari derajat keabuan di dalam sekumpulan piksel bertetangga",
+                    "Persepsi visual terhadap panjang gelombang pantulan objek",
+                    "Properti intrinsik geometri dari objek tiga dimensi ruang"
+                ],
+                answer: "B",
+                explanation: "Tekstur didefinisikan sebagai sebaran nilai spasial dari derajat keabuan tingkat kecemerlangan piksel bertetangga."
+            },
+            {
+                id: 49,
+                section: "Bab 3: Transformasi Geometri 2D & 3D",
+                category: 3,
+                question: "Ketika melakukan pemutaran objek geometri, jika sudut rotasi diatur sebesar 360°, posisi akhir objek grafis tersebut akan berada di...",
+                options: [
+                    "Seberang kuadran origin asal",
+                    "Titik koordinat semula (sama seperti posisi awal)",
+                    "Sepanjang garis diagonal sumbu X",
+                    "Sumbu koordinat Z ruang negatif"
+                ],
+                answer: "B",
+                explanation: "Putaran penuh lingkaran derajat $360^{\circ}$ akan mengembalikan objek tepat ke posisi spasial semulanya."
+            },
+            {
+                id: 50,
+                section: "Bab 4: Pengolahan Citra & Computer Vision",
+                category: 4,
+                question: "Manakah format file gambar berikut yang tidak mendukung penyimpanan data gambar bergerak (animasi sekuensial) secara standar di internet?",
+                options: [
+                    "GIF (.gif)",
+                    "Bitmap (.bmp)",
+                    "PNG (.png)",
+                    "JPEG (.jpeg)"
+                ],
+                answer: "D",
+                explanation: "Format berkas JPEG (.jpg) dirancang khusus hanya untuk mengompresi citra diam tunggal statis (still image)."
+            }
+        ];
+
+        // --- QUIZ GAME CONTROLLER ---
+        let quizState = {
+            mode: 'practice',          // 'practice' or 'exam'
+            questionCount: 'all',      // '10', '20', '30', 'all'
+            activeCategories: [1, 2, 3, 4],
+            questions: [],             // Subset of active questions selected for current session
+            currentIdx: 0,             // Current question index
+            userAnswers: {},           // Maps question.id -> selected option letter ('A', 'B', 'C', 'D')
+            flagged: {},               // Maps question.id -> boolean
+            timeRemaining: 0,          // Remaining time in seconds (for exam mode)
+            timeSpent: 0,              // Time spent in seconds
+            timerInterval: null,
+            quizActive: false,
+            soundEnabled: true,
+            theme: 'dark'
+        };
+
+        // --- WEB AUDIO SYNTHESIZER ---
+        let audioCtx = null;
+        function playSound(type) {
+            if (!quizState.soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(500, now);
+                    osc.frequency.exponentialRampToValueAtTime(250, now + 0.08);
+                    gain.gain.setValueAtTime(0.03, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'tick') {
+                    osc.frequency.setValueAtTime(800, now);
+                    gain.gain.setValueAtTime(0.01, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.03);
+                    osc.start(now);
+                    osc.stop(now + 0.03);
+                } else if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'incorrect') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.linearRampToValueAtTime(100, now + 0.15);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'flag') {
+                    osc.frequency.setValueAtTime(350, now);
+                    osc.frequency.exponentialRampToValueAtTime(450, now + 0.1);
+                    gain.gain.setValueAtTime(0.03, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.1);
+                    osc.start(now);
+                    osc.stop(now + 0.1);
+                }
+            } catch (e) {
+                console.warn('Audio Context failed to play:', e);
+            }
+        }
+
+        // --- APP LIFE CYCLE ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initHistory();
+            setupEventListeners();
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('index_quiz_theme') || 'dark';
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            quizState.theme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('index_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        function initHistory() {
+            const container = document.getElementById('history-container');
+            const history = JSON.parse(localStorage.getItem('gkpc_quiz_history')) || [];
+            
+            if (history.length === 0) {
+                container.innerHTML = `<div class="empty-history">Belum ada riwayat pengerjaan kuis.</div>`;
+                return;
+            }
+
+            container.innerHTML = history.map((item, idx) => `
+                <div class="history-item">
+                    <div class="history-info">
+                        <span class="history-score">${item.score}%</span>
+                        <span class="history-date">${item.date}</span>
+                    </div>
+                    <span class="history-meta">${item.mode === 'exam' ? 'Ujian' : 'Latihan'} • ${item.questions} Soal</span>
+                </div>
+            `).join('');
+        }
+
+        function saveHistory(score, qCount, mode) {
+            const history = JSON.parse(localStorage.getItem('gkpc_quiz_history')) || [];
+            const newRecord = {
+                score: score,
+                questions: qCount,
+                mode: mode,
+                date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+            };
+            history.unshift(newRecord); // Add to beginning
+            if (history.length > 10) history.pop(); // Keep top 10
+            localStorage.setItem('gkpc_quiz_history', JSON.stringify(history));
+            initHistory();
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playSound('click');
+                setTheme(quizState.theme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Sound toggle
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                quizState.soundEnabled = !quizState.soundEnabled;
+                const icon = document.getElementById('sound-icon');
+                if (quizState.soundEnabled) {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    `;
+                } else {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    `;
+                }
+                playSound('click');
+            });
+
+            // Setup customizers
+            const countButtons = document.querySelectorAll('#count-group .btn-select');
+            countButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSound('click');
+                    countButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    quizState.questionCount = btn.getAttribute('data-val');
+                });
+            });
+
+            const modeButtons = document.querySelectorAll('#mode-group .btn-select');
+            modeButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSound('click');
+                    modeButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    quizState.mode = btn.getAttribute('data-val');
+                });
+            });
+
+            // Start Quiz
+            document.getElementById('start-btn').addEventListener('click', startQuiz);
+
+            // Question Navigator Buttons
+            document.getElementById('prev-btn').addEventListener('click', () => navigateQuestion(-1));
+            document.getElementById('next-btn').addEventListener('click', () => navigateQuestion(1));
+            document.getElementById('flag-btn').addEventListener('click', toggleFlag);
+
+            // Submit Quiz
+            document.getElementById('submit-quiz-btn').addEventListener('click', () => {
+                if (confirm('Apakah Anda yakin ingin mengumpulkan kuis sekarang?')) {
+                    submitQuiz();
+                }
+            });
+
+            // Results Navigation
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                playSound('click');
+                document.getElementById('result-view').classList.add('hidden');
+                document.getElementById('dashboard-view').classList.remove('hidden');
+            });
+
+            document.getElementById('change-settings-btn').addEventListener('click', () => {
+                playSound('click');
+                document.getElementById('result-view').classList.add('hidden');
+                document.getElementById('dashboard-view').classList.remove('hidden');
+            });
+
+            // Review Toolbar Filters
+            const filterBtns = document.querySelectorAll('.review-filters .filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSound('click');
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyReviewFilter();
+                });
+            });
+
+            // Review Toolbar Search
+            document.getElementById('review-search').addEventListener('input', applyReviewFilter);
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!quizState.quizActive) return;
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                if (e.code === 'ArrowLeft') {
+                    e.preventDefault();
+                    navigateQuestion(-1);
+                } else if (e.code === 'ArrowRight') {
+                    e.preventDefault();
+                    navigateQuestion(1);
+                } else if (e.code === 'KeyF') {
+                    e.preventDefault();
+                    toggleFlag();
+                } else if (e.code === 'Digit1' || e.code === 'Numpad1') {
+                    selectOptionKeyboard(0);
+                } else if (e.code === 'Digit2' || e.code === 'Numpad2') {
+                    selectOptionKeyboard(1);
+                } else if (e.code === 'Digit3' || e.code === 'Numpad3') {
+                    selectOptionKeyboard(2);
+                } else if (e.code === 'Digit4' || e.code === 'Numpad4') {
+                    selectOptionKeyboard(3);
+                }
+            });
+        }
+
+        // --- GAMEPLAY ENGINE ---
+        function startQuiz() {
+            playSound('click');
+
+            // Gather active categories
+            const checkboxes = document.querySelectorAll('.cat-checkbox');
+            const selectedCats = [];
+            checkboxes.forEach(c => {
+                if (c.checked) selectedCats.push(parseInt(c.value));
+            });
+
+            if (selectedCats.length === 0) {
+                alert('Pilih minimal satu kategori materi sebelum memulai!');
+                return;
+            }
+
+            quizState.activeCategories = selectedCats;
+
+            // Filter questions
+            let filtered = ALL_QUESTIONS.filter(q => selectedCats.includes(q.category));
+
+            if (filtered.length === 0) {
+                alert('Tidak ada soal yang tersedia untuk kategori yang dipilih.');
+                return;
+            }
+
+            // Shuffle questions
+            for (let i = filtered.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+            }
+
+            // Slice count
+            let finalCount = filtered.length;
+            if (quizState.questionCount !== 'all') {
+                const limit = parseInt(quizState.questionCount);
+                finalCount = Math.min(limit, filtered.length);
+            }
+            quizState.questions = filtered.slice(0, finalCount);
+
+            // Clean state
+            quizState.currentIdx = 0;
+            quizState.userAnswers = {};
+            quizState.flagged = {};
+            quizState.timeSpent = 0;
+            quizState.quizActive = true;
+
+            // Toggle views
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.remove('hidden');
+
+            // Setup Navigation Grid map
+            setupGridMap();
+
+            // Set layout mode specific options
+            if (quizState.mode === 'exam') {
+                // 90 seconds per question
+                quizState.timeRemaining = quizState.questions.length * 90;
+                document.getElementById('timer-pill').classList.remove('hidden');
+                document.getElementById('timer-pill').classList.remove('critical');
+                startTimer();
+            } else {
+                document.getElementById('timer-pill').classList.add('hidden');
+                if (quizState.timerInterval) clearInterval(quizState.timerInterval);
+            }
+
+            // Load first question
+            loadQuestion();
+            updateProgress();
+        }
+
+        function setupGridMap() {
+            const grid = document.getElementById('exam-grid-container');
+            grid.innerHTML = quizState.questions.map((_, idx) => `
+                <div class="grid-cell" id="grid-cell-${idx}" onclick="jumpToQuestion(${idx})">${idx + 1}</div>
+            `).join('');
+        }
+
+        function updateGridMapCell(idx) {
+            const cell = document.getElementById(`grid-cell-${idx}`);
+            if (!cell) return;
+
+            cell.className = 'grid-cell';
+
+            if (quizState.currentIdx === idx) {
+                cell.classList.add('active');
+            }
+
+            if (quizState.flagged[quizState.questions[idx].id]) {
+                cell.classList.add('flagged');
+            } else if (quizState.userAnswers[quizState.questions[idx].id] !== undefined) {
+                cell.classList.add('answered');
+            }
+        }
+
+        function updateGridMapAll() {
+            quizState.questions.forEach((_, idx) => updateGridMapCell(idx));
+        }
+
+        function loadQuestion() {
+            const q = quizState.questions[quizState.currentIdx];
+            
+            // Labels
+            document.getElementById('question-index-label').innerText = `Soal ${quizState.currentIdx + 1} dari ${quizState.questions.length}`;
+            document.getElementById('question-section-tag').innerText = q.section;
+            document.getElementById('question-text-box').innerHTML = q.question;
+
+            // Options container
+            const container = document.getElementById('options-container');
+            const letters = ['A', 'B', 'C', 'D'];
+            
+            const selectedAns = quizState.userAnswers[q.id];
+            const isAnswered = selectedAns !== undefined;
+
+            container.innerHTML = q.options.map((opt, oIdx) => {
+                const optLetter = letters[oIdx];
+                let cssClass = '';
+
+                if (quizState.mode === 'practice' && isAnswered) {
+                    // Practice feedback styling
+                    if (optLetter === q.answer) {
+                        cssClass = 'correct disabled';
+                    } else if (optLetter === selectedAns) {
+                        cssClass = 'incorrect disabled';
+                    } else {
+                        cssClass = 'disabled';
+                    }
+                } else {
+                    // Regular selection styling
+                    if (optLetter === selectedAns) {
+                        cssClass = 'selected';
+                    }
+                }
+
+                return `
+                    <button class="option-btn ${cssClass}" id="opt-${optLetter}" onclick="selectOption('${optLetter}')" ${quizState.mode === 'practice' && isAnswered ? 'disabled' : ''}>
+                        <div class="option-badge">${optLetter}</div>
+                        <div class="option-text">${opt}</div>
+                    </button>
+                `;
+            }).join('');
+
+            // Flag state
+            const flagBtn = document.getElementById('flag-btn');
+            if (quizState.flagged[q.id]) {
+                flagBtn.classList.add('flagged');
+            } else {
+                flagBtn.classList.remove('flagged');
+            }
+
+            // Explanation box (Practice mode only)
+            const explanationBox = document.getElementById('instant-explanation-box');
+            if (quizState.mode === 'practice' && isAnswered) {
+                document.getElementById('instant-explanation-text').innerHTML = q.explanation;
+                explanationBox.classList.add('visible');
+            } else {
+                explanationBox.classList.remove('visible');
+            }
+
+            // Nav buttons availability
+            document.getElementById('prev-btn').disabled = quizState.currentIdx === 0;
+            document.getElementById('next-btn').disabled = quizState.currentIdx === quizState.questions.length - 1;
+
+            // Update score count indicators (Practice Mode only)
+            updateScoreCounter();
+
+            // Highlight grid cell
+            updateGridMapAll();
+        }
+
+        function selectOption(letter) {
+            if (!quizState.quizActive) return;
+            const q = quizState.questions[quizState.currentIdx];
+
+            // Avoid re-answering in practice mode
+            if (quizState.mode === 'practice' && quizState.userAnswers[q.id] !== undefined) return;
+
+            quizState.userAnswers[q.id] = letter;
+
+            if (quizState.mode === 'practice') {
+                if (letter === q.answer) {
+                    playSound('correct');
+                } else {
+                    playSound('incorrect');
+                }
+            } else {
+                playSound('click');
+            }
+
+            // Reload card to apply style feeds
+            loadQuestion();
+        }
+
+        function selectOptionKeyboard(index) {
+            const letters = ['A', 'B', 'C', 'D'];
+            if (index >= 0 && index < letters.length) {
+                selectOption(letters[index]);
+            }
+        }
+
+        function navigateQuestion(direction) {
+            const nextIdx = quizState.currentIdx + direction;
+            if (nextIdx >= 0 && nextIdx < quizState.questions.length) {
+                playSound('click');
+                quizState.currentIdx = nextIdx;
+                loadQuestion();
+                updateProgress();
+            }
+        }
+
+        function jumpToQuestion(idx) {
+            if (idx >= 0 && idx < quizState.questions.length) {
+                playSound('click');
+                quizState.currentIdx = idx;
+                loadQuestion();
+                updateProgress();
+            }
+        }
+
+        function toggleFlag() {
+            playSound('flag');
+            const q = quizState.questions[quizState.currentIdx];
+            quizState.flagged[q.id] = !quizState.flagged[q.id];
+            
+            const flagBtn = document.getElementById('flag-btn');
+            if (quizState.flagged[q.id]) {
+                flagBtn.classList.add('flagged');
+            } else {
+                flagBtn.classList.remove('flagged');
+            }
+
+            updateGridMapCell(quizState.currentIdx);
+        }
+
+        function updateProgress() {
+            const pct = ((quizState.currentIdx + 1) / quizState.questions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${pct}%`;
+        }
+
+        function updateScoreCounter() {
+            const counter = document.getElementById('score-counter-pill');
+            if (quizState.mode === 'practice') {
+                counter.style.display = 'block';
+                let correctCount = 0;
+                let incorrectCount = 0;
+
+                quizState.questions.forEach(q => {
+                    const ans = quizState.userAnswers[q.id];
+                    if (ans !== undefined) {
+                        if (ans === q.answer) correctCount++;
+                        else incorrectCount++;
+                    }
+                });
+
+                counter.innerText = `Benar: ${correctCount} • Salah: ${incorrectCount}`;
+            } else {
+                // In Exam mode, hide intermediate scores to avoid stress
+                counter.style.display = 'none';
+            }
+        }
+
+        // --- TIMER MANAGEMENT ---
+        function startTimer() {
+            if (quizState.timerInterval) clearInterval(quizState.timerInterval);
+
+            quizState.timerInterval = setInterval(() => {
+                quizState.timeRemaining--;
+                quizState.timeSpent++;
+
+                // Format display
+                const mins = Math.floor(quizState.timeRemaining / 60);
+                const secs = quizState.timeRemaining % 60;
+                const display = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                document.getElementById('timer-display').innerText = display;
+
+                // Warnings
+                if (quizState.timeRemaining <= 30) {
+                    playSound('tick');
+                    document.getElementById('timer-pill').classList.add('critical');
+                }
+
+                // Time ends
+                if (quizState.timeRemaining <= 0) {
+                    clearInterval(quizState.timerInterval);
+                    alert('Waktu ujian telah habis! Jawaban Anda akan dikumpulkan secara otomatis.');
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        // --- EVALUATE AND RESULTS ---
+        function submitQuiz() {
+            quizState.quizActive = false;
+            if (quizState.timerInterval) clearInterval(quizState.timerInterval);
+
+            // Compute statistics
+            let scoreCorrect = 0;
+            let scoreIncorrect = 0;
+            let scoreSkipped = 0;
+
+            quizState.questions.forEach(q => {
+                const ans = quizState.userAnswers[q.id];
+                if (ans === undefined) {
+                    scoreSkipped++;
+                } else if (ans === q.answer) {
+                    scoreCorrect++;
+                } else {
+                    scoreIncorrect++;
+                }
+            });
+
+            const total = quizState.questions.length;
+            const scorePercent = Math.round((scoreCorrect / total) * 100) || 0;
+
+            // Save to localStorage
+            saveHistory(scorePercent, total, quizState.mode);
+
+            // Populate overlay results
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('result-view').classList.remove('hidden');
+
+            // Animate circle score loading
+            const fill = document.getElementById('score-circle');
+            const r = 70;
+            const circumference = 2 * Math.PI * r;
+            const offset = circumference - (scorePercent / 100) * circumference;
+
+            fill.style.strokeDasharray = circumference;
+            fill.style.strokeDashoffset = circumference;
+            
+            setTimeout(() => {
+                fill.style.strokeDashoffset = offset;
+            }, 100);
+
+            document.getElementById('result-score-percent').innerText = `${scorePercent}%`;
+
+            // Score feedbacks
+            const feedbackTitle = document.getElementById('result-feedback-title');
+            const feedbackDesc = document.getElementById('result-feedback-desc');
+
+            if (scorePercent >= 85) {
+                feedbackTitle.innerText = 'Luar Biasa! 🏆';
+                feedbackTitle.style.color = 'var(--correct)';
+                feedbackDesc.innerText = `Pemahaman materi GKPC Anda sangat matang. Anda siap menghadapi UTS dengan percaya diri!`;
+            } else if (scorePercent >= 70) {
+                feedbackTitle.innerText = 'Sangat Bagus! 👍';
+                feedbackTitle.style.color = 'var(--accent)';
+                feedbackDesc.innerText = `Kinerja yang baik! Ulas kembali beberapa kesalahan minor untuk mengunci nilai A.`;
+            } else if (scorePercent >= 50) {
+                feedbackTitle.innerText = 'Cukup Baik ⚡';
+                feedbackTitle.style.color = 'var(--warning)';
+                feedbackDesc.innerText = `Skor rata-rata. Kami sarankan Anda membaca ulang file Rangkuman dan mencoba Flashcard GKPC sebelum ujian.`;
+            } else {
+                feedbackTitle.innerText = 'Butuh Belajar Lagi 🛠️';
+                feedbackTitle.style.color = 'var(--incorrect)';
+                feedbackDesc.innerText = `Skor Anda di bawah standar kelulusan. Pelajari kembali materi dasar dan ulangi kuis ini untuk latihan.`;
+            }
+
+            // Stat counters
+            document.getElementById('stats-correct').innerText = scoreCorrect;
+            document.getElementById('stats-incorrect').innerText = scoreIncorrect;
+            document.getElementById('stats-skipped').innerText = scoreSkipped;
+
+            // Timer display stats
+            const mins = Math.floor(quizState.timeSpent / 60);
+            const secs = quizState.timeSpent % 60;
+            document.getElementById('stats-time').innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+            // Initialize review area
+            setupReviewPanel();
+        }
+
+        // --- REVIEW CORNER ENGINE ---
+        function setupReviewPanel() {
+            applyReviewFilter();
+        }
+
+        function applyReviewFilter() {
+            const query = document.getElementById('review-search').value.toLowerCase().trim();
+            const activeFilter = document.querySelector('.review-filters .filter-btn.active').getAttribute('data-filter');
+            
+            const container = document.getElementById('review-cards-container');
+            const letters = ['A', 'B', 'C', 'D'];
+
+            // Match and filter questions
+            let matchCorrect = 0;
+            let matchIncorrect = 0;
+            let matchSkipped = 0;
+
+            const reviewItemsHtml = quizState.questions.map((q, idx) => {
+                const userAns = quizState.userAnswers[q.id];
+                const isCorrect = userAns === q.answer;
+                const isSkipped = userAns === undefined;
+
+                // Track stats
+                if (isSkipped) matchSkipped++;
+                else if (isCorrect) matchCorrect++;
+                else matchIncorrect++;
+
+                // Filter validations
+                if (activeFilter === 'correct' && !isCorrect) return '';
+                if (activeFilter === 'incorrect' && (isCorrect || isSkipped)) return '';
+                if (activeFilter === 'skipped' && !isSkipped) return '';
+
+                const matchesQuery = q.question.toLowerCase().includes(query) || 
+                                     q.explanation.toLowerCase().includes(query) || 
+                                     q.options.some(opt => opt.toLowerCase().includes(query));
+                
+                if (query !== '' && !matchesQuery) return '';
+
+                let borderClass = 'skipped-answer';
+                let badgeClass = 'skipped';
+                let badgeText = 'Dilewati';
+
+                if (!isSkipped) {
+                    if (isCorrect) {
+                        borderClass = 'correct-answer';
+                        badgeClass = 'correct';
+                        badgeText = 'Benar';
+                    } else {
+                        borderClass = 'incorrect-answer';
+                        badgeClass = 'incorrect';
+                        badgeText = 'Salah';
+                    }
+                }
+
+                const optionsHtml = q.options.map((opt, oIdx) => {
+                    const optLetter = letters[oIdx];
+                    let rowClass = '';
+
+                    if (optLetter === q.answer) {
+                        rowClass = 'correct-key';
+                    } else if (optLetter === userAns && !isCorrect) {
+                        rowClass = 'user-select';
+                    }
+
+                    return `
+                        <div class="review-ans-row ${rowClass}">
+                            <div class="review-ans-lbl">${optLetter}</div>
+                            <div class="review-ans-txt">${opt}</div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="review-item ${borderClass}">
+                        <div class="review-header">
+                            <span class="review-number">Pertanyaan ${idx + 1}</span>
+                            <span class="review-badge ${badgeClass}">${badgeText}</span>
+                        </div>
+                        <div class="review-question">${q.question}</div>
+                        <div class="review-answers">${optionsHtml}</div>
+                        <div class="review-explanation">
+                            <div class="review-explanation-title">Pembahasan Kunci Jawaban</div>
+                            <div class="review-explanation-text">${q.explanation}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Update badge chip numbers
+            document.getElementById('count-filter-all').innerText = quizState.questions.length;
+            document.getElementById('count-filter-correct').innerText = matchCorrect;
+            document.getElementById('count-filter-incorrect').innerText = matchIncorrect;
+            document.getElementById('count-filter-skipped').innerText = matchSkipped;
+
+            // Render review listing
+            const finalHtml = reviewItemsHtml.filter(h => h !== '').join('');
+            if (finalHtml === '') {
+                container.innerHTML = `<div style="text-align:center; padding:32px; color:var(--text-secondary); font-size:13px;">Tidak ada soal yang cocok dengan filter atau kata kunci pencarian.</div>`;
+            } else {
+                container.innerHTML = finalHtml;
+            }
+        }
+    </script>
+</body>
+
+</html>

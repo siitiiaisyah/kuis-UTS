@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards GKPC - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050a0e;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #581c87 0%, #050a0e 100%);
+            --panel-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #d946ef;
+            --accent-glow: rgba(217, 70, 239, 0.15);
+            --accent-hover: #c026d3;
+            --correct: #10b981;
+            --correct-bg: rgba(16, 185, 129, 0.08);
+            --correct-border: rgba(16, 185, 129, 0.25);
+            --incorrect: #ef4444;
+            --incorrect-bg: rgba(239, 68, 68, 0.08);
+            --incorrect-border: rgba(239, 68, 68, 0.25);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.08);
+            --warning-border: rgba(245, 158, 11, 0.25);
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #fdf4ff 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(217, 70, 239, 0.15);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #c026d3;
+            --accent-glow: rgba(192, 38, 211, 0.08);
+            --accent-hover: #a21caf;
+            --correct: #059669;
+            --correct-bg: rgba(5, 150, 105, 0.06);
+            --correct-border: rgba(5, 150, 105, 0.18);
+            --incorrect: #dc2626;
+            --incorrect-bg: rgba(220, 38, 38, 0.06);
+            --incorrect-border: rgba(220, 38, 38, 0.18);
+            --warning: #d97706;
+            --warning-bg: rgba(217, 119, 6, 0.06);
+            --warning-border: rgba(217, 119, 6, 0.18);
+            --shadow: 0 12px 40px 0 rgba(192, 38, 211, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #c084fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Layout Grid */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 32px;
+            flex-grow: 1;
+            margin-bottom: 32px;
+        }
+
+        @media (max-width: 900px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Kategori */
+        .category-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .sidebar-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .menu-item {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 12.5px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--text-primary);
+        }
+
+        .menu-item.active {
+            background: var(--accent);
+            color: #050a0e;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        [data-theme="light"] .menu-item.active {
+            color: white;
+        }
+
+        .menu-item-meta {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .menu-item.active .menu-item-meta {
+            background: rgba(255, 255, 255, 0.2);
+            color: inherit;
+        }
+
+        /* Main Study Arena */
+        .study-arena {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        /* 3D Flashcard Scene */
+        .card-scene {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 680px;
+            height: 360px;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .card-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .flashcard-3d {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .flashcard-3d.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .card-front {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            color: var(--text-primary);
+        }
+
+        .card-front::after {
+            content: 'Klik untuk membalik';
+            position: absolute;
+            bottom: 20px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, rgba(88, 28, 135, 0.2) 0%, rgba(15, 23, 42, 0.8) 100%);
+            backdrop-filter: var(--glass-blur);
+            color: var(--text-primary);
+            transform: rotateY(180deg);
+            border-color: var(--accent);
+        }
+
+        .card-back::after {
+            content: 'Klik untuk membalik kembali';
+            position: absolute;
+            bottom: 20px;
+            font-size: 11px;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .card-category-tag {
+            position: absolute;
+            top: 24px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            background: rgba(217, 70, 239, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(217, 70, 239, 0.15);
+        }
+
+        .card-text {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .card-back .card-text {
+            font-size: 16px;
+            font-weight: 600;
+            text-align: left;
+            max-height: 220px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .card-back .card-text::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .card-back .card-text::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        /* Controls Panel */
+        .controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 680px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .track-outer {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .track-inner {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* Action Buttons Row */
+        .buttons-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 1fr 100px;
+            gap: 12px;
+            width: 100%;
+        }
+
+        @media (max-width: 500px) {
+            .buttons-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .buttons-row .btn-nav {
+                order: 2;
+            }
+            .buttons-row .btn-evaluate {
+                order: 1;
+                grid-column: span 2;
+            }
+        }
+
+        .btn-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px;
+            border-radius: 12px;
+            font-family: var(--font-sans);
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+        }
+
+        .btn-action svg {
+            width: 16px;
+            height: 16px;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        .btn-action:hover:not(:disabled) {
+            border-color: var(--text-secondary);
+            transform: translateY(-1px);
+        }
+
+        .btn-action:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-evaluate {
+            color: white;
+            border: none;
+        }
+
+        .btn-review-again {
+            background: linear-gradient(135deg, var(--incorrect), #b91c1c);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-review-again:hover {
+            box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35);
+            filter: brightness(1.1);
+        }
+
+        .btn-mastered {
+            background: linear-gradient(135deg, var(--correct), #047857);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-mastered:hover {
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+            filter: brightness(1.1);
+        }
+
+        /* Helpers Box */
+        .helper-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 12px 18px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        [data-theme="light"] .helper-box {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .kbd-tips {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .kbd-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .kbd-key {
+            font-family: var(--font-mono);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            padding: 1px 5px;
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+
+        /* Reset and Shuffle tools */
+        .utility-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .btn-utility {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .btn-utility:hover {
+            color: var(--accent);
+        }
+
+        .btn-utility svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Success screen overlays */
+        .success-overlay {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            height: 100%;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--correct);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--correct-border);
+            margin-bottom: 8px;
+            animation: pulseCorrect 1.5s infinite alternate;
+        }
+
+        @keyframes pulseCorrect {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.2); }
+            100% { transform: scale(1.08); box-shadow: 0 0 16px 4px rgba(16, 185, 129, 0.1); }
+        }
+
+        .success-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke-width: 2.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>GKPC Flashcards</h1>
+                    <p>Grafik Komputer dan Pengolahan Citra</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="workspace-grid">
+            <!-- Sidebar Panel -->
+            <div class="category-sidebar">
+                <div class="glass-panel">
+                    <h3 class="sidebar-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M19 11H5m14 0a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2m14 0V9a2 2 0 0 0-2-2M5 11V9a2 2 0 0 1 2-2m10 0V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2m10 0H7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Materi Deck
+                    </h3>
+                    <div class="menu-list">
+                        <button class="menu-item active" data-kelompok="all">
+                            <span>Semua Materi</span>
+                            <span class="menu-item-meta" id="count-all">0 / 50</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="1">
+                            <span>Bab 1: Pengantar Grafkom</span>
+                            <span class="menu-item-meta" id="count-k1">0 / 8</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="2">
+                            <span>Bab 2: Citra, Vektor & Raster</span>
+                            <span class="menu-item-meta" id="count-k2">0 / 11</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="3">
+                            <span>Bab 3: Transformasi Geometri</span>
+                            <span class="menu-item-meta" id="count-k3">0 / 10</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="4">
+                            <span>Bab 4: Citra & Computer Vision</span>
+                            <span class="menu-item-meta" id="count-k4">0 / 21</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-panel" style="padding: 20px;">
+                    <h4 style="font-size: 13.5px; font-weight: 700; margin-bottom: 10px; display:flex; align-items:center; gap:6px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" style="width:16px; height:16px;">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Statistik Deck
+                    </h4>
+                    <div style="font-size: 12px; display:flex; flex-direction:column; gap:6px; color: var(--text-secondary);">
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>Total Dipelajari:</span>
+                            <strong style="color: var(--text-primary);" id="stat-total-mastered">0 / 50</strong>
+                        </div>
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>Tingkat Penguasaan:</span>
+                            <strong style="color: var(--accent);" id="stat-percent-mastered">0%</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Arena -->
+            <div class="study-arena">
+                <!-- 3D Card Scene -->
+                <div class="card-scene" id="card-scene">
+                    <div class="flashcard-3d" id="flashcard">
+                        <!-- Front Face -->
+                        <div class="card-face card-front">
+                            <div class="card-content-wrapper" id="card-content-wrapper">
+                                <span class="card-category-tag" id="card-category">Materi</span>
+                                <div class="card-text" id="card-question-text">
+                                    Pertanyaan memuat...
+                                </div>
+                            </div>
+                            <div class="success-overlay" id="success-overlay" style="display: none;">
+                                <div class="success-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14M22 4L12 14.01l-3-3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h3 style="font-size: 20px; font-weight: 800; color: var(--correct);">Deck Selesai! 🎉</h3>
+                                <p style="font-size: 13px; color: var(--text-secondary); max-width: 320px;" id="success-message">
+                                    Selamat! Anda telah menandai seluruh kartu sebagai "Paham".
+                                </p>
+                                <button class="btn-action" id="restart-deck-overlay-btn" style="margin-top: 8px; border-color: var(--accent); color: var(--accent); background: var(--accent-glow);">
+                                    Pelajari Lagi
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Back Face -->
+                        <div class="card-face card-back">
+                            <span class="card-category-tag" id="card-category-back">Materi</span>
+                            <div class="card-text" id="card-answer-text">
+                                Jawaban memuat...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls & Stats Panel -->
+                <div class="controls-panel">
+                    <!-- Progress bar -->
+                    <div class="progress-bar-container">
+                        <span id="card-index-label">Kartu 1 dari 50</span>
+                        <div class="track-outer">
+                            <div class="track-inner" id="progress-bar"></div>
+                        </div>
+                        <span id="mastery-indicator">Belum Dikuasai</span>
+                    </div>
+
+                    <!-- Navigation & Evaluation Buttons -->
+                    <div class="buttons-row">
+                        <button class="btn-action btn-nav" id="prev-card-btn" title="Sebelumnya (Arrow Left)">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <button class="btn-action btn-evaluate btn-review-again" id="review-again-btn" title="Belajar Lagi (Arrow Down)">
+                            Belajar Lagi
+                        </button>
+                        <button class="btn-action btn-evaluate btn-mastered" id="mastered-btn" title="Paham (Arrow Up)">
+                            Paham
+                        </button>
+                        <button class="btn-action btn-nav" id="next-card-btn" title="Selanjutnya (Arrow Right)">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Helpers and Reset/Shuffle bar -->
+                    <div class="helper-box">
+                        <div class="kbd-tips">
+                            <span class="kbd-item"><span class="kbd-key">Space</span> Balik</span>
+                            <span class="kbd-item"><span class="kbd-key">←</span> / <span class="kbd-key">→</span> Navigasi</span>
+                            <span class="kbd-item"><span class="kbd-key">↑</span> Paham</span>
+                            <span class="kbd-item"><span class="kbd-key">↓</span> Belajar Lagi</span>
+                        </div>
+                        <div class="utility-row">
+                            <button class="btn-utility" id="shuffle-btn">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M4 4h5l.282.282m4.436 4.436L15 10M4 20h5l1.644-1.644M19 4v6h-6m6-6l-8.5 8.5M19 20v-6h-6m6 6l-6.5-6.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Acak
+                            </button>
+                            <button class="btn-utility" id="reset-deck-btn">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 1 1 8.582 9h5m0 0V4" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dibuat untuk latihan mandiri UTS Grafik Komputer dan Pengolahan Citra.</p>
+            <p style="margin-top: 4px; color: var(--accent);">Siti Aisyah Edition</p>
+        </footer>
+    </div>
+
+    <!-- FLASHCARD ENGINE AND DATA SCRIPTS -->
+    <script>
+        // --- 50 FLASHCARDS DATABASE ---
+        const ALL_CARDS = [
+            {
+                id: 1,
+                kelompok: 1,
+                category: "Bab 1: Pengantar Grafik Komputer",
+                question: "Apa pengertian mendasar dari Grafika Komputer?",
+                answer: "Bidang ilmu yang mempelajari cara komputer menghasilkan dan memanipulasi gambar, baik 2D maupun 3D."
+            },
+            {
+                id: 2,
+                kelompok: 1,
+                category: "Bab 1: Pengantar Grafik Komputer",
+                question: "Apa perbedaan mendasar grafik komputer dengan pengolahan citra dari segi input-output?",
+                answer: "<strong>Grafika Komputer:</strong> Mengolah data deskriptif (matematis) menjadi citra baru.<br><br><strong>Pengolahan Citra:</strong> Mengolah citra input lama menjadi citra baru yang memiliki kualitas visual lebih baik."
+            },
+            {
+                id: 3,
+                kelompok: 1,
+                category: "Bab 1: Pengantar Grafik Komputer",
+                question: "Sebutkan tiga tahapan utama proses produksi gambar dalam Grafika Komputer!",
+                answer: "Pemodelan (Modelling), Rendering, dan Animasi."
+            },
+            {
+                id: 4,
+                kelompok: 1,
+                category: "Bab 1: Pengantar Grafik Komputer",
+                question: "Apa yang dimaksud dengan tahap Modelling grafis?",
+                answer: "Upaya menggambarkan objek dunia nyata atau imajinatif menjadi objek maya dengan karakteristik matematis geometris."
+            },
+            {
+                id: 5,
+                kelompok: 1,
+                category: "Bab 1: Pengantar Grafik Komputer",
+                question: "Apa tujuan dilakukannya proses Rendering?",
+                answer: "Memberikan nuansa realistis (seperti warna, pencahayaan, bayangan, tekstur) pada model wireframe geometri agar menyerupai objek asli."
+            },
+            {
+                id: 6,
+                kelompok: 1,
+                category: "Bab 1: Pengantar Grafik Komputer",
+                question: "Apa definisi dari perangkat masukan (device input) grafkom?",
+                answer: "Perangkat/media fisik untuk memasukkan data atau program dari luar sistem ke dalam memori dan processor untuk diolah."
+            },
+            {
+                id: 7,
+                kelompok: 1,
+                category: "Bab 1: Pengantar Grafik Komputer",
+                question: "Sebutkan minimal 4 contoh perangkat input grafika komputer!",
+                answer: "Keyboard, Mouse, Touchpad, Light Pen, Joystick, Scanner, Kamera Digital, Graphics Pads/Digitizer."
+            },
+            {
+                id: 8,
+                kelompok: 1,
+                category: "Bab 1: Pengantar Grafik Komputer",
+                question: "Sebutkan fungsi spesifik dari perangkat keluaran bernama Plotter!",
+                answer: "Mencetak gambar teknik/desain konstruksi beresolusi tinggi dengan dimensi ukuran kertas yang sangat besar."
+            },
+            {
+                id: 9,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Apa perbedaan struktural utama antara gambar Vektor dan gambar Raster?",
+                answer: "<strong>Vektor:</strong> Tersusun dari kumpulan garis, kurva, dan rumus matematika kontinu.<br><br><strong>Raster (Bitmap):</strong> Tersusun dari kumpulan kotak titik-titik warna (piksel) dalam bentuk kisi matriks."
+            },
+            {
+                id: 10,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Mengapa gambar Vektor tidak pecah atau blur ketika diperbesar (zoom)?",
+                answer: "Karena objek vektor didefinisikan sebagai rumus matematika kontinu yang dihitung dan di-render ulang secara presisi setiap kali perubahan skala (zoom) dilakukan."
+            },
+            {
+                id: 11,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Berikan contoh software aplikasi desain berbasis grafis Vektor!",
+                answer: "Corel Draw, AutoCAD, dan Microsoft Visio."
+            },
+            {
+                id: 12,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Berikan contoh software grafis yang menggunakan format gambar berbasis Raster/Bitmap!",
+                answer: "Adobe Photoshop dan Microsoft Paint."
+            },
+            {
+                id: 13,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Apa definisi dari elemen dasar grafis bernama Titik?",
+                answer: "Satuan gambar terkecil yang menempati posisi koordinat tertentu, tidak memiliki panjang, lebar, maupun dimensi tinggi."
+            },
+            {
+                id: 14,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Apa karakteristik pergerakan koordinat sumbu pada pembentukan Garis Horizontal?",
+                answer: "Sumbu X bergerak mengalami pertambahan/inkrementasi ($X=X+1$) sedangkan Sumbu Y bernilai konstan (tetap)."
+            },
+            {
+                id: 15,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Apa karakteristik pergerakan koordinat sumbu pada pembentukan Garis Vertikal?",
+                answer: "Sumbu X bernilai konstan (tetap) sedangkan Sumbu Y bergerak mengalami pertambahan/inkrementasi ($Y=Y+1$)."
+            },
+            {
+                id: 16,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Apa karakteristik koordinat sumbu pada pembentukan Garis Diagonal?",
+                answer: "Sumbu X dan Sumbu Y sama-sama bergerak bertambah maju secara bersamaan ($X=X+1; Y=Y+1$)."
+            },
+            {
+                id: 17,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Apa definisi umum dari proses Transformasi Geometri 2D?",
+                answer: "Metode memanipulasi posisi/lokasi koordinat dari sebuah titik piksel untuk memindahkan objek grafis tanpa merusak integritas bentuk aslinya."
+            },
+            {
+                id: 18,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Sebutkan 3 metode transformasi geometri dasar 2D!",
+                answer: "Translasi (Pergeseran), Penskalaan (Scaling), dan Rotasi (Pemutaran)."
+            },
+            {
+                id: 19,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Bagaimana prinsip kerja operasi transformasi Translasi?",
+                answer: "Memindahkan seluruh titik objek dengan menambahkan besaran jarak pergeseran ($t_x, t_y$) pada sumbu koordinat asal ($X' = X + t_x; Y' = Y + t_y$)."
+            },
+            {
+                id: 20,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Apa yang dimaksud dengan operasi Scaling (Penskalaan)?",
+                answer: "Operasi mengalikan koordinat objek dengan faktor pengali ($S_x, S_y$) untuk merubah ukuran geometri menjadi membesar atau mengecil ($X' = X \cdot S_x; Y' = Y \cdot S_y$)."
+            },
+            {
+                id: 21,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Apa yang dimaksud dengan istilah Uniform Scaling?",
+                answer: "Penskalaan objek di mana nilai faktor pengali sumbu X dan sumbu Y adalah mutlak sama besar ($S_x = S_y$)."
+            },
+            {
+                id: 22,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Bagaimana aturan tanda nilai sudut ($\theta$) dalam proses Rotasi objek?",
+                answer: "Bernilai **positif (+)** jika arah putaran berlawanan jarum jam, dan bernilai **negatif (-)** jika arah putaran searah jarum jam."
+            },
+            {
+                id: 23,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Apa sumbu koordinat tambahan yang membedakan ruang 2D dengan ruang 3D?",
+                answer: "Sumbu Z (Poros dimensi kedalaman/ruang)."
+            },
+            {
+                id: 24,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Apa perbedaan konvensi kaidah tangan kanan dan tangan kiri pada ruang koordinat 3D?",
+                answer: "<strong>Tangan Kanan:</strong> Sumbu Z positif mengarah keluar layar monitor mendekati mata pengamat.<br><br><strong>Tangan Kiri:</strong> Sumbu Z positif mengarah masuk ke dalam layar menjauhi mata pengamat."
+            },
+            {
+                id: 25,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Jelaskan perbedaan karakteristik pusat rotasi antara 2D dan 3D!",
+                answer: "<strong>Rotasi 2D:</strong> Menggunakan titik pusat bidang datar (0,0) atau pivot point.<br><br><strong>Rotasi 3D:</strong> Mengelilingi garis sumbu poros koordinat (Sumbu X, Y, atau Z)."
+            },
+            {
+                id: 26,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa pengertian dasar dari bidang ilmu Pengolahan Citra (Image Processing)?",
+                answer: "Kegiatan memanipulasi nilai piksel untuk memperbaiki kualitas citra visual agar lebih mudah diinterpretasikan oleh indera penglihatan manusia maupun mesin komputer."
+            },
+            {
+                id: 27,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa pengertian dasar dari Computer Vision (Analisis Citra)?",
+                answer: "Proses otomatisasi meniru cara kerja penglihatan manusia untuk menganalisis gambar digital guna mengekstrak informasi deskriptif kuantitatif atau mengambil keputusan otomatis."
+            },
+            {
+                id: 28,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa fungsi utama dari operasi pengolahan citra berjenis Grayscale?",
+                answer: "Menyederhanakan kompleksitas data gambar dengan mereduksi data warna RGB (24-bit) menjadi tingkatan warna skala keabuan (8-bit, 256 gradasi warna)."
+            },
+            {
+                id: 29,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa fungsi dari operasi citra bernama Blurring (Kekaburan)?",
+                answer: "Menghaluskan sudut objek yang terlalu tajam atau mereduksi bintik derau halus (noise reduction) pada citra."
+            },
+            {
+                id: 30,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa kegunaan dari operasi citra bernama Thresholding?",
+                answer: "Operasi segmentasi citra dasar untuk memisahkan objek utama dari latar belakang dengan mengubah citra menjadi biner hitam-putih tulen (0 dan 1)."
+            },
+            {
+                id: 31,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa fungsi dari operasi citra bernama Edge Detection (Deteksi Tepi)?",
+                answer: "Melacak outline batas-batas objek dengan mencari perubahan nilai intensitas piksel tetangga yang ekstrim."
+            },
+            {
+                id: 32,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Sebutkan minimal 2 contoh implementasi nyata aplikasi Pengolahan Citra!",
+                answer: "Deteksi kanker/wilayah sel tumor pada foto medis X-Ray, dan sistem pengenalan karakter tulisan gambar otomatis (OCR)."
+            },
+            {
+                id: 33,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa perbedaan antara proses Sampling dengan proses Kuantisasi?",
+                answer: "<strong>Sampling:</strong> Proses digitalisasi koordinat spasial (memecah gambar kontinu menjadi baris-kolom matriks piksel).<br><br><strong>Kuantisasi:</strong> Proses digitalisasi nilai kecerahan/derajat warna piksel menjadi diskrit."
+            },
+            {
+                id: 34,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Berapakah rentang nilai intensitas warna piksel untuk gambar biner murni?",
+                answer: "Hanya memiliki 2 kemungkinan nilai: angka 0 untuk warna hitam dan angka 1 untuk warna putih."
+            },
+            {
+                id: 35,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa yang dimaksud dengan citra tingkat warna True Color (24-bit)?",
+                answer: "Citra warna kaya yang tersusun dari kombinasi 3 warna dasar RGB (Red, Green, Blue) masing-masing sebesar 8-bit, mampu menghasilkan hingga 16,7 juta variasi warna."
+            },
+            {
+                id: 36,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Jelaskan perbedaan mendasar antara tipe kompresi Lossless dengan Lossy!",
+                answer: "<strong>Lossless:</strong> Mengompresi tanpa menghilangkan data informasi gambar sedikit pun (kualitas asli utuh).<br><br><strong>Lossy:</strong> Membuang sebagian data warna yang tidak tertangkap mata manusia demi menekan ukuran file sekecil mungkin."
+            },
+            {
+                id: 37,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa pengertian operasi Konvolusi pada domain spasial citra?",
+                answer: "Operasi penapisan gambar dengan cara mengalikan matriks nilai piksel tetangga dengan sebuah matriks kernel/mask kecil berukuran ganjil (seperti 3x3, 5x5)."
+            },
+            {
+                id: 38,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Sebutkan tujuan dilakukannya operasi konvolusi pada citra!",
+                answer: "Mereduksi noise, perbaikan kualitas gambar (smoothing/blurring), deteksi tepi (edge detection), dan penajaman tepi (sharpening)."
+            },
+            {
+                id: 39,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Mengapa proses konvolusi citra terkadang dipindahkan ke ranah frekuensi?",
+                answer: "Karena operasi konvolusi di ranah spasial memakan puluhan juta perkalian matematika ($N^2 \cdot m^2$) yang membebani komputasi processor. Di ranah frekuensi, konvolusi disederhanakan menjadi perkalian aljabar biasa."
+            },
+            {
+                id: 40,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa kontribusi Joseph Fourier (1822) dalam pengolahan citra digital?",
+                answer: "Menemukan teori bahwa setiap gelombang sinyal periodik apa pun dapat dibentuk dari hasil penjumlahan gelombang sinus dan kosinus dengan frekuensi berbeda."
+            },
+            {
+                id: 41,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa fungsi dari kegunaan alat bernama Transformasi Fourier Balikan (Inverse)?",
+                answer: "Mengembalikan data citra yang telah dimanipulasi di ranah frekuensi kembali menjadi bentuk spasial piksel semula agar bisa ditampilkan kembali di monitor."
+            },
+            {
+                id: 42,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Apa yang dimaksud dengan fenomena Horizontal Retrace pada monitor tabung?",
+                answer: "Pergerakan pancaran elektron penampil layar kembali dari arah kanan ke kiri layar setelah menyapu satu baris scan line."
+            },
+            {
+                id: 43,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Sebutkan 4 komponen penyusun citra digital yang ditangkap mata manusia!",
+                answer: "Kecerahan (Brightness), Kontras, Kontur, Warna, Bentuk (Shape), dan Tekstur."
+            },
+            {
+                id: 44,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa pengertian dari komponen citra bernama Kontras?",
+                answer: "Parameter sebaran gradasi tingkat kecemerlangan terang (lightness) dan gelap (darkness) di dalam suatu citra digital."
+            },
+            {
+                id: 45,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa teknik pendekatan antialiasing bernama Area Sampling?",
+                answer: "Menghitung rata-rata nilai intensitas piksel dengan mengambil sampel area di sekelilingnya untuk memperhalus tepian jaggies."
+            },
+            {
+                id: 46,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Mengapa dalam algoritma lingkaran Bressenham digunakan teknik pencerminan diagonal?",
+                answer: "Untuk mencari koordinat lingkaran di kuadran/oktan kedua ($45^{\circ}-90^{\circ}$) berdasarkan kuadran kesatu dengan cara menukar koordinat X dan Y ($[x,y] \rightarrow [y,x]$)."
+            },
+            {
+                id: 47,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Jenis huruf komputer rumpun Sanserif memiliki ciri khas visual berupa...",
+                answer: "Bentuk karakter huruf yang bersih, polos, tanpa memiliki kait/kaki tambahan pada ujung karakternya (e.g., Arial, Inter)."
+            },
+            {
+                id: 48,
+                kelompok: 2,
+                category: "Bab 2: Citra, Vektor, dan Raster",
+                question: "Apa fungsi dari tiga metode penyimpanan huruf bernama Stroke-based?",
+                answer: "Menyimpan karakter tulisan menggunakan kombinasi garis lurus dan kurva dengan panduan koordinat relatif ($x,y$)."
+            },
+            {
+                id: 49,
+                kelompok: 3,
+                category: "Bab 3: Transformasi Geometri",
+                question: "Apa kegunaan utama dari perluasan matriks koordinat menjadi Sistem Koordinat Homogen?",
+                answer: "Memungkinkan semua operasi transformasi geometri dasar (translasi, scaling, rotasi) dinyatakan dalam bentuk perkalian matriks standar yang seragam (3x3 untuk 2D, 4x4 untuk 3D)."
+            },
+            {
+                id: 50,
+                kelompok: 4,
+                category: "Bab 4: Pengolahan Citra & Vision",
+                question: "Apa efek visual yang dihasilkan oleh penapisan kernel konvolusi berjenis Embossing?",
+                answer: "Membuat citra digital seolah-olah terukir timbul secara 3D pada permukaan selembar logam atau nikel."
+            }
+        ];
+
+        // --- APP STATE ---
+        let state = {
+            currentKelompok: 'all',  // 'all', 1, 2, 3, 4
+            cards: [],              // Cards in active deck
+            currentIdx: 0,          // Index in state.cards
+            masteredCards: {},      // Maps card.id -> boolean
+            isFlipped: false,       // Current flip state
+            soundEnabled: true,
+            theme: 'dark'
+        };
+
+        // --- WEB AUDIO API SYNTHESIS ---
+        let audioCtx = null;
+        function playSynthSound(type) {
+            if (!state.soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(550, now);
+                    osc.frequency.exponentialRampToValueAtTime(280, now + 0.08);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'flip') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.exponentialRampToValueAtTime(680, now + 0.15);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'mastered') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'review') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(120, now + 0.12);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.12);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                }
+            } catch (e) {
+                console.warn('Audio Context sound play failed:', e);
+            }
+        }
+
+        // --- APP FLOW & ENGINE ---
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initMasteryStorage();
+            setupEventListeners();
+            loadDeck('all');
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('index_quiz_theme') || 'dark';
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            state.theme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('index_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        function initMasteryStorage() {
+            const stored = JSON.parse(localStorage.getItem('gkpc_flashcard_paham')) || {};
+            state.masteredCards = stored;
+            updateSidebarMasteryCounters();
+        }
+
+        function saveMastery() {
+            localStorage.setItem('gkpc_flashcard_paham', JSON.stringify(state.masteredCards));
+            updateSidebarMasteryCounters();
+        }
+
+        function updateSidebarMasteryCounters() {
+            const totalCards = ALL_CARDS.length;
+            let totalMastered = 0;
+            let kCounts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+            let kTotals = { 1: 0, 2: 0, 3: 0, 4: 0 };
+
+            ALL_CARDS.forEach(card => {
+                kTotals[card.kelompok]++;
+                if (state.masteredCards[card.id]) {
+                    totalMastered++;
+                    kCounts[card.kelompok]++;
+                }
+            });
+
+            // Update UI
+            document.getElementById('count-all').innerText = `${totalMastered} / ${totalCards}`;
+            document.getElementById('count-k1').innerText = `${kCounts[1]} / ${kTotals[1]}`;
+            document.getElementById('count-k2').innerText = `${kCounts[2]} / ${kTotals[2]}`;
+            document.getElementById('count-k3').innerText = `${kCounts[3]} / ${kTotals[3]}`;
+            document.getElementById('count-k4').innerText = `${kCounts[4]} / ${kTotals[4]}`;
+
+            document.getElementById('stat-total-mastered').innerText = `${totalMastered} / ${totalCards}`;
+            const percent = Math.round((totalMastered / totalCards) * 100) || 0;
+            document.getElementById('stat-percent-mastered').innerText = `${percent}%`;
+        }
+
+        function loadDeck(kelompokVal) {
+            state.currentKelompok = kelompokVal;
+            state.isFlipped = false;
+            document.getElementById('flashcard').classList.remove('is-flipped');
+
+            if (kelompokVal === 'all') {
+                state.cards = [...ALL_CARDS];
+            } else {
+                const k = parseInt(kelompokVal);
+                state.cards = ALL_CARDS.filter(c => c.kelompok === k);
+            }
+
+            state.currentIdx = 0;
+            renderCard();
+        }
+
+        function renderCard() {
+            const container = document.getElementById('card-scene');
+
+            if (state.cards.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding: 40px; color: var(--text-secondary);">
+                        Tidak ada kartu di deck ini.
+                    </div>`;
+                return;
+            }
+
+            document.getElementById('card-content-wrapper').style.display = 'flex';
+            document.getElementById('success-overlay').style.display = 'none';
+
+            const card = state.cards[state.currentIdx];
+            
+            const isMastered = state.masteredCards[card.id] === true;
+
+            document.getElementById('card-category').innerText = card.category;
+            document.getElementById('card-category-back').innerText = card.category;
+            document.getElementById('card-question-text').innerHTML = card.question;
+            document.getElementById('card-answer-text').innerHTML = card.answer;
+
+            const flashcardElement = document.getElementById('flashcard');
+            const frontFace = flashcardElement.querySelector('.card-front');
+            const backFace = flashcardElement.querySelector('.card-back');
+
+            if (isMastered) {
+                frontFace.style.borderColor = 'var(--correct)';
+                backFace.style.borderColor = 'var(--correct)';
+                document.getElementById('mastery-indicator').innerText = 'Paham (Dikuasai)';
+                document.getElementById('mastery-indicator').style.color = 'var(--correct)';
+            } else {
+                frontFace.style.borderColor = 'var(--border-color)';
+                backFace.style.borderColor = 'var(--accent)';
+                document.getElementById('mastery-indicator').innerText = 'Belum Dikuasai';
+                document.getElementById('mastery-indicator').style.color = 'var(--text-secondary)';
+            }
+
+            document.getElementById('card-index-label').innerText = `Kartu ${state.currentIdx + 1} dari ${state.cards.length}`;
+            document.getElementById('prev-card-btn').disabled = state.currentIdx === 0;
+            document.getElementById('next-card-btn').disabled = state.currentIdx === state.cards.length - 1;
+
+            const pct = ((state.currentIdx + 1) / state.cards.length) * 100;
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+        }
+
+        function flipCard() {
+            if (document.getElementById('success-overlay').style.display === 'flex') {
+                return;
+            }
+            playSynthSound('flip');
+            state.isFlipped = !state.isFlipped;
+            document.getElementById('flashcard').classList.toggle('is-flipped', state.isFlipped);
+        }
+
+        function markCardMastered(mastered) {
+            const card = state.cards[state.currentIdx];
+            if (!card) return;
+
+            if (mastered) {
+                playSynthSound('mastered');
+                state.masteredCards[card.id] = true;
+            } else {
+                playSynthSound('review');
+                state.masteredCards[card.id] = false;
+            }
+
+            saveMastery();
+            renderCard();
+
+            setTimeout(() => {
+                if (state.currentIdx < state.cards.length - 1) {
+                    navigateCard(1);
+                } else {
+                    const allActiveDeckMastered = state.cards.every(c => state.masteredCards[c.id] === true);
+                    if (allActiveDeckMastered) {
+                        showAllDeckCompletedCelebration();
+                    }
+                }
+            }, 400);
+        }
+
+        function navigateCard(direction) {
+            const nextIdx = state.currentIdx + direction;
+            if (nextIdx >= 0 && nextIdx < state.cards.length) {
+                playSynthSound('click');
+                state.currentIdx = nextIdx;
+                state.isFlipped = false;
+                document.getElementById('flashcard').classList.remove('is-flipped');
+                
+                const sceneElement = document.getElementById('card-scene');
+                sceneElement.style.transform = 'scale(0.95)';
+                sceneElement.style.opacity = '0.5';
+                
+                setTimeout(() => {
+                    renderCard();
+                    sceneElement.style.transform = '';
+                    sceneElement.style.opacity = '';
+                }, 150);
+            }
+        }
+
+        function shuffleActiveDeck() {
+            playSynthSound('click');
+            state.isFlipped = false;
+            document.getElementById('flashcard').classList.remove('is-flipped');
+            
+            for (let i = state.cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [state.cards[i], state.cards[j]] = [state.cards[j], state.cards[i]];
+            }
+            state.currentIdx = 0;
+            renderCard();
+        }
+
+        function resetAllMastery() {
+            if (confirm('Apakah Anda yakin ingin menyetel ulang semua data penguasaan kartu ke kondisi awal?')) {
+                playSynthSound('review');
+                state.masteredCards = {};
+                saveMastery();
+                renderCard();
+            }
+        }
+
+        function showAllDeckCompletedCelebration() {
+            const deckTitle = state.currentKelompok === 'all' ? 'Semua Materi' : `Bab ${state.currentKelompok}`;
+            
+            state.isFlipped = false;
+            document.getElementById('flashcard').classList.remove('is-flipped');
+            
+            document.getElementById('success-message').innerHTML = `
+                Selamat! Anda telah menandai seluruh kartu pada deck <strong>${deckTitle}</strong> sebagai "Paham".
+            `;
+            
+            document.getElementById('card-content-wrapper').style.display = 'none';
+            document.getElementById('success-overlay').style.display = 'flex';
+        }
+
+        function setupEventListeners() {
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playSynthSound('click');
+                setTheme(state.theme === 'dark' ? 'light' : 'dark');
+            });
+
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                state.soundEnabled = !state.soundEnabled;
+                const icon = document.getElementById('sound-icon');
+                if (state.soundEnabled) {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    `;
+                } else {
+                    icon.innerHTML = `
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                    `;
+                }
+                playSynthSound('click');
+            });
+
+            document.getElementById('card-scene').addEventListener('click', flipCard);
+
+            document.getElementById('prev-card-btn').addEventListener('click', () => navigateCard(-1));
+            document.getElementById('next-card-btn').addEventListener('click', () => navigateCard(1));
+
+            document.getElementById('review-again-btn').addEventListener('click', () => markCardMastered(false));
+            document.getElementById('mastered-btn').addEventListener('click', () => markCardMastered(true));
+
+            const menuItems = document.querySelectorAll('.menu-list .menu-item');
+            menuItems.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    menuItems.forEach(item => item.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    document.getElementById('card-scene').style.pointerEvents = 'auto';
+                    
+                    const kelompokVal = btn.getAttribute('data-kelompok');
+                    loadDeck(kelompokVal);
+                });
+            });
+
+            document.getElementById('restart-deck-overlay-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                state.cards.forEach(c => {
+                    state.masteredCards[c.id] = false;
+                });
+                saveMastery();
+                
+                loadDeck(state.currentKelompok);
+            });
+
+            document.getElementById('shuffle-btn').addEventListener('click', shuffleActiveDeck);
+            document.getElementById('reset-deck-btn').addEventListener('click', resetAllMastery);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    flipCard();
+                } else if (e.code === 'ArrowLeft') {
+                    e.preventDefault();
+                    navigateCard(-1);
+                } else if (e.code === 'ArrowRight') {
+                    e.preventDefault();
+                    navigateCard(1);
+                } else if (e.code === 'ArrowUp') {
+                    e.preventDefault();
+                    markCardMastered(true);
+                } else if (e.code === 'ArrowDown') {
+                    e.preventDefault();
+                    markCardMastered(false);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
