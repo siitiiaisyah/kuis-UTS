@@ -698,20 +698,24 @@
                             <span class="menu-item-meta" id="count-all">0 / 50</span>
                         </button>
                         <button class="menu-item" data-kelompok="1">
-                            <span>Bab 1: Pengantar Grafkom</span>
-                            <span class="menu-item-meta" id="count-k1">0 / 8</span>
+                            <span>PDF 1 & 2: Pengantar & Dasar</span>
+                            <span class="menu-item-meta" id="count-k1">0 / 16</span>
                         </button>
                         <button class="menu-item" data-kelompok="2">
-                            <span>Bab 2: Citra, Vektor & Raster</span>
-                            <span class="menu-item-meta" id="count-k2">0 / 11</span>
+                            <span>PDF 3 & 4: Garis & Lingkaran</span>
+                            <span class="menu-item-meta" id="count-k2">0 / 10</span>
                         </button>
                         <button class="menu-item" data-kelompok="3">
-                            <span>Bab 3: Transformasi Geometri</span>
-                            <span class="menu-item-meta" id="count-k3">0 / 10</span>
+                            <span>PDF 5: Primitif & Huruf</span>
+                            <span class="menu-item-meta" id="count-k3">0 / 7</span>
                         </button>
                         <button class="menu-item" data-kelompok="4">
-                            <span>Bab 4: Citra & Computer Vision</span>
-                            <span class="menu-item-meta" id="count-k4">0 / 21</span>
+                            <span>PDF 6a & 6b: Transformasi 2D/3D</span>
+                            <span class="menu-item-meta" id="count-k4">0 / 10</span>
+                        </button>
+                        <button class="menu-item" data-kelompok="5">
+                            <span>PDF 7 & 8: Citra & Konvolusi</span>
+                            <span class="menu-item-meta" id="count-k5">0 / 7</span>
                         </button>
                     </div>
                 </div>
@@ -846,358 +850,358 @@
             {
                 id: 1,
                 kelompok: 1,
-                category: "Bab 1: Pengantar Grafik Komputer",
+                category: "PDF 1: Konsep Grafik Komputer & Citra",
                 question: "Apa pengertian mendasar dari Grafika Komputer?",
-                answer: "Bidang ilmu yang mempelajari cara komputer menghasilkan dan memanipulasi gambar, baik 2D maupun 3D."
+                answer: "Bidang ilmu yang mempelajari bagaimana komputer menghasilkan dan memanipulasi gambar, baik 2D maupun 3D."
             },
             {
                 id: 2,
                 kelompok: 1,
-                category: "Bab 1: Pengantar Grafik Komputer",
-                question: "Apa perbedaan mendasar grafik komputer dengan pengolahan citra dari segi input-output?",
-                answer: "<strong>Grafika Komputer:</strong> Mengolah data deskriptif (matematis) menjadi citra baru.<br><br><strong>Pengolahan Citra:</strong> Mengolah citra input lama menjadi citra baru yang memiliki kualitas visual lebih baik."
+                category: "PDF 1: Konsep Grafik Komputer & Citra",
+                question: "Bagaimana perbedaan alur input-output antara Grafika Komputer, Pengolahan Citra, dan Computer Vision?",
+                answer: "<strong>Grafkom:</strong> Data Deskriptif &rarr; Citra.<br><strong>Pengolahan Citra:</strong> Citra &rarr; Citra Baru (Kualitas lebih baik).<br><strong>Computer Vision:</strong> Citra &rarr; Informasi Deskriptif / Keputusan."
             },
             {
                 id: 3,
                 kelompok: 1,
-                category: "Bab 1: Pengantar Grafik Komputer",
-                question: "Sebutkan tiga tahapan utama proses produksi gambar dalam Grafika Komputer!",
-                answer: "Pemodelan (Modelling), Rendering, dan Animasi."
+                category: "PDF 1: Konsep Grafik Komputer & Citra",
+                question: "Apa perbedaan antara citra diam (still image) dan citra bergerak (moving images)?",
+                answer: "Citra diam adalah citra tunggal, sedangkan citra bergerak adalah rangkaian citra diam yang ditampilkan secara beruntun (sekuensial) sehingga memberi kesan bergerak."
             },
             {
                 id: 4,
                 kelompok: 1,
-                category: "Bab 1: Pengantar Grafik Komputer",
-                question: "Apa yang dimaksud dengan tahap Modelling grafis?",
-                answer: "Upaya menggambarkan objek dunia nyata atau imajinatif menjadi objek maya dengan karakteristik matematis geometris."
+                category: "PDF 1: Konsep Grafik Komputer & Citra",
+                question: "Apa yang dimaksud dengan Computer Vision (Analisis Citra)?",
+                answer: "Proses otomatis yang meniru cara kerja sistem visual manusia (human vision) untuk persepsi visual, interpretasi citra, pengenalan, dan pengambilan keputusan."
             },
             {
                 id: 5,
                 kelompok: 1,
-                category: "Bab 1: Pengantar Grafik Komputer",
-                question: "Apa tujuan dilakukannya proses Rendering?",
-                answer: "Memberikan nuansa realistis (seperti warna, pencahayaan, bayangan, tekstur) pada model wireframe geometri agar menyerupai objek asli."
+                category: "PDF 1: Konsep Grafik Komputer & Citra",
+                question: "Sebutkan urutan metodologi sistem pada aplikasi OCR (Optical Character Recognition)!",
+                answer: "Masukan dokumen &rarr; Scanner (Digitization) &rarr; Locating Character &rarr; Preprocessing &rarr; Feature Extractor &rarr; Matching &rarr; Decision Maker &rarr; Recognized Character."
             },
             {
                 id: 6,
                 kelompok: 1,
-                category: "Bab 1: Pengantar Grafik Komputer",
-                question: "Apa definisi dari perangkat masukan (device input) grafkom?",
-                answer: "Perangkat/media fisik untuk memasukkan data atau program dari luar sistem ke dalam memori dan processor untuk diolah."
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Apa pengertian dari perangkat masukan (device input) pada grafkom?",
+                answer: "Perangkat atau media untuk memasukkan data atau program dari luar ke dalam memori dan processor untuk diolah."
             },
             {
                 id: 7,
                 kelompok: 1,
-                category: "Bab 1: Pengantar Grafik Komputer",
-                question: "Sebutkan minimal 4 contoh perangkat input grafika komputer!",
-                answer: "Keyboard, Mouse, Touchpad, Light Pen, Joystick, Scanner, Kamera Digital, Graphics Pads/Digitizer."
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Apa perbedaan antara Signal Input dan Maintenance Input?",
+                answer: "Signal input berbentuk data yang dimasukkan ke dalam sistem, sedangkan maintenance input berbentuk program yang digunakan untuk mengolah data tersebut."
             },
             {
                 id: 8,
                 kelompok: 1,
-                category: "Bab 1: Pengantar Grafik Komputer",
-                question: "Sebutkan fungsi spesifik dari perangkat keluaran bernama Plotter!",
-                answer: "Mencetak gambar teknik/desain konstruksi beresolusi tinggi dengan dimensi ukuran kertas yang sangat besar."
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Sebutkan fungsionalitas spesifik dari perangkat keluaran bernama Plotter!",
+                answer: "Digunakan untuk mencetak gambar cetak teknik, grafik, atau konstruksi bangunan dengan resolusi tinggi dalam ukuran kertas yang cukup besar."
             },
             {
                 id: 9,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Apa perbedaan struktural utama antara gambar Vektor dan gambar Raster?",
-                answer: "<strong>Vektor:</strong> Tersusun dari kumpulan garis, kurva, dan rumus matematika kontinu.<br><br><strong>Raster (Bitmap):</strong> Tersusun dari kumpulan kotak titik-titik warna (piksel) dalam bentuk kisi matriks."
+                kelompok: 1,
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Apa teknologi display yang membayangkan layar sebagai kumpulan titik (piksel) yang diaktifkan berdasarkan alamatnya dari kiri atas ke kanan bawah?",
+                answer: "Raster Display."
             },
             {
                 id: 10,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Mengapa gambar Vektor tidak pecah atau blur ketika diperbesar (zoom)?",
-                answer: "Karena objek vektor didefinisikan sebagai rumus matematika kontinu yang dihitung dan di-render ulang secara presisi setiap kali perubahan skala (zoom) dilakukan."
+                kelompok: 1,
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Apa yang dimaksud dengan istilah Horizontal Retrace dan Vertical Retrace pada display?",
+                answer: "Horizontal retrace adalah gerakan berkas elektron dari kiri ke kanan. Vertical retrace adalah gerakan kembali dari kanan bawah ke kiri atas layar setelah memindai seluruh permukaan."
             },
             {
                 id: 11,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Berikan contoh software aplikasi desain berbasis grafis Vektor!",
-                answer: "Corel Draw, AutoCAD, dan Microsoft Visio."
+                kelompok: 1,
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Apa perbedaan mendasar gambar Vektor dan Raster saat diperbesar (zoom)?",
+                answer: "Gambar raster akan pecah dan terlihat kotak-kotak pikselnya, sedangkan gambar vektor akan tetap halus dan tajam berapapun diperbesar."
             },
             {
                 id: 12,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Berikan contoh software grafis yang menggunakan format gambar berbasis Raster/Bitmap!",
-                answer: "Adobe Photoshop dan Microsoft Paint."
+                kelompok: 1,
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Sebutkan contoh aplikasi/software untuk mengolah gambar Vektor dan gambar Raster!",
+                answer: "Vektor: Corel Draw, AutoCAD, Visio.<br>Raster: Adobe Photoshop, MS Paint."
             },
             {
                 id: 13,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Apa definisi dari elemen dasar grafis bernama Titik?",
-                answer: "Satuan gambar terkecil yang menempati posisi koordinat tertentu, tidak memiliki panjang, lebar, maupun dimensi tinggi."
+                kelompok: 1,
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Jelaskan perbedaan fungsi antara Cone Receptor dan Rod Receptor pada mata manusia!",
+                answer: "Cone receptor sensitif terhadap warna (cahaya terang/photopic vision).<br>Rod receptor sensitif terhadap cahaya rendah (cahaya redup/scotopic vision) tanpa warna."
             },
             {
                 id: 14,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Apa karakteristik pergerakan koordinat sumbu pada pembentukan Garis Horizontal?",
-                answer: "Sumbu X bergerak mengalami pertambahan/inkrementasi ($X=X+1$) sedangkan Sumbu Y bernilai konstan (tetap)."
+                kelompok: 1,
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Apa yang dimaksud dengan Brightness Adaptation?",
+                answer: "Fenomena penyesuaian mata manusia dalam membedakan gradasi tingkat kecemerlangan cahaya secara subjektif."
             },
             {
                 id: 15,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Apa karakteristik pergerakan koordinat sumbu pada pembentukan Garis Vertikal?",
-                answer: "Sumbu X bernilai konstan (tetap) sedangkan Sumbu Y bergerak mengalami pertambahan/inkrementasi ($Y=Y+1$)."
+                kelompok: 1,
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Apa saja 3 komponen (tahapan) utama dari model dasar grafika komputer?",
+                answer: "Pemodelan (Modelling), Rendering, dan Animasi (Animation)."
             },
             {
                 id: 16,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Apa karakteristik koordinat sumbu pada pembentukan Garis Diagonal?",
-                answer: "Sumbu X dan Sumbu Y sama-sama bergerak bertambah maju secara bersamaan ($X=X+1; Y=Y+1$)."
+                kelompok: 1,
+                category: "PDF 2: Dasar Grafik Komputer",
+                question: "Apa definisi dari proses Rendering dalam grafika komputer?",
+                answer: "Pemberian nuansa realistis (warna, cahaya, gradasi, tekstur, bayangan) kepada model geometris agar menyerupai objek sebenarnya."
             },
             {
                 id: 17,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Apa definisi umum dari proses Transformasi Geometri 2D?",
-                answer: "Metode memanipulasi posisi/lokasi koordinat dari sebuah titik piksel untuk memindahkan objek grafis tanpa merusak integritas bentuk aslinya."
+                kelompok: 2,
+                category: "PDF 3: Algoritma Pembentuk Garis",
+                question: "Apa pengertian dari elemen dasar geometri berupa Titik?",
+                answer: "Bagian terkecil dari objek grafis yang menempati suatu tempat, tidak memiliki panjang, lebar, maupun tinggi."
             },
             {
                 id: 18,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Sebutkan 3 metode transformasi geometri dasar 2D!",
-                answer: "Translasi (Pergeseran), Penskalaan (Scaling), dan Rotasi (Pemutaran)."
+                kelompok: 2,
+                category: "PDF 3: Algoritma Pembentuk Garis",
+                question: "Apa parameter penyusun yang wajib dimiliki oleh setiap titik pada layar monitor?",
+                answer: "Koordinat posisi (alamat piksel, misalnya x dan y) dan warna."
             },
             {
                 id: 19,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Bagaimana prinsip kerja operasi transformasi Translasi?",
-                answer: "Memindahkan seluruh titik objek dengan menambahkan besaran jarak pergeseran ($t_x, t_y$) pada sumbu koordinat asal ($X' = X + t_x; Y' = Y + t_y$)."
+                kelompok: 2,
+                category: "PDF 3: Algoritma Pembentuk Garis",
+                question: "Apa definisi dari elemen dasar geometri bernama Garis?",
+                answer: "Kumpulan titik-titik atau piksel yang tersusun secara lurus dan linier dari titik awal sampai titik akhir."
             },
             {
                 id: 20,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Apa yang dimaksud dengan operasi Scaling (Penskalaan)?",
-                answer: "Operasi mengalikan koordinat objek dengan faktor pengali ($S_x, S_y$) untuk merubah ukuran geometri menjadi membesar atau mengecil ($X' = X \cdot S_x; Y' = Y \cdot S_y$)."
+                kelompok: 2,
+                category: "PDF 3: Algoritma Pembentuk Garis",
+                question: "Bagaimana karakteristik pergerakan sumbu koordinat pada pembentukan Garis Horizontal?",
+                answer: "Sumbu X bergerak mengalami pertambahan ($X = X + 1$), sedangkan Sumbu Y bernilai konstan (tetap)."
             },
             {
                 id: 21,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Apa yang dimaksud dengan istilah Uniform Scaling?",
-                answer: "Penskalaan objek di mana nilai faktor pengali sumbu X dan sumbu Y adalah mutlak sama besar ($S_x = S_y$)."
+                kelompok: 2,
+                category: "PDF 3: Algoritma Pembentuk Garis",
+                question: "Bagaimana karakteristik pergerakan sumbu koordinat pada pembentukan Garis Vertikal?",
+                answer: "Sumbu X bernilai konstan (tetap), sedangkan Sumbu Y bergerak mengalami pertambahan ($Y = Y + 1$)."
             },
             {
                 id: 22,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Bagaimana aturan tanda nilai sudut ($\theta$) dalam proses Rotasi objek?",
-                answer: "Bernilai **positif (+)** jika arah putaran berlawanan jarum jam, dan bernilai **negatif (-)** jika arah putaran searah jarum jam."
+                kelompok: 2,
+                category: "PDF 3: Algoritma Pembentuk Garis",
+                question: "Bagaimana karakteristik pergerakan sumbu koordinat pada pembentukan Garis Diagonal?",
+                answer: "Sumbu X dan Sumbu Y sama-sama bergerak mengalami pertambahan secara serentak ($X = X + 1$ dan $Y = Y + 1$)."
             },
             {
                 id: 23,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Apa sumbu koordinat tambahan yang membedakan ruang 2D dengan ruang 3D?",
-                answer: "Sumbu Z (Poros dimensi kedalaman/ruang)."
+                kelompok: 2,
+                category: "PDF 4: Algoritma Pembentuk Lingkaran",
+                question: "Mengapa Algoritma Lingkaran Bressenham hanya perlu menghitung koordinat titik pada sudut $0^{\circ}-45^{\circ}$ (Kuadran 1) saja?",
+                answer: "Karena bentuk lingkaran bersifat simetris, sehingga koordinat untuk kuadran/oktan lainnya dapat diperoleh secara instan melalui teknik pencerminan (refleksi)."
             },
             {
                 id: 24,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Apa perbedaan konvensi kaidah tangan kanan dan tangan kiri pada ruang koordinat 3D?",
-                answer: "<strong>Tangan Kanan:</strong> Sumbu Z positif mengarah keluar layar monitor mendekati mata pengamat.<br><br><strong>Tangan Kiri:</strong> Sumbu Z positif mengarah masuk ke dalam layar menjauhi mata pengamat."
+                kelompok: 2,
+                category: "PDF 4: Algoritma Pembentuk Lingkaran",
+                question: "Bagaimana cara melakukan Pencerminan Diagonal untuk mencari nilai Kuadran 2 pada lingkaran?",
+                answer: "Dilakukan dengan cara menukar posisi nilai koordinat X dan Y, sehingga koordinat asli $(a,b)$ menjadi $(b,a)$."
             },
             {
                 id: 25,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Jelaskan perbedaan karakteristik pusat rotasi antara 2D dan 3D!",
-                answer: "<strong>Rotasi 2D:</strong> Menggunakan titik pusat bidang datar (0,0) atau pivot point.<br><br><strong>Rotasi 3D:</strong> Mengelilingi garis sumbu poros koordinat (Sumbu X, Y, atau Z)."
+                kelompok: 2,
+                category: "PDF 4: Algoritma Pembentuk Lingkaran",
+                question: "Bagaimana cara melakukan Pencerminan Vertikal untuk mencari nilai Kuadran 3 dan 4?",
+                answer: "Dilakukan dengan cara mengalikan nilai koordinat sumbu Y dengan nilai negatif satu, sehingga $(a,b)$ menjadi $(a,-b)$."
             },
             {
                 id: 26,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa pengertian dasar dari bidang ilmu Pengolahan Citra (Image Processing)?",
-                answer: "Kegiatan memanipulasi nilai piksel untuk memperbaiki kualitas citra visual agar lebih mudah diinterpretasikan oleh indera penglihatan manusia maupun mesin komputer."
+                kelompok: 2,
+                category: "PDF 4: Algoritma Pembentuk Lingkaran",
+                question: "Bagaimana cara melakukan Pencerminan Horizontal untuk mencari nilai Kuadran 5, 6, 7, dan 8?",
+                answer: "Dilakukan dengan cara mengalikan nilai koordinat sumbu X dengan nilai negatif satu, sehingga $(a,b)$ menjadi $(-a,b)$."
             },
             {
                 id: 27,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa pengertian dasar dari Computer Vision (Analisis Citra)?",
-                answer: "Proses otomatisasi meniru cara kerja penglihatan manusia untuk menganalisis gambar digital guna mengekstrak informasi deskriptif kuantitatif atau mengambil keputusan otomatis."
+                kelompok: 3,
+                category: "PDF 5: Objek Primitif & Atribut Output",
+                question: "Apa yang dimaksud dengan Atribut Output Primitif?",
+                answer: "Parameter yang menentukan tampilan visual dari objek-objek dasar, seperti warna, ukuran, ketebalan garis, dan orientasi teks."
             },
             {
                 id: 28,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa fungsi utama dari operasi pengolahan citra berjenis Grayscale?",
-                answer: "Menyederhanakan kompleksitas data gambar dengan mereduksi data warna RGB (24-bit) menjadi tingkatan warna skala keabuan (8-bit, 256 gradasi warna)."
+                kelompok: 3,
+                category: "PDF 5: Objek Primitif & Atribut Output",
+                question: "Sebutkan dua pendekatan utama dalam melakukan pengisian area (Fill Area Primitif)!",
+                answer: "1. Menentukan overlap interval untuk scan line (garis horizontal yang melewati objek).<br>2. Mulai menggambar dari titik bagian dalam poligon ke arah pinggir hingga batas tepi."
             },
             {
                 id: 29,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa fungsi dari operasi citra bernama Blurring (Kekaburan)?",
-                answer: "Menghaluskan sudut objek yang terlalu tajam atau mereduksi bintik derau halus (noise reduction) pada citra."
+                kelompok: 3,
+                category: "PDF 5: Objek Primitif & Atribut Output",
+                question: "Apa perbedaan visual yang mendasar antara tipe huruf (typeface) kategori Serif dan Sanserif?",
+                answer: "Serif memiliki kait atau sirip tambahan pada ujung hurufnya (memberikan kesan formal/klasik), sedangkan Sanserif polos tanpa kait (kesan bersih/modern)."
             },
             {
                 id: 30,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa kegunaan dari operasi citra bernama Thresholding?",
-                answer: "Operasi segmentasi citra dasar untuk memisahkan objek utama dari latar belakang dengan mengubah citra menjadi biner hitam-putih tulen (0 dan 1)."
+                kelompok: 3,
+                category: "PDF 5: Objek Primitif & Atribut Output",
+                question: "Apa karakteristik utama dari kelompok huruf kategori Monospace?",
+                answer: "Memiliki ukuran lebar horizontal yang mutlak sama/tetap untuk setiap karakter hurufnya."
             },
             {
                 id: 31,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa fungsi dari operasi citra bernama Edge Detection (Deteksi Tepi)?",
-                answer: "Melacak outline batas-batas objek dengan mencari perubahan nilai intensitas piksel tetangga yang ekstrim."
+                kelompok: 3,
+                category: "PDF 5: Objek Primitif & Atribut Output",
+                question: "Apa yang dimaksud dengan efek cacat visual bernama Jaggies?",
+                answer: "Efek garis atau batas tepi objek di layar yang terlihat kasar, patah-patah, atau berundak seperti anak tangga akibat keterbatasan resolusi layar monitor."
             },
             {
                 id: 32,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Sebutkan minimal 2 contoh implementasi nyata aplikasi Pengolahan Citra!",
-                answer: "Deteksi kanker/wilayah sel tumor pada foto medis X-Ray, dan sistem pengenalan karakter tulisan gambar otomatis (OCR)."
+                kelompok: 3,
+                category: "PDF 5: Objek Primitif & Atribut Output",
+                question: "Apa pengertian dari teknik Antialiasing?",
+                answer: "Teknik untuk memuluskan transisi warna dan mengurangi efek tangga (jaggies) dengan cara memodifikasi tingkat intensitas warna piksel-piksel di sekitar batas objek."
             },
             {
                 id: 33,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa perbedaan antara proses Sampling dengan proses Kuantisasi?",
-                answer: "<strong>Sampling:</strong> Proses digitalisasi koordinat spasial (memecah gambar kontinu menjadi baris-kolom matriks piksel).<br><br><strong>Kuantisasi:</strong> Proses digitalisasi nilai kecerahan/derajat warna piksel menjadi diskrit."
+                kelompok: 3,
+                category: "PDF 5: Objek Primitif & Atribut Output",
+                question: "Sebutkan 3 pendekatan metode untuk melakukan proses Antialiasing!",
+                answer: "Supersampling (postfiltering), Area Sampling, dan Piksel Phasing."
             },
             {
                 id: 34,
                 kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Berapakah rentang nilai intensitas warna piksel untuk gambar biner murni?",
-                answer: "Hanya memiliki 2 kemungkinan nilai: angka 0 untuk warna hitam dan angka 1 untuk warna putih."
+                category: "PDF 6a: Transformasi 2D",
+                question: "Apa prinsip dasar dari melakukan transformasi geometri objek?",
+                answer: "Memindahkan atau memodifikasi lokasi/posisi dari sebuah objek tanpa merusak bentuk asli karakteristik objek tersebut."
             },
             {
                 id: 35,
                 kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa yang dimaksud dengan citra tingkat warna True Color (24-bit)?",
-                answer: "Citra warna kaya yang tersusun dari kombinasi 3 warna dasar RGB (Red, Green, Blue) masing-masing sebesar 8-bit, mampu menghasilkan hingga 16,7 juta variasi warna."
+                category: "PDF 6a: Transformasi 2D",
+                question: "Sebutkan minimal 3 tujuan dilakukannya Transformasi 2D pada objek grafis!",
+                answer: "Menyesuaikan susunan komposisi pemandangan, memudahkan membuat objek simetris, melihat objek dari sudut pandang berbeda, dan membuat pergerakan efek animasi beruntun."
             },
             {
                 id: 36,
                 kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Jelaskan perbedaan mendasar antara tipe kompresi Lossless dengan Lossy!",
-                answer: "<strong>Lossless:</strong> Mengompresi tanpa menghilangkan data informasi gambar sedikit pun (kualitas asli utuh).<br><br><strong>Lossy:</strong> Membuang sebagian data warna yang tidak tertangkap mata manusia demi menekan ukuran file sekecil mungkin."
+                category: "PDF 6a: Transformasi 2D",
+                question: "Apa jenis operasi matematika yang digunakan pada transformasi Translasi (Pergeseran)?",
+                answer: "Operasi penjumlahan nilai titik koordinat asal dengan vektor translasi ($t_x, t_y$)."
             },
             {
                 id: 37,
                 kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa pengertian operasi Konvolusi pada domain spasial citra?",
-                answer: "Operasi penapisan gambar dengan cara mengalikan matriks nilai piksel tetangga dengan sebuah matriks kernel/mask kecil berukuran ganjil (seperti 3x3, 5x5)."
+                category: "PDF 6a: Transformasi 2D",
+                question: "Apa perbedaan antara Uniform Scaling and Non-Uniform Scaling?",
+                answer: "Uniform scaling terjadi jika faktor penskalaan sumbu X and Y bernilai sama ($S_x = S_y$). Non-uniform scaling terjadi jika faktor penskalaannya tidak sama besar ($S_x \neq S_y$)."
             },
             {
                 id: 38,
                 kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Sebutkan tujuan dilakukannya operasi konvolusi pada citra!",
-                answer: "Mereduksi noise, perbaikan kualitas gambar (smoothing/blurring), deteksi tepi (edge detection), dan penajaman tepi (sharpening)."
+                category: "PDF 6a: Transformasi 2D",
+                question: "Bagaimana aturan tanda besar sudut ($\\theta$) pada transformasi Rotasi (Pemutaran)?",
+                answer: "Sudut bernilai positif (+) jika objek diputar berlawanan arah jarum jam. Sudut bernilai negatif (-) jika diputar searah jarum jam."
             },
             {
                 id: 39,
                 kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Mengapa proses konvolusi citra terkadang dipindahkan ke ranah frekuensi?",
-                answer: "Karena operasi konvolusi di ranah spasial memakan puluhan juta perkalian matematika ($N^2 \cdot m^2$) yang membebani komputasi processor. Di ranah frekuensi, konvolusi disederhanakan menjadi perkalian aljabar biasa."
+                category: "PDF 6a: Transformasi 2D",
+                question: "Apa tujuan utama penggunaan Sistem Koordinat Homogen pada matriks transformasi?",
+                answer: "Agar seluruh komponen transformasi dasar (translasi, scaling, rotasi) dapat disatukan ke dalam satu bentuk operasi matematika tunggal, yaitu perkalian matriks."
             },
             {
                 id: 40,
                 kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa kontribusi Joseph Fourier (1822) dalam pengolahan citra digital?",
-                answer: "Menemukan teori bahwa setiap gelombang sinyal periodik apa pun dapat dibentuk dari hasil penjumlahan gelombang sinus dan kosinus dengan frekuensi berbeda."
+                category: "PDF 6b: Transformasi 3D",
+                question: "Apa sumbu koordinat tambahan yang membedakan ruang 2D dengan ruang 3D?",
+                answer: "Sumbu Z (merepresentasikan dimensi ruang atau kedalaman objek)."
             },
             {
                 id: 41,
                 kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa fungsi dari kegunaan alat bernama Transformasi Fourier Balikan (Inverse)?",
-                answer: "Mengembalikan data citra yang telah dimanipulasi di ranah frekuensi kembali menjadi bentuk spasial piksel semula agar bisa ditampilkan kembali di monitor."
+                category: "PDF 6b: Transformasi 3D",
+                question: "Bagaimana konvensi arah sumbu Z positif pada sistem koordinat Kaidah Tangan Kanan?",
+                answer: "Jika sumbu X mengarah ke kanan dan Y mengarah ke atas, maka sumbu Z positif mengarah mendekati kita (keluar dari layar)."
             },
             {
                 id: 42,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Apa yang dimaksud dengan fenomena Horizontal Retrace pada monitor tabung?",
-                answer: "Pergerakan pancaran elektron penampil layar kembali dari arah kanan ke kiri layar setelah menyapu satu baris scan line."
+                kelompok: 4,
+                category: "PDF 6b: Transformasi 3D",
+                question: "Jelaskan perbedaan karakteristik operasi Rotasi antara ruang 2D dan ruang 3D!",
+                answer: "Rotasi 2D menggunakan titik pusat bidang datar (0,0) / pivot point, sedangkan rotasi 3D menggunakan poros sumbu koordinat ruang (sumbu X, sumbu Y, atau sumbu Z) sebagai poros perputarannya."
             },
             {
                 id: 43,
                 kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Sebutkan 4 komponen penyusun citra digital yang ditangkap mata manusia!",
-                answer: "Kecerahan (Brightness), Kontras, Kontur, Warna, Bentuk (Shape), dan Tekstur."
+                category: "PDF 6b: Transformasi 3D",
+                question: "Terhadap apa operasi transformasi Refleksi (Pencerminan) dilakukan pada ruang 3D?",
+                answer: "Operasi refleksi 3D dihitung terhadap bidang datar ruang (bidang XY, bidang YZ, atau bidang ZX)."
             },
             {
                 id: 44,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa pengertian dari komponen citra bernama Kontras?",
-                answer: "Parameter sebaran gradasi tingkat kecemerlangan terang (lightness) dan gelap (darkness) di dalam suatu citra digital."
+                kelompok: 5,
+                category: "PDF 7: Konsep Dasar Pengolahan Citra",
+                question: "Apa tujuan utama digunakannya bidang ilmu Pengolahan Citra (Image Processing)?",
+                answer: "Memperbaiki kualitas dari suatu gambar agar lebih mudah diinterpretasikan oleh indera penglihatan manusia maupun mesin komputer."
             },
             {
                 id: 45,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa teknik pendekatan antialiasing bernama Area Sampling?",
-                answer: "Menghitung rata-rata nilai intensitas piksel dengan mengambil sampel area di sekelilingnya untuk memperhalus tepian jaggies."
+                kelompok: 5,
+                category: "PDF 7: Konsep Dasar Pengolahan Citra",
+                question: "Apa perbedaan visual antara citra biner, citra grayscale, dan citra true color?",
+                answer: "<strong>Citra biner:</strong> Hanya memiliki 2 warna, hitam (0) dan putih (1) (1-bit).<br><strong>Citra grayscale:</strong> Rentang warna abu-abu sebanyak 256 kombinasi warna (8-bit).<br><strong>Citra true color (24-bit):</strong> Memiliki lebih dari 16 juta kombinasi warna dari komponen dasar RGB."
             },
             {
                 id: 46,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Mengapa dalam algoritma lingkaran Bressenham digunakan teknik pencerminan diagonal?",
-                answer: "Untuk mencari koordinat lingkaran di kuadran/oktan kedua ($45^{\circ}-90^{\circ}$) berdasarkan kuadran kesatu dengan cara menukar koordinat X dan Y ($[x,y] \rightarrow [y,x]$)."
+                kelompok: 5,
+                category: "PDF 7: Konsep Dasar Pengolahan Citra",
+                question: "Jelaskan perbedaan mendasar antara metode kompresi citra tipe Lossless dan Lossy?",
+                answer: "Lossless tidak membuang informasi gambar sedikit pun setelah dikompresi (kualitas utuh), sedangkan Lossy membuang sebagian data tidak penting demi ukuran file super kecil."
             },
             {
                 id: 47,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Jenis huruf komputer rumpun Sanserif memiliki ciri khas visual berupa...",
-                answer: "Bentuk karakter huruf yang bersih, polos, tanpa memiliki kait/kaki tambahan pada ujung karakternya (e.g., Arial, Inter)."
+                kelompok: 5,
+                category: "PDF 7: Konsep Dasar Pengolahan Citra",
+                question: "Apa yang dimaksud dengan operasi Segmentasi Citra?",
+                answer: "Proses memecah atau membagi gambar menjadi bagian-bagian yang lebih kecil berdasarkan karakteristik kesamaan warna, kecerahan, atau tepi objek."
             },
             {
                 id: 48,
-                kelompok: 2,
-                category: "Bab 2: Citra, Vektor, dan Raster",
-                question: "Apa fungsi dari tiga metode penyimpanan huruf bernama Stroke-based?",
-                answer: "Menyimpan karakter tulisan menggunakan kombinasi garis lurus dan kurva dengan panduan koordinat relatif ($x,y$)."
+                kelompok: 5,
+                category: "PDF 8: Transformasi Citra",
+                question: "Apa pengertian dari operasi matematis Konvolusi pada citra?",
+                answer: "Operasi penapisan (image filtering) di ranah spasial dengan cara mengalikan matriks piksel gambar dengan sebuah matriks filter mask atau kernel kecil berukuran ganjil."
             },
             {
                 id: 49,
-                kelompok: 3,
-                category: "Bab 3: Transformasi Geometri",
-                question: "Apa kegunaan utama dari perluasan matriks koordinat menjadi Sistem Koordinat Homogen?",
-                answer: "Memungkinkan semua operasi transformasi geometri dasar (translasi, scaling, rotasi) dinyatakan dalam bentuk perkalian matriks standar yang seragam (3x3 untuk 2D, 4x4 untuk 3D)."
+                kelompok: 5,
+                category: "PDF 8: Transformasi Citra",
+                question: "Sebutkan efek visual fungsional yang dihasilkan dari operasi penapisan kernel: Blurring, Thresholding, dan Edge Detection!",
+                answer: "<strong>Blurring:</strong> Membuat citra kabur halus untuk mereduksi bintik gangguan (noise reduction).<br><strong>Thresholding:</strong> Mengubah citra menjadi biner hitam-putih murni.<br><strong>Edge Detection:</strong> Melacak outline garis batas tepi objek di dalam citra."
             },
             {
                 id: 50,
-                kelompok: 4,
-                category: "Bab 4: Pengolahan Citra & Vision",
-                question: "Apa efek visual yang dihasilkan oleh penapisan kernel konvolusi berjenis Embossing?",
-                answer: "Membuat citra digital seolah-olah terukir timbul secara 3D pada permukaan selembar logam atau nikel."
+                kelompok: 5,
+                category: "PDF 8: Transformasi Citra",
+                question: "Mengapa proses pemrosesan citra terkadang ditransformasikan ke dalam ranah frekuensi menggunakan Transformasi Fourier?",
+                answer: "Karena konvolusi di ranah spasial memakan operasi perkalian komputasi matriks yang sangat besar ($N^2 \\cdot m^2$), sehingga ranah frekuensi digunakan sebagai solusi untuk mereduksi beban komputasi tersebut menjadi perkalian sederhana."
             }
         ];
 
         // --- APP STATE ---
         let state = {
-            currentKelompok: 'all',  // 'all', 1, 2, 3, 4
+            currentKelompok: 'all',  // 'all', 1, 2, 3, 4, 5
             cards: [],              // Cards in active deck
             currentIdx: 0,          // Index in state.cards
             masteredCards: {},      // Maps card.id -> boolean
@@ -1300,8 +1304,8 @@
         function updateSidebarMasteryCounters() {
             const totalCards = ALL_CARDS.length;
             let totalMastered = 0;
-            let kCounts = { 1: 0, 2: 0, 3: 0, 4: 0 };
-            let kTotals = { 1: 0, 2: 0, 3: 0, 4: 0 };
+            let kCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+            let kTotals = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
             ALL_CARDS.forEach(card => {
                 kTotals[card.kelompok]++;
@@ -1317,6 +1321,7 @@
             document.getElementById('count-k2').innerText = `${kCounts[2]} / ${kTotals[2]}`;
             document.getElementById('count-k3').innerText = `${kCounts[3]} / ${kTotals[3]}`;
             document.getElementById('count-k4').innerText = `${kCounts[4]} / ${kTotals[4]}`;
+            document.getElementById('count-k5').innerText = `${kCounts[5]} / ${kTotals[5]}`;
 
             document.getElementById('stat-total-mastered').innerText = `${totalMastered} / ${totalCards}`;
             const percent = Math.round((totalMastered / totalCards) * 100) || 0;
