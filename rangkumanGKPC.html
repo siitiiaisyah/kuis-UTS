@@ -7,9 +7,7 @@
     <title>Rangkuman GKPC - UTS Prep</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #06080c;
@@ -194,7 +192,7 @@
             backdrop-filter: var(--glass-blur);
             border: 1px solid var(--border-color);
             border-radius: var(--card-radius);
-            padding: 24px;
+            padding: 20px;
             box-shadow: var(--shadow);
         }
 
@@ -220,25 +218,37 @@
         .toc-list {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .toc-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .toc-list::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 2px;
         }
 
         .toc-item {
             width: 100%;
-            padding: 10px 12px;
+            padding: 8px 10px;
             border-radius: 8px;
             background: transparent;
             border: 1px solid transparent;
             color: var(--text-secondary);
             font-family: var(--font-sans);
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 600;
             text-align: left;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .toc-item:hover {
@@ -259,10 +269,10 @@
         }
 
         .toc-number {
-            font-size: 10px;
+            font-size: 9px;
             background: rgba(255, 255, 255, 0.05);
-            padding: 2px 6px;
-            border-radius: 6px;
+            padding: 1px 4px;
+            border-radius: 4px;
             color: var(--text-secondary);
             flex-shrink: 0;
             font-weight: 700;
@@ -311,12 +321,12 @@
             scroll-margin-top: 24px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
             animation: fadeIn 0.4s ease-out;
         }
 
         .bab-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
             letter-spacing: -0.5px;
             color: var(--text-primary);
@@ -329,11 +339,11 @@
 
         .bab-number {
             font-family: var(--font-mono);
-            font-size: 14px;
+            font-size: 12px;
             background: var(--accent-glow);
             color: var(--accent);
-            padding: 4px 10px;
-            border-radius: 8px;
+            padding: 4px 8px;
+            border-radius: 6px;
             font-weight: 700;
         }
 
@@ -341,11 +351,11 @@
         .sub-section {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--border-color);
             border-radius: var(--card-radius);
-            padding: 24px;
+            padding: 20px;
             transition: var(--transition);
         }
 
@@ -355,7 +365,7 @@
         }
 
         .sub-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -366,16 +376,20 @@
         .sub-title::before {
             content: '';
             width: 4px;
-            height: 16px;
+            height: 14px;
             background: var(--accent);
             border-radius: 2px;
             display: inline-block;
         }
 
         .text-p {
-            font-size: 14px;
+            font-size: 13.5px;
             line-height: 1.6;
             color: var(--text-secondary);
+        }
+
+        .text-p strong {
+            color: var(--text-primary);
         }
 
         .bullet-list {
@@ -383,11 +397,11 @@
             padding-left: 4px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .bullet-item {
-            font-size: 13.5px;
+            font-size: 13px;
             line-height: 1.6;
             color: var(--text-secondary);
             display: flex;
@@ -402,15 +416,19 @@
             flex-shrink: 0;
         }
 
+        .bullet-item strong {
+            color: var(--text-primary);
+        }
+
         /* Styled Cards (Alert Box) */
         .alert-box {
             border-radius: 12px;
-            padding: 16px 20px;
+            padding: 14px 18px;
             display: flex;
             gap: 12px;
             align-items: flex-start;
             border: 1px solid transparent;
-            font-size: 13.5px;
+            font-size: 13px;
             line-height: 1.6;
         }
 
@@ -442,29 +460,21 @@
         .alert-content {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
         }
 
         .alert-content strong {
             color: var(--text-primary);
         }
 
-        /* Mnemonic */
-        .mnemonic-box {
+        .code-inline {
             font-family: var(--font-mono);
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px dashed var(--border-color);
-            border-radius: 10px;
-            padding: 14px 18px;
-            font-size: 12.5px;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .mnemonic-box strong {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
             color: var(--accent);
+            border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         /* Table design */
@@ -473,26 +483,27 @@
             overflow-x: auto;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.15);
+            margin-top: 8px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 13px;
+            font-size: 12.5px;
         }
 
         th {
             background: rgba(255, 255, 255, 0.02);
             font-weight: 700;
-            padding: 14px 16px;
+            padding: 12px 14px;
             color: var(--text-primary);
             border-bottom: 1px solid var(--border-color);
         }
 
         td {
-            padding: 14px 16px;
+            padding: 12px 14px;
             color: var(--text-secondary);
             border-bottom: 1px solid var(--border-color);
             line-height: 1.5;
@@ -520,17 +531,17 @@
         .prediction-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
         .prediction-card {
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 20px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .prediction-card-header {
@@ -538,26 +549,26 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
+            padding-bottom: 6px;
         }
 
         .prediction-card-title {
-            font-size: 14.5px;
+            font-size: 13.5px;
             font-weight: 700;
             color: var(--text-primary);
         }
 
         .prediction-badge {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 800;
-            padding: 2px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
             background: var(--accent-glow);
             color: var(--accent);
         }
 
         .prediction-detail {
-            font-size: 13px;
+            font-size: 12.5px;
             color: var(--text-secondary);
             line-height: 1.5;
         }
@@ -569,9 +580,8 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(12px);
+                transform: translateY(10px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -594,41 +604,35 @@
         <!-- Header -->
         <header>
             <div class="brand-section">
-                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama"
-                    style="text-decoration: none; margin-right: 4px;">
-                    <svg viewBox="0 0 24 24"
-                        style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
-                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" />
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </a>
                 <div class="brand-logo">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                        <circle cx="8.5" cy="8.5" r="1.5" />
-                        <polyline points="21 15 16 10 5 21" />
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
                     </svg>
                 </div>
                 <div class="brand-title">
                     <h1>Rangkuman GKPC</h1>
-                    <p>Grafik Komputer dan Pengolahan Citra</p>
+                    <p>Grafik Komputer dan Pengolahan Citra (Berdasarkan PDF)</p>
                 </div>
             </div>
             <div class="header-controls">
                 <!-- Sound Toggle -->
                 <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
                     <svg id="sound-icon" viewBox="0 0 24 24">
-                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
                 <!-- Theme Toggle -->
                 <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
                     <svg id="theme-icon" viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
             </div>
@@ -641,38 +645,54 @@
                 <div class="glass-panel">
                     <h3 class="sidebar-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 6h16M4 12h16M4 18h7" stroke-linecap="round" />
+                            <path d="M4 6h16M4 12h16M4 18h7" stroke-linecap="round"/>
                         </svg>
                         Daftar Isi
                     </h3>
                     <div class="toc-list">
-                        <button class="toc-item active" data-target="bab1">
-                            <span class="toc-number">Bab 1</span>
-                            <span>Pengantar GKPC</span>
+                        <button class="toc-item active" data-target="pdf1">
+                            <span class="toc-number">PDF 1</span>
+                            <span>Konsep & Alur I-O</span>
                         </button>
-                        <button class="toc-item" data-target="bab2">
-                            <span class="toc-number">Bab 2</span>
-                            <span>Citra, Vektor & Raster</span>
+                        <button class="toc-item" data-target="pdf2">
+                            <span class="toc-number">PDF 2</span>
+                            <span>Dasar Grafika Komputer</span>
                         </button>
-                        <button class="toc-item" data-target="bab3">
-                            <span class="toc-number">Bab 3</span>
-                            <span>Transformasi Geometri</span>
+                        <button class="toc-item" data-target="pdf3">
+                            <span class="toc-number">PDF 3</span>
+                            <span>Algoritma Garis</span>
                         </button>
-                        <button class="toc-item" data-target="bab4">
-                            <span class="toc-number">Bab 4</span>
-                            <span>Pengolahan Citra & Vision</span>
+                        <button class="toc-item" data-target="pdf4">
+                            <span class="toc-number">PDF 4</span>
+                            <span>Algoritma Lingkaran</span>
                         </button>
-                        <button class="toc-item" data-target="bab5">
-                            <span class="toc-number">Tabel</span>
-                            <span>Perbandingan Konsep</span>
+                        <button class="toc-item" data-target="pdf5">
+                            <span class="toc-number">PDF 5</span>
+                            <span>Objek Primitif & Atribut</span>
                         </button>
-                        <button class="toc-item" data-target="bab6">
+                        <button class="toc-item" data-target="pdf6a">
+                            <span class="toc-number">PDF 6a</span>
+                            <span>Transformasi 2D</span>
+                        </button>
+                        <button class="toc-item" data-target="pdf6b">
+                            <span class="toc-number">PDF 6b</span>
+                            <span>Transformasi 3D</span>
+                        </button>
+                        <button class="toc-item" data-target="pdf7">
+                            <span class="toc-number">PDF 7</span>
+                            <span>Pengolahan Citra</span>
+                        </button>
+                        <button class="toc-item" data-target="pdf8">
+                            <span class="toc-number">PDF 8</span>
+                            <span>Transformasi Citra</span>
+                        </button>
+                        <button class="toc-item" data-target="trik">
                             <span class="toc-number">Trik</span>
-                            <span>Cepat Menghafal</span>
+                            <span>Cara Cepat Hafal</span>
                         </button>
-                        <button class="toc-item" data-target="bab7">
-                            <span class="toc-number">Prediksi</span>
-                            <span>Soal Ujian Dosen</span>
+                        <button class="toc-item" data-target="prediksi">
+                            <span class="toc-number">Soal</span>
+                            <span>Prediksi Ujian Dosen</span>
                         </button>
                     </div>
                 </div>
@@ -682,853 +702,598 @@
             <div class="content-area">
                 <!-- Search Box -->
                 <div class="search-container">
-                    <input type="text" id="search-box" class="search-input"
-                        placeholder="Cari materi, bab, transformasi, metode konvolusi, atau soal prediksi...">
+                    <input type="text" id="search-box" class="search-input" placeholder="Cari materi, PDF, transformasi, algoritma, konvolusi, atau trik cepat...">
                 </div>
 
-                <!-- Bab 1 -->
-                <section class="bab-container" id="bab1">
+                <!-- PDF 1 -->
+                <section class="bab-container" id="pdf1">
                     <h2 class="bab-title">
-                        <span class="bab-number">BAB 1</span>
-                        Pengantar Grafik Komputer & Pengolahan Citra
+                        <span class="bab-number">PDF 1</span>
+                        Konsep Grafik Komputer dan Pengolahan Citra
                     </h2>
 
-                    <!-- Subsection 1 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">1. Pengertian dan Tujuan Grafik Komputer</h3>
-                        <p class="text-p"><strong>Grafik Komputer (Computer Graphics):</strong> Bidang ilmu yang
-                            mempelajari bagaimana komputer menghasilkan dan memanipulasi gambar, baik berbentuk 2D
-                            maupun 3D.</p>
-                        <p class="text-p"><strong>Tujuan Utama:</strong> Menghasilkan citra/gambar secara buatan dengan
-                            primitif geometris dasar seperti titik, garis, lingkaran, dan sebagainya menggunakan data
-                            deskriptif matematis (seperti koordinat titik, panjang garis, jari-jari, ketebalan, warna,
-                            dsb.).</p>
-
+                        <h3 class="sub-title">1. Pengertian dan Konsep Dasar</h3>
+                        <p class="text-p"><strong>Grafika Komputer:</strong> Ilmu yang berhubungan dengan pembuatan (produksi) gambar (citra) menggunakan komputer melalui tahapan <strong>Pemodelan (Modelling), Rendering, dan Animasi</strong>.</p>
+                        
                         <div class="alert-box important">
                             <span class="alert-icon">⭐</span>
                             <div class="alert-content">
-                                <strong>WAJIB HAFAL KONSEP:</strong>
-                                <em>"Grafika komputer adalah ilmu yang berhubungan dengan pembuatan (produksi) gambar
-                                    (citra) menggunakan komputer melalui tahapan: Pemodelan (Modelling), Rendering, dan
-                                    Animasi."</em>
+                                <strong>WAJIB HAFAL (Alur Input-Output):</strong>
+                                <ul style="padding-left: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px;">
+                                    <li><strong>Grafika Komputer:</strong> Input = Data deskriptif (geometri/matematika) &rarr; Output = Citra (Gambar).</li>
+                                    <li><strong>Pengolahan Citra:</strong> Input = Citra &rarr; Output = Citra baru dengan kualitas yang lebih baik.</li>
+                                    <li><strong>Analisis Citra (Computer Vision):</strong> Input = Citra &rarr; Output = Informasi deskriptif atau keputusan kuantitatif.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Subsection 2 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">2. Tiga Tahap Utama Pembuatan Grafika Komputer</h3>
+                        <h3 class="sub-title">2. Citra Diam vs Citra Bergerak</h3>
                         <ul class="bullet-list">
-                            <li class="bullet-item">
-                                <strong>Pemodelan (Modelling):</strong> Upaya menggambarkan objek nyata ke dalam objek
-                                maya yang memiliki karakteristik geometris matematika, atau menjelaskan dunia
-                                nyata/objek imajinatif secara matematis.
-                            </li>
-                            <li class="bullet-item">
-                                <strong>Rendering:</strong> Pemberian nuansa realistis kepada model-model geometris
-                                mentah sehingga memiliki sifat/keadaan yang menyerupai objek sebenarnya di dunia nyata
-                                (seperti pemberian warna, pencahayaan, bayangan, dan tekstur).
-                            </li>
-                            <li class="bullet-item">
-                                <strong>Animasi (Animation):</strong> Teknik-teknik untuk memberikan efek gerakan atau
-                                motion pada objek grafis yang mengikuti kaidah normal gerakan fisik.
-                            </li>
+                            <li class="bullet-item"><strong>Citra Diam (Still Image):</strong> Sebuah citra tunggal yang berdiri sendiri.</li>
+                            <li class="bullet-item"><strong>Citra Bergerak (Moving Images):</strong> Rangkaian citra diam yang ditampilkan secara beruntun (sekuensial) sehingga memberi kesan sebagai gambar yang bergerak bagi indera penglihatan manusia.</li>
                         </ul>
                     </div>
 
-                    <!-- Subsection 3 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">3. Penerapan Grafik Komputer di Berbagai Bidang</h3>
-                        <ul class="bullet-list">
-                            <li class="bullet-item"><strong>User Interface (UI):</strong> Grafik sebagai antarmuka
-                                visual interaktif pada sistem operasi dan aplikasi modern (misalnya Windows, Visual
-                                Studio, macOS).</li>
-                            <li class="bullet-item"><strong>Computer-Aided Design (CAD):</strong> Rancang bangun presisi
-                                untuk perancangan rumah, gedung, jembatan, kendaraan, dan suku cadang pada bidang
-                                teknik.</li>
-                            <li class="bullet-item"><strong>Seni dan Komersil:</strong> Lukisan digital, manipulasi seni
-                                kreatif, dan pembuatan materi iklan promosi barang dagangan secara online.</li>
-                            <li class="bullet-item"><strong>Hiburan (Entertainment):</strong> Pembuatan film animasi 3D
-                                panjang (contoh: Toy Story oleh Pixar & Disney), video games interaktif, Virtual Reality
-                                (VR), dan Augmented Reality (AR).</li>
-                            <li class="bullet-item"><strong>Bidang Lain:</strong> Pendidikan/Presentasi (diagram),
-                                percetakan digital (brosur, billboard), dan pengontrolan proses visual (kamera
-                                pengawasan).</li>
-                        </ul>
+                        <h3 class="sub-title">3. Pengertian Analisis Citra (Computer Vision)</h3>
+                        <p class="text-p">Proses otomatis yang meniru cara kerja sistem visual manusia (human vision) untuk mengenali objek, menginterpretasi makna citra, hingga mengambil keputusan otomatis.</p>
+                        <p class="text-p" style="margin-top: 6px;"><strong>Metodologi Aplikasi OCR (Optical Character Recognition):</strong></p>
+                        <ol style="padding-left: 20px; font-size: 13px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px; margin-top: 4px;">
+                            <li><strong>Pembentukan Citra (Data Acquisition):</strong> Melakukan scan dokumen fisik.</li>
+                            <li><strong>Pengolahan Citra Tingkat Awal (Preprocessing):</strong> Deteksi sisi/outline, pembersihan noise, dan perbaikan ukuran (sizing).</li>
+                            <li><strong>Ekstraksi Ciri (Feature Extractor):</strong> Perhitungan ciri momen geometris.</li>
+                            <li><strong>Pengenalan Karakter (Character Matching):</strong> Mencocokkan ciri karakter dengan basis pengetahuan (knowledge base).</li>
+                        </ol>
                     </div>
 
-                    <!-- Subsection 4 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">4. Perangkat Input dan Output Grafik</h3>
-                        <p class="text-p">Sistem grafik interaktif bertumpu pada perangkat masukan dan keluaran fisik:
-                        </p>
-                        <ul class="bullet-list">
-                            <li class="bullet-item"><strong>Device Input (Masukan):</strong> Media memasukkan data luar
-                                ke dalam memori & processor untuk diolah. Contoh: Keyboard, Mouse, Touchpad, Light Pen,
-                                Joystick, Scanner, Kamera Digital, Microphone, Graphics Pads/Digitizer.</li>
-                            <li class="bullet-item"><strong>Device Output (Keluaran):</strong> Media menampilkan hasil
-                                olah data grafik kepada pengguna. Contoh: CRT Monitor, TFT/LCD Monitor, Printer (Impact:
-                                Dot Matrix; Non-Impact: Inkjet/Laser), Plotter (khusus mencetak gambar konstruksi/desain
-                                teknik ukuran sangat raksasa), Speaker.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Subsection 5 -->
-                    <div class="sub-section">
-                        <h3 class="sub-title">5. Jenis Software Grafis dan Fungsinya</h3>
-                        <ul class="bullet-list">
-                            <li class="bullet-item"><strong>Software Desain Vektor:</strong> Corel Draw, AutoCAD,
-                                Microsoft Visio. Digunakan untuk mendesain gambar berbasis rumus matematika koordinat
-                                dengan garis-garis yang presisi tinggi.</li>
-                            <li class="bullet-item"><strong>Software Raster/Bitmap:</strong> Adobe Photoshop, Paint.
-                                Digunakan untuk memanipulasi gambar digital berbasis piksel foto.</li>
-                            <li class="bullet-item"><strong>Software 3D & Animasi:</strong> 3D Studio MAX, Blender,
-                                Adobe Animate.</li>
-                        </ul>
+                        <h3 class="sub-title">UTS Note (PDF 1)</h3>
+                        <p class="text-p">Ingat klasifikasi **Anil K. Jain**: Pengolahan citra diterapkan jika gambar diubah menjadi citra lain. Analisis citra diterapkan jika elemen di dalam citra perlu dikelompokkan atau diukur untuk menghasilkan deskripsi.</p>
                     </div>
                 </section>
 
-                <!-- Bab 2 -->
-                <section class="bab-container" id="bab2">
+                <!-- PDF 2 -->
+                <section class="bab-container" id="pdf2">
                     <h2 class="bab-title">
-                        <span class="bab-number">BAB 2</span>
-                        Citra, Vektor, dan Raster
+                        <span class="bab-number">PDF 2</span>
+                        Dasar Grafik Komputer
                     </h2>
 
-                    <!-- Subsection 1 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">1. Gambar Raster dan Elemen Dasar Grafik</h3>
-                        <p class="text-p"><strong>Gambar Raster (Bitmap):</strong> Representasi gambar digital sebagai
-                            susunan matriks atau titik-titik di mana setiap titik terkecil penyusun gambar disebut
-                            <strong>Piksel (Pixel / Picture Element)</strong>.</p>
-                        <p class="text-p"><strong>Elemen Dasar Grafik (Primitif Geometris):</strong> Komponen pembentuk
-                            dasar untuk membuat struktur gambar yang kompleks:</p>
+                        <h3 class="sub-title">1. Perangkat Input dan Output Grafik Komputer</h3>
+                        <p class="text-p"><strong>Device Input:</strong> Perangkat atau media untuk memasukkan data dari luar ke dalam memori dan processor untuk diolah.</p>
                         <ul class="bullet-list">
-                            <li class="bullet-item"><strong>Titik:</strong> Satuan grafis terkecil, menempati tempat
-                                koordinat tertentu, tidak memiliki panjang, lebar, atau tinggi. Memiliki parameter
-                                koordinat (X,Y) dan warna.</li>
-                            <li class="bullet-item"><strong>Garis:</strong> Kumpulan titik-titik/piksel yang tersusun
-                                lurus secara linier dari titik awal (start) sampai titik akhir (end).</li>
+                            <li class="bullet-item">Contoh: Keyboard (paling penting untuk memasukkan karakter), Mouse, Touch Screen, Joystick, Scanner, Digital Camera, Light Pen, Graphics Tablet.</li>
+                            <li class="bullet-item">Data input dibagi menjadi: <strong>Signal Input</strong> (data yang dimasukkan) dan <strong>Maintenance Input</strong> (program untuk mengolah data).</li>
+                        </ul>
+                        <p class="text-p" style="margin-top: 6px;"><strong>Device Output:</strong> Perangkat untuk memberikan atau menampilkan informasi hasil olahan kepada pengguna.</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">Contoh: Monitor CRT (menggunakan tabung sinar katoda), Monitor Flat Panel (TFT/LCD), Printer (Impact: Dot Matrix; Non-Impact: Inkjet & Laser), Plotter.</li>
+                        </ul>
+                        <div class="alert-box important" style="margin-top: 8px;">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>WAJIB HAFAL FUNGSI PLOTTER:</strong>
+                                <em>Plotter digunakan khusus untuk mencetak grafik, cetak teknik blueprint, atau gambar konstruksi beresolusi tinggi dengan dimensi ukuran kertas yang sangat besar.</em>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Pengertian Gambar Vektor dan Raster (Aplikasi & Software)</h3>
+                        <p class="text-p"><strong>Gambar Raster (Bitmap):</strong> Gambar yang dibentuk oleh sekumpulan bintik, titik, atau piksel dalam sebuah grid matriks.</p>
+                        <ul class="bullet-list" style="margin-bottom: 8px;">
+                            <li class="bullet-item">Software Grafis Raster: Adobe Photoshop, Corel PhotoPaint, Microsoft Paint.</li>
+                        </ul>
+                        <p class="text-p"><strong>Gambar Vektor:</strong> Gambar yang dibentuk dari struktur matematika garis dan kurva geometri kontinu.</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">Software Grafis Vektor: Corel Draw, AutoCAD, Adobe Illustrator, Microsoft Visio.</li>
                         </ul>
                     </div>
 
-                    <!-- Subsection 2 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">2. Jenis-Jenis Garis Berdasarkan Posisi / Sudut Inkrementasi</h3>
-                        <p class="text-p">Pembentukan garis pada koordinat komputer raster didasarkan pada pergerakan
-                            sumbu:</p>
+                        <h3 class="sub-title">3. Model Pemodelan Grafis dan Sistem Visual Manusia</h3>
                         <ul class="bullet-list">
-                            <li class="bullet-item"><strong>Garis Horizontal:</strong> Sumbu-X bergerak maju inkremental
-                                ($X = X + 1$) dan Sumbu-Y bernilai tetap/konstan.</li>
-                            <li class="bullet-item"><strong>Garis Vertikal:</strong> Sumbu-X konstan dan Sumbu-Y
-                                bergerak inkremental naik ($Y = Y + 1$).</li>
-                            <li class="bullet-item"><strong>Garis Diagonal:</strong> Sumbu-X bergerak ($X = X + 1$) dan
-                                Sumbu-Y bergerak serentak ($Y = Y + 1$) dengan sudut kemiringan tetap 45 derajat.</li>
-                            <li class="bullet-item"><strong>Garis Bebas:</strong> Sumbu-X bergerak maju sebesar langkah
-                                $n$ ($X = X + n$) dan Sumbu-Y bergerak dinamis ($Y = Y + m$).</li>
+                            <li class="bullet-item"><strong>Pemodelan (Modelling):</strong> Tahap menggambarkan objek nyata atau imajinatif ke dalam karakteristik geometris matematika di komputer.</li>
+                            <li class="bullet-item"><strong>Animasi:</strong> Teknik memberikan efek gerakan pada objek grafis.</li>
+                            <li class="bullet-item"><strong>Adaptasi Kecerahan (Brightness Adaptation):</strong> Kemampuan digital visual mata manusia dalam menyesuaikan diri untuk membedakan gradasi tingkat kecemerlangan cahaya secara subjektif.</li>
+                            <li class="bullet-item"><strong>Reseptor Mata:</strong> <strong>Cone (sel kerucut)</strong> peka terhadap warna pada kondisi cahaya terang (Photopic). <strong>Rod (sel batang)</strong> peka terhadap cahaya redup/gelap tanpa warna (Scotopic).</li>
                         </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">UTS Note (PDF 2)</h3>
+                        <p class="text-p">Jangan tertukar antara software vektor dan raster! Jika dosen bertanya software untuk memanipulasi foto digital, jawabannya adalah Photoshop (Raster). Jika untuk cetak cetakan arsitektur/presisi garis, jawabannya Corel Draw/AutoCAD (Vektor).</p>
                     </div>
                 </section>
 
-                <!-- Bab 3 -->
-                <section class="bab-container" id="bab3">
+                <!-- PDF 3 -->
+                <section class="bab-container" id="pdf3">
                     <h2 class="bab-title">
-                        <span class="bab-number">BAB 3</span>
-                        Transformasi Geometri 2D & 3D
+                        <span class="bab-number">PDF 3</span>
+                        Algoritma Pembentuk Garis
                     </h2>
 
-                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Pengertian Elemen Dasar Grafik: Garis dan Titik</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Titik:</strong> Bagian terkecil dari suatu objek grafis yang menempati posisi tertentu, tidak memiliki dimensi panjang, lebar, maupun tinggi. Titik adalah satuan grafis terkecil.</li>
+                            <li class="bullet-item"><strong>Garis:</strong> Kumpulan dari titik-titik atau piksel yang tersusun secara lurus, linier, dan kontinu dari titik koordinat awal hingga titik koordinat akhir.</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Jenis-Jenis Garis Berdasarkan Posisi/Sudut Pergerakan</h3>
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>WAJIB HAFAL (Pergerakan Koordinat):</strong>
+                                <ul style="padding-left: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px;">
+                                    <li><strong>Garis Horizontal:</strong> Garis lurus mendatar di mana sumbu X bergerak maju secara bertahap (<code class="code-inline">X = X + 1</code>) sedangkan nilai sumbu Y konstan/tetap.</li>
+                                    <li><strong>Garis Vertikal:</strong> Garis lurus tegak berdiri di mana nilai sumbu X konstan/tetap sedangkan sumbu Y bergerak naik (<code class="code-inline">Y = Y + 1</code>).</li>
+                                    <li><strong>Garis Diagonal:</strong> Garis miring bersudut 45 derajat di mana sumbu X dan sumbu Y bergerak maju bersama-sama secara serentak (<code class="code-inline">X = X + 1</code> dan <code class="code-inline">Y = Y + 1</code>).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">UTS Note (PDF 3)</h3>
+                        <p class="text-p">Pemodelan geometri melibatkan konversi dari konsep bentuk fisik benda nyata ke dalam model matematis berupa shape (bentuk), posisi, orientasi, serta surface properties (warna dan tekstur).</p>
+                    </div>
+                </section>
+
+                <!-- PDF 4 -->
+                <section class="bab-container" id="pdf4">
+                    <h2 class="bab-title">
+                        <span class="bab-number">PDF 4</span>
+                        Algoritma Pembentuk Lingkaran
+                    </h2>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Konsep Kuadran dan Simetrisitas Lingkaran</h3>
+                        <p class="text-p">Lingkaran utuh (360 derajat) dibagi menjadi 8 bagian simetris yang disebut oktan/kuadran.</p>
+                        <p class="text-p"><strong>Konsep Utama Algoritma Bressenham:</strong> Sistem komputer hanya perlu menghitung atau mencari koordinat titik lingkaran pada kuadran pertama (0 s/d 45 derajat) saja. Koordinat untuk 7 kuadran sisanya diperoleh secara otomatis menggunakan teknik pencerminan (refleksi) dari kuadran pertama, sehingga sangat menghemat memori komputasi komputer.</p>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Teknik Pencerminan Sesuai Lokasi Kuadran</h3>
+                        <p class="text-p">Jika koordinat dasar hasil perhitungan di kuadran pertama dinyatakan sebagai titik asli <code class="code-inline">(a, b)</code>, maka cara mencari koordinat di kuadran lain tanpa menghitung ulang adalah:</p>
+                        
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>WAJIB HAFAL (Rumus Refleksi):</strong>
+                                <ul style="padding-left: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px;">
+                                    <li><strong>Pencerminan Diagonal (Kuadran 2):</strong> Menukar posisi nilai koordinat X dan Y. Rumusnya: <code class="code-inline">(a, b) &rarr; (b, a)</code>.</li>
+                                    <li><strong>Pencerminan Vertikal (Kuadran 3 dan 4):</strong> Mengalikan nilai koordinat sumbu Y dengan nilai negatif satu. Rumusnya: <code class="code-inline">(a, b) &rarr; (a, -b)</code>.</li>
+                                    <li><strong>Pencerminan Horizontal (Kuadran 5, 6, 7, dan 8):</strong> Mengalikan nilai koordinat sumbu X dengan nilai negatif satu. Rumusnya: <code class="code-inline">(a, b) &rarr; (-a, b)</code> atau <code class="code-inline">(-a, -b)</code>.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">UTS Note (PDF 4)</h3>
+                        <p class="text-p">Ingat rumus cepatnya: Kuadran 2 = Tukar posisi (X &harr; Y). Kuadran 3 & 4 = Y negatif (bawah). Kuadran 5 s/d 8 = X negatif (kiri).</p>
+                    </div>
+                </section>
+
+                <!-- PDF 5 -->
+                <section class="bab-container" id="pdf5">
+                    <h2 class="bab-title">
+                        <span class="bab-number">PDF 5</span>
+                        Objek Primitif dan Atribut Output Primitif
+                    </h2>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Objek Primitif dan Output Primitif</h3>
+                        <p class="text-p"><strong>Objek Primitif:</strong> Bentuk elemen dasar geometri paling sederhana (seperti titik, garis, poligon, kurva, dan lingkaran) yang digunakan sebagai fondasi utama untuk membangun gambar visual yang lebih kompleks di layar komputer.</p>
+                        <p class="text-p"><strong>Fill Area Primitif:</strong> Metode untuk mengisi bagian dalam suatu area poligon tertutup. Pendekatan yang paling populer adalah <strong>Scan-line Fill Area</strong>, yang bekerja dengan cara mendeteksi interval titik potong garis horizontal dengan sisi-sisi poligon tersebut.</p>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Tipografi (Jenis Huruf Komputer)</h3>
+                        <p class="text-p"><strong>Jenis Huruf (Typeface):</strong></p>
+                        <ul class="bullet-list" style="margin-bottom: 8px;">
+                            <li class="bullet-item"><strong>Serif:</strong> Memiliki "kait", sirip, atau kaki tambahan pada setiap ujung karakter huruf. Memberikan kesan formal dan klasik. Contoh: Times New Roman.</li>
+                            <li class="bullet-item"><strong>Sanserif:</strong> Polos, bersih, dan tidak memiliki kait/sirip tambahan pada ujung hurufnya. Contoh: Arial, Inter.</li>
+                            <li class="bullet-item"><strong>Monospace:</strong> Setiap karakter huruf memiliki ukuran lebar horizontal yang mutlak sama/tetap. Contoh: Courier, JetBrains Mono.</li>
+                        </ul>
+                        <p class="text-p"><strong>Metode Penyimpanan Huruf:</strong></p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Bitmap Font (Raster Font):</strong> Huruf disimpan dalam pola matriks grid segi empat. Bit 1 berarti piksel menyala, bit 0 berarti mati. Ukuran file kecil tapi pecah jika diperbesar.</li>
+                            <li class="bullet-item"><strong>Outline Font / Stroke-based Font:</strong> Huruf disimpan menggunakan rumus kurva matematika. Bisa diperbesar berukuran raksasa tanpa pecah.</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Konsep Antialiasing</h3>
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>WAJIB HAFAL DEFINISI & METODE:</strong>
+                                <p><strong>Antialiasing:</strong> Teknik untuk menghaluskan tampilan garis yang terlihat kasar atau berundak seperti tangga (jaggies) akibat keterbatasan resolusi layar monitor. Cara kerjanya adalah dengan memodifikasi tingkat intensitas warna piksel-piksel yang berada di sekitar batas tepi objek.</p>
+                                <p style="margin-top: 4px;"><strong>3 Pendekatan Antialiasing:</strong></p>
+                                <ul style="padding-left: 16px; margin-top: 2px;">
+                                    <li><em>Supersampling (Postfiltering):</em> Gambar dibuat di resolusi tinggi lalu diperkecil ke ukuran normal.</li>
+                                    <li><em>Area Sampling:</em> Menghitung rata-rata intensitas area piksel sekitar.</li>
+                                    <li><em>Piksel Phasing:</em> Menggeser sedikit posisi fisik piksel penampil.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">UTS Note (PDF 5)</h3>
+                        <p class="text-p">Jika dosen bertanya: "Apa nama efek garis berundak/tangga kasar pada monitor?" Jawabannya adalah **Jaggies**. "Apa solusinya?" Jawabannya adalah **Antialiasing**.</p>
+                    </div>
+                </section>
+
+                <!-- PDF 6a -->
+                <section class="bab-container" id="pdf6a">
+                    <h2 class="bab-title">
+                        <span class="bab-number">PDF 6a</span>
+                        Transformasi 2D
+                    </h2>
+
                     <div class="sub-section">
                         <h3 class="sub-title">1. Pengertian dan Tujuan Transformasi 2D</h3>
-                        <p class="text-p"><strong>Transformasi Geometri 2D:</strong> Metode matematika untuk
-                            memanipulasi lokasi posisi dari titik-titik piksel suatu objek grafis dengan prinsip
-                            memindahkan objek tersebut di dalam ruang koordinat tanpa merusak bentuk dasarnya.</p>
-                        <p class="text-p"><strong>Tujuan:</strong> Mengubah susunan/komposisi pemandangan, memudahkan
-                            pembuatan objek simetris, melihat objek dari sudut pandang kamera yang berbeda, serta
-                            menghasilkan efek gerak (animasi).</p>
-                    </div>
-
-                    <!-- Subsection 2 -->
-                    <div class="sub-section">
-                        <h3 class="sub-title">2. Jenis-Jenis Transformasi Geometri Dasar</h3>
-                        <ul class="bullet-list">
-                            <li class="bullet-item">
-                                <strong>Translasi (Pergeseran):</strong> Memindahkan posisi objek dari satu tempat ke
-                                tempat lain secara sejajar sepanjang sumbu X dan Y dengan jarak pergeseran ($t_x, t_y$)
-                                tertentu tanpa mengubah orientasi atau ukuran objek.
-                            </li>
-                            <li class="bullet-item">
-                                <strong>Skala (Scaling):</strong> Mengubah dimensi ukuran fisik objek menjadi membesar
-                                atau mengecil secara seragam (uniform scaling: $S_x = S_y$) atau tidak seragam
-                                (non-uniform scaling: $S_x \neq S_y$) berdasarkan faktor pengali skala.
-                            </li>
-                            <li class="bullet-item">
-                                <strong>Rotasi (Pemutaran):</strong> Memutar koordinat objek pada titik pusat origin
-                                (0,0) atau titik poros tertentu (pivot point) dengan besaran sudut $\theta$.
-                            </li>
-                            <li class="bullet-item">
-                                <strong>Refleksi (Pencerminan):</strong> Membuat bayangan terbalik (mirror) dari
-                                geometri objek terhadap garis cermin tertentu.
-                            </li>
-                            <li class="bullet-item">
-                                <strong>Shear (Distorsi):</strong> Menggeser sudut kemiringan sisi objek sehingga memicu
-                                efek distorsi bentuk yang miring.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Subsection 3 -->
-                    <div class="sub-section">
-                        <h3 class="sub-title">3. Karakteristik Transformasi 3D vs 2D</h3>
-                        <ul class="bullet-list">
-                            <li class="bullet-item">Pada ruang 3D, terdapat sumbu ketiga yaitu <strong>Sumbu Z</strong>
-                                (dimensi ruang kedalaman).</li>
-                            <li class="bullet-item">Sumbu koordinat 3D diatur dengan <strong>Kaidah Tangan
-                                    Kanan</strong> (sumbu Z positif mengarah ke arah mata kita/keluar layar) atau
-                                <strong>Kaidah Tangan Kiri</strong> (sumbu Z positif menjauhi mata kita/masuk ke dalam
-                                layar).</li>
-                            <li class="bullet-item">Rotasi 3D wajib didefinisikan secara spesifik berdasarkan poros
-                                sumbu putarnya: Rotasi terhadap sumbu X, sumbu Y, atau sumbu Z.</li>
-                            <li class="bullet-item">Refleksi 3D dilakukan terhadap bidang pemisah (bidang xy, yz, atau
-                                zx) bukan terhadap garis sumbu lagi.</li>
-                        </ul>
-                    </div>
-                </section>
-
-                <!-- Bab 4 -->
-                <section class="bab-container" id="bab4">
-                    <h2 class="bab-title">
-                        <span class="bab-number">BAB 4</span>
-                        Pengolahan Citra & Computer Vision
-                    </h2>
-
-                    <!-- Subsection 1 -->
-                    <div class="sub-section">
-                        <h3 class="sub-title">1. Pengolahan Citra vs Computer Vision</h3>
+                        <p class="text-p"><strong>Definisi:</strong> Metode matematika untuk memanipulasi posisi, orientasi, atau ukuran dari sebuah titik piksel objek. Prinsip dasarnya adalah memindahkan atau memodifikasi objek tanpa merusak karakteristik bentuk aslinya.</p>
+                        
                         <div class="alert-box important">
                             <span class="alert-icon">⭐</span>
                             <div class="alert-content">
-                                <strong>WAJIB HAFAL DEFINISI:</strong>
-                                <em>"Pengolahan citra (Image Processing) adalah kegiatan memperbaiki kualitas citra agar
-                                    mudah diinterpretasi oleh manusia atau mesin komputer. Inputnya adalah citra dan
-                                    keluarannya adalah citra baru dengan kualitas yang lebih baik."</em>
+                                <strong>WAJIB HAFAL (Tujuan Transformasi 2D):</strong>
+                                <ol style="padding-left: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px;">
+                                    <li>Mengubah atau menyesuaikan susunan komposisi pemandangan objek grafis.</li>
+                                    <li>Memudahkan dalam membuat rancangan objek desain yang simetris.</li>
+                                    <li>Melihat suatu objek dari sudut pandang (point of view) yang berbeda.</li>
+                                    <li>Membuat efek gerakan beruntun yang digunakan dalam animasi komputer.</li>
+                                </ol>
                             </div>
                         </div>
-                        <p class="text-p"><strong>Computer Vision (Analisis Citra):</strong> Proses otomatisasi tingkat
-                            tinggi yang meniru cara kerja sistem visual mata dan otak manusia untuk mengintegrasikan
-                            akuisisi citra, memproses, menganalisis, menginterpretasikan isi citra, serta mengekstrak
-                            gambaran deskripsi kuantitatif guna mengambil suatu keputusan/informasi tindakan otomatis
-                            (misal: memandu pergerakan robot atau memicu alarm).</p>
                     </div>
 
-                    <!-- Subsection 2 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">2. Fungsi dan Operasi Pengolahan Citra</h3>
+                        <h3 class="sub-title">2. Jenis-Jenis Transformasi Geometri Dasar 2D</h3>
                         <ul class="bullet-list">
-                            <li class="bullet-item"><strong>Perbaikan Kualitas (Image Enhancement):</strong>
-                                Meningkatkan kejelasan detail parameter citra secara visual (seperti menaikkan
-                                kecerahan/brightness, kontras, ketajaman/sharpening, atau memperjelas tepian/edge
-                                enhancement).</li>
-                            <li class="bullet-item"><strong>Pemugaran Citra (Image Restoration):</strong> Menghilangkan
-                                cacat/distorsi atau derau (noise) pada citra agar kembali ke bentuk asli (seperti
-                                deblurring dan noise filtering).</li>
-                            <li class="bullet-item"><strong>Kompresi Citra (Image Compression):</strong> Mereduksi
-                                ukuran bit file penyimpanan gambar.
-                                <ul
-                                    style="padding-left: 20px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px; list-style-type: circle;">
-                                    <li><em>Lossless:</em> Kompresi tanpa membuang informasi detail gambar sedikit pun
-                                        (kualitas asli tetap utuh, e.g., format .png, .tiff).</li>
-                                    <li><em>Lossy:</em> Membuang data warna yang tidak tertangkap mata manusia untuk
-                                        menekan ukuran file secara ekstrim (kualitas menurun sedikit, e.g., format
-                                        .jpg).</li>
+                            <li class="bullet-item"><strong>Translasi (Pergeseran):</strong> Memindahkan posisi objek secara lurus sejajar sumbu X dan sumbu Y tanpa mengubah ukuran maupun bentuknya. Operasi dasarnya menggunakan <strong>penjumlahan koordinat</strong>.</li>
+                            <li class="bullet-item"><strong>Scaling (Penskalaan):</strong> Mengubah ukuran dimensi objek menjadi membesar atau mengecil. Operasi dasarnya menggunakan <strong>perkalian koordinat</strong> dengan faktor skala (<code class="code-inline">Sx, Sy</code>).
+                                <ul style="padding-left: 16px; margin-top: 2px;">
+                                    <li><em>Uniform Scaling:</em> Ukuran berubah seragam (faktor pengali <code class="code-inline">Sx = Sy</code>).</li>
+                                    <li><em>Non-Uniform Scaling:</em> Ukuran berubah tidak proporsional (faktor pengali <code class="code-inline">Sx &ne; Sy</code>).</li>
+                                    <li>Jika nilai skala = 1, maka ukuran dan posisi objek mutlak tetap tidak berubah.</li>
                                 </ul>
                             </li>
-                            <li class="bullet-item"><strong>Segmentasi Citra:</strong> Memecah atau membagi suatu gambar
-                                menjadi wilayah objek-objek yang lebih kecil berdasarkan kemiripan karakteristik
-                                warna/kecerahan.</li>
+                            <li class="bullet-item"><strong>Rotasi (Pemutaran):</strong> Memutar posisi objek berdasarkan titik pusat putaran (pivot point) dengan membentuk sudut tertentu (&theta;).
+                                <div class="alert-box info" style="margin-top: 6px; padding: 10px 14px;">
+                                    <strong>ATURAN SUDUT ROTASI:</strong> Sudut putar bernilai <strong>POSITIF (+)</strong> jika diputar berlawanan arah jarum jam. Sudut putar bernilai <strong>NEGATIF (-)</strong> jika diputar searah jarum jam.
+                                </div>
+                            </li>
+                            <li class="bullet-item"><strong>Refleksi (Pencerminan):</strong> Membuat bentuk visual bayangan cermin dari suatu objek grafis.</li>
+                            <li class="bullet-item"><strong>Shear (Distorsi):</strong> Menggeser sudut objek sehingga menghasilkan efek kemiringan bentuk geometri.</li>
                         </ul>
                     </div>
 
-                    <!-- Subsection 3 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">3. Fungsi Spesifik Operasi Citra</h3>
-                        <ul class="bullet-list">
-                            <li class="bullet-item"><strong>Grayscale:</strong> Mengubah citra kaya warna (RGB 24-bit)
-                                menjadi skala keabuan (8-bit, rentang gradasi keabuan dari nilai 0 hitam hingga 255
-                                putih) demi menyederhanakan data warna sebelum masuk ke pemrosesan utama.</li>
-                            <li class="bullet-item"><strong>Blurring:</strong> Membuat citra menjadi kabur/halus dengan
-                                tujuan melembutkan tepi sudut tajam atau mereduksi bintik derau halus (noise reduction).
-                            </li>
-                            <li class="bullet-item"><strong>Thresholding:</strong> Operasi segmentasi dasar untuk
-                                memisahkan objek utama dari latar belakang dengan cara mengonversi nilai piksel menjadi
-                                biner hitam-putih mutlak (nilai 0 untuk hitam, 1 untuk putih) berdasarkan nilai batas
-                                (threshold) tertentu.</li>
-                            <li class="bullet-item"><strong>Edge Detection (Deteksi Tepi):</strong> Operasi melacak
-                                batas outline terluar objek di dalam citra dengan mencari titik koordinat perubahan
-                                intensitas piksel tetangga yang ekstrim.</li>
-                        </ul>
+                        <h3 class="sub-title">3. Sistem Koordinat Homogen</h3>
+                        <p class="text-p">Perluasan koordinat <code class="code-inline">(x, y)</code> menjadi matriks tiga elemen <code class="code-inline">(x, y, h)</code> di mana nilai <code class="code-inline">h = 1</code>.</p>
+                        <p class="text-p"><strong>Tujuan:</strong> Agar semua operasi transformasi geometri dasar (translasi, scaling, rotasi) dapat disatukan ke dalam satu bentuk operasi matematika yang seragam, yaitu perkalian matriks, sehingga memudahkan pemrograman komputer.</p>
                     </div>
 
-                    <!-- Subsection 4 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">4. Contoh Penerapan Pengolahan Citra & Vision</h3>
-                        <ul class="bullet-list">
-                            <li class="bullet-item"><strong>Kedokteran:</strong> Perekaman citra X-Ray paru-paru atau
-                                CT-Scan untuk mendeteksi sebaran wilayah sel tumor/kanker secara cepat dan akurat.</li>
-                            <li class="bullet-item"><strong>Pengenalan Karakter (OCR - Optical Character
-                                    Recognition):</strong> Memindai dokumen gambar berisi teks tulisan tangan/cetak,
-                                melacak tepi karakter, lalu menerjemahkannya menjadi teks digital yang bisa diedit.</li>
-                            <li class="bullet-item"><strong>Militer dan Satelit:</strong> Deteksi penggunaan lahan
-                                hijau, perkiraan cuaca badai, atau pelacakan target koordinat musuh dari foto satelit.
-                            </li>
-                        </ul>
+                        <h3 class="sub-title">UTS Note (PDF 6a)</h3>
+                        <p class="text-p">Translasi menggunakan prinsip penjumlahan, sedangkan Penskalaan (Scaling) dan Rotasi menggunakan prinsip perkalian. Ingat arah rotasi jarum jam karena ini jebakan utama dosen!</p>
                     </div>
                 </section>
 
-                <!-- Bab 5 -->
-                <section class="bab-container" id="bab5">
+                <!-- PDF 6b -->
+                <section class="bab-container" id="pdf6b">
                     <h2 class="bab-title">
-                        <span class="bab-number">TABEL</span>
-                        Perbandingan Konsep Materi
+                        <span class="bab-number">PDF 6b</span>
+                        Transformasi 3D
                     </h2>
 
                     <div class="sub-section">
-                        <h3 class="sub-title">1. Grafika 2D vs Grafik 3D</h3>
-                        <div class="custom-table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Karakteristik</th>
-                                        <th>Grafik 2D</th>
-                                        <th>Grafik 3D</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Sumbu Koordinat</strong></td>
-                                        <td>2 Sumbu (X, Y)</td>
-                                        <td>3 Sumbu (X, Y, Z)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Pusat Rotasi</strong></td>
-                                        <td>Menggunakan Titik Pusat (0,0) atau Pivot Point</td>
-                                        <td>Menggunakan Sumbu Koordinat (Poros Sumbu X, Y, atau Z)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Acuan Refleksi</strong></td>
-                                        <td>Berdasarkan Garis Koordinat Cermin</td>
-                                        <td>Berdasarkan Bidang Koordinat Cermin (xy, yz, atau zx)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Matriks Homogen</strong></td>
-                                        <td>Ukuran Matriks 3x3</td>
-                                        <td>Ukuran Matriks 4x4</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <h3 class="sub-title">1. Perbedaan Karakteristik Ruang 2D vs 3D</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Sumbu Koordinat:</strong> Ruang 2D hanya memiliki sumbu X (horizontal) dan Y (vertikal). Ruang 3D menambahkan sumbu ketiga, yaitu sumbu Z (dimensi kedalaman/ruang).</li>
+                            <li class="bullet-item"><strong>Representasi Titik:</strong> Menggunakan Sistem Koordinat Homogen berukuran matriks kolom 4 elemen, yaitu <code class="code-inline">[x, y, z, 1]</code>. Ukuran matriks transformasinya adalah <code class="code-inline">4 x 4</code>.</li>
+                        </ul>
                     </div>
 
                     <div class="sub-section">
-                        <h3 class="sub-title">2. Gambar Vektor vs Gambar Raster (Piksel)</h3>
-                        <div class="custom-table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Karakteristik</th>
-                                        <th>Gambar Vektor</th>
-                                        <th>Gambar Raster (Bitmap)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Elemen Penyusun</strong></td>
-                                        <td>Garis, kurva, dan rumus matematika</td>
-                                        <td>Kumpulan kotak titik-titik piksel (matriks grid)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Ketika Diperbesar (Zoom)</strong></td>
-                                        <td>Tetap tajam, halus, dan jernih berapapun diperbesar</td>
-                                        <td>Pecah, buram, dan terlihat kotak-kotaknya (jaggies)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Format File Populer</strong></td>
-                                        <td>.ai, .cdr, .svg, .dwg</td>
-                                        <td>.bmp, .gif, .jpeg, .jpg, .png, .tiff</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Ukuran File</strong></td>
-                                        <td>Cenderung kecil karena hanya menyimpan rumus data objek</td>
-                                        <td>Cenderung besar karena wajib menyimpan informasi warna per piksel</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <h3 class="sub-title">2. Aturan Sumbu dan Konvensi Kaidah Tangan</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Kaidah Tangan Kanan:</strong> Jika sumbu X positif mengarah ke kanan dan sumbu Y positif mengarah ke atas, maka sumbu Z positif mengarah mendekati mata kita (keluar dari layar monitor).</li>
+                            <li class="bullet-item"><strong>Kaidah Tangan Liri:</strong> Sumbu Z positif mengarah menjauhi mata kita (masuk ke dalam layar komputer).</li>
+                        </ul>
                     </div>
 
                     <div class="sub-section">
-                        <h3 class="sub-title">3. Computer Vision vs Pengolahan Citra</h3>
-                        <div class="custom-table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Kriteria</th>
-                                        <th>Pengolahan Citra (Image Processing)</th>
-                                        <th>Computer Vision (Analisis Citra)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Tujuan Utama</strong></td>
-                                        <td>Memperbaiki/memanipulasi kualitas citra secara visual</td>
-                                        <td>Memahami isi makna citra dan mengambil keputusan otomatis</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Bentuk Input</strong></td>
-                                        <td>Citra Digital</td>
-                                        <td>Citra Digital</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Bentuk Output</strong></td>
-                                        <td>Citra Baru yang kualitasnya lebih baik</td>
-                                        <td>Deskripsi objek, angka kuantitatif, keputusan/informasi</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Cara Kerja</strong></td>
-                                        <td>Proses matematis manipulasi nilai piksel / frekuensi</td>
-                                        <td>Meniru cara kerja indera mata dan otak manusia</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <h3 class="sub-title">3. Perbedaan Metode Operasi Dasar 3D vs 2D</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Rotasi 3D:</strong> Berbeda dengan 2D yang hanya berputar pada satu titik pusat bidang datar, rotasi 3D harus dibedakan secara spesifik berdasarkan poros sumbunya, yaitu: <strong>Rotasi terhadap Sumbu X, Rotasi terhadap Sumbu Y, atau Rotasi terhadap Sumbu Z</strong>.</li>
+                            <li class="bullet-item"><strong>Refleksi 3D:</strong> Pencerminan objek 3D dihitung terhadap bidang datar ruang, bukan terhadap garis lagi. Bidang acuannya adalah bidang XY, bidang YZ, atau bidang ZX.</li>
+                            <li class="bullet-item"><strong>Shear 3D:</strong> Distorsi kemiringan terjadi secara simultan terhadap dua sumbu ruang (misalnya terhadap sumbu X dan Z).</li>
+                        </ul>
                     </div>
 
                     <div class="sub-section">
-                        <h3 class="sub-title">4. Perbandingan Karakteristik Jenis Transformasi Geometri 2D</h3>
-                        <div class="custom-table-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Jenis Transformasi</th>
-                                        <th>Perubahan Bentuk</th>
-                                        <th>Perubahan Ukuran</th>
-                                        <th>Perubahan Posisi / Lokasi</th>
-                                        <th>Cara Operasi Utama</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Translasi</strong></td>
-                                        <td>Tidak Berubah</td>
-                                        <td>Tidak Berubah</td>
-                                        <td>Berubah (Berdasarkan parameter pergeseran tx, ty)</td>
-                                        <td>Penambahan nilai koordinat ($X' = X + tx$)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Scaling</strong></td>
-                                        <td>Tidak Berubah</td>
-                                        <td>Berubah (Membesar / Mengecil)</td>
-                                        <td>Berubah (Menjauhi / Mendekati titik origin asal)</td>
-                                        <td>Perkalian nilai koordinat ($X' = X \cdot Sx$)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Rotasi</strong></td>
-                                        <td>Tidak Berubah</td>
-                                        <td>Tidak Berubah</td>
-                                        <td>Berubah (Berputar membentuk lintasan sudut $\theta$)</td>
-                                        <td>Perkalian koordinat dengan rumus Trigonometri Cos/Sin</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Refleksi</strong></td>
-                                        <td>Tidak Berubah (Hanya Terbalik)</td>
-                                        <td>Tidak Berubah</td>
-                                        <td>Berubah (Pindah posisi ke seberang garis cermin)</td>
-                                        <td>Mengalikan sumbu koordinat cermin dengan nilai -1</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <h3 class="sub-title">UTS Note (PDF 6b)</h3>
+                        <p class="text-p">Sumbu Z positif pada kaidah tangan kanan selalu mendekati kita. Matriks homogen untuk ruang 3D berukuran **4 x 4**.</p>
                     </div>
                 </section>
 
-                <!-- Bab 6 -->
-                <section class="bab-container" id="bab6">
+                <!-- PDF 7 -->
+                <section class="bab-container" id="pdf7">
+                    <h2 class="bab-title">
+                        <span class="bab-number">PDF 7</span>
+                        Konsep Dasar Pengolahan Citra
+                    </h2>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Pengertian dan Fungsi Pengolahan Citra</h3>
+                        <p class="text-p"><strong>Definisi:</strong> Kegiatan memperbaiki kualitas tampilan visual suatu citra digital agar gambar tersebut menjadi lebih mudah diinterpretasikan oleh indera manusia atau diolah oleh mesin komputer.</p>
+                        <p class="text-p"><strong>Sifat Keluaran Citra Berdasarkan Sistem Perekaman:</strong></p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Optik:</strong> Berupa lembaran foto fisik.</li>
+                            <li class="bullet-item"><strong>Analog:</strong> Berupa aliran sinyal video kontinu (contoh: siaran gambar pada monitor televisi tabung lama).</li>
+                            <li class="bullet-item"><strong>Digital:</strong> Gambar berupa angka matriks diskrit yang disimpan langsung pada media penyimpanan magnetik. Hanya citra digital yang bisa diproses komputer.</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Operasi-Operasi Fungsional Pengolahan Citra</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Perbaikan Kualitas (Image Enhancement):</strong> Meningkatkan fitur tertentu pada gambar. Contoh: Menaikkan kecerahan (brightness), ketajaman (sharpening), dan kontras.</li>
+                            <li class="bullet-item"><strong>Pemugaran Citra (Image Restoration):</strong> Menghilangkan cacat atau gangguan visual yang merusak gambar agar kembali ke kondisi asli. Contoh: Menghilangkan kekaburan (deblurring).</li>
+                            <li class="bullet-item"><strong>Kompresi Citra (Image Compression):</strong> Meminimalkan jumlah bit memori penyimpanan gambar.
+                                <div class="alert-box important" style="margin-top: 8px;">
+                                    <span class="alert-icon">⭐</span>
+                                    <div class="alert-content">
+                                        <strong>WAJIB HAFAL TIPE KOMPRESI:</strong>
+                                        <ul style="padding-left: 16px; margin-top: 2px;">
+                                            <li><strong>Lossless Compression:</strong> Kompresi yang tidak menghilangkan informasi data sedikit pun. Kualitas gambar tetap utuh 100%. Contoh format: <code class="code-inline">.png</code>.</li>
+                                            <li><strong>Lossy Compression:</strong> Kompresi yang membuang sebagian data warna gambar yang kurang sensitif bagi mata manusia demi memperkecil ukuran file secara ekstrem. Contoh format: <code class="code-inline">.jpg / .jpeg</code>.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="bullet-item"><strong>Segmentasi Citra:</strong> Proses memecah atau membagi gambar menjadi bagian-bagian objek yang lebih kecil berdasarkan kesamaan warna, tingkat kecerahan, atau tepi objek. Operasi Segmentasi: <strong>Thresholding, Segmentasi Warna, dan Deteksi Tepi</strong>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Macam Tipe Citra Digital dan Komponennya</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item"><strong>Citra Biner (Monokrom):</strong> Citra yang setiap pikselnya hanya diwakili oleh 1 bit data. Hanya memiliki dua kemungkinan warna: Hitam (nilai 0) dan Putih (nilai 1).</li>
+                            <li class="bullet-item"><strong>Citra Skala Keabuan (Grayscale):</strong> Citra 8 bit yang memiliki rentang gradasi warna keabuan dari hitam hingga putih sebanyak 2^8 = <strong>256</strong> kombinasi warna.</li>
+                            <li class="bullet-item"><strong>Citra Warna (True Color):</strong> Citra 24 bit di mana warnanya tersusun dari perpaduan 3 warna dasar komponen primer, yaitu RGB (Red, Green, Blue) yang masing-masing berkapasitas 8 bit. Mencakup hingga 16 juta kombinasi warna.</li>
+                            <li class="bullet-item"><strong>Model Warna Cetak (CMY):</strong> Model warna Substractive (Cyan, Magenta, Yellow) yang digunakan untuk media cetak tinta kertas.</li>
+                            <li class="bullet-item"><strong>Komponen Citra Digital:</strong> Kecerahan (Brightness), Kontras (sebaran terang-gelap), Kontur (perubahan intensitas lokal), Warna, Bentuk (Shape), dan Tekstur (distribusi spasial derajat keabuan piksel bertetangga).</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">UTS Note (PDF 7)</h3>
+                        <p class="text-p">Format `.gif` digunakan untuk gambar animasi pendek di internet. Format `.bmp` sangat efisien di sistem Windows namun berukuran besar karena tidak terkompresi secara optimal.</p>
+                    </div>
+                </section>
+
+                <!-- PDF 8 -->
+                <section class="bab-container" id="pdf8">
+                    <h2 class="bab-title">
+                        <span class="bab-number">PDF 8</span>
+                        Transformasi Citra
+                    </h2>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Operasi Matematis Konvolusi (Domain Spasial)</h3>
+                        <p class="text-p"><strong>Pengertian Konvolusi:</strong> Operasi penapisan citra (image filtering) di ranah spasial yang dilakukan dengan cara mengalikan matriks piksel asli gambar dengan sebuah matriks filter kecil berukuran ganjil yang disebut <strong>Mask atau Kernel</strong>. Posisi tengah kernel bertindak sebagai piksel output.</p>
+                        
+                        <div class="alert-box important">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>WAJIB HAFAL (Fungsi Spesifik Hasil Konvolusi):</strong>
+                                <ul style="padding-left: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px;">
+                                    <li><strong>Blurring:</strong> Operasi konvolusi menggunakan filter pelembut (low-pass filter) yang bertujuan menghaluskan sudut-sudut tajam atau membuang gangguan bintik halus (noise reduction).</li>
+                                    <li><strong>Edge Detection (Deteksi Tepi):</strong> Operasi untuk melacak outline batas objek dengan mencari lonjakan nilai intensitas piksel tetangga yang berubah secara ekstrem.</li>
+                                    <li><strong>Sharpening:</strong> Operasi memperjelas detail gambar dengan cara menaikkan kontras pada area tepi objek.</li>
+                                    <li><strong>Embossing:</strong> Operasi konvolusi yang menghasilkan efek visual gambar seolah-olah terukir timbul di atas selembar logam.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Ranah Spasial vs Ranah Frekuensi (Transformasi Fourier)</h3>
+                        <p class="text-p"><strong>Masalah Ranah Spasial:</strong> Melakukan operasi konvolusi langsung pada piksel gambar beresolusi tinggi membutuhkan waktu komputasi yang sangat lama karena komputer harus melakukan miliaran operasi perkalian matriks secara berulang.</p>
+                        <p class="text-p"><strong>Solusi Ranah Frekuensi:</strong> Memindahkan manipulasi gambar dari ranah spasial (lokasi piksel) ke ranah frekuensi (sinyal gelombang cahaya) menggunakan alat matematika yang bernama <strong>Transformasi Fourier</strong>. Di ranah frekuensi, proses penapisan yang rumit berubah menjadi operasi perkalian matematika sederhana sehingga jauh lebih cepat.</p>
+                        
+                        <div class="alert-box important" style="margin-top: 8px;">
+                            <span class="alert-icon">⭐</span>
+                            <div class="alert-content">
+                                <strong>WAJIB HAFAL ALAT TRANSFORMASI:</strong>
+                                <ul style="padding-left: 16px; margin-top: 2px;">
+                                    <li><strong>Transformasi Fourier:</strong> Mengubah fungsi citra dari ranah spasial piksel <code class="code-inline">f(x,y)</code> menuju ranah frekuensi gelombang sinyal <code class="code-inline">F(u,v)</code>.</li>
+                                    <li><strong>Transformasi Fourier Balikan (Inverse):</strong> Mengembalikan data gambar yang telah selesai diolah di ranah frekuensi <code class="code-inline">F(u,v)</code> untuk diubah kembali menjadi citra spasial normal <code class="code-inline">f(x,y)</code> agar bisa dilihat oleh manusia.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">UTS Note (PDF 8)</h3>
+                        <p class="text-p">Ranah spasial mengolah komponen lokasi piksel, sedangkan ranah frekuensi mengolah komponen gelombang sinyal. Penemu teori gelombang periodik ini adalah **Joseph Fourier** pada tahun 1822.</p>
+                    </div>
+                </section>
+
+                <!-- Trik Menghafal -->
+                <section class="bab-container" id="trik">
                     <h2 class="bab-title">
                         <span class="bab-number">TRIK</span>
                         Modul: Trik Cepat Menghafal
                     </h2>
 
-                    <!-- Subsection 1 -->
                     <div class="sub-section">
                         <h3 class="sub-title">1. Mnemonik Singkatan Populer</h3>
                         <ul class="bullet-list">
                             <li class="bullet-item">
-                                <strong>P-R-A (Tahapan Grafkom):</strong> Pemodelan, Rendering, Animasi.<br>
-                                <em>Cara hafal: "Grafkom itu Paling Rajin Animasi"</em>
+                                <strong>P-R-A (3 Tahap Grafkom):</strong> Pemodeling, Rendering, Animasi.<br>
+                                <em>Cara hafal: "Grafkom itu Paling Radikal Animasinya".</em>
                             </li>
                             <li class="bullet-item">
-                                <strong>G-B-T-E (Operasi Citra):</strong> Grayscale, Blurring, Thresholding, Edge
-                                Detection.<br>
-                                <em>Cara hafal: "Dosen Citra suka Ganti Baju Tiap Exam"</em>
+                                <strong>G-B-T-E (4 Operasi Inti Citra):</strong> Grayscale, Blurring, Thresholding, Edge Detection.<br>
+                                <em>Cara hafal: "Dosen Citra suka Ganti Baju Tiap Exam".</em>
                             </li>
                         </ul>
                     </div>
 
-                    <!-- Subsection 2 -->
                     <div class="sub-section">
                         <h3 class="sub-title">2. Analogi Sederhana Realistis</h3>
+                        <p class="text-p"><strong>Vektor vs Raster &rarr; Karet Gelang vs Pasir di Pantai:</strong></p>
                         <ul class="bullet-list">
-                            <li class="bullet-item">
-                                <strong>Rendering -> Memakai Make Up:</strong> Objek wireframe 3D matematika yang polos
-                                ibarat wajah polos yang belum dirias. Proses rendering memberikan warna bedak, lipstik
-                                (warna), shading pipi (pencahayaan), dan bulu mata palsu (tekstur) agar terlihat nyata,
-                                cantik, dan menyerupai aslinya.
-                            </li>
-                            <li class="bullet-item">
-                                <strong>Vektor vs Raster -> Karet Gelang vs Foto Koran:</strong> Vektor itu seperti
-                                karet gelang (ditarik/diperbesar seberapa pun bentuknya tetap mulus). Raster itu seperti
-                                foto cetak di koran (kalau Anda zoom atau gunakan kaca pembesar, gambarnya akan berubah
-                                menjadi kotak-kotak/bintik-bintik tinta koran yang pecah).
-                            </li>
+                            <li class="bullet-item">Vektor itu seperti karet gelang. Mau kamu tarik atau perbesar sepanjang apa pun, karetnya tetap mulus tanpa putus (tidak pecah).</li>
+                            <li class="bullet-item">Raster itu seperti istana pasir di pantai. Jika dilihat dari jauh terlihat menyatu indah, tapi begitu kamu mendekat dan melihat pakai kaca pembesar (zoom), kamu baru sadar bahwa istana itu tersusun dari jutaan butir pasir kecil berbentuk kotak-kotak (piksel yang pecah).</li>
                         </ul>
                     </div>
 
-                    <!-- Subsection 3 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">3. Tips Menghafal 1 Menit Sebelum Ujian</h3>
+                        <h3 class="sub-title">3. Tips Menghafal 1 Menit Sebelum Ujian (Alur Output)</h3>
                         <div class="alert-box important">
                             <span class="alert-icon">⚡</span>
                             <div class="alert-content">
-                                <strong>Ingat Rumus Alur Logika Input-Output Ini:</strong>
-                                <ul
-                                    style="padding-left: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px;">
-                                    <li>DATA DESKRIPTIF -> <strong>GRAFKOM</strong> -> CITRA</li>
-                                    <li>CITRA -> <strong>PROCESSING (PENGOLAHAN CITRA)</strong> -> CITRA BARU</li>
-                                    <li>CITRA -> <strong>VISION (COMPUTER VISION)</strong> -> INFORMASI / KEPUTUSAN</li>
+                                <strong>Ingat Rumus Alur Logika:</strong>
+                                <ul style="padding-left: 16px; margin-top: 4px; display: flex; flex-direction: column; gap: 4px;">
+                                    <li>DATA diolah komputer menjadi &rarr; <strong>CITRA</strong> (Itu Grafika Komputer)</li>
+                                    <li>CITRA diperbaiki komputer menjadi &rarr; <strong>CITRA BARU</strong> (Itu Pengolahan Citra)</li>
+                                    <li>CITRA dipahami komputer menjadi &rarr; <strong>INFORMASI / KEPUTUSAN</strong> (Itu Computer Vision)</li>
                                 </ul>
                             </div>
                         </div>
-
-                        <p class="text-p" style="margin-top: 8px;"><strong>Arah Rotasi:</strong> Jangan sampai terbalik!
-                            Putaran searah jarum jam bernilai negatif (-) karena menyalahi arah normal diagram
-                            matematika, sedangkan putaran berlawanan jarum jam bernilai positif (+).</p>
-                        <p class="text-p"><strong>Algoritma Lingkaran Bressenham:</strong> Sistem hanya perlu menghitung
-                            koordinat pada kuadran/oktan pertama ($0^{\circ}-45^{\circ}$) saja. Sisa koordinat lingkaran
-                            lainnya langsung diperoleh menggunakan teknik pencerminan (diagonal, vertikal, horizontal)
-                            untuk menghemat waktu komputasi processor.</p>
                     </div>
 
-                    <!-- Subsection 4 -->
                     <div class="sub-section">
-                        <h3 class="sub-title">4. Teknik Mengunci Konsep yang Sering Tertukar</h3>
-                        <p class="text-p">Bagaimana membedakan kuadran pencerminan pada lingkaran Bressenham secara
-                            instan tanpa menghitung?</p>
+                        <h3 class="sub-title">4. Teknik Mengunci Konsep yang Sering Tertukar (Logika Pencerminan)</h3>
+                        <p class="text-p">Bagaimana membedakan teknik pencerminan kuadran Lingkaran Bressenham tanpa menghitung?</p>
                         <ul class="bullet-list">
-                            <li class="bullet-item">Jika posisi koordinat dibalik $(X,Y) \rightarrow (Y,X)$, itu pasti
-                                **Pencerminan Diagonal** (Kuadran 2).</li>
-                            <li class="bullet-item">Jika nilai koordinat $Y$ dikali $-1$, itu pasti **Pencerminan
-                                Vertikal** (Kuadran 3 & 4).</li>
-                            <li class="bullet-item">Jika nilai koordinat $X$ dikali $-1$, itu pasti **Pencerminan
-                                Horizontal** (Kuadran 5, 6, 7, 8).</li>
+                            <li class="bullet-item">Jika koordinat dibalik posisinya <code class="code-inline">(X, Y) &rarr; (Y, X)</code>, kata kuncinya <strong>DIAGONAL</strong> (Kuadran 2).</li>
+                            <li class="bullet-item">Jika nilai Y diberi tanda minus <code class="code-inline">(X, -Y)</code>, kata kuncinya <strong>VERTIKAL</strong> (Kuadran 3 & 4) karena arah sumbu Y negatif berada di bawah.</li>
+                            <li class="bullet-item">Jika nilai X diberi tanda minus <code class="code-inline">(-X, Y)</code>, kata kuncinya <strong>HORIZONTAL</strong> (Kuadran 5 s/d 8) karena arah sumbu X negatif berada di kiri.</li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- Bab 7 -->
-                <section class="bab-container" id="bab7">
+                <!-- Prediksi Soal -->
+                <section class="bab-container" id="prediksi">
                     <h2 class="bab-title">
-                        <span class="bab-number">PREDIKSI</span>
+                        <span class="bab-number">SOAL</span>
                         Prediksi Soal Ujian Dosen
                     </h2>
 
                     <div class="prediction-list">
-                        <!-- Soal 1 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
-                                <span class="prediction-card-title">Soal 1: Perbedaan Alur Input-Output Grafkom, Citra,
-                                    dan Vision</span>
+                                <span class="prediction-card-title">Soal 1: Perbedaan Alur Input-Output Grafkom, Citra, dan Vision</span>
                                 <span class="prediction-badge">Sangat Mungkin Keluar</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Disajikan narasi sistem (seperti sistem OCR atau robot
-                                panduan otomatis), mahasiswa diminta menentukan bagian mana yang merupakan domain
-                                pengolahan citra dan mana yang computer vision.<br>
-                                <strong>Alasan:</strong> Ini konsep fundamental paling penting untuk menguji pemahaman
-                                mahasiswa tentang batas-batas ruang lingkup mata kuliah.
+                                Menguji pemahaman tentang domain input-output: Grafika Komputer (Data deskriptif &rarr; Citra), Pengolahan Citra (Citra &rarr; Citra baru), dan Computer Vision (Citra &rarr; Informasi/Keputusan).
                             </div>
                         </div>
 
-                        <!-- Soal 2 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
                                 <span class="prediction-card-title">Soal 2: Karakteristik Gambar Vektor vs Raster</span>
                                 <span class="prediction-badge">Sangat Mungkin Keluar</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Pertanyaan jebakan tentang apa yang terjadi pada kualitas
-                                piksel ketika file ber-ekstensi `.svg` (vektor) diperbesar dibandingkan dengan file
-                                `.bmp` (raster).<br>
-                                <strong>Alasan:</strong> Dosen ingin memastikan mahasiswa paham kelebihan dan kekurangan
-                                dari masing-masing tipe format grafis digital.
+                                Pertanyaan jebakan tentang apa yang terjadi pada kualitas piksel ketika file ber-ekstensi `.svg` (vektor) diperbesar dibandingkan dengan file `.bmp` (raster).
                             </div>
                         </div>
 
-                        <!-- Soal 3 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
                                 <span class="prediction-card-title">Soal 3: Aturan Sudut Rotasi Geometri 2D</span>
                                 <span class="prediction-badge">Sangat Mungkin Keluar</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menanyakan nilai tanda derajat sudut (apakah positif atau
-                                negatif) jika suatu objek segitiga diputar searah jarum jam sebesar $90^{\circ}$
-                                (Jawaban: $-90^{\circ}$).<br>
-                                <strong>Alasan:</strong> Aturan arah sudut rotasi (+/-) adalah jebakan ujian tertulis
-                                klasik yang menguji ketelitian matematis mahasiswa.
+                                Menanyakan tanda derajat sudut: POSITIF jika berlawanan arah jarum jam, dan NEGATIF jika searah jarum jam.
                             </div>
                         </div>
 
-                        <!-- Soal 4 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
-                                <span class="prediction-card-title">Soal 4: Logika Pencerminan Algoritma Lingkaran
-                                    Bressenham</span>
+                                <span class="prediction-card-title">Soal 4: Logika Pencerminan Algoritma Lingkaran Bressenham</span>
                                 <span class="prediction-badge">Sangat Mungkin Keluar</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> "Untuk mencari titik lingkaran pada Kuadran 2 berdasarkan
-                                Kuadran 1, teknik pencerminan geometri yang digunakan adalah..." (Jawaban: Pencerminan
-                                Diagonal / Tukar nilai X dan Y).<br>
-                                <strong>Alasan:</strong> Menguji pemahaman algoritma pembuatan oktan lingkaran simetris.
+                                Menguji pencerminan diagonal oktan: Kuadran 2 dicari dengan menukar posisi koordinat X dan Y <code class="code-inline">(a,b) &rarr; (b,a)</code>.
                             </div>
                         </div>
 
-                        <!-- Soal 5 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
                                 <span class="prediction-card-title">Soal 5: Kompresi Gambar Lossy vs Lossless</span>
                                 <span class="prediction-badge">Sangat Mungkin Keluar</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Teori mengenai format berkas JPEG yang membuang data warna
-                                yang tidak tertangkap mata manusia demi menekan ukuran penyimpanan berkas.<br>
-                                <strong>Alasan:</strong> Memahami manajemen ukuran file gambar merupakan aplikasi
-                                penting dalam pengolahan data citra digital.
+                                Teori format berkas: PNG menggunakan Lossless (kualitas tetap utuh), JPEG menggunakan Lossy (sebagian data dibuang).
                             </div>
                         </div>
 
-                        <!-- Soal 6 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
                                 <span class="prediction-card-title">Soal 6: Fungsi Spesifik Operasi Thresholding</span>
-                                <span class="prediction-badge">Sangat Mungkin Keluar</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menguji pemahaman bahwa thresholding digunakan untuk
-                                segmentasi biner (mengubah citra menjadi hitam-putih tulen 0 dan 1).<br>
-                                <strong>Alasan:</strong> Merupakan metode segmentasi citra paling dasar dan krusial.
-                            </div>
-                        </div>
-
-                        <!-- Soal 7 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
-                                <span class="prediction-card-title">Soal 7: Karakteristik Komponen Output Grafik
-                                    Interaktif (Plotter)</span>
-                                <span class="prediction-badge">Sangat Mungkin Keluar</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menanyakan perangkat keras output yang paling efektif
-                                untuk mencetak desain blueprint arsitektur ukuran raksasa.<br>
-                                <strong>Alasan:</strong> Sesuai kisi-kisi mengenai identifikasi perangkat keras output
-                                grafik komputer.
-                            </div>
-                        </div>
-
-                        <!-- Soal 8 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
-                                <span class="prediction-card-title">Soal 8: Sumbu dan Karakteristik Sumbu Koordinat
-                                    3D</span>
-                                <span class="prediction-badge">Sangat Mungkin Keluar</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menanyakan arah pergerakan sumbu Z positif pada kaidah
-                                tangan kanan komputer grafis (Jawaban: Mendekati pengamat / keluar layar).<br>
-                                <strong>Alasan:</strong> Sumbu koordinat adalah konsep pembeda utama materi transformasi
-                                2D menuju 3D.
-                            </div>
-                        </div>
-
-                        <!-- Soal 9 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
                                 <span class="prediction-badge">Mungkin Keluar</span>
-                                <span class="prediction-card-title">Soal 9: Perbedaan Garis Berdasarkan Posisi</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Teori inkrementasi sumbu: Jika Sumbu X bertambah konstan
-                                dan Sumbu Y konstan, garis apa yang terbentuk? (Jawaban: Horizontal).<br>
-                                <strong>Alasan:</strong> Menguji logika sumbu piksel pembentuk garis dasar.
+                                Menguji pemahaman bahwa thresholding menghasilkan citra biner (hitam-putih mutlak 0 dan 1) untuk memisahkan objek dari latar belakang.
                             </div>
                         </div>
 
-                        <!-- Soal 10 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
+                                <span class="prediction-card-title">Soal 7: Perangkat Output Grafik Khusus (Plotter)</span>
                                 <span class="prediction-badge">Mungkin Keluar</span>
-                                <span class="prediction-card-title">Soal 10: Pengertian Teknik Antialiasing</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menanyakan istilah untuk proses memodifikasi piksel
-                                sekitar batas objek kasar agar tampak lebih halus di layar monitor (Jawaban:
-                                Antialiasing).<br>
-                                <strong>Alasan:</strong> Merupakan atribut primitif output penting pada sistem tampilan
-                                komputer.
+                                Menguji identifikasi Plotter sebagai printer beresolusi tinggi berukuran raksasa khusus blueprint teknik.
                             </div>
                         </div>
 
-                        <!-- Soal 11 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
+                                <span class="prediction-card-title">Soal 8: Sumbu Z pada Kaidah Tangan Kanan 3D</span>
                                 <span class="prediction-badge">Mungkin Keluar</span>
-                                <span class="prediction-card-title">Soal 11: Sejarah Sistem Grafik Interaktif
-                                    (Sketchpad)</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Siapa tokoh penemu sistem grafis interaktif Sketchpad pada
-                                tahun 1963? (Jawaban: Ivan Sutherland).<br>
-                                <strong>Alasan:</strong> Sejarah dasar kemunculan sistem operasi grafis interaktif
-                                modern di dunia komputer.
+                                Pada kaidah tangan kanan 3D, sumbu Z positif mengarah keluar layar monitor mendekati pengamat.
                             </div>
                         </div>
 
-                        <!-- Soal 12 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
-                                <span class="prediction-badge">Mungkin Keluar</span>
-                                <span class="prediction-card-title">Soal 12: Pengertian Fungsi Primitif Titik</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Pertanyaan definisi: Satuan gambar terkecil yang tidak
-                                memiliki panjang, lebar, dan tinggi disebut... (Jawaban: Titik).<br>
-                                <strong>Alasan:</strong> Merupakan fondasi elemen dasar pembentuk grafik komputer.
-                            </div>
-                        </div>
-
-                        <!-- Soal 13 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
-                                <span class="prediction-badge">Mungkin Keluar</span>
-                                <span class="prediction-card-title">Soal 13: Model Warna CMY vs RGB</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menanyakan model warna apa yang digunakan pada sistem
-                                pancaran monitor komputer dibandingkan dengan sistem tinta mesin printer percetakan.<br>
-                                <strong>Alasan:</strong> Teori warna dasar sering keluar untuk menguji aspek output
-                                piranti keras.
-                            </div>
-                        </div>
-
-                        <!-- Soal 14 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
-                                <span class="prediction-badge">Mungkin Keluar</span>
-                                <span class="prediction-card-title">Soal 14: Konsep Ranah Spasial vs Ranah Frekuensi
-                                    Citra</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menanyakan apa arti memanipulasi citra dalam ranah
-                                frekuensi (Jawaban: Memanipulasi nilai sinyal gelombang cahaya citra, bukan piksel
-                                langsung).<br>
-                                <strong>Alasan:</strong> Merupakan materi krusial dari bab transformasi citra tingkat
-                                lanjut.
-                            </div>
-                        </div>
-
-                        <!-- Soal 15 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
-                                <span class="prediction-badge">Mungkin Keluar</span>
-                                <span class="prediction-card-title">Soal 15: Fungsi Operasi Deteksi Tepi (Edge
-                                    Detection)</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menguji pemahaman tujuan edge detection untuk melacak
-                                kontur perubahan intensitas ekstrem piksel bertetangga.<br>
-                                <strong>Alasan:</strong> Merupakan salah satu operasi utama pengolahan citra.
-                            </div>
-                        </div>
-
-                        <!-- Soal 16 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
+                                <span class="prediction-card-title">Soal 9: P-R-A (Tahapan Grafkom)</span>
                                 <span class="prediction-badge">Latihan Tambahan</span>
-                                <span class="prediction-card-title">Soal 16: Pengertian Penskalaan (Scaling)</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menguji definisi operasi transformasi geometri yang
-                                mengubah dimensi ukuran objek.<br>
-                                <strong>Alasan:</strong> Bagian dari materi dasar transformasi geometri 2D.
+                                Tiga tahapan utama pembuatan grafika komputer secara berurutan: Pemodelan (Modelling), Rendering, dan Animasi.
                             </div>
                         </div>
 
-                        <!-- Soal 17 -->
                         <div class="prediction-card">
                             <div class="prediction-card-header">
+                                <span class="prediction-card-title">Soal 10: Sistem Koordinat Homogen</span>
                                 <span class="prediction-badge">Latihan Tambahan</span>
-                                <span class="prediction-card-title">Soal 17: Klasifikasi Rumpun Huruf Serif vs
-                                    Sanserif</span>
                             </div>
                             <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Memberikan contoh font Arial lalu menanyakan masuk ke
-                                kelompok klasifikasi typeface mana (Jawaban: Sans Serif).<br>
-                                <strong>Alasan:</strong> Bagian dari materi penataan teks grafis komputer.
-                            </div>
-                        </div>
-
-                        <!-- Soal 18 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
-                                <span class="prediction-badge">Latihan Tambahan</span>
-                                <span class="prediction-card-title">Soal 18: Pengertian Siklus Retrace (Teknologi
-                                    Raster)</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menanyakan istilah untuk pergerakan elektron kembali dari
-                                posisi kanan bawah menuju posisi kiri atas layar monitor kuno (Jawaban: Vertical
-                                Retrace).<br>
-                                <strong>Alasan:</strong> Menguji dasar pengetahuan cara kerja perangkat keras display
-                                raster.
-                            </div>
-                        </div>
-
-                        <!-- Soal 19 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
-                                <span class="prediction-badge">Latihan Tambahan</span>
-                                <span class="prediction-card-title">Soal 19: Tiga Tahap Utama Pembuatan Grafika
-                                    Komputer</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Mengurutkan atau menjelaskan arti tahapan Pemodelan,
-                                Rendering, dan Animasi pada grafika komputer.<br>
-                                <strong>Alasan:</strong> Merupakan konsep paling mendasar di Bab 1.
-                            </div>
-                        </div>
-
-                        <!-- Soal 20 -->
-                        <div class="prediction-card">
-                            <div class="prediction-card-header">
-                                <span class="prediction-badge">Latihan Tambahan</span>
-                                <span class="prediction-card-title">Soal 20: Transformasi Geometri Shear
-                                    (Distorsi)</span>
-                            </div>
-                            <div class="prediction-detail">
-                                <strong>Bentuk Soal:</strong> Menanyakan jenis transformasi 2D yang memicu efek
-                                kemiringan sudut atau distorsi objek geometri (Jawaban: Shear).<br>
-                                <strong>Alasan:</strong> Melengkapi pemahaman mengenai seluruh jenis transformasi
-                                geometri dasar 2D.
+                                Menyatukan seluruh operasi transformasi geometri dasar 2D (translasi, scaling, rotasi) ke dalam perkalian matriks yang seragam.
                             </div>
                         </div>
                     </div>
@@ -1542,13 +1307,10 @@
         </main>
 
         <!-- Footer -->
-        <header
-            style="margin-top: 48px; border-bottom: none; border-top: 1px solid var(--border-color); padding-top: 24px; padding-bottom: 0;">
+        <header style="margin-top: 48px; border-bottom: none; border-top: 1px solid var(--border-color); padding-top: 24px; padding-bottom: 0;">
             <div style="width: 100%; text-align: center;">
-                <p style="font-size: 11px; color: var(--text-secondary);">Dibuat untuk latihan mandiri UTS Grafik
-                    Komputer dan Pengolahan Citra.</p>
-                <p style="margin-top: 4px; font-size: 11px; color: var(--accent); font-weight: 700;">Siti Aisyah Edition
-                </p>
+                <p style="font-size: 11px; color: var(--text-secondary);">Dibuat untuk latihan mandiri UTS Grafik Komputer dan Pengolahan Citra.</p>
+                <p style="margin-top: 4px; font-size: 11px; color: var(--accent); font-weight: 700;">Siti Aisyah Edition</p>
             </div>
         </header>
     </div>
