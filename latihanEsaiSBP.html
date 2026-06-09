@@ -859,6 +859,87 @@
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Keyword Hints Style */
+        .hint-toggle-container {
+            margin-top: 14px;
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .hint-switch-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            user-select: none;
+            transition: var(--transition);
+            width: fit-content;
+        }
+
+        .hint-switch-label:hover {
+            color: var(--accent);
+        }
+
+        .hint-switch-label input[type="checkbox"] {
+            accent-color: var(--accent);
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
+        .keyword-hints-box {
+            display: none;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(234, 179, 8, 0.03);
+            border: 1px dashed rgba(234, 179, 8, 0.25);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .keyword-hints-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .hints-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .hint-badge {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .hint-badge svg {
+            flex-shrink: 0;
+        }
+
+        .hint-badge:hover {
+            background: rgba(234, 179, 8, 0.06);
+            border-color: rgba(234, 179, 8, 0.3);
+            color: var(--text-primary);
+        }
     </style>
 </head>
 
@@ -1024,6 +1105,20 @@
 
                     <div class="question-text-essay" id="q-question-text">
                         Loading pertanyaan...
+                    </div>
+
+                    <!-- Keyword Hints Toggle & Box -->
+                    <div class="hint-toggle-container" id="hint-toggle-container">
+                        <label class="hint-switch-label">
+                            <input type="checkbox" id="toggle-keyword-hints">
+                            <span>Tampilkan Petunjuk Kata Kunci</span>
+                        </label>
+                        <div class="keyword-hints-box" id="keyword-hints-box">
+                            <span class="keyword-hints-title">Petunjuk Kata Kunci / Konsep Penting:</span>
+                            <div class="hints-list" id="hints-list">
+                                <!-- Loaded dynamically -->
+                            </div>
+                        </div>
                     </div>
 
                     <div class="essay-textarea-wrapper">
@@ -2608,6 +2703,7 @@
             initAudio();
             initLocalStorage();
             renderSidebarQuestions();
+            initKeywordHintsState();
             loadQuestion(0);
             setupEventListeners();
         });
@@ -2710,6 +2806,19 @@
             sbpEssayDrafts = JSON.parse(localStorage.getItem('sbp_essay_drafts')) || {};
             renderHistoryList();
             updateTotalDoneBadge();
+        }
+
+        // Initialize Keyword Hints Toggle State
+        function initKeywordHintsState() {
+            const showHints = localStorage.getItem('sbp_show_keyword_hints') === 'true';
+            const checkbox = document.getElementById('toggle-keyword-hints');
+            if (checkbox) {
+                checkbox.checked = showHints;
+                const box = document.getElementById('keyword-hints-box');
+                if (box) {
+                    box.style.display = showHints ? 'block' : 'none';
+                }
+            }
         }
 
         function saveHistoryItem(questionId, score, answer) {
@@ -2818,8 +2927,12 @@
             const textInput = document.getElementById('essay-answer-input');
             const evalBox = document.getElementById('essay-evaluation-box');
             
-            // Hide evaluation area when loading a new card
-            evalBox.classList.remove('visible');
+            // Hide evaluation area when loading a new card, unless in evaluated simulation mode
+            if (appMode === 'practice' || !simIsEvaluated) {
+                evalBox.classList.remove('visible');
+            } else if (appMode === 'sim' && simIsEvaluated) {
+                evalBox.classList.add('visible');
+            }
 
             let q;
             if (appMode === 'practice') {
@@ -2829,6 +2942,15 @@
                 document.getElementById('prev-btn-essay').disabled = idx === 0;
                 document.getElementById('next-btn-essay').disabled = idx === ALL_QUESTIONS.length - 1;
                 
+                // Show hint toggle and load hints
+                const hintToggle = document.getElementById('hint-toggle-container');
+                if (hintToggle) hintToggle.style.display = 'flex';
+                renderKeywordHints(q);
+
+                // Always show reveal button in practice mode
+                const revealBtn = document.getElementById('reveal-ans-btn');
+                if (revealBtn) revealBtn.style.display = 'inline-block';
+
                 // Set draft answer
                 textInput.value = getAnswerDraft(q.id);
             } else {
@@ -2838,6 +2960,20 @@
                 document.getElementById('next-btn-essay').style.display = 'block';
                 document.getElementById('prev-btn-essay').disabled = idx === 0;
                 document.getElementById('next-btn-essay').disabled = idx === 9; // Max 10 questions
+
+                // Hide hint toggle in simulation
+                const hintToggle = document.getElementById('hint-toggle-container');
+                if (hintToggle) hintToggle.style.display = 'none';
+
+                // Hide reveal button during simulation, show it if completed/evaluated
+                const revealBtn = document.getElementById('reveal-ans-btn');
+                if (revealBtn) {
+                    if (simIsRunning) {
+                        revealBtn.style.display = 'none';
+                    } else {
+                        revealBtn.style.display = 'inline-block';
+                    }
+                }
 
                 textInput.value = simAnswers[q.id] || "";
             }
@@ -2908,6 +3044,25 @@
             score = Math.min(score, 100);
             rubricScore = score;
             document.getElementById('self-eval-score-label').innerText = `Skor: ${score}%`;
+        }
+
+        // Render Keyword Hints dynamically
+        function renderKeywordHints(question) {
+            const hintsList = document.getElementById('hints-list');
+            if (!hintsList) return;
+            hintsList.innerHTML = '';
+            
+            question.rubric.forEach(item => {
+                const span = document.createElement('span');
+                span.className = 'hint-badge';
+                span.innerHTML = `
+                    <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; fill: none; stroke: var(--accent); stroke-width: 3;">
+                        <circle cx="12" cy="12" r="10"/>
+                    </svg>
+                    <span>${item.text}</span>
+                `;
+                hintsList.appendChild(span);
+            });
         }
 
         // Setup Strict Simulation mode UI and logic
@@ -3147,7 +3302,7 @@
             // Action buttons
             document.getElementById('reveal-ans-btn').addEventListener('click', () => {
                 const answerText = document.getElementById('essay-answer-input').value;
-                if (answerText.trim().length < 5) {
+                if (appMode !== 'practice' && answerText.trim().length < 5) {
                     playSynthSound('warn');
                     alert('Mohon ketikkan draf jawaban esai Anda terlebih dahulu sebelum membuka rubrik pembahasan!');
                     return;
@@ -3155,6 +3310,19 @@
                 playSynthSound('click');
                 document.getElementById('essay-evaluation-box').classList.toggle('visible');
             });
+
+            // Toggle keyword hints checkbox
+            const hintCheckbox = document.getElementById('toggle-keyword-hints');
+            if (hintCheckbox) {
+                hintCheckbox.addEventListener('change', (e) => {
+                    playSynthSound('click');
+                    const box = document.getElementById('keyword-hints-box');
+                    if (box) {
+                        box.style.display = e.target.checked ? 'block' : 'none';
+                    }
+                    localStorage.setItem('sbp_show_keyword_hints', e.target.checked);
+                });
+            }
 
             // Manual Save draft button
             document.getElementById('save-draft-btn').addEventListener('click', () => {
