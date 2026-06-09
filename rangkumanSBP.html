@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rangkuman SBP - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #06080c;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #a16207 0%, #06080c 100%);
+            --panel-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #eab308;
+            --accent-glow: rgba(234, 179, 8, 0.15);
+            --accent-hover: #ca8a04;
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #fef3c7 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(202, 138, 4, 0.15);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #ca8a04;
+            --accent-glow: rgba(202, 138, 4, 0.08);
+            --accent-hover: #a16207;
+            --shadow: 0 12px 40px 0 rgba(202, 138, 4, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #06080c;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        [data-theme="light"] .brand-logo {
+            color: white;
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Layout Grid */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 900px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar TOC */
+        .toc-sidebar {
+            position: sticky;
+            top: 24px;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .toc-sidebar {
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .sidebar-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .toc-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .toc-item {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 12.5px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toc-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .toc-item.active {
+            background: var(--accent);
+            color: #06080c;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        [data-theme="light"] .toc-item.active {
+            color: white;
+        }
+
+        .toc-number {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+
+        .toc-item.active .toc-number {
+            background: rgba(255, 255, 255, 0.2);
+            color: inherit;
+        }
+
+        /* Content Area */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 14.5px;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* Bab Containers */
+        .bab-container {
+            scroll-margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .bab-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bab-number {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        /* Material Subsections */
+        .sub-section {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            transition: var(--transition);
+        }
+
+        .sub-section:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .sub-title {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+        }
+
+        .sub-title::before {
+            content: '';
+            width: 4px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .text-p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bullet-item {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .bullet-item::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Styled Cards (Alert Box) */
+        .alert-box {
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            border: 1px solid transparent;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+
+        .alert-box.important {
+            background: rgba(234, 179, 8, 0.05);
+            border-color: rgba(234, 179, 8, 0.2);
+            color: #d97706;
+        }
+
+        [data-theme="dark"] .alert-box.important {
+            color: #fbbf24;
+        }
+
+        .alert-box.info {
+            background: rgba(217, 119, 6, 0.05);
+            border-color: rgba(217, 119, 6, 0.2);
+            color: #b45309;
+        }
+
+        [data-theme="dark"] .alert-box.info {
+            color: #f59e0b;
+        }
+
+        .alert-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .alert-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .alert-content strong {
+            color: var(--text-primary);
+        }
+
+        /* Mnemonic Box */
+        .mnemonic-box {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px dashed var(--border-color);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mnemonic-box strong {
+            color: var(--accent);
+        }
+
+        /* Table design */
+        .custom-table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            font-weight: 700;
+            padding: 14px 16px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 14px 16px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            line-height: 1.5;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        /* Formula block */
+        .formula-block {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.25);
+            border-left: 4px solid var(--accent);
+            padding: 12px 18px;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+            color: var(--text-primary);
+            margin: 8px 0;
+            display: inline-block;
+        }
+
+        /* Empty state */
+        .no-results {
+            text-align: center;
+            padding: 48px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 32px 0 24px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>SBP Rangkuman Materi</h1>
+                    <p>Sistem Berbasis Pengetahuan</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="workspace-grid">
+            <!-- Sidebar TOC (Table of Contents) -->
+            <div class="toc-sidebar">
+                <div class="glass-panel">
+                    <h3 class="sidebar-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6h16M4 12h16M4 18h7" stroke-linecap="round"/>
+                        </svg>
+                        Daftar Isi
+                    </h3>
+                    <div class="toc-list">
+                        <button class="toc-item active" data-target="bab1">
+                            <span class="toc-number">Bab 1</span>
+                            <span>Pengantar Sistem Pakar</span>
+                        </button>
+                        <button class="toc-item" data-target="bab2">
+                            <span class="toc-number">Bab 2</span>
+                            <span>Klasifikasi Representasi</span>
+                        </button>
+                        <button class="toc-item" data-target="bab3">
+                            <span class="toc-number">Bab 3</span>
+                            <span>Logika Proposisi</span>
+                        </button>
+                        <button class="toc-item" data-target="bab4">
+                            <span class="toc-number">Bab 4</span>
+                            <span>Logika Predikat & Kuantor</span>
+                        </button>
+                        <button class="toc-item" data-target="bab5">
+                            <span class="toc-number">Bab 5</span>
+                            <span>Forward Chaining</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Search Box -->
+                <div class="search-container">
+                    <input type="text" id="search-box" class="search-input" placeholder="Cari materi, konsep, aturan, atau rumus...">
+                </div>
+
+                <div class="no-results" id="no-results">
+                    Materi tidak ditemukan. Coba ketik kata kunci lain.
+                </div>
+
+                <!-- Bab 1 -->
+                <section class="bab-container" id="bab1">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 1</span>
+                        Pengantar Sistem Pakar / Sistem Berbasis Pengetahuan
+                    </h2>
+
+                    <!-- Subsection 1 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Definisi Sistem Pakar</h3>
+                        <p class="text-p"><strong>Sistem Pakar (Expert System):</strong> Program komputer cerdas yang dirancang untuk meniru (menduplikasi) kemampuan berpikir, menganalisa, dan memecahkan masalah dari seorang pakar pada domain bidang keahlian tertentu.</p>
+                        
+                        <div class="alert-box important">
+                            <span class="alert-icon">💡</span>
+                            <div class="alert-content">
+                                <strong>Definisi Menurut Ahli (Martin & Oxman, 1988):</strong>
+                                Sistem berbasis komputer yang menggunakan <strong>pengetahuan (knowledge)</strong>, <strong>fakta-fakta (facts)</strong>, dan <strong>teknik penalaran (inference techniques)</strong> dalam memecahkan masalah yang biasanya hanya bisa diselesaikan oleh seorang pakar di bidang tersebut.
+                            </div>
+                        </div>
+
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Nama Lain:</strong> Sering disebut juga sebagai <em>Knowledge Based System</em> (Sistem Berbasis Pengetahuan) karena operasinya digerakkan oleh ketersediaan basis pengetahuan.
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Batasan Peran:</strong> Sistem Pakar berfungsi sebagai asisten, penasehat, atau konsultan komputer yang cerdas bagi pengguna, <strong>bukan untuk menggantikan</strong> posisi pakar manusia secara mutlak.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Subsection 2 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Tiga Komponen Utama Sistem Pakar</h3>
+                        <p class="text-p">Arsitektur dasar Sistem Pakar tersusun atas tiga modul vital yang saling berinteraksi:</p>
+                        
+                        <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 10px; color: var(--text-secondary); font-size: 13.5px;">
+                            <li>
+                                <strong>Basis Pengetahuan (Knowledge Base):</strong> Berisi kumpulan fakta, ide, keterhubungan, serta aturan-aturan logika (kaidah) dari domain masalah spesifik yang diperoleh dari pakar.
+                            </li>
+                            <li>
+                                <strong>Mesin Inferensi (Inference Engine):</strong> "Otak" sistem yang menganalisa pengetahuan yang ada dan menarik kesimpulan logis berdasarkan aturan-aturan dalam basis pengetahuan dan fakta input kasus.
+                            </li>
+                            <li>
+                                <strong>Antarmuka Pengguna (User Interface):</strong> Media interaksi tempat pengguna memberikan query (pertanyaan) kasus dan sistem menyajikan advice (solusi/saran).
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- Subsection 3 -->
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Perbandingan Fungsi: Sistem Pakar vs SPK</h3>
+                        <p class="text-p">Perbedaan mendasar peran Sistem Pakar dengan Sistem Penunjang Keputusan (SPK) di dunia kerja:</p>
+                        <div class="custom-table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Kriteria</th>
+                                        <th>Sistem Pakar (Expert System)</th>
+                                        <th>Sistem Penunjang Keputusan (SPK)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Fokus Fungsi</strong></td>
+                                        <td>Mendiagnosis, mendeteksi, mengidentifikasi, dan memberikan saran konsultan.</td>
+                                        <td>Memilih alternatif solusi, menyeleksi kandidat, dan menilai kelayakan penerimaan.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Kemampuan</strong></td>
+                                        <td>Meniru pemecahan masalah pakar secara mandiri.</td>
+                                        <td>Membantu pengambil keputusan (manajer) mengolah data kuantitatif.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Output Utama</strong></td>
+                                        <td>Diagnosis masalah dan advice penyelesaian.</td>
+                                        <td>Rekomendasi urutan peringkat alternatif terbaik.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bab 2 -->
+                <section class="bab-container" id="bab2">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 2</span>
+                        Klasifikasi Representasi Pengetahuan
+                    </h2>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Karakteristik Representasi Pengetahuan</h3>
+                        <p class="text-p">Menurut Turban (2001), representasi pengetahuan adalah metode penyusunan pengetahuan agar siap diproses secara digital. Karakteristik umumnya:</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">Dapat diprogram dengan beragam bahasa komputer dan disimpan dalam memori komputer.</li>
+                            <li class="bullet-item">Dirancang sedemikian rupa sehingga fakta-fakta dapat dimanfaatkan oleh mesin inferensi untuk proses penalaran (reasoning).</li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Empat Klasifikasi Representasi Pengetahuan</h3>
+                        <p class="text-p">Menurut Mylopoulus dan Levesque, terdapat 4 kategori utama skema representasi pengetahuan:</p>
+                        
+                        <div class="custom-table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Kategori</th>
+                                        <th>Deskripsi & Konsep</th>
+                                        <th>Contoh / Penerapan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Representasi Logika</strong></td>
+                                        <td>Menggunakan ekspresi-ekspresi logika formal (matematis) untuk merepresentasikan fakta dan aturan. Sangat presisi.</td>
+                                        <td>Bahasa pemrograman <strong>PROLOG</strong>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Representasi Prosedural</strong></td>
+                                        <td>Menggambarkan pengetahuan sebagai sekumpulan instruksi langkah demi langkah atau kaidah berformat IF-THEN untuk memecahkan masalah.</td>
+                                        <td>Kaidah penalaran berbasis aturan (Rule-based).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Representasi Network (Jaringan)</strong></td>
+                                        <td>Menangkap pengetahuan sebagai struktur graf berarah di mana node mewakili konsep dan edge mewakili hubungan antar konsep.</td>
+                                        <td>Jaringan Semantik (<em>Semantic Network</em>).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Representasi Terstruktur</strong></td>
+                                        <td>Perluasan dari representasi network di mana setiap simpulnya (node) berupa struktur data kompleks berisi slot (atribut) dan nilai (value).</td>
+                                        <td>Representasi berbasis kerangka (<em>Frame-Based</em>).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mnemonic-box" style="margin-top: 14px;">
+                            <span class="alert-icon">🔑</span>
+                            <div>
+                                <strong>Mnemonic Hafalan:</strong> Klasifikasi Representasi = <strong>Lo-Pro-Net-Struk</strong> (Logika, Prosedural, Network, Terstruktur).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Detail Jaringan Semantik & Frame</h3>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Jaringan Semantik:</strong> Terdiri dari <strong>Node</strong> (objek, konsep, sifat, situasi) dan <strong>Edge/Arc</strong> (panah relasi berarah seperti <em>is-a</em> [sejenis] atau <em>has-a</em> [mempunyai]).
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Frame (Kerangka):</strong> Mengelompokkan atribut objek ke dalam satu wadah. Mendukung pewarisan sifat (<em>inheritance</em>). 
+                                <br><em>Contoh Frame:</em>
+                                <div style="font-family: var(--font-mono); font-size:12px; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; margin-top:6px;">
+                                    Frame: Penyakit<br>
+                                    - Nama: Flu<br>
+                                    - Gejala: [Demam, Batuk, Pilek]<br>
+                                    - Obat: Parasetamol
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Bab 3 -->
+                <section class="bab-container" id="bab3">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 3</span>
+                        Logika Proposisi & Inferensi Logika
+                    </h2>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Notasi & Operator Logika Proposisi</h3>
+                        <p class="text-p">Logika proposisi hanya menilai kebenaran (True/False) suatu pernyataan utuh. Simbol operator yang wajib diingat:</p>
+                        
+                        <div class="custom-table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nama Operator</th>
+                                        <th>Simbol Notasi</th>
+                                        <th>Makna Kata</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Konjungsi</td>
+                                        <td style="font-size: 16px; font-weight: bold;">&and;</td>
+                                        <td>DAN (AND)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Disjungsi</td>
+                                        <td style="font-size: 16px; font-weight: bold;">&or;</td>
+                                        <td>ATAU (OR)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Negasi</td>
+                                        <td style="font-size: 16px; font-weight: bold;">~ / &not;</td>
+                                        <td>TIDAK / BUKAN (NOT)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Implikasi</td>
+                                        <td style="font-size: 16px; font-weight: bold;">&rarr;</td>
+                                        <td>JIKA... MAKA... (IF-THEN)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Biimplikasi / Ekuivalensi</td>
+                                        <td style="font-size: 16px; font-weight: bold;">&harr;</td>
+                                        <td>JIKA DAN HANYA JIKA (IF AND ONLY IF)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Aturan Inferensi Logika (Wajib Dihafal)</h3>
+                        <p class="text-p">Untuk memecahkan studi kasus deduktif, gunakan aturan formal berikut:</p>
+                        
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Modus Ponens:</strong> Jika syarat implikasi dan pemicunya bernilai benar, maka konklusinya benar.
+                                <br><span class="formula-block">[(p &rarr; q) &and; p] &rarr; q</span>
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Modus Tollens:</strong> Jika syarat implikasi benar namun akibatnya dinegasikan, maka pemicunya juga dinegasikan.
+                                <br><span class="formula-block">[(p &rarr; q) &and; ~q] &rarr; ~p</span>
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Silogisme Disjungtif:</strong> Jika ada dua pilihan dan salah satunya terbukti salah, maka pilihan yang lain pasti benar.
+                                <br><span class="formula-block">[(p &or; q) &and; ~p] &rarr; q</span> atau <span class="formula-block">[(p &or; q) &and; ~q] &rarr; p</span>
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Silogisme Hipotesis (Transitif):</strong> Menghubungkan dua implikasi berantai.
+                                <br><span class="formula-block">[(p &rarr; q) &and; (q &rarr; r)] &rarr; (p &rarr; r)</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Pengujian Validitas: Tautologi</h3>
+                        <p class="text-p">Sebuah argumen inferensi dinyatakan <strong>Valid</strong> jika semua premis bernilai benar maka kesimpulannya mutlak benar, sehingga dalam tabel kebenaran membentuk sebuah <strong>Tautologi</strong> (seluruh baris hasil akhir bernilai True).</p>
+                    </div>
+                </section>
+
+                <!-- Bab 4 -->
+                <section class="bab-container" id="bab4">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 4</span>
+                        Logika Predikat & Kuantor
+                    </h2>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Mengapa Logika Predikat Dibutuhkan?</h3>
+                        <p class="text-p">Logika proposisi tidak dapat mendeskripsikan objek secara detail atau membedakan kuantitas objek (seperti "semua" atau "sebagian"). Logika predikat memecah kalimat menjadi predikat dan argumen: <code>Predikat(Argumen)</code>.
+                        <br><em>Contoh:</em> "Mini hidup di sarang" direpresentasikan menjadi <code style="font-family:var(--font-mono);">Hidup_Di(Mini, Sarang)</code>.</p>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Dua Jenis Kuantor</h3>
+                        <p class="text-p">Kuantor digunakan untuk mengekspresikan kuantitas objek dalam semesta pembicaraan:</p>
+                        
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Kuantor Universal (&forall; - A Terbalik):</strong> Menyatakan kondisi berlaku untuk <strong>Setiap / Semua</strong> objek.
+                                <br><em>Template Konversi:</em>
+                                <br><span class="formula-block">&forall;x (Gajah(x) &rarr; Mamalia(x))</span>
+                                <br>Dibaca: "Untuk semua x, jika x gajah maka x mamalia" (Dosen menyederhanakan penulisannya menjadi: <strong>"Untuk semua gajah adalah mamalia"</strong>).
+                                <br><span style="color:var(--accent);">*Catatan: Kuantor Universal (&forall;) selalu dipasangkan dengan operator Implikasi (&rarr;).</span>
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Kuantor Eksistensial (&exist; - E Terbalik):</strong> Menyatakan kondisi berlaku untuk <strong>Ada / Beberapa / Terdapat / Minimal Satu</strong> objek.
+                                <br><em>Template Konversi:</em>
+                                <br><span class="formula-block">&exist;x (Kuda_Laut(x) &and; Hewan(x))</span>
+                                <br>Dibaca: "Ada x di mana x kuda laut dan x hewan" (Dosen mengonversi menjadi: <strong>"Kuda laut adalah hewan"</strong>).
+                                <br><span style="color:var(--accent);">*Catatan: Kuantor Eksistensial (&exist;) selalu dipasangkan dengan operator Konjungsi (&and;).</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Negasi pada Kuantor</h3>
+                        <p class="text-p">Untuk menyatakan "Tidak semua gajah adalah mamalia", letakkan operator negasi di depan ekspresi kuantor universal:</p>
+                        <span class="formula-block">~&forall;x (Gajah(x) &rarr; Mamalia(x))</span>
+                    </div>
+                </section>
+
+                <!-- Bab 5 -->
+                <section class="bab-container" id="bab5">
+                    <h2 class="bab-title">
+                        <span class="bab-number">BAB 5</span>
+                        Mesin Inferensi & Forward Chaining
+                    </h2>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">1. Dua Metode Penalaran Aturan (Rule-Based)</h3>
+                        <p class="text-p">Mesin inferensi mengeksekusi aturan IF-THEN menggunakan dua arah penalaran:</p>
+                        <ul class="bullet-list">
+                            <li class="bullet-item">
+                                <strong>Forward Chaining (Penalaran Maju):</strong> Penalaran dimulai dari <strong>Fakta awal</strong> yang diketahui terlebih dahulu (mencocokkan kondisi IF sebelah kiri), lalu bergerak maju untuk menghasilkan kesimpulan baru (THEN). Bersifat <em>Data-driven</em>.
+                            </li>
+                            <li class="bullet-item">
+                                <strong>Backward Chaining (Penalaran Mundur):</strong> Penalaran dimulai dari <strong>Hipotesis/Goal</strong> terlebih dahulu (sebelah kanan / THEN), lalu bergerak mundur mencari fakta pendukung di sebelah kiri (IF). Bersifat <em>Goal-driven</em>.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">2. Algoritma Langkah Kerja Forward Chaining</h3>
+                        <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 8px; color: var(--text-secondary); font-size: 13.5px;">
+                            <li>Cocokkan fakta-fakta yang diketahui dengan kondisi (IF) pada aturan (<em>rules</em>) dalam basis pengetahuan.</li>
+                            <li>Jika seluruh kondisi IF bernilai benar (terpenuhi), aturan akan terpicu (<strong>Fire</strong>) dan dieksekusi.</li>
+                            <li>Hasil kesimpulan (bagian THEN) dimasukkan kembali ke basis data sebagai <strong>fakta baru</strong>.</li>
+                            <li>Ulangi langkah 1-3 menggunakan kumpulan fakta baru tersebut.</li>
+                            <li>Proses berhenti (<strong>terminate</strong>) jika:
+                                <ul style="padding-left: 16px; margin-top: 4px; list-style-type: circle;">
+                                    <li>Tidak ada aturan lain yang kondisinya cocok dengan database fakta.</li>
+                                    <li>Tujuan (<em>goal</em>) akhir analisis telah ditemukan/bernilai benar.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="sub-section">
+                        <h3 class="sub-title">3. Penalaran Berbasis Kasus (Case-Based Reasoning)</h3>
+                        <p class="text-p">Sebagai pembanding, <strong>Case-Based Reasoning (CBR)</strong> memecahkan masalah baru dengan cara mencari kemiripan (keserupaan) dengan kasus-kasus nyata yang sukses diselesaikan di masa lalu dalam database riwayat kasus sistem cerdas.</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dibuat khusus untuk persiapan UTS Sistem Berbasis Pengetahuan.</p>
+            <p style="margin-top: 4px; color: var(--accent);">Siti Aisyah Edition</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initAudio();
+            setupTOC();
+            setupSearch();
+        });
+
+        // Theme management
+        let currentTheme = 'dark';
+        function initTheme() {
+            currentTheme = localStorage.getItem('index_quiz_theme') || 'dark';
+            setTheme(currentTheme);
+            
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playSynthSound('click');
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('index_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        // Web Audio Synthesizer
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        function initAudio() {
+            soundEnabled = localStorage.getItem('sbp_sound_enabled') !== 'false';
+            updateSoundIcon();
+
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                localStorage.setItem('sbp_sound_enabled', soundEnabled);
+                updateSoundIcon();
+                if (soundEnabled) {
+                    playSynthSound('click');
+                }
+            });
+        }
+
+        function updateSoundIcon() {
+            const icon = document.getElementById('sound-icon');
+            if (soundEnabled) {
+                icon.innerHTML = `
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                `;
+            } else {
+                icon.innerHTML = `
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                `;
+            }
+        }
+
+        function playSynthSound(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(450, now);
+                    osc.frequency.exponentialRampToValueAtTime(150, now + 0.1);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.1);
+                    osc.start(now);
+                    osc.stop(now + 0.1);
+                } else if (type === 'hover') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(320, now);
+                    gain.gain.setValueAtTime(0.01, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                }
+            } catch (e) {
+                console.warn('Synth sound failed:', e);
+            }
+        }
+
+        // Sidebar Table of Contents
+        function setupTOC() {
+            const tocItems = document.querySelectorAll('.toc-item');
+            
+            tocItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    playSynthSound('click');
+                    
+                    // Remove active from all
+                    tocItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+
+                    const targetId = item.getAttribute('data-target');
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Highlight TOC on scroll
+            const sections = document.querySelectorAll('.bab-container');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 120) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                if (current) {
+                    tocItems.forEach(item => {
+                        item.classList.toggle('active', item.getAttribute('data-target') === current);
+                    });
+                }
+            });
+        }
+
+        // Search engine
+        function setupSearch() {
+            const searchBox = document.getElementById('search-box');
+            const sections = document.querySelectorAll('.bab-container');
+            const subSections = document.querySelectorAll('.sub-section');
+            const noResults = document.getElementById('no-results');
+
+            searchBox.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                let matchesTotal = 0;
+
+                if (query === '') {
+                    // Show everything
+                    sections.forEach(s => s.style.display = 'flex');
+                    subSections.forEach(ss => ss.style.display = 'flex');
+                    noResults.style.display = 'none';
+                    return;
+                }
+
+                sections.forEach(sec => {
+                    let sectionHasMatch = false;
+                    
+                    const secTitle = sec.querySelector('.bab-title').innerText.toLowerCase();
+                    if (secTitle.includes(query)) {
+                        sectionHasMatch = true;
+                    }
+
+                    const subSecs = sec.querySelectorAll('.sub-section');
+                    subSecs.forEach(sub => {
+                        const content = sub.innerText.toLowerCase();
+                        if (content.includes(query)) {
+                            sub.style.display = 'flex';
+                            sectionHasMatch = true;
+                            matchesTotal++;
+                        } else {
+                            sub.style.display = 'none';
+                        }
+                    });
+
+                    if (sectionHasMatch) {
+                        sec.style.display = 'flex';
+                        // If the section title matched but subsections didn't, show subsections anyway
+                        if (secTitle.includes(query)) {
+                            subSecs.forEach(sub => sub.style.display = 'flex');
+                        }
+                    } else {
+                        sec.style.display = 'none';
+                    }
+                });
+
+                noResults.style.display = matchesTotal === 0 ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+
+</html>

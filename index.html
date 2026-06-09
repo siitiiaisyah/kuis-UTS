@@ -27,6 +27,8 @@
             --accent-pvd-glow: rgba(249, 115, 22, 0.2);
             --accent-gkpc: #d946ef;
             --accent-gkpc-glow: rgba(217, 70, 239, 0.2);
+            --accent-sbp: #eab308;
+            --accent-sbp-glow: rgba(234, 179, 8, 0.2);
             --glass-blur: blur(20px);
             --shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.6);
             --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -51,6 +53,8 @@
             --accent-pvd-glow: rgba(234, 88, 12, 0.08);
             --accent-gkpc: #c026d3;
             --accent-gkpc-glow: rgba(192, 38, 211, 0.08);
+            --accent-sbp: #ca8a04;
+            --accent-sbp-glow: rgba(202, 138, 4, 0.08);
             --shadow: 0 20px 50px 0 rgba(99, 102, 241, 0.05);
         }
 
@@ -722,10 +726,63 @@
             box-shadow: 0 4px 12px var(--accent-gkpc-glow);
         }
 
-        @media (min-width: 769px) {
-            .subjects-grid > .card-gkpc {
-                grid-column: span 2;
-            }
+        /* Subject 6: SBP */
+        .card-sbp::before {
+            background: linear-gradient(90deg, var(--accent-sbp), #f59e0b);
+        }
+
+        .card-sbp:hover {
+            box-shadow: 0 20px 40px rgba(234, 179, 8, 0.12);
+        }
+
+        .card-sbp .subject-icon {
+            background: linear-gradient(135deg, var(--accent-sbp), #f59e0b);
+            box-shadow: 0 6px 20px var(--accent-sbp-glow);
+        }
+
+        .card-sbp .topic-item svg {
+            stroke: var(--accent-sbp);
+        }
+
+        .card-sbp .stat-label-item .val.high-score {
+            color: #eab308;
+        }
+
+        .card-sbp .btn-start {
+            background: linear-gradient(135deg, var(--accent-sbp), #f59e0b);
+            color: #0c0a09;
+            box-shadow: 0 4px 14px rgba(234, 179, 8, 0.2);
+        }
+
+        [data-theme="light"] .card-sbp .btn-start {
+            color: white;
+        }
+
+        .card-sbp:hover .btn-start {
+            box-shadow: 0 8px 24px rgba(234, 179, 8, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .card-sbp .btn-flashcard {
+            border-color: var(--accent-sbp);
+            background: rgba(234, 179, 8, 0.05);
+            color: var(--accent-sbp);
+        }
+
+        .card-sbp .btn-flashcard:hover {
+            background: var(--accent-sbp-glow);
+            box-shadow: 0 4px 12px var(--accent-sbp-glow);
+        }
+
+        .card-sbp .btn-summary-sbp {
+            border-color: var(--accent-sbp);
+            background: rgba(234, 179, 8, 0.05);
+            color: var(--accent-sbp);
+        }
+
+        .card-sbp .btn-summary-sbp:hover {
+            background: var(--accent-sbp-glow);
+            box-shadow: 0 4px 12px var(--accent-sbp-glow);
         }
 
         .btn-start svg {
@@ -1168,6 +1225,85 @@
                                 </svg>
                             </button>
                         </div>
+                </div>
+
+                <!-- Subject 6: SBP -->
+                <div class="subject-card card-sbp">
+                    <div class="card-header-area">
+                        <div class="subject-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                        </div>
+                        <span class="badge-count">70 Soal & Esai</span>
+                    </div>
+
+                    <div class="subject-info">
+                        <h3>Sistem Berbasis Pengetahuan</h3>
+                        <p>Teori sistem pakar, klasifikasi representasi pengetahuan, inferensi logika proposisional & predikat (Modus Ponens & Tollens), kuantor universal & eksistensial, serta penalaran Forward Chaining.</p>
+                    </div>
+
+                    <div class="topics-list">
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Pengantar Sistem Pakar & Komponen</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Representasi Logika, Network & Frame</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Logika Proposisi & Aturan Inferensi</span>
+                        </div>
+                        <div class="topic-item">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" fill="none" />
+                            </svg>
+                            <span>Logika Predikat & Forward Chaining</span>
+                        </div>
+                    </div>
+
+                    <!-- Statistics box -->
+                    <div class="card-stats-box" id="stats-sbp">
+                        <div class="stat-label-item">
+                            <span class="lbl">Skor Tertinggi</span>
+                            <span class="val high-score" id="sbp-high">-</span>
+                        </div>
+                        <div class="stat-label-item" style="text-align: right;">
+                            <span class="lbl">Sesi Terakhir</span>
+                            <span class="val" id="sbp-recent">Belum ada</span>
+                        </div>
+                    </div>
+
+                    <div class="card-actions-row" style="flex-direction: column; gap: 10px;">
+                        <button class="btn-start" onclick="window.location.href='latihanEsaiSBP.html'">
+                            Mulai Latihan Esai
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" />
+                            </svg>
+                        </button>
+                        <div style="display: flex; gap: 10px; width: 100%;">
+                            <button class="btn-flashcard" onclick="window.location.href='flashcardSBP.html'">
+                                Flashcards
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"/>
+                                    <path d="M7 7h10M7 12h10M7 17h6"/>
+                                </svg>
+                            </button>
+                            <button class="btn-summary btn-summary-sbp" onclick="window.location.href='rangkumanSBP.html'">
+                                Rangkuman
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V3A2.5 2.5 0 0 1 6.5 4H20v13H6.5a2.5 2.5 0 0 0-2.5 2.5z" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1175,7 +1311,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>© 2026 Siti Aisyah Quiz Hub. Dirancang khusus untuk persiapan UTS Jaringan Komputer, APSI, MLSI & PVD.</p>
+            <p>© 2026 Siti Aisyah Quiz Hub. Dirancang khusus untuk persiapan UTS Jaringan Komputer, APSI, MLSI, PVD, GKPC & SBP.</p>
         </footer>
     </div>
 
@@ -1292,13 +1428,30 @@
                     const scores = gkpcHistory.map(item => item.score);
                     const highest = Math.max(...scores);
                     document.getElementById('gkpc-high').innerText = `${highest}%`;
-
+ 
                     // Recent session
                     const recent = gkpcHistory[0];
                     document.getElementById('gkpc-recent').innerText = `${recent.date} (${recent.score}%)`;
                 }
             } catch (e) {
                 console.warn('Gagal memuat statistik GKPC:', e);
+            }
+
+            // 6. SBP Statistics
+            try {
+                const sbpHistory = JSON.parse(localStorage.getItem('sbp_essay_history')) || [];
+                if (sbpHistory.length > 0) {
+                    // Highest Score
+                    const scores = sbpHistory.map(item => item.score);
+                    const highest = Math.max(...scores);
+                    document.getElementById('sbp-high').innerText = `${highest}%`;
+ 
+                    // Recent session
+                    const recent = sbpHistory[0];
+                    document.getElementById('sbp-recent').innerText = `${recent.date} (${recent.score}%)`;
+                }
+            } catch (e) {
+                console.warn('Gagal memuat statistik SBP:', e);
             }
         }
     </script>

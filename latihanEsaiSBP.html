@@ -1,0 +1,3230 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Esai SBP - UTS Prep</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #78350f 0%, #0b0f19 100%);
+            --panel-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #eab308;
+            --accent-glow: rgba(234, 179, 8, 0.15);
+            --accent-hover: #ca8a04;
+            --correct: #10b981;
+            --correct-bg: rgba(16, 185, 129, 0.08);
+            --correct-border: rgba(16, 185, 129, 0.25);
+            --incorrect: #ef4444;
+            --incorrect-bg: rgba(239, 68, 68, 0.08);
+            --incorrect-border: rgba(239, 68, 68, 0.25);
+            --warning: #f59e0b;
+            --warning-bg: rgba(245, 158, 11, 0.08);
+            --warning-border: rgba(245, 158, 11, 0.25);
+            --glass-blur: blur(20px);
+            --shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --card-radius: 20px;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #fef3c7 0%, #f1f5f9 100%);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(202, 138, 4, 0.15);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent: #ca8a04;
+            --accent-glow: rgba(202, 138, 4, 0.08);
+            --accent-hover: #a16207;
+            --shadow: 0 12px 40px 0 rgba(202, 138, 4, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 24px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 32px;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #f59e0b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0b0f19;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        [data-theme="light"] .brand-logo {
+            color: white;
+        }
+
+        .brand-logo svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        /* Layout Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 32px;
+            animation: fadeIn 0.4s ease-out;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: fit-content;
+        }
+
+        /* Sidebar Selector Mode */
+        .mode-tab-group {
+            display: flex;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .mode-tab-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .mode-tab-btn.active {
+            background: var(--accent);
+            color: #0b0f19;
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+
+        [data-theme="light"] .mode-tab-btn.active {
+            color: white;
+        }
+
+        .sidebar-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .sidebar-title svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .search-sidebar {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.1);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 13px;
+        }
+
+        .search-sidebar:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Question list inside sidebar */
+        .question-list-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .question-list-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .question-list-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .question-item-btn {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 12px;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .question-item-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--text-primary);
+        }
+
+        .question-item-btn.active {
+            background: var(--accent);
+            color: #0b0f19;
+            border-color: var(--accent);
+            font-weight: 700;
+        }
+
+        [data-theme="light"] .question-item-btn.active {
+            color: white;
+        }
+
+        .question-item-badge {
+            font-size: 9px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1px 5px;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        .question-item-btn.active .question-item-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: inherit;
+        }
+
+        .question-item-btn.completed {
+            border-color: var(--correct);
+            background: rgba(16, 185, 129, 0.02);
+        }
+
+        .question-item-btn.completed:hover {
+            background: var(--correct-bg);
+        }
+
+        /* Practice Arena Panel */
+        .practice-arena {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card-main {
+            background: var(--panel-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .card-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #f59e0b, var(--accent));
+        }
+
+        .tag-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .category-tag {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(234, 179, 8, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(234, 179, 8, 0.15);
+        }
+
+        .difficulty-tag {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .difficulty-tag.mudah {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--correct);
+            border: 1px solid var(--correct-border);
+        }
+
+        .difficulty-tag.sedang {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            border: 1px solid var(--warning-border);
+        }
+
+        .difficulty-tag.sulit {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--incorrect);
+            border: 1px solid var(--incorrect-border);
+        }
+
+        .mandatory-tag {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            animation: blinkMandatory 1.5s infinite alternate;
+        }
+
+        @keyframes blinkMandatory {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; transform: scale(1.03); }
+        }
+
+        .question-text-essay {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .essay-textarea-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .essay-textarea {
+            width: 100%;
+            height: 220px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            padding: 16px 20px;
+            font-family: var(--font-sans);
+            font-size: 14.5px;
+            line-height: 1.6;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        .essay-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .textarea-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .btn-action-essay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-primary);
+        }
+
+        .btn-action-essay:hover:not(:disabled) {
+            border-color: var(--text-secondary);
+            transform: translateY(-1px);
+        }
+
+        .btn-action-essay:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .btn-action-essay.primary {
+            background: linear-gradient(135deg, var(--accent), #f59e0b);
+            color: #0b0f19;
+            border: none;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        [data-theme="light"] .btn-action-essay.primary {
+            color: white;
+        }
+
+        .btn-action-essay.primary:hover:not(:disabled) {
+            box-shadow: 0 6px 20px var(--accent-glow);
+            filter: brightness(1.1);
+        }
+
+        /* Model Answer Panel */
+        .explanation-box {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .explanation-box.visible {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .model-answer-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .model-answer-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .model-answer-text {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            background: rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Math formula formatting inside answer text */
+        .model-answer-text code {
+            font-family: var(--font-mono);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #eab308;
+        }
+
+        /* Rubric Checkbox Checklist */
+        .rubric-card {
+            border: 1px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .rubric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .rubric-header h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .rubric-score-indicator {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .rubric-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .rubric-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .rubric-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-primary);
+        }
+
+        .rubric-item input[type="checkbox"] {
+            margin-top: 3px;
+            accent-color: var(--accent);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+
+        /* timed simulation layout overlay */
+        .sim-setup-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .sim-setup-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .sim-setup-rules {
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            background: rgba(239, 68, 68, 0.03);
+            border: 1px solid rgba(239, 68, 68, 0.15);
+            padding: 16px 20px;
+            border-radius: 12px;
+        }
+
+        .sim-choice-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 6px;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 680px) {
+            .sim-choice-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sim-choice-grid::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sim-choice-grid::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .sim-checkbox-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .sim-checkbox-card:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .sim-checkbox-card.selected {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .sim-checkbox-card input[type="checkbox"] {
+            margin-top: 2px;
+            accent-color: var(--accent);
+        }
+
+        .sim-status-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Active Test Simulation view */
+        .simulation-active-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #ef4444;
+            margin-bottom: 16px;
+            animation: borderPulse 2s infinite alternate;
+        }
+
+        @keyframes borderPulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.1); }
+            100% { box-shadow: 0 0 12px 2px rgba(239, 68, 68, 0.2); }
+        }
+
+        .sim-question-pagination {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .page-num-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--panel-bg);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .page-num-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .page-num-btn.active {
+            background: var(--accent);
+            color: #0b0f19;
+            border-color: var(--accent);
+        }
+
+        [data-theme="light"] .page-num-btn.active {
+            color: white;
+        }
+
+        .page-num-btn.answered {
+            border-color: var(--correct);
+            color: var(--correct);
+        }
+
+        .page-num-btn.mandatory-page {
+            border: 1px solid rgba(239, 68, 68, 0.6);
+            color: #ef4444;
+        }
+
+        .page-num-btn.mandatory-page.active {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        /* History card */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 240px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .history-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .history-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .history-item {
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11.5px;
+            color: var(--text-secondary);
+        }
+
+        .history-item-score {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand-section">
+                <a href="index.html" class="btn-icon" title="Kembali ke Menu Utama" style="text-decoration: none; margin-right: 4px;">
+                    <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.5;">
+                        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div class="brand-title">
+                    <h1>Latihan Simulator Esai SBP</h1>
+                    <p>Sistem Berbasis Pengetahuan</p>
+                </div>
+            </div>
+            <div class="header-controls">
+                <!-- Sound Toggle -->
+                <button class="btn-icon" id="sound-toggle" title="Matikan/Aktifkan Suara">
+                    <svg id="sound-icon" viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button class="btn-icon" id="theme-toggle" title="Ganti Tema">
+                    <svg id="theme-icon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Body Grid -->
+        <div class="dashboard-grid">
+            <!-- Sidebar Navigation panel -->
+            <div class="category-sidebar" style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- Mode Selector -->
+                <div class="glass-panel" style="padding: 16px;">
+                    <div class="mode-tab-group">
+                        <button class="mode-tab-btn active" id="mode-practice-btn">Practice Mode</button>
+                        <button class="mode-tab-btn" id="mode-sim-btn">Strict UTS Mode</button>
+                    </div>
+                </div>
+
+                <!-- Normal practice navigation -->
+                <div class="glass-panel" id="practice-nav-panel">
+                    <h3 class="sidebar-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h12" stroke-linecap="round" stroke-width="2"/>
+                        </svg>
+                        Daftar Soal Esai (<span id="total-done-label">0</span>/70)
+                    </h3>
+                    
+                    <input type="text" id="search-sidebar" class="search-sidebar" placeholder="Cari nomor/kata kunci soal...">
+                    
+                    <div class="question-list-sidebar" id="question-list-sidebar" style="margin-top: 10px;">
+                        <!-- List loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Simulation navigation metadata -->
+                <div class="glass-panel" id="sim-status-nav-panel" style="display: none;">
+                    <h3 class="sidebar-title" style="border-color: rgba(239, 68, 68, 0.2); color:#ef4444;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke:#ef4444;">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                        </svg>
+                        Status Simulasi UTS
+                    </h3>
+                    <div style="font-size:12px; display:flex; flex-direction:column; gap:10px; color: var(--text-secondary);">
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>Pertanyaan Terjawab:</span>
+                            <strong style="color: var(--text-primary);" id="sim-ans-count-label">0 / 10</strong>
+                        </div>
+                        <div style="display:flex; justify-content:space-between;">
+                            <span>Sisa Waktu:</span>
+                            <strong style="color: #ef4444;" id="sim-timer-label">00:00:00</strong>
+                        </div>
+                    </div>
+                    <button class="btn-action-essay" id="sim-terminate-btn" style="border-color: rgba(239,68,68,0.3); color:#ef4444; width:100%; margin-top:10px;">
+                        Hentikan & Kumpul
+                    </button>
+                </div>
+
+                <!-- History panel -->
+                <div class="glass-panel">
+                    <h3 class="sidebar-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                        </svg>
+                        Riwayat Latihan
+                    </h3>
+                    <div class="history-list" id="history-list">
+                        <!-- Loaded dynamically -->
+                        <div class="empty-history" id="empty-history">Belum ada riwayat latihan.</div>
+                    </div>
+                    <button class="btn-utility" id="clear-history-btn" style="margin-top: 10px; font-size:11px;">
+                        Hapus Semua Riwayat
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Practice Arena Panel -->
+            <div class="practice-arena" id="practice-arena-panel">
+                <!-- Timed Simulation banner -->
+                <div class="simulation-active-bar" id="simulation-active-bar" style="display: none;">
+                    <span>⚠️ MODE UJIAN SIMULASI AKTIF: Kerjakan 1 Soal Wajib Logika + 9 Soal Pilihan. Pengumpulan diluar aturan UTS bernilai 0.</span>
+                    <span id="timer-pill-banner">Waktu: 00:00</span>
+                </div>
+
+                <!-- Question Selector bar for Simulation Mode -->
+                <div class="sim-question-pagination" id="sim-question-pagination" style="display: none;">
+                    <!-- Pages loaded dynamically -->
+                </div>
+
+                <!-- Setup screen for Simulation mode -->
+                <div class="sim-setup-card" id="sim-setup-card" style="display: none;">
+                    <h2 class="sim-setup-title">Setup Simulasi UTS SBP (Strict Rule)</h2>
+                    <div class="sim-setup-rules">
+                        <strong>Aturan Ujian Dosen:</strong>
+                        <ul style="padding-left: 20px; margin-top: 6px; display:flex; flex-direction:column; gap:4px;">
+                            <li>Wajib mengerjakan tepat <strong>10 soal</strong>.</li>
+                            <li><strong>1 Soal Wajib Logika</strong> (Soal Kasus Kacamata Logic atau Forward Chaining) + <strong>9 Soal Pilihan</strong> dari daftar di bawah.</li>
+                            <li>Kelebihan atau kekurangan jumlah pengerjaan soal otomatis menghasilkan nilai total <strong>0</strong>!</li>
+                        </ul>
+                    </div>
+
+                    <div style="font-weight: 700; font-size: 14px; margin-top: 10px;">
+                        1. Soal Wajib (Telah Dipilih Otomatis):
+                        <div style="margin-top: 8px; padding: 12px; border-radius: 8px; border:1px solid rgba(239,68,68,0.2); background:rgba(239,68,68,0.03); font-size:13px; color:var(--text-primary);">
+                            <strong>Soal Wajib Logika:</strong> Prediksi UTS Kasus Logika Proposisi & Inferensi Deduktif (Kasus Letak Kacamata John Wikens)
+                        </div>
+                    </div>
+
+                    <div style="font-weight: 700; font-size: 14px; margin-top: 10px;">
+                        2. Pilih Tepat 9 Soal Tambahan dari Daftar Prediksi/Bank Soal:
+                    </div>
+
+                    <div class="sim-choice-grid" id="sim-choice-grid">
+                        <!-- Checkbox list loaded dynamically -->
+                    </div>
+
+                    <div class="sim-status-box">
+                        <span id="sim-choice-status-label">Terpilih: 0 / 9 Soal Pilihan</span>
+                        <button class="btn-action-essay primary" id="sim-start-test-btn" disabled>Mulai Ujian Simulasi</button>
+                    </div>
+                </div>
+
+                <!-- Core Practice Card (Textarea / Input) -->
+                <div class="card-main" id="essay-working-card">
+                    <div class="tag-row">
+                        <span class="category-tag" id="q-category-tag">Topik A</span>
+                        <span class="difficulty-tag sedang" id="q-difficulty-tag">Sedang</span>
+                        <span class="mandatory-tag" id="q-mandatory-tag" style="display: none;">Wajib</span>
+                    </div>
+
+                    <div class="question-text-essay" id="q-question-text">
+                        Loading pertanyaan...
+                    </div>
+
+                    <div class="essay-textarea-wrapper">
+                        <label for="essay-answer-input" style="font-size:13px; font-weight:700; color:var(--text-primary);">Tulis Jawaban Esai Anda:</label>
+                        <textarea id="essay-answer-input" class="essay-textarea" placeholder="Tuliskan penjelasan logis, rumus formula, notasi predikat, atau langkah forward chaining secara terperinci di sini..."></textarea>
+                        <div class="textarea-meta">
+                            <span id="char-counter">0 karakter</span>
+                            <span>Draft tersimpan otomatis</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <button class="btn-action-essay" id="prev-btn-essay" style="display: none;">Sebelumnya</button>
+                        <button class="btn-action-essay" id="reveal-ans-btn">Buka Pembahasan & Evaluasi</button>
+                        <button class="btn-action-essay primary" id="save-draft-btn">Simpan Jawaban</button>
+                        <button class="btn-action-essay" id="next-btn-essay" style="display: none;">Selanjutnya</button>
+                    </div>
+                </div>
+
+                <!-- Model Answer and self-evaluator checklist -->
+                <div class="explanation-box" id="essay-evaluation-box">
+                    <div class="model-answer-section">
+                        <h4 class="model-answer-title">Kunci Jawaban Resmi / Pembahasan Ringkas</h4>
+                        <div class="model-answer-text" id="model-short-ans">
+                            Loading kunci jawaban...
+                        </div>
+                    </div>
+
+                    <div class="model-answer-section">
+                        <h4 class="model-answer-title">Penjelasan Pembahasan Lengkap & Runtut</h4>
+                        <div class="model-answer-text" id="model-long-ans" style="white-space: pre-line;">
+                            Loading pembahasan lengkap...
+                        </div>
+                    </div>
+
+                    <!-- Self rubric checklist -->
+                    <div class="rubric-card">
+                        <div class="rubric-header">
+                            <h4>Rubrik Evaluasi Mandiri</h4>
+                            <div class="rubric-score-indicator" id="self-eval-score-label">Skor: 0%</div>
+                        </div>
+                        <p style="font-size: 11.5px; color: var(--text-secondary); margin-top:-6px;">
+                            Centang poin-poin di bawah ini jika jawaban Anda memuat konsep/kata kunci yang sesuai:
+                        </p>
+                        <div class="rubric-list" id="rubric-list">
+                            <!-- Rubric items loaded dynamically -->
+                        </div>
+                        <button class="btn-action-essay primary" id="submit-grade-btn" style="margin-top: 10px; width: 100%;">
+                            Simpan Skor Nilai Evaluasi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUESTIONS DATABASE SCRIPTS -->
+    <script>
+        // --- 70 SBP QUESTIONS DATABASE ---
+        const ALL_QUESTIONS = [
+            // --- TOPIK A: TEORI SISTEM PAKAR (1-10) ---
+            {
+                id: 1,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Jelaskan pengertian Sistem Pakar menurut Martin dan Oxman (1988)!",
+                shortAnswer: "Sistem berbasis komputer menggunakan pengetahuan, fakta, dan teknik penalaran untuk memecahkan masalah pakar.",
+                longAnswer: "Menurut Martin dan Oxman (1988), Sistem Pakar adalah sistem berbasis komputer yang menggunakan pengetahuan (knowledge), fakta-fakta (facts), dan teknik penalaran (inference techniques) dalam memecahkan masalah yang biasanya hanya bisa dipecahkan oleh seorang pakar di bidang tersebut.",
+                rubric: [
+                    { text: "Menyebutkan nama pencetus 'Martin dan Oxman (1988)'", weight: 25 },
+                    { text: "Memuat keyword 'pengetahuan / knowledge'", weight: 25 },
+                    { text: "Memuat keyword 'fakta / facts'", weight: 25 },
+                    { text: "Memuat keyword 'teknik penalaran / inference'", weight: 25 }
+                ]
+            },
+            {
+                id: 2,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Sebutkan dan jelaskan fungsionalitas dari 3 komponen utama arsitektur sistem pakar!",
+                shortAnswer: "1. Basis Pengetahuan (Knowledge Base) menyimpan fakta/aturan.<br>2. Mesin Inferensi (Inference Engine) melakukan penalaran.<br>3. Antarmuka Pengguna (User Interface) interaksi query/advice.",
+                longAnswer: "1. Basis Pengetahuan (Knowledge Base): tempat menyimpan representasi pengetahuan domain masalah, berisi fakta-fakta dan kaidah aturan logika.\n2. Mesin Inferensi (Inference Engine): otak penalar yang menganalisa basis pengetahuan dan menguji aturan untuk menghasilkan kesimpulan logis.\n3. Antarmuka Pengguna (User Interface): media interaksi komunikasi antara non-expert user (memasukkan query) dan sistem pakar (menampilkan advice).",
+                rubric: [
+                    { text: "Menyebutkan 'Basis Pengetahuan' beserta fungsinya menyimpan fakta/aturan", weight: 34 },
+                    { text: "Menyebutkan 'Mesin Inferensi' beserta fungsinya melakukan penalaran/penarikan kesimpulan", weight: 33 },
+                    { text: "Menyebutkan 'Antarmuka Pengguna' beserta fungsinya media input query & output advice", weight: 33 }
+                ]
+            },
+            {
+                id: 3,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Mengapa sistem pakar sering disebut sebagai Knowledge Based System (KBS)?",
+                shortAnswer: "Karena seluruh fungsionalitas dan keputusan didorong oleh modul basis pengetahuan.",
+                longAnswer: "Sistem pakar sering disebut sebagai Knowledge Based System karena sistem ini dirancang dengan memisahkan basis pengetahuan dari mesin penalaran. Keberhasilan proses pemecahan masalah dan akurasi advice yang dihasilkan sangat bergantung pada kelengkapan dan kualitas pengetahuan pakar yang disimpan dalam Basis Pengetahuan komputer tersebut.",
+                rubric: [
+                    { text: "Menjelaskan pemisahan basis pengetahuan dan mesin penalaran", weight: 50 },
+                    { text: "Menyebutkan ketergantungan keputusan terhadap kualitas basis pengetahuan", weight: 50 }
+                ]
+            },
+            {
+                id: 4,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Apakah sistem pakar dibuat untuk menggantikan posisi seorang pakar manusia secara mutlak? Jelaskan alasan Anda!",
+                shortAnswer: "Tidak, melainkan sebagai penasihat, asisten, atau konsultan komputer bagi non-expert user.",
+                longAnswer: "Tidak. Sistem pakar dibuat bukan untuk menggantikan peran pakar manusia secara mutlak, melainkan sebagai asisten atau konsultan cerdas yang melipatgandakan dan menyebarluaskan keahlian pakar manusia agar dapat diakses dengan mudah oleh pengguna umum (non-expert user) demi mempercepat pemecahan masalah.",
+                rubric: [
+                    { text: "Menyatakan 'Tidak menggantikan secara mutlak'", weight: 40 },
+                    { text: "Menyebutkan peran sebagai 'asisten / konsultan / penasihat'", weight: 30 },
+                    { text: "Menyebutkan tujuan penyebarluasan keahlian untuk 'non-expert / pengguna umum'", weight: 30 }
+                ]
+            },
+            {
+                id: 5,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Sebutkan 3 contoh fungsi penerapan Sistem Pakar di dunia nyata!",
+                shortAnswer: "1. Diagnosa penyakit medis.<br>2. Deteksi kerusakan mesin otomotif.<br>3. Identifikasi jenis batuan/makhluk hidup.",
+                longAnswer: "Penerapan sistem pakar berfokus pada analisis mendalam untuk menghasilkan diagnosa dan identifikasi. Contohnya:\n1. Diagnosa penyakit (medis, pertanian).\n2. Deteksi kerusakan (alat berat, mesin otomotif, jaringan komputer).\n3. Identifikasi/Klasifikasi (jenis batuan geologi, klasifikasi spesies biologi).",
+                rubric: [
+                    { text: "Menyebutkan fungsi 'Diagnosa' (medis/pertanian)", weight: 34 },
+                    { text: "Menyebutkan fungsi 'Deteksi kerusakan' (mesin/jaringan)", weight: 33 },
+                    { text: "Menyebutkan fungsi 'Identifikasi/Klasifikasi' (geologi/biologi)", weight: 33 }
+                ]
+            },
+            {
+                id: 6,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Sebutkan 3 contoh fungsi penerapan Sistem Penunjang Keputusan (SPK) sebagai perbandingan dengan Sistem Pakar!",
+                shortAnswer: "1. Pemilihan alternatif investasi terbaik.<br>2. Proses seleksi karyawan baru.<br>3. Sistem penerimaan beasiswa mahasiswa.",
+                longAnswer: "Sistem Penunjang Keputusan (SPK) berfokus pada pembobotan kriteria dan alternatif keputusan. Contohnya:\n1. Pemilihan produk investasi terbaik.\n2. Proses seleksi penerimaan karyawan/mahasiswa baru.\n3. Penentuan kelayakan penerimaan beasiswa/bantuan sosial.",
+                rubric: [
+                    { text: "Menyebutkan fungsi 'Pemilihan' alternatif investasi/keputusan", weight: 34 },
+                    { text: "Menyebutkan fungsi 'Seleksi' penerimaan karyawan", weight: 33 },
+                    { text: "Menyebutkan fungsi 'Penilaian kelayakan / Penerimaan beasiswa'", weight: 33 }
+                ]
+            },
+            {
+                id: 7,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan Expertise dalam konteks sistem pakar?",
+                shortAnswer: "Keahlian mendalam, keterampilan, dan pengalaman khusus yang dimiliki seorang pakar manusia.",
+                longAnswer: "Expertise adalah pengetahuan luas dan mendalam di bidang spesifik, keterampilan analitis, serta pengalaman praktek bertahun-tahun yang dimiliki oleh seorang pakar manusia, yang memungkinkannya memecahkan masalah pelik dengan cepat dan akurat. Expertise inilah yang diekstrak untuk ditransfer ke basis pengetahuan komputer.",
+                rubric: [
+                    { text: "Menyebutkan 'pengetahuan luas/mendalam'", weight: 35 },
+                    { text: "Menyebutkan 'keterampilan dan pengalaman khusus pakar'", weight: 35 },
+                    { text: "Menjelaskan transfer keahlian ke basis pengetahuan komputer", weight: 30 }
+                ]
+            },
+            {
+                id: 8,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan apa yang terjadi pada proses perpindahan informasi dari Expert (Pakar) menuju Knowledge Base (Basis Pengetahuan)!",
+                shortAnswer: "Terjadi proses akuisisi pengetahuan, ekstraksi, penyusunan struktur, dan pengodean kaidah digital.",
+                longAnswer: "Proses ini disebut Akuisisi Pengetahuan (Knowledge Acquisition). Informasi dan pola pikir pakar manusia diekstraksi (diwawancarai/dianalisis), kemudian distrukturkan menjadi format representasi formal (misalnya aturan IF-THEN) dan dikodekan ke dalam bahasa pemrograman komputer agar dapat disimpan di basis pengetahuan.",
+                rubric: [
+                    { text: "Menyebutkan istilah 'Akuisisi Pengetahuan'", weight: 35 },
+                    { text: "Menjelaskan ekstraksi atau wawancara pakar", weight: 35 },
+                    { text: "Menjelaskan pengodean menjadi representasi formal (IF-THEN)", weight: 30 }
+                ]
+            },
+            {
+                id: 9,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Apa perbedaan peran antara pengguna (Non-expert user) dan pakar (Expert) terhadap Sistem Pakar?",
+                shortAnswer: "Pakar mensuplai pengetahuan dasar pembangun sistem; User memasukkan kasus spesifik untuk mendapat advice solusi.",
+                longAnswer: "Pakar (Expert) bertindak di tahap awal pembangunan sistem untuk menyuplai keahlian, logika, dan fakta guna membangun basis pengetahuan. Sedangkan Pengguna (Non-expert user) bertindak sebagai pengguna akhir yang menggunakan sistem tersebut untuk berkonsultasi dengan menginput fakta kasus tertentu guna mendapatkan keputusan/solusi dari mesin inferensi.",
+                rubric: [
+                    { text: "Menjelaskan peran Pakar menyuplai keahlian di awal pembangunan", weight: 50 },
+                    { text: "Menjelaskan peran User menginput kasus untuk berkonsultasi / mendapat solusi", weight: 50 }
+                ]
+            },
+            {
+                id: 10,
+                topic: "Teori Sistem Pakar & Komponen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Mengapa evaluasi kebenaran atau validasi basis pengetahuan sangat krusial dalam sistem pakar?",
+                shortAnswer: "Karena mesin inferensi menarik kesimpulan secara mutlak berdasarkan isi basis pengetahuan. Jika salah, advice sistem ikut salah.",
+                longAnswer: "Evaluasi basis pengetahuan sangat krusial karena mesin inferensi bekerja secara mekanis mengevaluasi aturan yang tertulis. Jika aturan logika atau fakta di basis pengetahuan salah (tidak valid), maka kesimpulan (advice) yang dikeluarkan sistem juga akan salah, menyesatkan user, dan berpotensi menimbulkan risiko fatal (misalnya salah diagnosa obat medis).",
+                rubric: [
+                    { text: "Menjelaskan cara kerja mekanis mesin inferensi mengevaluasi aturan", weight: 40 },
+                    { text: "Menyebutkan efek 'kesimpulan/advice salah jika aturan di KB salah'", weight: 40 },
+                    { text: "Menyebutkan risiko fatal / menyesatkan pengguna", weight: 20 }
+                ]
+            },
+            // --- TOPIK B: REPRESENTASI PENGETAHUAN (11-20) ---
+            {
+                id: 11,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Sebutkan 2 karakteristik umum dari representasi pengetahuan menurut Turban (2001)!",
+                shortAnswer: "1. Dapat diprogram dan disimpan di memori.<br>2. Dirancang agar fakta dapat digunakan mesin inferensi untuk penalaran.",
+                longAnswer: "Sesuai teori Turban (2001), dua karakteristik umum representasi pengetahuan:\n1. Representasi pengetahuan dapat diprogramkan dengan beragam bahasa komputer yang ada dan dapat disimpan dalam memori.\n2. Representasi pengetahuan dirancang sedemikian rupa sehingga fakta dan pengetahuan lainnya dapat dimanfaatkan untuk penalaran.",
+                rubric: [
+                    { text: "Menyebutkan karakteristik 'dapat diprogram dan disimpan di memori'", weight: 50 },
+                    { text: "Menyebutkan karakteristik 'dirancang agar fakta dapat digunakan untuk penalaran'", weight: 50 }
+                ]
+            },
+            {
+                id: 12,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Jelaskan apa yang dimaksud dengan Representasi Logika!",
+                shortAnswer: "Skema representasi menggunakan ekspresi logika formal matematis untuk menyatakan fakta dan aturan.",
+                longAnswer: "Representasi Logika adalah skema representasi pengetahuan yang menggunakan ekspresi-ekspresi logika formal (seperti logika proposisional atau logika predikat) untuk menyatakan kebenaran fakta, aturan, dan relasi konseptual di dalam basis pengetahuan komputer.",
+                rubric: [
+                    { text: "Menyebutkan 'logika formal / logika matematika'", weight: 50 },
+                    { text: "Menjelaskan tujuannya untuk menyatakan fakta, aturan, atau relasi", weight: 50 }
+                ]
+            },
+            {
+                id: 13,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Mengapa bahasa pemrograman PROLOG dinilai ideal untuk representasi logika?",
+                shortAnswer: "Karena PROLOG memiliki mesin inferensi internal bawaan yang mengevaluasi fakta dan logika secara langsung.",
+                longAnswer: "Bahasa pemrograman PROLOG dirancang khusus untuk komputasi logika (Programming in Logic). PROLOG ideal karena memiliki mesin inferensi bawaan (unifikasi dan backtracking) yang dapat langsung mencocokkan query terhadap basis data fakta dan relasi logika tanpa desainer harus menulis kode mesin penalar dari nol.",
+                rubric: [
+                    { text: "Menyebutkan arti PROLOG (Programming in Logic)", weight: 30 },
+                    { text: "Menyebutkan keberadaan 'mesin inferensi internal bawaan'", weight: 40 },
+                    { text: "Menjelaskan pencocokan query secara langsung terhadap fakta/relasi", weight: 30 }
+                ]
+            },
+            {
+                id: 14,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan apa yang dimaksud dengan Representasi Prosedural!",
+                shortAnswer: "Representasi pengetahuan sebagai sekumpulan instruksi atau kaidah terarah untuk memecahkan masalah.",
+                longAnswer: "Representasi Prosedural adalah skema representasi yang menggambarkan pengetahuan sebagai kumpulan instruksi kerja aktif, prosedur, atau aturan (kaidah kausalitas IF-THEN) langkah demi langkah yang mengarahkan sistem mengenai tindakan apa yang harus diambil untuk mencapai solusi.",
+                rubric: [
+                    { text: "Menyebutkan 'instruksi kerja aktif / prosedur langkah-langkah'", weight: 50 },
+                    { text: "Menyebutkan kaidah aturan 'IF-THEN'", weight: 50 }
+                ]
+            },
+            {
+                id: 15,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Bagaimana aturan IF-THEN diinterpretasikan dalam Representasi Prosedural?",
+                shortAnswer: "Bagian IF sebagai pemicu kondisi, bagian THEN sebagai tindakan prosedur aktif.",
+                longAnswer: "Aturan IF-THEN diinterpretasikan sebagai instruksi prosedural aktif: jika kondisi prasyarat di bagian IF terpenuhi (True), maka lakukan tindakan/prosedur yang berada di bagian THEN (kesimpulan) sebagai langkah aktif untuk memajukan status pencarian solusi.",
+                rubric: [
+                    { text: "Menjelaskan fungsi IF sebagai pemicu kondisi / syarat", weight: 50 },
+                    { text: "Menjelaskan fungsi THEN sebagai tindakan prosedur aktif", weight: 50 }
+                ]
+            },
+            {
+                id: 16,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan esensi utama dari Representasi Network (Jaringan)!",
+                shortAnswer: "Menggambarkan pengetahuan sebagai graf berisi node (objek) dan edge (relasi).",
+                longAnswer: "Esensi representasi network adalah menyusun pengetahuan dalam bentuk struktur graf berarah yang intuitif. Pengetahuan ditangkap sebagai simpul-simpul (node) yang merepresentasikan objek/konsep, dihubungkan oleh lengkungan/garis berarah (edge/arc) yang menunjukkan tipe hubungan konseptual antar objek.",
+                rubric: [
+                    { text: "Menyebutkan struktur graf berarah", weight: 40 },
+                    { text: "Menjelaskan 'node/simpul' mewakili objek/konsep", weight: 30 },
+                    { text: "Menjelaskan 'edge/arc/garis' mewakili hubungan relasi", weight: 30 }
+                ]
+            },
+            {
+                id: 17,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Berikan penjelasan mendalam mengenai struktur Jaringan Semantik!",
+                shortAnswer: "Graf berarah yang menghubungkan konsep dengan label relasi seperti 'is-a' atau 'has-a'.",
+                longAnswer: "Jaringan Semantik (Semantic Network) adalah skema graf berarah untuk memetakan hubungan asosiasi antar konsep. Objek digambarkan sebagai lingkaran/simpul (node), dihubungkan oleh panah (edge) dengan label relasi spesifik seperti 'is-a' (sejenis, menunjukkan pewarisan taksonomi) atau 'has-a' (mempunyai, menunjukkan kepemilikan bagian).",
+                rubric: [
+                    { text: "Menyebutkan istilah 'Semantic Network' sebagai graf berarah", weight: 40 },
+                    { text: "Menyebutkan contoh relasi 'is-a' (sejenis)", weight: 30 },
+                    { text: "Menyebutkan contoh relasi 'has-a' (mempunyai)", weight: 30 }
+                ]
+            },
+            {
+                id: 18,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan Representasi Terstruktur?",
+                shortAnswer: "Representasi yang memperluas jaringan dengan mengubah simpul menjadi objek data kompleks berslot dan bernilai.",
+                longAnswer: "Representasi Terstruktur adalah bentuk representasi pengetahuan yang memperluas skema network dengan membuat simpul-simpul grafnya menjadi suatu struktur data kompleks (objek digital) yang memiliki slot-slot (atribut bernama) dengan nilai (value) tertentu, sehingga informasi tersimpan secara modular.",
+                rubric: [
+                    { text: "Menjelaskan perluasan dari konsep network", weight: 40 },
+                    { text: "Menyebutkan istilah simpul menjadi 'struktur data kompleks'", weight: 30 },
+                    { text: "Menyebutkan slot (atribut) dan nilai (value)", weight: 30 }
+                ]
+            },
+            {
+                id: 19,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Jelaskan konsep dasar dari Frame-Based Representation!",
+                shortAnswer: "Representasi terstruktur berbasis objek 'frame' dengan slot atribut yang mewarisi sifat objek induk.",
+                longAnswer: "Frame-Based Representation merepresentasikan pengetahuan menggunakan kumpulan entitas bernama 'Frame' (Kerangka). Setiap frame mendeskripsikan suatu objek/situasi dengan slot-slot (atribut) yang diisi nilai. Frame mendukung hirarki klasifikasi di mana frame anak otomatis mewarisi (inheritance) slot-slot dari frame induknya.",
+                rubric: [
+                    { text: "Menyebutkan entitas 'Frame' (Kerangka)", weight: 35 },
+                    { text: "Menyebutkan slot dan nilai pengisi atribut", weight: 35 },
+                    { text: "Menjelaskan konsep pewarisan sifat / 'inheritance'", weight: 30 }
+                ]
+            },
+            {
+                id: 20,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Berikan contoh pendefinisian objek menggunakan Frame berdasarkan materi!",
+                shortAnswer: "Frame: Penyakit; Nama: Flu; Gejala: Demam, Batuk; Obat: Parasetamol.",
+                longAnswer: "Contoh kerangka Frame:\nFrame: Penyakit\n- Nama: Flu\n- Gejala: [Demam, Batuk, Pilek]\n- Obat: Parasetamol\nDi mana 'Penyakit' adalah nama Frame, sedangkan 'Nama', 'Gejala', dan 'Obat' merupakan slot yang menyimpan nilai masing-masing.",
+                rubric: [
+                    { text: "Menuliskan nama Frame objek secara jelas (misal: Penyakit)", weight: 40 },
+                    { text: "Menyebutkan slot-slot atribut (Nama, Gejala, Obat)", weight: 30 },
+                    { text: "Mengisi nilai slot secara lengkap sesuai logika contoh", weight: 30 }
+                ]
+            },
+            // --- TOPIK C: LOGIKA PROPOSISI (21-30) ---
+            {
+                id: 21,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Seutkan 5 jenis operator/penghubung logika proposisi beserta simbolnya!",
+                shortAnswer: "Konjungsi (&and;), Disjungsi (&or;), Negasi (~), Implikasi (&rarr;), Ekuivalensi (&harr;).",
+                longAnswer: "Lima operator logika proposisi:\n1. Konjungsi: &and; (AND / Dan)\n2. Disjungsi: &or; (OR / Atau)\n3. Negasi: ~ atau &not; (NOT / Tidak)\n4. Implikasi: &rarr; (IF-THEN / Jika-Maka)\n5. Ekuivalensi/Biimplikasi: &harr; (IF AND ONLY IF / Jika dan hanya jika)",
+                rubric: [
+                    { text: "Menyebutkan Konjungsi (&and;)", weight: 20 },
+                    { text: "Menyebutkan Disjungsi (&or;)", weight: 20 },
+                    { text: "Menyebutkan Negasi (~ atau &not;)", weight: 20 },
+                    { text: "Menyebutkan Implikasi (&rarr;)", weight: 20 },
+                    { text: "Menyebutkan Ekuivalensi (&harr;)", weight: 20 }
+                ]
+            },
+            {
+                id: 22,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Kapan sebuah argumen dalam inferensi logika dinyatakan sebagai argumen valid?",
+                shortAnswer: "Ketika seluruh premis bernilai benar sehingga kesimpulan mutlak benar (membentuk Tautologi).",
+                longAnswer: "Sebuah argumen dinyatakan valid jika dan hanya jika dalam seluruh kondisi di mana premis-premisnya bernilai benar (True), maka kesimpulan (konklusi) yang diturunkan juga wajib bernilai benar (True). Secara formal, implikasi premis-premis terhadap konklusi harus berupa Tautologi.",
+                rubric: [
+                    { text: "Menyebutkan prasyarat 'semua premis bernilai benar'", weight: 40 },
+                    { text: "Menyebutkan konsekuensi 'kesimpulan wajib bernilai benar'", weight: 40 },
+                    { text: "Menghubungkan validitas dengan pembentukan 'Tautologi'", weight: 20 }
+                ]
+            },
+            {
+                id: 23,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan mekanisme penarikan kesimpulan dengan aturan Modus Ponens!",
+                shortAnswer: "Jika premis implikasi p &rarr; q benar, dan p benar, maka kesimpulannya q benar.",
+                longAnswer: "Modus Ponens adalah aturan inferensi deduktif dasar. Mekanismenya: jika kita memiliki premis implikasi 'jika p maka q' bernilai benar, dan premis pemicu p ditemukan bernilai benar, maka kita dapat menarik kesimpulan mutlak bahwa q bernilai benar. Rumus: [(p &rarr; q) &and; p] &rarr; q.",
+                rubric: [
+                    { text: "Menyebutkan premis implikasi 'jika p maka q'", weight: 30 },
+                    { text: "Menyebutkan premis fakta p", weight: 30 },
+                    { text: "Menarik kesimpulan q", weight: 20 },
+                    { text: "Menuliskan formula [(p &rarr; q) &and; p] &rarr; q", weight: 20 }
+                ]
+            },
+            {
+                id: 24,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan prinsip inferensi yang terjadi pada Modus Tollens!",
+                shortAnswer: "Jika premis implikasi p &rarr; q benar, dan ~q benar, maka kesimpulannya ~p benar.",
+                longAnswer: "Modus Tollens bekerja dengan menyangkal akibat. Prinsipnya: jika diketahui implikasi 'jika p maka q' bernilai benar, namun diperoleh fakta negasi dari akibatnya (~q) bernilai benar, maka ditarik kesimpulan berupa negasi dari syarat awal (~p). Rumus: [(p &rarr; q) &and; ~q] &rarr; ~p.",
+                rubric: [
+                    { text: "Menyebutkan premis implikasi 'jika p maka q'", weight: 30 },
+                    { text: "Menyebutkan penyangkalan akibat (~q)", weight: 30 },
+                    { text: "Menarik kesimpulan negasi syarat awal (~p)", weight: 20 },
+                    { text: "Menuliskan formula [(p &rarr; q) &and; ~q] &rarr; ~p", weight: 20 }
+                ]
+            },
+            {
+                id: 25,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan aturan penyederhanaan konjungtif?",
+                shortAnswer: "Dari premis p &and; q benar, disimpulkan p benar, atau q benar secara mandiri.",
+                longAnswer: "Penyederhanaan Konjungtif (Simplification) adalah aturan penarikan kesimpulan yang menyatakan jika suatu pernyataan majemuk konjungsi p &and; q bernilai benar, maka masing-masing komponen proposisinya (p secara mandiri atau q secara mandiri) otomatis bernilai benar.",
+                rubric: [
+                    { text: "Menyebutkan premis konjungsi 'p &and; q' bernilai benar", weight: 50 },
+                    { text: "Menyimpulkan kebenaran salah satu komponen secara mandiri (p / q)", weight: 50 }
+                ]
+            },
+            {
+                id: 26,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan aturan kerja Silogisme Disjungtif!",
+                shortAnswer: "Jika premis p &or; q benar, dan salah satunya dinegasikan (~p), maka yang lain (q) benar.",
+                longAnswer: "Silogisme Disjungtif (Disjunctive Syllogism) menyatakan jika kita memiliki premis disjungsi 'p atau q' benar, dan salah satu variabel disjungsinya dinegasikan (misal ~p benar / p salah), maka variabel disjungsi lainnya (q) wajib bernilai benar agar kalimat awal tetap benar. Rumus: [(p &or; q) &and; ~p] &rarr; q.",
+                rubric: [
+                    { text: "Menyebutkan premis disjungsi 'p atau q' bernilai benar", weight: 30 },
+                    { text: "Menyebutkan negasi salah satu variabel (misal ~p)", weight: 30 },
+                    { text: "Menyimpulkan variabel lainnya benar (q)", weight: 20 },
+                    { text: "Menuliskan formula [(p &or; q) &and; ~p] &rarr; q", weight: 20 }
+                ]
+            },
+            {
+                id: 27,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Bagaimana aturan Silogisme Hipotesis bekerja menghubungkan proposisi?",
+                shortAnswer: "Menggabungkan dua implikasi berantai (p &rarr; q) dan (q &rarr; r) menjadi (p &rarr; r).",
+                longAnswer: "Silogisme Hipotesis bekerja secara transitif menghubungkan implikasi berantai. Jika premis 'jika p maka q' benar dan premis 'jika q maka r' benar, maka dapat ditarik kesimpulan implikasi baru yaitu 'jika p maka r'. Rumus: [(p &rarr; q) &and; (q &rarr; r)] &rarr; (p &rarr; r).",
+                rubric: [
+                    { text: "Menyebutkan premis implikasi berantai p &rarr; q dan q &rarr; r", weight: 40 },
+                    { text: "Menyimpulkan implikasi transitif p &rarr; r", weight: 40 },
+                    { text: "Menuliskan formula [(p &rarr; q) &and; (q &rarr; r)] &rarr; (p &rarr; r)", weight: 20 }
+                ]
+            },
+            {
+                id: 28,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan aturan Dilema dalam inferensi logika?",
+                shortAnswer: "Mengombinasikan dua implikasi dengan satu disjungsi premis untuk menghasilkan konklusi disjungtif baru.",
+                longAnswer: "Aturan Dilema (Dilemma / Constructive Dilemma) adalah aturan inferensi di mana kita menggabungkan dua premis implikasi (p &rarr; q) dan (r &rarr; s) dengan premis disjungsi dari pemicunya (p &or; r). Konklusi yang dihasilkan berupa disjungsi dari akibat kedua implikasi tersebut (q &or; s). Formula: [((p &rarr; q) &and; (r &rarr; s)) &and; (p &or; r)] &rarr; (q &or; s).",
+                rubric: [
+                    { text: "Menyebutkan dua premis implikasi (p &rarr; q) dan (r &rarr; s)", weight: 30 },
+                    { text: "Menyebutkan premis disjungsi pemicu (p &or; r)", weight: 30 },
+                    { text: "Menyimpulkan disjungsi akibat (q &or; s)", weight: 20 },
+                    { text: "Menuliskan rumus formal Dilema Konstruktif", weight: 20 }
+                ]
+            },
+            {
+                id: 29,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Tuliskan bentuk simbolis dari aturan Penambahan Disjungtif!",
+                shortAnswer: "p &rarr; (p &or; q). Jika p benar, maka p atau q selalu benar.",
+                longAnswer: "Penambahan Disjungtif (Addition) menyatakan jika suatu proposisi p bernilai benar, maka kita bebas menambahkan variabel apa pun (q) lewat disjungsi, sehingga proposisi majemuk p &or; q akan selalu bernilai benar. Bentuk simbolisnya: p &rarr; (p &or; q).",
+                rubric: [
+                    { text: "Menyebutkan premis fakta p", weight: 50 },
+                    { text: "Menuliskan bentuk simbolis p &rarr; (p &or; q)", weight: 50 }
+                ]
+            },
+            {
+                id: 30,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Mengapa representasi logika proposisi dinilai kurang efektif untuk menggambarkan kalimat yang memiliki kuantitas objek?",
+                shortAnswer: "Karena proposisi menganggap satu kalimat sebagai satu variabel utuh, tidak bisa membedakan kuantitas seperti 'semua' atau 'sebagian'.",
+                longAnswer: "Logika proposisi memperlakukan satu kalimat utuh secara atomik sebagai satu variabel proposisional tunggal (p atau q). Proposisi tidak memiliki struktur internal untuk membedakan sifat-sifat objek individual di dalam kalimat, ataupun menyatakan kuantitas objek (seperti kata 'semua/setiap' atau 'beberapa/ada') dalam semesta pembicaraan.",
+                rubric: [
+                    { text: "Menyebutkan proposisi melihat kalimat secara atomik / variabel tunggal", weight: 40 },
+                    { text: "Menjelaskan ketidakmampuan memecah detail objek internal", weight: 30 },
+                    { text: "Menjelaskan ketidakmampuan menyatakan kuantitas ('semua' / 'sebagian')", weight: 30 }
+                ]
+            },
+            // --- TOPIK D: LOGIKA PREDIKAT (31-40) ---
+            {
+                id: 31,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan Kuantor Universal dalam logika predikat?",
+                shortAnswer: "Kuantor (&forall;) yang menyatakan predikat berlaku bagi seluruh/semua objek dalam semesta pembicaraan.",
+                longAnswer: "Kuantor Universal (Universal Quantifier) dilambangkan dengan simbol &forall; (A terbalik). Kuantor ini menyatakan bahwa predikat atau sifat yang dideskripsikan berlaku mutlak bagi seluruh objek/anggota yang ada di dalam semesta pembicaraan tanpa terkecuali.",
+                rubric: [
+                    { text: "Menyebutkan simbol &forall; (A terbalik)", weight: 34 },
+                    { text: "Menyebutkan arti 'Untuk semua / Setiap'", weight: 33 },
+                    { text: "Menjelaskan bahwa predikat berlaku bagi seluruh anggota semesta", weight: 33 }
+                ]
+            },
+            {
+                id: 32,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa pengertian dari Kuantor Eksistensial?",
+                shortAnswer: "Kuantor (&exist;) yang menyatakan predikat bernilai benar untuk sekurang-kurangnya satu atau beberapa objek.",
+                longAnswer: "Kuantor Eksistensial (Existential Quantifier) dilambangkan dengan simbol &exist; (E terbalik). Kuantor ini menunjukkan bahwa predikat atau sifat terkait bernilai benar untuk sekurang-kurangnya satu, terdapat, ada, atau beberapa objek dalam semesta pembicaraan.",
+                rubric: [
+                    { text: "Menyebutkan simbol &exist; (E terbalik)", weight: 34 },
+                    { text: "Menyebutkan arti 'Terdapat / Ada / Beberapa / Minimal satu'", weight: 33 },
+                    { text: "Menjelaskan pemenuhan sifat minimal bagi satu objek", weight: 33 }
+                ]
+            },
+            {
+                id: 33,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Tuliskan arti harfiah dari ekspresi logika predikat berikut: &forall;x (Gajah(x) &rarr; Mamalia(x))!",
+                shortAnswer: "Untuk semua gajah adalah mamalia.",
+                longAnswer: "Sesuai template visual latihan dosen:\nEkspresi &forall;x (Gajah(x) &rarr; Mamalia(x)) diartikan secara harfiah menjadi kalimat pembuka: 'Untuk semua gajah adalah mamalia' (Atau secara panjang: 'Untuk setiap objek x, jika x adalah gajah maka x adalah mamalia').",
+                rubric: [
+                    { text: "Menerjemahkan kuantor universal menjadi kata 'Untuk semua / Setiap'", weight: 40 },
+                    { text: "Membentuk pola kalimat 'Untuk semua gajah adalah mamalia'", weight: 60 }
+                ]
+            },
+            {
+                id: 34,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jika diberikan ekspresi &exist;x (Kuda_Laut(x) &and; Hewan(x)), apa arti ekspresi kuantor tersebut?",
+                shortAnswer: "Kuda laut adalah hewan (artinya ada objek yang merupakan kuda laut sekaligus hewan).",
+                longAnswer: "Sesuai petunjuk konversi jawaban dari dosen:\nEkspresi kuantor eksistensial &exist;x (Kuda_Laut(x) &and; Hewan(x)) diterjemahkan menjadi kalimat langsung: 'Kuda laut adalah hewan' (Mengindikasikan keberadaan minimal satu objek x yang bersifat kuda laut dan bersifat hewan).",
+                rubric: [
+                    { text: "Menerjemahkan menjadi kalimat 'Kuda laut adalah hewan'", weight: 60 },
+                    { text: "Menjelaskan implikasi keberadaan parsial (ada/beberapa objek)", weight: 40 }
+                ]
+            },
+            {
+                id: 35,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Mengapa operator implikasi (&rarr;) lebih sering dipasangkan dengan Kuantor Universal (&forall;)?",
+                shortAnswer: "Karena kuantor universal menyatakan hukum umum/mutlak yang mengikat seluruh objek jika mereka memenuhi syarat awal.",
+                longAnswer: "Kuantor universal (&forall;) menyatakan aturan hukum yang berlaku menyeluruh. Pola &forall;x (A(x) &rarr; B(x)) memastikan bahwa 'untuk setiap objek x di semesta, jika x memiliki sifat A, maka otomatis x harus memiliki sifat B'. Jika diganti konjungsi (&and;), artinya akan menjadi 'semua objek di semesta adalah A dan B' yang nilainya hampir selalu salah.",
+                rubric: [
+                    { text: "Menjelaskan pola implikasi sebagai hukum kondisional umum", weight: 50 },
+                    { text: "Menjelaskan kesalahan logika jika menggunakan konjungsi dengan &forall;", weight: 50 }
+                ]
+            },
+            {
+                id: 36,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Mengapa operator konjungsi (&and;) lebih tepat dipasangkan dengan Kuantor Eksistensial (&exist;)?",
+                shortAnswer: "Karena kuantor eksistensial hanya membuktikan keberadaan minimal satu objek spesifik yang memiliki kedua sifat sekaligus.",
+                longAnswer: "Kuantor eksistensial (&exist;) bertujuan membuktikan eksistensi/keberadaan minimal satu objek. Pola &exist;x (A(x) &and; B(x)) menyatakan 'ada sebuah objek x yang memiliki sifat A sekaligus sifat B'. Jika diganti implikasi (&rarr;), ekspresi &exist;x (A(x) &rarr; B(x)) akan bernilai benar secara hampa jika ada objek yang tidak memiliki sifat A (karena premis implikasi False &rarr; True/False bernilai True).",
+                rubric: [
+                    { text: "Menjelaskan pola konjungsi sebagai pembukti kepemilikan dua sifat sekaligus", weight: 50 },
+                    { text: "Menjelaskan kelemahan hampa (vacuous truth) jika menggunakan implikasi dengan &exist;", weight: 50 }
+                ]
+            },
+            {
+                id: 37,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Ubahlah pernyataan berikut ke bentuk logika predikat: 'Semua murai adalah burung'!",
+                shortAnswer: "&forall;x (Murai(x) &rarr; Burung(x))",
+                longAnswer: "Karena menggunakan kata 'Semua', kita menerapkan kuantor universal (&forall;) berpasangan dengan implikasi (&rarr;):\n&forall;x (Murai(x) &rarr; Burung(x))",
+                rubric: [
+                    { text: "Menggunakan simbol kuantor universal (&forall;)", weight: 40 },
+                    { text: "Menggunakan operator implikasi (&rarr;)", weight: 30 },
+                    { text: "Menuliskan predikat dan variabel secara benar: &forall;x (Murai(x) &rarr; Burung(x))", weight: 30 }
+                ]
+            },
+            {
+                id: 38,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Ubahlah pernyataan 'Ada burung yang dapat terbang' ke logika predikat!",
+                shortAnswer: "&exist;x (Burung(x) &and; Dapat_Terbang(x))",
+                longAnswer: "Karena menggunakan kata 'Ada', kita menerapkan kuantor eksistensial (&exist;) dipadukan dengan operator konjungsi (&and;):\n&exist;x (Burung(x) &and; Dapat_Terbang(x))",
+                rubric: [
+                    { text: "Menggunakan simbol kuantor eksistensial (&exist;)", weight: 40 },
+                    { text: "Menggunakan operator konjungsi (&and;)", weight: 30 },
+                    { text: "Menuliskan predikat: &exist;x (Burung(x) &and; Dapat_Terbang(x))", weight: 30 }
+                ]
+            },
+            {
+                id: 39,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa arti penulisan predikat dua argumen seperti Hidup_Di(Mini, Sarang) berdasarkan teks?",
+                shortAnswer: "Menyatakan relasi spesifik bahwa objek Mini hidup di objek Sarang.",
+                longAnswer: "Penulisan predikat dua argumen Hidup_Di(Mini, Sarang) menyatakan relasi relasional spesifik antara objek pertama (Mini) dengan objek kedua (Sarang), di mana objek pertama melakukan aksi/kondisi 'Hidup Di' pada objek kedua.",
+                rubric: [
+                    { text: "Menjelaskan relasi antar dua objek spesifik", weight: 50 },
+                    { text: "Mengidentifikasi objek pertama (Mini) dan objek kedua (Sarang) dalam relasi Hidup Di", weight: 50 }
+                ]
+            },
+            {
+                id: 40,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Bagaimana cara melambangkan negasi pada kuantor universal untuk menyatakan 'Tidak semua gajah adalah mamalia'?",
+                shortAnswer: "~&forall;x (Gajah(x) &rarr; Mamalia(x))",
+                longAnswer: "Untuk menyatakan ingkaran/negasi dari aturan universal, kita meletakkan simbol negasi (~ atau &not;) di bagian paling depan dari seluruh ekspresi kuantor universal:\n~&forall;x (Gajah(x) &rarr; Mamalia(x))",
+                rubric: [
+                    { text: "Meletakkan simbol negasi (~ atau &not;) paling depan", weight: 50 },
+                    { text: "Menuliskan sisa formula secara lengkap: &forall;x (Gajah(x) &rarr; Mamalia(x))", weight: 50 }
+                ]
+            },
+            // --- TOPIK E: FORWARD CHAINING (41-50) ---
+            {
+                id: 41,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Jelaskan apa itu penalaran berbasis aturan (rule-based reasoning)!",
+                shortAnswer: "Representasi pengetahuan menggunakan aturan IF-THEN yang dieksekusi berurutan.",
+                longAnswer: "Penalaran berbasis aturan (Rule-based reasoning) adalah pendekatan representasi pengetahuan yang mengodekan keahlian seorang pakar ke dalam sekumpulan aturan formal berformat IF-THEN. Mesin inferensi akan mengeksekusi aturan-aturan ini secara berurutan berdasarkan fakta input kasus untuk menyelesaikan masalah.",
+                rubric: [
+                    { text: "Menyebutkan 'representasi aturan IF-THEN'", weight: 50 },
+                    { text: "Menjelaskan proses eksekusi berurutan untuk memecahkan masalah", weight: 50 }
+                ]
+            },
+            {
+                id: 42,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan prinsip dasar metode inferensi Forward Chaining!",
+                shortAnswer: "Pencocokan aturan dimulai dari fakta dasar (IF) ke kanan menuju penemuan kesimpulan (THEN).",
+                longAnswer: "Forward Chaining (Penalaran Maju) adalah strategi inferensi berorientasi data (Data-driven). Proses dimulai dengan mengumpulkan fakta-fakta yang diketahui di database, lalu mencocokkannya dengan bagian sebelah kiri (kondisi IF) dari aturan. Jika cocok, aturan dieksekusi untuk menghasilkan kesimpulan baru (THEN) yang dimasukkan sebagai fakta baru untuk memicu aturan berikutnya.",
+                rubric: [
+                    { text: "Menyebutkan penalaran berorientasi data ('Data-driven')", weight: 30 },
+                    { text: "Menjelaskan pencarian dimulai dari fakta (IF) terlebih dahulu", weight: 40 },
+                    { text: "Menjelaskan hasil kesimpulan (THEN) memicu aturan selanjutnya", weight: 30 }
+                ]
+            },
+            {
+                id: 43,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa keunikan pencarian fakta pada Forward Chaining dibanding Backward Chaining?",
+                shortAnswer: "Forward Chaining bergerak dari fakta ke kesimpulan (data-driven); Backward Chaining dari tujuan ke fakta pendukung (goal-driven).",
+                longAnswer: "Keunikan Forward Chaining adalah alurnya yang bergerak maju dari data menuju kesimpulan akhir (data-driven), sangat cocok untuk masalah identifikasi yang memiliki data awal melimpah. Sebaliknya, Backward Chaining bergerak mundur dari target hipotesis menuju pencarian fakta pendukung (goal-driven), cocok untuk pembuktian diagnosis.",
+                rubric: [
+                    { text: "Menyebutkan Forward Chaining: data-driven (fakta &rarr; kesimpulan)", weight: 50 },
+                    { text: "Menyebutkan Backward Chaining: goal-driven (tujuan &rarr; fakta pendukung)", weight: 50 }
+                ]
+            },
+            {
+                id: 44,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Sebutkan kondisi-kondisi yang membuat proses Forward Chaining berhenti!",
+                shortAnswer: "1. Tidak ada aturan cocok dengan fakta.<br>2. Tujuan akhir (goal) telah tercapai.",
+                longAnswer: "Berdasarkan diktat kuliah, perulangan Forward Chaining akan berhenti (terminate) ketika:\n1. Sudah tidak ada aturan (rule) lagi dalam basis pengetahuan yang kondisi IF-nya cocok dengan fakta di database.\n2. Tujuan akhir (goal/hipotesis yang ingin dibuktikan) telah berhasil masuk ke dalam database fakta bernilai benar.",
+                rubric: [
+                    { text: "Menyebutkan 'tidak ada rule yang cocok dengan fakta dasar/baru'", weight: 50 },
+                    { text: "Menyebutkan 'tujuan akhir / goal telah tercapai'", weight: 50 }
+                ]
+            },
+            {
+                id: 45,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Kapan sebuah aturan (rule) dikatakan memicu (fire) fakta baru pada forward chaining?",
+                shortAnswer: "Ketika seluruh prasyarat kondisi pada bagian IF bernilai benar terhadap fakta database.",
+                longAnswer: "Sebuah aturan (rule) dikatakan memicu (fire) fakta baru jika seluruh kondisi prasyarat atau variabel yang tertulis di bagian sebelah kiri (kondisi IF) telah berhasil dicocokkan dan semuanya bernilai benar (True) terhadap koleksi fakta yang tersedia saat itu di basis data.",
+                rubric: [
+                    { text: "Menyebutkan prasyarat di bagian kondisi (IF)", weight: 50 },
+                    { text: "Menjelaskan pemenuhan nilai benar (True) terhadap fakta di database", weight: 50 }
+                ]
+            },
+            {
+                id: 46,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan penalaran berbasis kasus (case-based reasoning)?",
+                shortAnswer: "Penyelesaian masalah baru dengan mencocokkan kemiripan solusi kasus-kasus lama.",
+                longAnswer: "Penalaran berbasis kasus (Case-Based Reasoning / CBR) adalah pendekatan sistem cerdas yang menyelesaikan masalah baru dengan cara memanggil, mengadaptasi, dan menerapkan solusi-solusi dari kasus-kasus nyata serupa yang pernah diselesaikan di masa lalu (riwayat database kasus).",
+                rubric: [
+                    { text: "Menjelaskan pemanggilan solusi dari kasus masa lalu", weight: 50 },
+                    { text: "Menjelaskan pencocokan berdasarkan kemiripan / keserupaan kasus baru dengan kasus lama", weight: 50 }
+                ]
+            },
+            {
+                id: 47,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Kapan kita sebaiknya menggunakan penalaran berbasis kasus (case-based reasoning)?",
+                shortAnswer: "Saat data riwayat kasus masa lalu melimpah dan user membutuhkan kedekatan analogi kasus.",
+                longAnswer: "CBR sebaiknya digunakan apabila domain masalah sulit dirumuskan ke dalam aturan IF-THEN yang kaku, namun kita memiliki database dokumentasi kasus masa lalu yang sangat kaya dan pengguna ingin menganalisis solusi berdasarkan analogi keserupaan kasus nyata.",
+                rubric: [
+                    { text: "Menyebutkan kondisi 'sulit merumuskan aturan IF-THEN kaku'", weight: 50 },
+                    { text: "Menyebutkan ketersediaan 'database riwayat kasus masa lalu yang melimpah'", weight: 50 }
+                ]
+            },
+            {
+                id: 48,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Perhatikan aturan: IF demam AND batuk THEN flu. Jika sistem mengetahui fakta awal adalah demam dan batuk, apa langkah forward chaining selanjutnya?",
+                shortAnswer: "Memicu aturan (fire), menyimpulkan dan memasukkan fakta baru 'flu' ke database.",
+                longAnswer: "Karena fakta awal ('demam' dan 'batuk') cocok dengan kondisi IF pada aturan, aturan tersebut terpicu (fired). Langkah selanjutnya adalah mengeksekusi kesimpulan dan menambahkan fakta baru berupa 'flu' ke dalam database fakta.",
+                rubric: [
+                    { text: "Menyatakan aturan terpicu / fire karena fakta cocok", weight: 50 },
+                    { text: "Menyimpulkan penambahan fakta baru 'flu' ke database", weight: 50 }
+                ]
+            },
+            {
+                id: 49,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Melanjutkan soal nomor 48, jika ada aturan berikutnya: IF flu AND sakit kepala THEN influenza. Apakah aturan ini bisa langsung dieksekusi? Jelaskan!",
+                shortAnswer: "Belum bisa, karena sistem masih kekurangan fakta pendukung 'sakit kepala'.",
+                longAnswer: "Belum bisa langsung dieksekusi (not fired). Meskipun fakta 'flu' sudah diperoleh dari langkah sebelumnya, aturan tersebut membutuhkan konjungsi (AND) dengan fakta 'sakit kepala'. Aturan baru bisa dieksekusi jika fakta 'sakit kepala' telah dimasukkan ke database fakta.",
+                rubric: [
+                    { text: "Menyatakan 'Belum bisa dieksekusi / not fired'", weight: 40 },
+                    { text: "Menyebutkan pemenuhan fakta 'flu' sudah siap", weight: 30 },
+                    { text: "Menjelaskan kekurangan fakta pendukung 'sakit kepala'", weight: 30 }
+                ]
+            },
+            {
+                id: 50,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa kelebihan utama penggunaan representasi aturan (rule-based) jika ditinjau dari pelacakan solusi?",
+                shortAnswer: "Memungkinkan sistem memberikan penjelasan terperinci mengenai langkah-langkah pencapaian keputusan.",
+                longAnswer: "Kelebihan utama representasi aturan dalam pelacakan solusi adalah kemampuannya menyajikan jejak penjelasan (explanation trace) yang transparan. Sistem dapat dengan mudah merunut balik dan menampilkan deretan aturan (rules) mana saja yang berhasil terpicu dari fakta awal hingga membuahkan keputusan akhir.",
+                rubric: [
+                    { text: "Menyebutkan istilah 'jejak penjelasan / explanation trace'", weight: 50 },
+                    { text: "Menjelaskan runut balik aturan terpicu dari fakta awal ke kesimpulan", weight: 50 }
+                ]
+            },
+            // --- PREDIKSI UTS SBP (51-70) ---
+            {
+                id: 51,
+                topic: "Prediksi UTS SBP (Wajib Kasus Logika)",
+                difficulty: "Sulit",
+                isMandatory: true,
+                question: "Diketahui kumpulan fakta dan aturan sebagai berikut:\na. Jika kacamataku ada di meja dapur, maka aku pasti sudah melihatnya ketika sarapan pagi.\nb. Aku membaca koran di ruang tamu, atau aku membacanya di dapur.\nc. Jika aku membaca koran di ruang tamu, maka pastilah kacamataku kuletakkan di meja tamu.\nd. Aku tidak melihat kacamataku pada waktu sarapan pagi.\ne. Jika aku membaca buku di ranjang, maka kacamataku kuletakkan di meja samping ranjang.\nf. Jika aku membaca koran di dapur, maka kacamataku ada di meja dapur.\nBuktikan di mana letak kacamata tersebut menggunakan notasi dan langkah aturan inferensi logika formal!",
+                shortAnswer: "Kacamata diletakkan di meja tamu.",
+                longAnswer: "Langkah 1: Inisialisasi Variabel Proposisi\np: Kacamataku ada di meja dapur\nq: Aku melihat kacamata ketika sarapan pagi\nr: Aku membaca koran di ruang tamu\ns: Aku membaca koran di dapur\nt: Kacamata kuletakkan di meja tamu\nu: Aku membaca buku di ranjang\nv: Kacamata kuletakkan di meja samping ranjang\n\nLangkah 2: Mengubah Pernyataan Menjadi Premis Logika\n1. p &rarr; q\n2. r &or s\n3. r &rarr; t\n4. ~q\n5. u &rarr; v\n6. s &rarr; p\n\nLangkah 3: Proses Penarikan Kesimpulan (Inferensi)\n- Dari Premis 1 (p &rarr; q) dan Premis 4 (~q), dengan Modus Tollens diperoleh: ~p (Kacamata tidak ada di meja dapur).\n- Dari Premis 6 (s &rarr; p) dan fakta baru (~p), dengan Modus Tollens diperoleh: ~s (Aku tidak membaca koran di dapur).\n- Dari Premis 2 (r &or s) dan fakta baru (~s), dengan Silogisme Disjungtif diperoleh: r (Aku membaca koran di ruang tamu).\n- Dari Premis 3 (r &rarr; t) dan fakta baru (r), dengan Modus Ponens diperoleh: t.\n\nKesimpulan: t bernilai benar, yang berarti kacamataku diletakkan di meja tamu.",
+                rubric: [
+                    { text: "Melakukan inisialisasi variabel proposisi (p, q, r, s, t, u, v)", weight: 20 },
+                    { text: "Mengubah narasi menjadi premis formal 1-6 secara tepat", weight: 20 },
+                    { text: "Menggunakan Modus Tollens pada (p &rarr; q) &and; ~q menghasilkan ~p", weight: 20 },
+                    { text: "Menggunakan Modus Tollens pada (s &rarr; p) &and; ~p menghasilkan ~s", weight: 15 },
+                    { text: "Menggunakan Silogisme Disjungtif pada (r &or s) &and; ~s menghasilkan r", weight: 15 },
+                    { text: "Menggunakan Modus Ponens pada (r &rarr; t) &and; r menghasilkan t (Kacamata di meja tamu)", weight: 10 }
+                ]
+            },
+            {
+                id: 52,
+                topic: "Prediksi UTS SBP (Soal Kasus Chaining)",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Dalam basis pengetahuan sebuah sistem pakar, terdapat 5 aturan:\nR1: IF A &and; B THEN C\nR2: IF C THEN D\nR3: IF F &and; G THEN D\nR4: IF G &and; E THEN H\nR5: IF G THEN J\nJika fakta awal yang benar adalah A dan B, tunjukkan langkah penalaran menggunakan Forward Chaining untuk membuktikan apakah target kesimpulan D bernilai benar!",
+                shortAnswer: "Target D terbukti bernilai benar.",
+                longAnswer: "Fakta Awal: {A, B}\nTarget Goal: D\n\nLangkah Forward Chaining:\n1. Sistem mencocokkan fakta awal dengan kondisi aturan. Kondisi IF R1 (A &and; B) terpenuhi karena fakta A dan B tersedia. R1 dieksekusi (fired). Kesimpulan C ditambahkan sebagai fakta baru.\n   Database fakta sekarang: {A, B, C}\n2. Sistem terus memindai aturan. Kondisi IF R2 (C) sekarang terpenuhi karena fakta C tersedia. R2 dieksekusi (fired). Kesimpulan D ditambahkan sebagai fakta baru.\n   Database fakta sekarang: {A, B, C, D}\n3. Sistem memeriksa apakah Goal D telah tercapai. Karena D telah masuk ke database fakta, komputasi dihentikan.\n\nKesimpulan: Target kesimpulan D terbukti Bernilai Benar.",
+                rubric: [
+                    { text: "Menyebutkan fakta awal {A, B}", weight: 20 },
+                    { text: "Menjelaskan eksekusi R1 (A &and; B) terpicu (fire) karena fakta A & B ada", weight: 30 },
+                    { text: "Menjelaskan penambahan fakta baru C, lalu eksekusi R2 (C) terpicu (fire)", weight: 30 },
+                    { text: "Menyimpulkan target D berhasil masuk ke database fakta dan bernilai benar", weight: 20 }
+                ]
+            },
+            {
+                id: 53,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Terangkan perbedaan mendasar fungsionalitas antara komponen Knowledge Base dengan Inference Engine pada sistem pakar!",
+                shortAnswer: "Knowledge Base adalah gudang penyimpanan fakta dan aturan; Inference Engine adalah mesin penalaran aktif.",
+                longAnswer: "1. Knowledge Base (Basis Pengetahuan): bertindak sebagai basis data statis/dinamis yang menyimpan semua fakta, relasi konseptual, dan kaidah aturan logika (IF-THEN) yang disadur dari pakar.\n2. Inference Engine (Mesin Inferensi): bertindak sebagai unit pemroses aktif ('otak'). Tugasnya mengevaluasi aturan di basis pengetahuan terhadap data masukan pengguna untuk menarik kesimpulan baru.",
+                rubric: [
+                    { text: "Menjelaskan Knowledge Base sebagai modul penyimpanan pasif fakta & aturan pakar", weight: 50 },
+                    { text: "Menjelaskan Inference Engine sebagai modul penalaran aktif penarik kesimpulan", weight: 50 }
+                ]
+            },
+            {
+                id: 54,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Ubahlah ekspresi logika predikat berikut ke dalam bentuk kalimat bahasa alami yang tepat sesuai arahan materi: &forall;x (Gajah(x) &rarr; Mamalia(x))!",
+                shortAnswer: "Untuk semua gajah adalah mamalia.",
+                longAnswer: "Simbol &forall; melambangkan kuantor universal yang dibaca 'Untuk semua' atau 'Setiap'. Sesuai pedoman visual lembar koreksi dosen, ekspresi &forall;x (Gajah(x) &rarr; Mamalia(x)) dikonversi menjadi kalimat taksonomi langsung: 'Untuk semua gajah adalah mamalia'.",
+                rubric: [
+                    { text: "Menuliskan kata pembuka kuantor 'Untuk semua / Setiap'", weight: 40 },
+                    { text: "Menuliskan struktur kalimat lengkap 'Untuk semua gajah adalah mamalia'", weight: 60 }
+                ]
+            },
+            {
+                id: 55,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Tuliskan konversi kalimat dari bentuk formal predikat berikut: &exist;x (Kuda_Laut(x) &and; Hewan(x))!",
+                shortAnswer: "Kuda laut adalah hewan.",
+                longAnswer: "Simbol &exist; melambangkan kuantor eksistensial. Berdasarkan pedoman visual jawaban ujian SBP yang ditekankan dosen, ekspresi predikat eksistensial &exist;x (Kuda_Laut(x) &and; Hewan(x)) dikonversi menjadi kalimat tunggal terarah: 'Kuda laut adalah hewan'.",
+                rubric: [
+                    { text: "Mengonversi menjadi kalimat langsung 'Kuda laut adalah hewan'", weight: 100 }
+                ]
+            },
+            {
+                id: 56,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan bagaimana Jaringan Semantik (Semantic Network) mengorganisasikan sebuah pengetahuan, dan gambarkan komponen pembangunnya!",
+                shortAnswer: "Mengorganisasikan pengetahuan dalam graf berarah berisi Node (objek/konsep) dan Edge (relasi).",
+                longAnswer: "Jaringan Semantik mengorganisasikan pengetahuan lewat struktur graf berarah yang merepresentasikan relasi asosiasi antar konsep.\nKomponen pembangunnya:\n1. Node (Simpul): lingkaran yang mewakili entitas fisik, konsep abstrak, sifat, atau situasi.\n2. Edge / Arc (Garis Lengkung Berarah): panah berlabel yang menyatakan jenis hubungan relasi (misal: 'is-a', 'has-a', 'lives-in').",
+                rubric: [
+                    { text: "Menyebutkan struktur graf berarah", weight: 30 },
+                    { text: "Menjelaskan Node sebagai konsep/objek/sifat", weight: 35 },
+                    { text: "Menjelaskan Edge/Arc sebagai panah relasi berlabel", weight: 35 }
+                ]
+            },
+            {
+                id: 57,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa yang membedakan skema Representasi Terstruktur (seperti Frame) dengan skema Jaringan Semantik biasa?",
+                shortAnswer: "Jaringan Semantik hanya menghubungkan konsep sederhana tanpa struktur internal; Frame memperluas simpul menjadi objek data berslot dan bernilai.",
+                longAnswer: "1. Jaringan Semantik: simpul (node) hanya berupa label konsep tunggal pasif yang dihubungkan panah tanpa struktur internal di dalam simpul tersebut.\n2. Representasi Terstruktur (Frame): simpul graf dikembangkan menjadi struktur data modular (Frame) yang berisi slot-slot atribut berserta nilai objeknya, serta mendukung pewarisan sifat taksonomi (inheritance).",
+                rubric: [
+                    { text: "Menyebutkan simpul Jaringan Semantik bersifat sederhana tanpa struktur internal", weight: 40 },
+                    { text: "Menyebutkan simpul Frame berupa objek data modular berslot-nilai", weight: 40 },
+                    { text: "Menyebutkan fitur pewarisan sifat / inheritance pada Frame", weight: 20 }
+                ]
+            },
+            {
+                id: 58,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Sebutkan dua karakteristik umum dari bentuk skema representasi pengetahuan mengacu pada pendapat Turban (2001)!",
+                shortAnswer: "1. Dapat diprogram dan disimpan di memori.<br>2. Dirancang agar fakta dapat dimanfaatkan untuk penalaran.",
+                longAnswer: "Sesuai diktat sistem-pakar.pdf, dua karakteristik representasi pengetahuan menurut Turban (2001) adalah:\n1. Representasi pengetahuan dapat diprogramkan dengan beragam bahasa komputer yang ada dan dapat disimpan dalam memori.\n2. Representasi pengetahuan dirancang sedemikian rupa sehingga fakta dan pengetahuan lainnya dapat dimanfaatkan untuk penalaran.",
+                rubric: [
+                    { text: "Karakteristik 1: dapat diprogram dan disimpan di memori", weight: 50 },
+                    { text: "Karakteristik 2: dirancang agar fakta dapat digunakan untuk penalaran", weight: 50 }
+                ]
+            },
+            {
+                id: 59,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Tuliskan skema formal aturan inferensi Modus Tollens dan jelaskan penalaran logis di balik aturan tersebut!",
+                shortAnswer: "[(p &rarr; q) &and; ~q] &rarr; ~p. Menyangkal akibat otomatis menyangkal syarat awal.",
+                longAnswer: "Skema formal: [(p &rarr; q) &and; ~q] &rarr; ~p.\nPenalaran logis: Aturan ini menyatakan jika kebenaran syarat p mutlak menyebabkan kemunculan akibat q, namun di lapangan akibat q tidak pernah terjadi (~q), maka secara logis dapat disimpulkan bahwa syarat pemicu p pasti tidak pernah terjadi (~p).",
+                rubric: [
+                    { text: "Menuliskan formula [(p &rarr; q) &and; ~q] &rarr; ~p", weight: 50 },
+                    { text: "Menjelaskan logika penyangkalan akibat mutlak meniadakan syarat pemicu", weight: 50 }
+                ]
+            },
+            {
+                id: 60,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan perbedaan pendekatan basis pengetahuan antara Rule-Based Reasoning dengan Case-Based Reasoning!",
+                shortAnswer: "Rule-Based menyimpan aturan IF-THEN prosedural; Case-Based menyimpan database solusi kasus lama.",
+                longAnswer: "1. Rule-Based Reasoning (Penalaran Berbasis Aturan): merepresentasikan pengetahuan pakar sebagai aturan terstruktur IF-THEN. Penalaran dilakukan dengan mencocokkan fakta secara prosedural.\n2. Case-Based Reasoning (Penalaran Berbasis Kasus): tidak menyimpan aturan logika, melainkan menyimpan database berisi solusi kasus-kasus nyata terdahulu. Masalah baru diselesaikan dengan mencari keserupaan kasus lama.",
+                rubric: [
+                    { text: "Menjelaskan Rule-Based menyimpan kaidah aturan IF-THEN prosedural", weight: 50 },
+                    { text: "Menjelaskan Case-Based menyimpan database solusi kasus terdahulu untuk dicari keserupaannya", weight: 50 }
+                ]
+            },
+            {
+                id: 61,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Ubahlah teks deskriptif berikut ke bentuk notasi logika proposisi formal: 'Jika Mini adalah sejenis murai dan ia hidup di sarang, maka Mini adalah spesies yang dilindungi oleh peraturan pemerintah.'",
+                shortAnswer: "(a &and; b) &rarr; c",
+                longAnswer: "Langkah 1: Inisialisasi variabel proposisi\na: Mini adalah sejenis murai\nb: Mini hidup di sarang\nc: Mini adalah spesies yang dilindungi oleh peraturan pemerintah\n\nLangkah 2: Hubungkan dengan operator logika\nKata 'dan' &rarr; konjungsi (&and;)\nKata 'Jika... maka...' &rarr; implikasi (&rarr;)\n\nNotasi Akhir: (a &and; b) &rarr; c",
+                rubric: [
+                    { text: "Menentukan variabel proposisi secara mandiri (a, b, c)", weight: 40 },
+                    { text: "Menggunakan operator konjungsi (&and;) untuk 'Mini murai dan hidup di sarang'", weight: 30 },
+                    { text: "Menggunakan operator implikasi (&rarr;) untuk menghasilkan notasi (a &and; b) &rarr; c", weight: 30 }
+                ]
+            },
+            {
+                id: 62,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Kapan sebuah mesin inferensi yang menerapkan metode Forward Chaining menghentikan proses perulangan penalarannya? Jelaskan berdasarkan materi kuliah!",
+                shortAnswer: "Saat tidak ada rule cocok dengan fakta, atau goal utama tercapai.",
+                longAnswer: "Berdasarkan dokumen FORWARD CHAINING.pdf, proses komputasi perulangan penalaran maju akan berhenti apabila menemui salah satu dari dua kondisi:\n1. Sudah tidak ada aturan (rule) dalam basis pengetahuan yang kondisi IF-nya cocok dengan koleksi fakta yang dimiliki sistem.\n2. Tujuan utama (goal / hipotesis yang ingin dibuktikan) telah berhasil dicapai atau ditemukan bernilai benar di database fakta.",
+                rubric: [
+                    { text: "Kondisi 1: tidak ada rule cocok dengan koleksi fakta dasar/baru", weight: 50 },
+                    { text: "Kondisi 2: goal utama tercapai / terbukti benar", weight: 50 }
+                ]
+            },
+            {
+                id: 63,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Tuliskan formula logika untuk aturan inferensi Silogisme Disjungtif dan berikan contoh kalimat sederhana penerapannya!",
+                shortAnswer: "[(p &or; q) &and; ~p] &rarr; q. Contoh: Saya di dapur atau ruang tamu. Saya tidak di ruang tamu. Maka saya di dapur.",
+                longAnswer: "Formula Logika: [(p &or; q) &and; ~p] &rarr; q.\nContoh Kalimat:\nPremis 1 (p &or; q): Saya membaca koran di ruang tamu atau saya membacanya di dapur.\nPremis 2 (~p): Saya tidak membaca koran di ruang tamu.\nKesimpulan (q): Saya membaca koran di dapur.",
+                rubric: [
+                    { text: "Menuliskan formula [(p &or; q) &and; ~p] &rarr; q secara tepat", weight: 40 },
+                    { text: "Membuat contoh premis disjungsi 'p atau q' yang logis", weight: 30 },
+                    { text: "Membuat premis negasi (~p) dan konklusi q secara runtut", weight: 30 }
+                ]
+            },
+            {
+                id: 64,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Berdasarkan teks materi: 'Mini adalah sejenis murai, dia hidup di sarang yang berada di atas pohon'. Sebutkan objek-objek yang menjadi Node dan hubungan yang menjadi Edge jika ditransformasikan ke Jaringan Semantik!",
+                shortAnswer: "Node: Mini, Murai, Sarang, Pohon. Edge: Sejenis, Hidup Di, Berada Di Atas.",
+                longAnswer: "Berdasarkan lembar latihan offline mahasiswa:\nNode (Objek/Konsep): Mini, Murai, Sarang, Pohon.\nEdge (Relasi Hubungan berarah):\n- Mini &rarr; Sejenis &rarr; Murai\n- Mini &rarr; Hidup Di &rarr; Sarang\n- Sarang &rarr; Berada Di Atas &rarr; Pohon",
+                rubric: [
+                    { text: "Menyebutkan semua Node objek secara benar (Mini, Murai, Sarang, Pohon)", weight: 50 },
+                    { text: "Menyebutkan Edge relasi berarah secara lengkap (Sejenis, Hidup Di, Berada Di Atas)", weight: 50 }
+                ]
+            },
+            {
+                id: 65,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Mengapa pendekatan penalaran berbasis aturan (rule-based) sangat disukai apabila pengguna memerlukan penjelasan mengenai keputusan sistem?",
+                shortAnswer: "Karena sistem dapat menampilkan jejak langkah demi langkah aturan mana saja yang terpicu untuk mencapai solusi.",
+                longAnswer: "Sesuai materi M6 Lanjutan, representasi berbasis aturan sangat disukai karena struktur IF-THEN mempermudah pelacakan solusi. Apabila pengguna meminta penjelasan, sistem cukup menampilkan urutan baris aturan (rules) mana saja yang berhasil terpicu (fired) dari database fakta awal hingga mencapai kesimpulan akhir secara runtut dan transparan.",
+                rubric: [
+                    { text: "Menjelaskan kemudahan visualisasi pelacakan solusi", weight: 50 },
+                    { text: "Menjelaskan penayangan urutan baris aturan terpicu (fired) sebagai transparansi", weight: 50 }
+                ]
+            },
+            {
+                id: 66,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan Tautologi dalam pengujian validitas sebuah argumen logika proposisi?",
+                shortAnswer: "Kondisi tabel kebenaran di mana konklusi akhir selalu bernilai benar untuk kombinasi nilai variabel apa pun.",
+                longAnswer: "Tautologi adalah suatu pernyataan majemuk dalam logika proposisional yang selalu bernilai benar (True) pada kolom hasil akhir tabel kebenaran, tidak peduli apa pun kombinasi nilai kebenaran (True atau False) yang diberikan kepada variabel-variabel proposisi pembangunnya.",
+                rubric: [
+                    { text: "Menjelaskan hasil tabel kebenaran 'selalu bernilai benar (True)'", weight: 50 },
+                    { text: "Menjelaskan kondisi berlaku independen terhadap nilai variabel pembawa", weight: 50 }
+                ]
+            },
+            {
+                id: 67,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Mengapa aturan berbentuk IF-THEN dalam sistem berbasis kaidah dapat diklasifikasikan ke dalam jenis Representasi Prosedural?",
+                shortAnswer: "Karena aturan IF-THEN berfungsi sebagai instruksi kerja aktif bagi mesin inferensi, bukan sekadar relasi pasif.",
+                longAnswer: "Aturan IF-THEN diklasifikasikan sebagai representasi prosedural karena ia bertindak sebagai instruksi kerja aktif bagi mesin inferensi. Jika kondisi prasyarat (IF) terpenuhi, sistem diarahkan secara prosedural untuk melakukan tindakan penarikan kesimpulan (THEN), menjadikannya kumpulan prosedur pemecahan masalah ketimbang data relasional pasif.",
+                rubric: [
+                    { text: "Menyebutkan istilah 'instruksi kerja aktif' untuk mesin inferensi", weight: 50 },
+                    { text: "Menjelaskan alur prosedural penyelesaian masalah", weight: 50 }
+                ]
+            },
+            {
+                id: 68,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Terangkan makna lambang &forall; dan &exist; dalam lingkup representasi pengetahuan logika predikat!",
+                shortAnswer: "&forall; adalah Kuantor Universal (Semua/Setiap). &exist; adalah Kuantor Eksistensial (Ada/Terdapat).",
+                longAnswer: "1. Simbol &forall; (A terbalik) mewakili Kuantor Universal, artinya predikat atau sifat berlaku mutlak untuk semua/setiap objek dalam semesta pembicaraan.\n2. Simbol &exist; (E terbalik) mewakili Kuantor Eksistensial, artinya predikat atau relasi setidaknya berlaku untuk minimal satu/ada/beberapa objek dalam semesta.",
+                rubric: [
+                    { text: "Menyebutkan &forall; sebagai Kuantor Universal ('Semua/Setiap')", weight: 50 },
+                    { text: "Menyebutkan &exist; sebagai Kuantor Eksistensial ('Ada/Terdapat/Minimal satu')", weight: 50 }
+                ]
+            },
+            {
+                id: 69,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Tunjukkan bentuk konklusi dari rangkaian aturan berikut menggunakan Silogisme Hipotesis:\n1. Jika hewan menyusui, maka hewan tersebut termasuk mamalia.\n2. Jika hewan termasuk mamalia, maka hewan tersebut memakan daging.",
+                shortAnswer: "Jika hewan menyusui, maka hewan tersebut memakan daging.",
+                longAnswer: "Langkah 1: Inisialisasi variabel proposisi\np: hewan menyusui\nq: hewan termasuk mamalia\nr: hewan memakan daging\n\nLangkah 2: Model premis implikasi\n1. p &rarr; q\n2. q &rarr; r\n\nLangkah 3: Aturan Silogisme Hipotesis\nFormula: [(p &rarr; q) &and; (q &rarr; r)] &rarr; (p &rarr; r)\nKesimpulan Akhir (p &rarr; r): Jika hewan menyusui, maka hewan tersebut memakan daging.",
+                rubric: [
+                    { text: "Menginisialisasi variabel proposisi (p, q, r)", weight: 30 },
+                    { text: "Menyebutkan formula Silogisme Hipotesis", weight: 30 },
+                    { text: "Menyimpulkan kalimat 'Jika hewan menyusui, maka hewan tersebut memakan daging'", weight: 40 }
+                ]
+            },
+            {
+                id: 70,
+                topic: "Prediksi UTS SBP",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan apa yang dimaksud dengan Mesin Inferensi yang bersifat Data-Driven dan Goal-Driven!",
+                shortAnswer: "Data-Driven memulai penalaran dari fakta masukan (forward chaining); Goal-Driven memulai dari target hipotesis (backward chaining).",
+                longAnswer: "1. Data-Driven (Digerakkan oleh data): merupakan prinsip di mana penalaran dimulai dari kumpulan fakta input yang diberikan oleh pengguna ke database fakta, lalu sistem mencari aturan yang cocok untuk disimpulkan (contoh: Forward Chaining).\n2. Goal-Driven (Digerakkan oleh tujuan): merupakan prinsip di mana penalaran dimulai dari perumusan target kesimpulan/hipotesis terlebih dahulu, kemudian sistem mencari ke belakang fakta-fakta pendukung untuk membuktikan kebenaran target tersebut (contoh: Backward Chaining).",
+                rubric: [
+                    { text: "Menjelaskan Data-Driven (Forward Chaining) bertumpu dari fakta awal ke kesimpulan", weight: 50 },
+                    { text: "Menjelaskan Goal-Driven (Backward Chaining) bertumpu dari hipotesis akhir ke pencarian fakta pendukung", weight: 50 }
+                ]
+            }
+        ];
+
+        // Fill up other questions (1-50) using templates to complete the 70 questions database
+        // We will generate the 1-50 list based on the bank questions list in the user prompt
+        // Let's populate the remaining 48 questions (as we already defined 1-10 and 51-70)
+        // Wait, to populate Q11-Q50 in detail, let's write out their data structures
+        // Wait, in our ALL_QUESTIONS array, Q1 to Q10 are detailed, Q11 to Q20 are representing Klasifikasi Representasi
+        // Let's double check if we can populate Q11 to Q50 with the exact questions from user's "BANK SOAL ESAI (50 Soal)"!
+        // Yes, the questions 11 to 50 match the bank questions 11 to 50!
+        // Let's modify our ALL_QUESTIONS database to make sure all 70 questions are exactly populated.
+        // Wait, I can write the complete array directly in this file. Let's do it!
+        // To make it highly structured and readable, I'll write all 70 questions explicitly so the user can query and practice all of them!
+        // Yes! That is extremely thorough. Let's write them.
+    </script>
+    <script>
+        // Let's insert questions 11 to 50 into the database array!
+        const BANK_QUESTIONS_11_TO_50 = [
+            // Q11 to Q20 are Topic B (Representasi)
+            {
+                id: 11,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Sebutkan 2 karakteristik umum dari representasi pengetahuan menurut Turban (2001)!",
+                shortAnswer: "1. Dapat diprogram dan disimpan di memori. 2. Dirancang agar fakta bisa digunakan untuk penalaran.",
+                longAnswer: "Dua karakteristik umum representasi pengetahuan:\n1. Dapat diprogramkan dengan beragam bahasa komputer yang ada dan dapat disimpan dalam memori.\n2. Dirancang sedemikian rupa sehingga fakta dan pengetahuan lainnya dapat dimanfaatkan untuk penalaran.",
+                rubric: [
+                    { text: "Dapat diprogram dan disimpan di memori", weight: 50 },
+                    { text: "Dirancang agar fakta bisa digunakan untuk penalaran", weight: 50 }
+                ]
+            },
+            {
+                id: 12,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Jelaskan apa yang dimaksud dengan Representasi Logika!",
+                shortAnswer: "Skema representasi menggunakan ekspresi logika formal.",
+                longAnswer: "Skema representasi pengetahuan yang menggunakan ekspresi-ekspresi logika formal untuk menyatakan fakta dan aturan dalam basis pengetahuan.",
+                rubric: [
+                    { text: "Menggunakan ekspresi logika formal", weight: 100 }
+                ]
+            },
+            {
+                id: 13,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Mengapa bahasa pemrograman PROLOG dinilai ideal untuk representasi logika?",
+                shortAnswer: "Karena PROLOG dirancang khusus untuk mengolah logika formal dengan mesin inferensi internal.",
+                longAnswer: "Karena PROLOG memiliki mesin inferensi internal bawaan yang mengevaluasi fakta dan relasi logika secara langsung, menjadikannya sangat cocok untuk mengeksekusi ekspresi logika formal.",
+                rubric: [
+                    { text: "Punya mesin inferensi bawaan", weight: 50 },
+                    { text: "Mengevaluasi fakta dan relasi logika langsung", weight: 50 }
+                ]
+            },
+            {
+                id: 14,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan apa yang dimaksud dengan Representasi Prosedural!",
+                shortAnswer: "Pengetahuan sebagai sekumpulan instruksi pemecahan masalah.",
+                longAnswer: "Representasi yang menggambarkan pengetahuan sebagai sekumpulan instruksi langkah demi langkah atau prosedur eksplisit untuk memecahkan suatu masalah, contohnya aturan IF-THEN.",
+                rubric: [
+                    { text: "Kumpulan instruksi langkah demi langkah", weight: 50 },
+                    { text: "Prosedur untuk memecahkan masalah (IF-THEN)", weight: 50 }
+                ]
+            },
+            {
+                id: 15,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Bagaimana aturan IF-THEN diinterpretasikan dalam Representasi Prosedural?",
+                shortAnswer: "Sebagai prosedur terarah untuk mencapai tujuan.",
+                longAnswer: "Ditafsirkan sebagai sebuah rangkaian aksi prosedural; jika kondisi terpenuhi, maka lakukan tindakan/prosedur yang ada pada bagian kesimpulan untuk mencapai target solusi.",
+                rubric: [
+                    { text: "Jika kondisi terpenuhi maka lakukan tindakan", weight: 50 },
+                    { text: "Sebagai rangkaian aksi prosedural", weight: 50 }
+                ]
+            },
+            {
+                id: 16,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan esensi utama dari Representasi Network (Jaringan)!",
+                shortAnswer: "Menangkap pengetahuan sebagai graf berisi node dan lengkungan relasi.",
+                longAnswer: "Skema yang menangkap pengetahuan sebagai sebuah struktur graf di mana titik/node menggambarkan konsep atau objek, sedangkan garis/lengkungan menggambarkan relasi asosiasi antar objek tersebut.",
+                rubric: [
+                    { text: "Menyusun graf berisi simpul (node)", weight: 50 },
+                    { text: "Menggunakan garis (edge) mewakili hubungan relasi", weight: 50 }
+                ]
+            },
+            {
+                id: 17,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Berikan penjelasan mendalam mengenai struktur Jaringan Semantik!",
+                shortAnswer: "Graf berarah berisi node (objek/keadaan) dan edge (relasi).",
+                longAnswer: "Jaringan semantik adalah bentuk representasi network yang menggunakan graf berarah berisi simpul (node) untuk mewakili objek, sifat, atau situasi, dan garis penunjuk (edge) untuk menunjukkan hubungan spesifik antar konsep.",
+                rubric: [
+                    { text: "Graf berarah dengan simpul (node)", weight: 50 },
+                    { text: "Garis penunjuk (edge) menunjukkan hubungan spesifik", weight: 50 }
+                ]
+            },
+            {
+                id: 18,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan Representasi Terstruktur?",
+                shortAnswer: "Representasi network yang dikembangkan menjadi objek dengan slot-slot nilai.",
+                longAnswer: "Bentuk bahasa representasi yang memperluas konsep network dengan mengelompokkan informasi ke dalam objek terstruktur yang memiliki slot (atribut) bernama dengan nilai-nilai spesifik di dalamnya.",
+                rubric: [
+                    { text: "Memperluas konsep network", weight: 50 },
+                    { text: "Mengelompokkan informasi ke objek terstruktur", weight: 50 }
+                ]
+            },
+            {
+                id: 19,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Jelaskan konsep dasar dari Frame-Based Representation!",
+                shortAnswer: "Struktur berbasis objek dan atribut yang mendukung pewarisan.",
+                longAnswer: "Representasi pengetahuan terstruktur menggunakan objek yang disebut frame. Setiap frame memiliki kumpulan slot (atribut) dan nilai, serta mendukung fitur pewarisan sifat antar objek layaknya Object Oriented Programming.",
+                rubric: [
+                    { text: "Menggunakan objek bernama frame", weight: 50 },
+                    { text: "Mendukung fitur pewarisan sifat (inheritance)", weight: 50 }
+                ]
+            },
+            {
+                id: 20,
+                topic: "Klasifikasi Representasi Pengetahuan",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Berikan contoh pendefinisian objek menggunakan Frame berdasarkan materi!",
+                shortAnswer: "Frame: Penyakit; Nama: Flu; Gejala: Demam; Obat: Parasetamol.",
+                longAnswer: "Contoh kerangka:\nFrame: Penyakit\nNama: Flu\nGejala: [Demam, Batuk, Pilek]\nObat: Parasetamol",
+                rubric: [
+                    { text: "Menulis nama frame (Penyakit)", weight: 50 },
+                    { text: "Menulis slot (Nama, Gejala, Obat)", weight: 50 }
+                ]
+            },
+            // Q21 to Q30 are Topic C (Logika Proposisi)
+            {
+                id: 21,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Sebutkan 5 jenis operator/penghubung logika proposisi beserta simbolnya!",
+                shortAnswer: "Konjungsi (&and;), Disjungsi (&or;), Negasi (~), Implikasi (&rarr;), Ekuivalensi (&harr;).",
+                longAnswer: "Sesuai materi, operatornya adalah: Konjungsi (&and; / And), Disjungsi (&or; / Or), Negasi (~ / Not), Implikasi (&rarr; / If-Then), dan Ekuivalensi (&harr; / If and Only If).",
+                rubric: [
+                    { text: "Menyebutkan semua 5 operator dengan simbol", weight: 100 }
+                ]
+            },
+            {
+                id: 22,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Kapan sebuah argumen dalam inferensi logika dinyatakan sebagai argumen valid?",
+                shortAnswer: "Ketika semua premis bernilai benar sehingga kesimpulan mutlak benar (Tautologi).",
+                longAnswer: "Sebuah argumen dinyatakan valid jika semua premis pembangunnya bernilai benar, maka konklusinya juga wajib bernilai benar sehingga membentuk sebuah Tautologi.",
+                rubric: [
+                    { text: "Premis benar mengakibatkan konklusi benar", weight: 50 },
+                    { text: "Membentuk sebuah Tautologi", weight: 50 }
+                ]
+            },
+            {
+                id: 23,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan mekanisme penarikan kesimpulan dengan aturan Modus Ponens!",
+                shortAnswer: "Jika diketahui p &rarr; q dan fakta p, maka kesimpulannya q.",
+                longAnswer: "Aturan inferensi yang menyatakan bahwa jika kita memiliki aturan implikasi 'jika p maka q' bernilai benar, dan fakta komponen p ditemukan bernilai benar, maka kita dapat menyimpulkan bahwa q juga bernilai benar.",
+                rubric: [
+                    { text: "Premis implikasi p &rarr; q dan fakta p", weight: 50 },
+                    { text: "Kesimpulan q", weight: 50 }
+                ]
+            },
+            {
+                id: 24,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan prinsip inferensi yang terjadi pada Modus Tollens!",
+                shortAnswer: "Jika diketahui p &rarr; q dan fakta ~q, maka kesimpulannya ~p.",
+                longAnswer: "Aturan inferensi yang menyatakan jika berlaku 'jika p maka q' dan diperoleh fakta ingkaran/negasi dari q (~q), maka ditarik kesimpulan berupa negasi dari p (~p).",
+                rubric: [
+                    { text: "Premis implikasi p &rarr; q dan fakta ~q", weight: 50 },
+                    { text: "Kesimpulan ~p", weight: 50 }
+                ]
+            },
+            {
+                id: 25,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan aturan penyederhanaan konjungtif?",
+                shortAnswer: "Mengambil salah satu komponen dari operasi AND.",
+                longAnswer: "Aturan penarikan kesimpulan di mana jika sebuah pernyataan konjungsi p &and; q bernilai benar, maka secara mandiri proposisi p bernilai benar atau proposisi q bernilai benar.",
+                rubric: [
+                    { text: "Premis p &and; q benar", weight: 50 },
+                    { text: "Menyimpulkan p benar atau q benar secara mandiri", weight: 50 }
+                ]
+            },
+            {
+                id: 26,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan aturan kerja Silogisme Disjungtif!",
+                shortAnswer: "Jika ada pilihan p &or; q dan salah satunya salah, maka yang lain pasti benar.",
+                longAnswer: "Aturan yang menyatakan jika terdapat premis disjungsi p &or; q benar dan salah satu variabel proposisinya dinegasikan (misal ~p benar), maka komponen lainnya (q) wajib bernilai benar sebagai kesimpulan.",
+                rubric: [
+                    { text: "Premis disjungsi p &or; q benar", weight: 50 },
+                    { text: "Salah satu variabel dinegasikan (~p)", weight: 50 }
+                ]
+            },
+            {
+                id: 27,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Bagaimana aturan Silogisme Hipotesis bekerja menghubungkan proposisi?",
+                shortAnswer: "Menyambungkan rangkaian implikasi: dari p &rarr; q dan q &rarr; r menghasilkan p &rarr; r.",
+                longAnswer: "Aturan yang menghubungkan dua premis implikasi transitif. Jika 'jika p maka q' benar dan 'jika q maka r' benar, maka disimpulkan pernyataan baru 'jika p maka r'.",
+                rubric: [
+                    { text: "Premis p &rarr; q dan q &rarr; r", weight: 50 },
+                    { text: "Menyimpulkan p &rarr; r", weight: 50 }
+                ]
+            },
+            {
+                id: 28,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan aturan Dilema dalam inferensi logika?",
+                shortAnswer: "Penarikan kesimpulan dari dua pilihan disjungsi yang masing-masing menghasilkan implikasi.",
+                longAnswer: "Rangkaian inferensi kompleks yang mengombinasikan dua pernyataan implikasi dengan satu pernyataan disjungsi untuk menghasilkan konklusi disjungtif baru.",
+                rubric: [
+                    { text: "Mengombinasikan dua implikasi dan satu disjungsi", weight: 100 }
+                ]
+            },
+            {
+                id: 29,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Tuliskan bentuk simbolis dari aturan Penambahan Disjungtif!",
+                shortAnswer: "Dari premis p dapat disimpulkan p &or; q.",
+                longAnswer: "Mengindikasikan jika sebuah proposisi p bernilai benar, maka pernyataan disjungsi p &or; q otomatis akan selalu bernilai benar tidak peduli apa pun nilai q.",
+                rubric: [
+                    { text: "Simbol p &rarr; (p &or; q)", weight: 100 }
+                ]
+            },
+            {
+                id: 30,
+                topic: "Logika Proposisi & Inferensi Argumen",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Mengapa representasi logika proposisi dinilai kurang efektif untuk menggambarkan kalimat yang memiliki kuantitas objek?",
+                shortAnswer: "Karena proposisi tidak bisa membedakan kuantitas objek seperti 'semua' atau 'sebagian'.",
+                longAnswer: "Proposisi hanya melihat sebuah kalimat sebagai satu blok variabel tunggal (p atau q). Ia tidak memiliki kapabilitas internal untuk membedakan detail properti objek tunggal ataupun kuantitas objek (seperti kata seluruhnya/sebagian).",
+                rubric: [
+                    { text: "Kalimat dianggap satu variabel tunggal", weight: 50 },
+                    { text: "Tidak bisa menyatakan kuantitas (semua/sebagian)", weight: 50 }
+                ]
+            },
+            // Q31 to Q40 are Topic D (Logika Predikat)
+            {
+                id: 31,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan Kuantor Universal dalam logika predikat?",
+                shortAnswer: "Kuantor yang menyatakan kondisi berlaku untuk seluruh/setiap objek (&forall;).",
+                longAnswer: "Lambang logika predikat (&forall;) yang mengekspresikan bahwa pernyataan atau predikat yang mengikutinya bernilai benar untuk semua/setiap objek tanpa terkecuali dalam semesta pembicaraan.",
+                rubric: [
+                    { text: "Mengekspresikan berlaku untuk semua/setiap", weight: 50 },
+                    { text: "Simbol &forall;", weight: 50 }
+                ]
+            },
+            {
+                id: 32,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa pengertian dari Kuantor Eksistensial?",
+                shortAnswer: "Kuantor yang menyatakan kondisi berlaku bagi sebagian atau minimal ada satu objek (&exist;).",
+                longAnswer: "Lambang logika predikat (&exist;) yang menyatakan bahwa predikat tersebut bernilai benar untuk sekurang-kurangnya satu, ada, atau beberapa objek dalam semesta pembicaraan.",
+                rubric: [
+                    { text: "Mengekspresikan berlaku untuk sebagian/minimal satu", weight: 50 },
+                    { text: "Simbol &exist;", weight: 50 }
+                ]
+            },
+            {
+                id: 33,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Tuliskan arti harfiah dari ekspresi logika predikat berikut: &forall;x (Gajah(x) &rarr; Mamalia(x))!",
+                shortAnswer: "Untuk semua gajah adalah mamalia.",
+                longAnswer: "Berdasarkan pedoman visual dari dosen: 'Untuk semua x, jika x adalah gajah maka x adalah mamalia', yang disingkat menjadi: 'Untuk semua gajah adalah mamalia'.",
+                rubric: [
+                    { text: "Menerjemahkan menjadi 'Untuk semua gajah adalah mamalia'", weight: 100 }
+                ]
+            },
+            {
+                id: 34,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jika diberikan ekspresi &exist;x (Kuda_Laut(x) &and; Hewan(x)), apa arti ekspresi kuantor tersebut?",
+                shortAnswer: "Kuda laut adalah hewan (ada/beberapa kuda laut adalah hewan).",
+                longAnswer: "Berdasarkan petunjuk konversi kalimat: Arti ekspresi dengan lambang E terbalik tersebut menyatakan bahwa 'Kuda laut adalah hewan' (berlaku untuk sebagian/ada objek).",
+                rubric: [
+                    { text: "Menerjemahkan menjadi 'Kuda laut adalah hewan'", weight: 100 }
+                ]
+            },
+            {
+                id: 35,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Mengapa operator implikasi (&rarr;) lebih sering dipasangkan dengan Kuantor Universal (&forall;)?",
+                shortAnswer: "Karena menyatakan aturan mutlak yang mengikat seluruh anggota kelompok.",
+                longAnswer: "Kuantor universal menegaskan aturan menyeluruh. Pola &forall;x (A(x) &rarr; B(x)) memastikan bahwa 'setiap benda yang memiliki sifat A pastilah otomatis memiliki sifat B', yang merepresentasikan hukum universal.",
+                rubric: [
+                    { text: "Menyatakan aturan kondisional yang mengikat seluruh objek", weight: 50 },
+                    { text: "Pola &forall;x (A(x) &rarr; B(x))", weight: 50 }
+                ]
+            },
+            {
+                id: 36,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Mengapa operator konjungsi (&and;) lebih tepat dipasangkan dengan Kuantor Eksistensial (&exist;)?",
+                shortAnswer: "Karena menyatakan fakta keberadaan objek spesifik yang memiliki dua sifat sekaligus.",
+                longAnswer: "Kuantor eksistensial bertujuan membuktikan keberadaan minimal satu objek. Pola &exist;x (A(x) &and; B(x)) mengonfirmasi bahwa 'nyata ada sebuah objek x yang sekaligus bersifat A dan bersifat B'.",
+                rubric: [
+                    { text: "Membuktikan keberadaan objek spesifik", weight: 50 },
+                    { text: "Pola &exist;x (A(x) &and; B(x))", weight: 50 }
+                ]
+            },
+            {
+                id: 37,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Ubahlah pernyataan berikut ke bentuk logika predikat: 'Semua murai adalah burung'!",
+                shortAnswer: "&forall;x (Murai(x) &rarr; Burung(x))",
+                longAnswer: "Menggunakan kuantor universal (&forall;) dan implikasi karena menyatakan sifat seluruh anggota kelompok: &forall;x (Murai(x) &rarr; Burung(x)).",
+                rubric: [
+                    { text: "Formula &forall;x (Murai(x) &rarr; Burung(x))", weight: 100 }
+                ]
+            },
+            {
+                id: 38,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Ubahlah pernyataan 'Ada burung yang dapat terbang' ke logika predikat!",
+                shortAnswer: "&exist;x (Burung(x) &and; Dapat_Terbang(x))",
+                longAnswer: "Menggunakan kuantor eksistensial (&exist;) karena memakai kata 'Ada', dipadukan dengan konjungsi: &exist;x (Burung(x) &and; Dapat_Terbang(x)).",
+                rubric: [
+                    { text: "Formula &exist;x (Burung(x) &and; Dapat_Terbang(x))", weight: 100 }
+                ]
+            },
+            {
+                id: 39,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa arti penulisan predikat dua argumen seperti Hidup_Di(Mini, Sarang) berdasarkan teks?",
+                shortAnswer: "Menyatakan hubungan bahwa Mini hidup di sarang.",
+                longAnswer: "Merepresentasikan relasi spesifik antar dua objek, di mana objek pertama (Mini) memiliki keterikatan aksi/kondisi (Hidup Di) pada objek kedua (Sarang).",
+                rubric: [
+                    { text: "Menyatakan relasi antar objek pertama dan kedua", weight: 100 }
+                ]
+            },
+            {
+                id: 40,
+                topic: "Logika Predikat & Kuantor",
+                difficulty: "Sulit",
+                isMandatory: false,
+                question: "Bagaimana cara melambangkan negasi pada kuantor universal untuk menyatakan 'Tidak semua gajah adalah mamalia'?",
+                shortAnswer: "~&forall;x (Gajah(x) &rarr; Mamalia(x))",
+                longAnswer: "Memberikan tanda ingkaran (~ atau &not;) di paling depan struktur ekspresi kuantor universal yang utuh: ~&forall;x (Gajah(x) &rarr; Mamalia(x)).",
+                rubric: [
+                    { text: "Menuliskan tanda negasi di paling depan ekspresi kuantor", weight: 100 }
+                ]
+            },
+            // Q41 to Q50 are Topic E (Forward Chaining)
+            {
+                id: 41,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Jelaskan apa itu penalaran berbasis aturan (rule-based reasoning)!",
+                shortAnswer: "Representasi pengetahuan menggunakan aturan IF-THEN yang dieksekusi berurutan.",
+                longAnswer: "Suatu pendekatan bentuk basis pengetahuan di mana keahlian pakar disusun menggunakan sekumpulan aturan kaidah berformat IF-THEN untuk menyelesaikan masalah secara sekuensial atau berurutan.",
+                rubric: [
+                    { text: "Menggunakan aturan IF-THEN", weight: 100 }
+                ]
+            },
+            {
+                id: 42,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Jelaskan prinsip dasar metode inferensi Forward Chaining!",
+                shortAnswer: "Pencocokan yang dimulai dari fakta sebelah kiri (IF) untuk menguji kesimpulan.",
+                longAnswer: "Rantai penalaran maju yang memulai pencocokan data dari komponen sebelah kiri (kondisi IF) menggunakan fakta-fakta awal yang diketahui untuk menarik kesimpulan baru (THEN).",
+                rubric: [
+                    { text: "Memulai dari fakta (IF) ke kesimpulan (THEN)", weight: 100 }
+                ]
+            },
+            {
+                id: 43,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa keunikan pencarian fakta pada Forward Chaining dibanding Backward Chaining?",
+                shortAnswer: "Forward chaining mencari dari fakta ke tujuan, backward chaining dari tujuan ke fakta.",
+                longAnswer: "Forward chaining digerakkan oleh data awal (data-driven) dari kiri ke kanan, sedangkan backward chaining digerakkan oleh tujuan (goal-driven) yang bekerja mundur memverifikasi fakta pendukung dari kanan ke kiri.",
+                rubric: [
+                    { text: "Forward chaining bersifat data-driven", weight: 50 },
+                    { text: "Backward chaining bersifat goal-driven", weight: 50 }
+                ]
+            },
+            {
+                id: 44,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Sebutkan kondisi-kondisi yang membuat proses Forward Chaining berhenti!",
+                shortAnswer: "Tidak ada rule yang cocok, atau goal/tujuan akhir telah tercapai.",
+                longAnswer: "Berdasarkan diktat kuliah, proses berulang akan berhenti jika:\n1. Tidak ada aturan (rule) lagi yang bisa dipakai/cocok dengan basis fakta.\n2. Tujuan (goal) utama penyimpulan sudah sukses tercapai.",
+                rubric: [
+                    { text: "Kondisi 1: Tidak ada aturan yang cocok", weight: 50 },
+                    { text: "Kondisi 2: Goal utama tercapai", weight: 50 }
+                ]
+            },
+            {
+                id: 45,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Kapan sebuah aturan (rule) dikatakan memicu (fire) fakta baru pada forward chaining?",
+                shortAnswer: "Saat seluruh kondisi pada bagian IF bernilai benar/terpenuhi.",
+                longAnswer: "Ketika semua premis atau syarat data yang tertulis di bagian kondisi (IF) berhasil dicocokkan dan bernilai benar terhadap koleksi fakta yang ada di basis data.",
+                rubric: [
+                    { text: "Kondisi IF terpenuhi / bernilai benar", weight: 100 }
+                ]
+            },
+            {
+                id: 46,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa yang dimaksud dengan penalaran berbasis kasus (case-based reasoning)?",
+                shortAnswer: "Penurunan solusi berdasarkan kasus-kasus lama yang mirip di basis pengetahuan.",
+                longAnswer: "Pendekatan basis pengetahuan yang berisi solusi-solusi dari kasus yang telah dicapai sebelumnya, untuk kemudian diturunkan menjadi solusi keadaan sekarang berdasarkan kemiripan kasus.",
+                rubric: [
+                    { text: "Berdasarkan kasus-kasus lama yang mirip", weight: 100 }
+                ]
+            },
+            {
+                id: 47,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Kapan kita sebaiknya menggunakan penalaran berbasis kasus (case-based reasoning)?",
+                shortAnswer: "Saat user ingin tahu lebih banyak pada kasus-kasus yang hampir sama/mirip.",
+                longAnswer: "Digunakan apabila pengguna menginginkan informasi atau penalaran mendalam pada kasus-kasus yang mirip, dan sistem sudah memiliki database riwayat situasi kasus terdahulu yang melimpah.",
+                rubric: [
+                    { text: "Memiliki database kasus terdahulu yang melimpah", weight: 50 },
+                    { text: "User membutuhkan informasi tentang kemiripan kasus", weight: 50 }
+                ]
+            },
+            {
+                id: 48,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Mudah",
+                isMandatory: false,
+                question: "Perhatikan aturan: IF demam AND batuk THEN flu. Jika sistem mengetahui fakta awal adalah demam dan batuk, apa langkah forward chaining selanjutnya?",
+                shortAnswer: "Aturan dijalankan, lalu menambahkan fakta baru yaitu flu.",
+                longAnswer: "Karena fakta awal cocok dengan kondisi IF, aturan dieksekusi (fired), dan sistem akan menambahkan kesimpulan baru berupa fakta flu ke dalam basis pengetahuan.",
+                rubric: [
+                    { text: "Aturan dieksekusi (fired)", weight: 50 },
+                    { text: "Fakta baru 'flu' ditambahkan ke database", weight: 50 }
+                ]
+            },
+            {
+                id: 49,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Melanjutkan soal nomor 48, jika ada aturan berikutnya: IF flu AND sakit kepala THEN influenza. Apakah aturan ini bisa langsung dieksekusi? Jelaskan!",
+                shortAnswer: "Belum bisa, karena harus menunggu adanya fakta pendukung sakit kepala.",
+                longAnswer: "Belum bisa dieksekusi langsung (not fired) karena meskipun fakta flu sudah didapatkan dari langkah sebelumnya, kondisi konjungsi membutuhkan fakta sakit kepala agar bernilai benar seutuhnya.",
+                rubric: [
+                    { text: "Belum bisa karena kurang fakta sakit kepala", weight: 100 }
+                ]
+            },
+            {
+                id: 50,
+                topic: "Mesin Inferensi & Forward Chaining",
+                difficulty: "Sedang",
+                isMandatory: false,
+                question: "Apa kelebihan utama penggunaan representasi aturan (rule-based) jika ditinjau dari pelacakan solusi?",
+                shortAnswer: "Dapat memberikan penjelasan tentang jejak langkah pencapaian solusi.",
+                longAnswer: "Kelebihannya adalah kemampuannya dalam memberikan transparansi atau penjelasan runtut mengenai jejak langkah demi langkah bagaimana sebuah keputusan akhir dapat dicapai oleh sistem.",
+                rubric: [
+                    { text: "Memberikan penjelasan/transparansi jejak langkah keputusan", weight: 100 }
+                ]
+            }
+        ];
+
+        // Merge BANK_QUESTIONS_11_TO_50 into ALL_QUESTIONS
+        // We override indices 10 to 49 (which correspond to id 11 to 50)
+        BANK_QUESTIONS_11_TO_50.forEach(q => {
+            ALL_QUESTIONS[q.id - 1] = q;
+        });
+    </script>
+    <!-- CORE INTERACTIVE JS ENGINE -->
+    <script>
+        // --- APP STATE ---
+        let appMode = 'practice'; // 'practice' or 'sim'
+        let activeIdx = 0;        // In practice mode, index of current question in ALL_QUESTIONS.
+                                  // In sim mode, page index (0 to 9) of selected questions.
+
+        // Simulation parameters
+        let simSelectedOptionalIds = []; // 9 optional questions selected by user.
+        let simTestPaperQuestions = [];  // Combined 1 mandatory + 9 optional questions.
+        let simAnswers = {};            // Maps question.id -> String (answers drafted during simulation).
+        let simIsRunning = false;
+        let simIsEvaluated = false;
+        let simTimeElapsed = 0;         // In seconds
+        let simTimerInterval = null;
+
+        // General history
+        let sbpEssayHistory = [];
+        // General drafts
+        let sbpEssayDrafts = {};
+
+        // Audio
+        let audioCtx = null;
+        let soundEnabled = true;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initAudio();
+            initLocalStorage();
+            renderSidebarQuestions();
+            loadQuestion(0);
+            setupEventListeners();
+        });
+
+        // Theme management
+        let currentTheme = 'dark';
+        function initTheme() {
+            currentTheme = localStorage.getItem('index_quiz_theme') || 'dark';
+            setTheme(currentTheme);
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('index_quiz_theme', theme);
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'light') {
+                icon.innerHTML = `<path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707.707M12 5a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            } else {
+                icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>`;
+            }
+        }
+
+        // Web Audio Synthesizer
+        function initAudio() {
+            soundEnabled = localStorage.getItem('sbp_sound_enabled') !== 'false';
+            updateSoundIcon();
+
+            document.getElementById('sound-toggle').addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                localStorage.setItem('sbp_sound_enabled', soundEnabled);
+                updateSoundIcon();
+                if (soundEnabled) playSynthSound('click');
+            });
+        }
+
+        function updateSoundIcon() {
+            const icon = document.getElementById('sound-icon');
+            if (soundEnabled) {
+                icon.innerHTML = `
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                `;
+            } else {
+                icon.innerHTML = `
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M23 9l-6 6M17 9l6 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                `;
+            }
+        }
+
+        function playSynthSound(type) {
+            if (!soundEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(450, now);
+                    osc.frequency.exponentialRampToValueAtTime(220, now + 0.08);
+                    gain.gain.setValueAtTime(0.04, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'success') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                    gain.gain.setValueAtTime(0.06, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'warn') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.linearRampToValueAtTime(100, now + 0.15);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.linearRampToValueAtTime(0, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                }
+            } catch (e) {
+                console.warn('Synth sound failed:', e);
+            }
+        }
+
+        // Local Storage
+        function initLocalStorage() {
+            sbpEssayHistory = JSON.parse(localStorage.getItem('sbp_essay_history')) || [];
+            sbpEssayDrafts = JSON.parse(localStorage.getItem('sbp_essay_drafts')) || {};
+            renderHistoryList();
+            updateTotalDoneBadge();
+        }
+
+        function saveHistoryItem(questionId, score, answer) {
+            const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+            
+            // Remove duplicates for the same question
+            sbpEssayHistory = sbpEssayHistory.filter(h => h.questionId !== questionId);
+            
+            sbpEssayHistory.unshift({
+                questionId: questionId,
+                score: score,
+                date: today,
+                answer: answer
+            });
+
+            localStorage.setItem('sbp_essay_history', JSON.stringify(sbpEssayHistory));
+            renderHistoryList();
+            updateTotalDoneBadge();
+            renderSidebarQuestions();
+        }
+
+        function saveAnswerDraft(questionId, text) {
+            sbpEssayDrafts[questionId] = text;
+            localStorage.setItem('sbp_essay_drafts', JSON.stringify(sbpEssayDrafts));
+        }
+
+        function getAnswerDraft(questionId) {
+            return sbpEssayDrafts[questionId] || "";
+        }
+
+        function renderHistoryList() {
+            const list = document.getElementById('history-list');
+            const empty = document.getElementById('empty-history');
+            
+            // Clear items except empty
+            const items = list.querySelectorAll('.history-item');
+            items.forEach(i => i.remove());
+
+            if (sbpEssayHistory.length === 0) {
+                empty.style.display = 'block';
+                return;
+            }
+
+            empty.style.display = 'none';
+            sbpEssayHistory.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.innerHTML = `
+                    <div class="history-info">
+                        <strong>Soal #${item.questionId}</strong>
+                        <span class="history-date">${item.date}</span>
+                    </div>
+                    <span class="history-score">${item.score}%</span>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function updateTotalDoneBadge() {
+            // Count unique question IDs in history
+            const uniqueDone = new Set(sbpEssayHistory.map(h => h.questionId)).size;
+            document.getElementById('total-done-label').innerText = uniqueDone;
+        }
+
+        // Sidebar rendering
+        function renderSidebarQuestions(filterText = '') {
+            const container = document.getElementById('question-list-sidebar');
+            container.innerHTML = '';
+
+            ALL_QUESTIONS.forEach((q, idx) => {
+                // Apply search filter
+                if (filterText !== '') {
+                    const matchNum = `soal ${q.id}`.includes(filterText) || `#${q.id}`.includes(filterText);
+                    const matchQ = q.question.toLowerCase().includes(filterText);
+                    const matchT = q.topic.toLowerCase().includes(filterText);
+                    if (!matchNum && !matchQ && !matchT) return;
+                }
+
+                const completed = sbpEssayHistory.some(h => h.questionId === q.id);
+                const isActive = appMode === 'practice' && idx === activeIdx;
+
+                const btn = document.createElement('button');
+                btn.className = `question-item-btn${isActive ? ' active' : ''}${completed ? ' completed' : ''}`;
+                btn.innerHTML = `
+                    <span>Soal #${q.id}: ${q.question.substring(0, 32)}...</span>
+                    <span class="question-item-badge">${completed ? '✓ Done' : q.difficulty}</span>
+                `;
+                
+                btn.addEventListener('click', () => {
+                    if (appMode !== 'practice') return;
+                    playSynthSound('click');
+                    activeIdx = idx;
+                    loadQuestion(idx);
+                    // Update active class
+                    const allBtns = container.querySelectorAll('.question-item-btn');
+                    allBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+
+                container.appendChild(btn);
+            });
+        }
+
+        // Core Study Arena Loader
+        function loadQuestion(idx) {
+            const textInput = document.getElementById('essay-answer-input');
+            const evalBox = document.getElementById('essay-evaluation-box');
+            
+            // Hide evaluation area when loading a new card
+            evalBox.classList.remove('visible');
+
+            let q;
+            if (appMode === 'practice') {
+                q = ALL_QUESTIONS[idx];
+                document.getElementById('prev-btn-essay').style.display = 'block';
+                document.getElementById('next-btn-essay').style.display = 'block';
+                document.getElementById('prev-btn-essay').disabled = idx === 0;
+                document.getElementById('next-btn-essay').disabled = idx === ALL_QUESTIONS.length - 1;
+                
+                // Set draft answer
+                textInput.value = getAnswerDraft(q.id);
+            } else {
+                // Simulation mode
+                q = simTestPaperQuestions[idx];
+                document.getElementById('prev-btn-essay').style.display = 'block';
+                document.getElementById('next-btn-essay').style.display = 'block';
+                document.getElementById('prev-btn-essay').disabled = idx === 0;
+                document.getElementById('next-btn-essay').disabled = idx === 9; // Max 10 questions
+
+                textInput.value = simAnswers[q.id] || "";
+            }
+
+            // Fill question details
+            document.getElementById('q-category-tag').innerText = q.topic;
+            document.getElementById('q-difficulty-tag').innerText = q.difficulty;
+            document.getElementById('q-difficulty-tag').className = `difficulty-tag ${q.difficulty.toLowerCase()}`;
+            document.getElementById('q-question-text').innerText = q.question;
+
+            if (q.isMandatory) {
+                document.getElementById('q-mandatory-tag').style.display = 'inline-block';
+            } else {
+                document.getElementById('q-mandatory-tag').style.display = 'none';
+            }
+
+            // Update char count
+            updateCharCount();
+            
+            // Setup rubric
+            renderRubric(q);
+        }
+
+        function updateCharCount() {
+            const val = document.getElementById('essay-answer-input').value;
+            document.getElementById('char-counter').innerText = `${val.length} karakter`;
+        }
+
+        // Rubric Grading Render
+        let rubricScore = 0;
+        function renderRubric(question) {
+            const list = document.getElementById('rubric-list');
+            list.innerHTML = '';
+            rubricScore = 0;
+            document.getElementById('self-eval-score-label').innerText = 'Skor: 0%';
+
+            // Bind model answers
+            document.getElementById('model-short-ans').innerHTML = question.shortAnswer;
+            document.getElementById('model-long-ans').innerText = question.longAnswer;
+
+            question.rubric.forEach((item, index) => {
+                const label = document.createElement('label');
+                label.className = 'rubric-item';
+                label.innerHTML = `
+                    <input type="checkbox" data-weight="${item.weight}">
+                    <span>[+${item.weight}%] ${item.text}</span>
+                `;
+
+                const checkbox = label.querySelector('input');
+                checkbox.addEventListener('change', () => {
+                    playSynthSound('click');
+                    calculateRubricScore();
+                });
+
+                list.appendChild(label);
+            });
+        }
+
+        function calculateRubricScore() {
+            const checkboxes = document.getElementById('rubric-list').querySelectorAll('input[type="checkbox"]');
+            let score = 0;
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    score += parseInt(cb.getAttribute('data-weight'));
+                }
+            });
+            // Cap at 100
+            score = Math.min(score, 100);
+            rubricScore = score;
+            document.getElementById('self-eval-score-label').innerText = `Skor: ${score}%`;
+        }
+
+        // Setup Strict Simulation mode UI and logic
+        function renderSimSetupChoiceGrid() {
+            const grid = document.getElementById('sim-choice-grid');
+            grid.innerHTML = '';
+            simSelectedOptionalIds = [];
+            updateSimSetupStatus();
+
+            // Load optional questions (exclude Soal Wajib logic #51)
+            ALL_QUESTIONS.forEach(q => {
+                if (q.isMandatory) return; // Skip logic case #51
+
+                const label = document.createElement('label');
+                label.className = 'sim-checkbox-card';
+                label.innerHTML = `
+                    <input type="checkbox" value="${q.id}">
+                    <div>
+                        <strong>Soal #${q.id} (${q.difficulty})</strong><br>
+                        <span style="font-size:10.5px; opacity:0.8;">${q.question.substring(0, 50)}...</span>
+                    </div>
+                `;
+
+                const checkbox = label.querySelector('input');
+                checkbox.addEventListener('change', () => {
+                    playSynthSound('click');
+                    const qId = parseInt(checkbox.value);
+                    if (checkbox.checked) {
+                        if (simSelectedOptionalIds.length >= 9) {
+                            checkbox.checked = false;
+                            playSynthSound('warn');
+                            alert('Anda hanya boleh memilih tepat 9 soal tambahan!');
+                            return;
+                        }
+                        simSelectedOptionalIds.push(qId);
+                        label.classList.add('selected');
+                    } else {
+                        simSelectedOptionalIds = simSelectedOptionalIds.filter(id => id !== qId);
+                        label.classList.remove('selected');
+                    }
+                    updateSimSetupStatus();
+                });
+
+                grid.appendChild(label);
+            });
+        }
+
+        function updateSimSetupStatus() {
+            const count = simSelectedOptionalIds.length;
+            document.getElementById('sim-choice-status-label').innerText = `Terpilih: ${count} / 9 Soal Pilihan`;
+            document.getElementById('sim-start-test-btn').disabled = count !== 9;
+        }
+
+        function startSimulation() {
+            simIsRunning = true;
+            simIsEvaluated = false;
+            simTimeElapsed = 0;
+            simAnswers = {};
+            activeIdx = 0;
+
+            // Combine 1 mandatory question (#51) + 9 selected questions
+            const mandatoryQ = ALL_QUESTIONS.find(q => q.isMandatory);
+            const optionalQs = ALL_QUESTIONS.filter(q => simSelectedOptionalIds.includes(q.id));
+            simTestPaperQuestions = [mandatoryQ, ...optionalQs];
+
+            // Render Pagination numbers
+            const pagContainer = document.getElementById('sim-question-pagination');
+            pagContainer.innerHTML = '';
+            simTestPaperQuestions.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `page-num-btn${idx === 0 ? ' active' : ''}${q.isMandatory ? ' mandatory-page' : ''}`;
+                btn.innerText = idx + 1;
+                btn.id = `pag-btn-${idx}`;
+                btn.addEventListener('click', () => {
+                    playSynthSound('click');
+                    // Save current draft
+                    saveCurrentSimAnswerDraft();
+                    activeIdx = idx;
+                    loadQuestion(idx);
+                    updatePaginationUI();
+                });
+                pagContainer.appendChild(btn);
+            });
+
+            // Toggle panels visible
+            document.getElementById('sim-setup-card').style.display = 'none';
+            document.getElementById('essay-working-card').style.display = 'flex';
+            document.getElementById('sim-question-pagination').style.display = 'flex';
+            document.getElementById('simulation-active-bar').style.display = 'flex';
+            
+            // Sidebar simulation tracking
+            document.getElementById('practice-nav-panel').style.display = 'none';
+            document.getElementById('sim-status-nav-panel').style.display = 'block';
+
+            // Start Timer
+            startTimer();
+            loadQuestion(0);
+            updateSimAnswersSidebarCount();
+        }
+
+        function saveCurrentSimAnswerDraft() {
+            const val = document.getElementById('essay-answer-input').value;
+            const currentQ = simTestPaperQuestions[activeIdx];
+            simAnswers[currentQ.id] = val;
+            updatePaginationUI();
+            updateSimAnswersSidebarCount();
+        }
+
+        function updatePaginationUI() {
+            simTestPaperQuestions.forEach((q, idx) => {
+                const btn = document.getElementById(`pag-btn-${idx}`);
+                if (!btn) return;
+                
+                btn.classList.toggle('active', idx === activeIdx);
+                
+                const hasAnswer = simAnswers[q.id] && simAnswers[q.id].trim().length > 0;
+                btn.classList.toggle('answered', hasAnswer);
+            });
+        }
+
+        function updateSimAnswersSidebarCount() {
+            const answeredCount = Object.values(simAnswers).filter(a => a.trim().length > 0).length;
+            document.getElementById('sim-ans-count-label').innerText = `${answeredCount} / 10`;
+        }
+
+        function startTimer() {
+            clearInterval(simTimerInterval);
+            simTimerInterval = setInterval(() => {
+                simTimeElapsed++;
+                const hours = Math.floor(simTimeElapsed / 3600).toString().padStart(2, '0');
+                const minutes = Math.floor((simTimeElapsed % 3600) / 60).toString().padStart(2, '0');
+                const seconds = (simTimeElapsed % 60).toString().padStart(2, '0');
+                const timeStr = `${hours}:${minutes}:${seconds}`;
+                document.getElementById('sim-timer-label').innerText = timeStr;
+                document.getElementById('timer-pill-banner').innerText = `Waktu: ${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function terminateSimulation() {
+            // Save final question draft
+            saveCurrentSimAnswerDraft();
+
+            if (!confirm('Apakah Anda yakin ingin mengakhiri kuis simulasi dan mengumpulkan seluruh jawaban esai Anda sekarang?')) {
+                return;
+            }
+
+            clearInterval(simTimerInterval);
+            simIsRunning = false;
+            simIsEvaluated = true;
+
+            // Display evaluate/rubric interface for each paper
+            alert('Ujian Simulasi UTS Selesai Dikumpulkan!\nSilakan lakukan penilaian mandiri untuk tiap soal menggunakan rubrik evaluasi yang sekarang terbuka.');
+
+            // Toggle panels
+            document.getElementById('simulation-active-bar').style.display = 'none';
+            document.getElementById('essay-evaluation-box').classList.add('visible');
+            loadQuestion(activeIdx);
+        }
+
+        // Set App Navigation mode Practice vs Sim
+        function setAppMode(mode) {
+            appMode = mode;
+            document.getElementById('mode-practice-btn').classList.toggle('active', mode === 'practice');
+            document.getElementById('mode-sim-btn').classList.toggle('active', mode === 'sim');
+
+            clearInterval(simTimerInterval);
+            simIsRunning = false;
+            
+            const workingCard = document.getElementById('essay-working-card');
+            const setupCard = document.getElementById('sim-setup-card');
+            const evalBox = document.getElementById('essay-evaluation-box');
+
+            if (mode === 'practice') {
+                workingCard.style.display = 'flex';
+                setupCard.style.display = 'none';
+                evalBox.classList.remove('visible');
+                document.getElementById('sim-question-pagination').style.display = 'none';
+                document.getElementById('simulation-active-bar').style.display = 'none';
+                
+                document.getElementById('practice-nav-panel').style.display = 'block';
+                document.getElementById('sim-status-nav-panel').style.display = 'none';
+                
+                activeIdx = 0;
+                loadQuestion(0);
+                renderSidebarQuestions();
+            } else {
+                // Simulation mode
+                workingCard.style.display = 'none';
+                setupCard.style.display = 'flex';
+                evalBox.classList.remove('visible');
+                document.getElementById('sim-question-pagination').style.display = 'none';
+                document.getElementById('simulation-active-bar').style.display = 'none';
+                
+                document.getElementById('practice-nav-panel').style.display = 'block'; // Let user see setup options
+                document.getElementById('sim-status-nav-panel').style.display = 'none';
+
+                renderSimSetupChoiceGrid();
+            }
+        }
+
+        function setupEventListeners() {
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', () => {
+                playSynthSound('click');
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Tabs mode toggle
+            document.getElementById('mode-practice-btn').addEventListener('click', () => {
+                playSynthSound('click');
+                setAppMode('practice');
+            });
+            document.getElementById('mode-sim-btn').addEventListener('click', () => {
+                playSynthSound('click');
+                setAppMode('sim');
+            });
+
+            // Search sidebar
+            document.getElementById('search-sidebar').addEventListener('input', (e) => {
+                renderSidebarQuestions(e.target.value.toLowerCase().trim());
+            });
+
+            // Characters count
+            document.getElementById('essay-answer-input').addEventListener('input', () => {
+                updateCharCount();
+                const q = appMode === 'practice' ? ALL_QUESTIONS[activeIdx] : simTestPaperQuestions[activeIdx];
+                
+                if (appMode === 'practice') {
+                    saveAnswerDraft(q.id, document.getElementById('essay-answer-input').value);
+                } else {
+                    simAnswers[q.id] = document.getElementById('essay-answer-input').value;
+                    updatePaginationUI();
+                    updateSimAnswersSidebarCount();
+                }
+            });
+
+            // Action buttons
+            document.getElementById('reveal-ans-btn').addEventListener('click', () => {
+                const answerText = document.getElementById('essay-answer-input').value;
+                if (answerText.trim().length < 5) {
+                    playSynthSound('warn');
+                    alert('Mohon ketikkan draf jawaban esai Anda terlebih dahulu sebelum membuka rubrik pembahasan!');
+                    return;
+                }
+                playSynthSound('click');
+                document.getElementById('essay-evaluation-box').classList.toggle('visible');
+            });
+
+            // Manual Save draft button
+            document.getElementById('save-draft-btn').addEventListener('click', () => {
+                const val = document.getElementById('essay-answer-input').value;
+                const q = appMode === 'practice' ? ALL_QUESTIONS[activeIdx] : simTestPaperQuestions[activeIdx];
+                
+                if (appMode === 'practice') {
+                    saveAnswerDraft(q.id, val);
+                    playSynthSound('success');
+                    alert('Jawaban esai latihan Anda berhasil disimpan!');
+                } else {
+                    saveCurrentSimAnswerDraft();
+                    playSynthSound('success');
+                    alert('Draf jawaban simulasi tersimpan!');
+                }
+            });
+
+            // Rubric Grading submission
+            document.getElementById('submit-grade-btn').addEventListener('click', () => {
+                const q = appMode === 'practice' ? ALL_QUESTIONS[activeIdx] : simTestPaperQuestions[activeIdx];
+                const ans = document.getElementById('essay-answer-input').value;
+                
+                saveHistoryItem(q.id, rubricScore, ans);
+                playSynthSound('success');
+                alert(`Skor evaluasi ${rubricScore}% berhasil disimpan dalam riwayat belajar Anda!`);
+            });
+
+            // Prev & Next navigation
+            document.getElementById('prev-btn-essay').addEventListener('click', () => {
+                if (activeIdx > 0) {
+                    if (appMode === 'sim') saveCurrentSimAnswerDraft();
+                    activeIdx--;
+                    loadQuestion(activeIdx);
+                    if (appMode === 'sim') updatePaginationUI();
+                }
+            });
+            document.getElementById('next-btn-essay').addEventListener('click', () => {
+                const max = appMode === 'practice' ? ALL_QUESTIONS.length : 10;
+                if (activeIdx < max - 1) {
+                    if (appMode === 'sim') saveCurrentSimAnswerDraft();
+                    activeIdx++;
+                    loadQuestion(activeIdx);
+                    if (appMode === 'sim') updatePaginationUI();
+                }
+            });
+
+            // Strict test setup
+            document.getElementById('sim-start-test-btn').addEventListener('click', () => {
+                playSynthSound('success');
+                startSimulation();
+            });
+
+            document.getElementById('sim-terminate-btn').addEventListener('click', () => {
+                playSynthSound('click');
+                terminateSimulation();
+            });
+
+            // Clear history logs
+            document.getElementById('clear-history-btn').addEventListener('click', () => {
+                if (confirm('Apakah Anda yakin ingin menghapus seluruh log riwayat latihan esai Anda?')) {
+                    playSynthSound('warn');
+                    sbpEssayHistory = [];
+                    localStorage.removeItem('sbp_essay_history');
+                    renderHistoryList();
+                    updateTotalDoneBadge();
+                    renderSidebarQuestions();
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
